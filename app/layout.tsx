@@ -16,7 +16,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="kr">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <main className="min-h-screen">{children}</main>
+      </body>
     </html>
   );
 };
