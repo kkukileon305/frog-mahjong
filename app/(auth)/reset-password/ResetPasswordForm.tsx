@@ -2,14 +2,15 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ResetPasswordInputs = {
-  email: string;
-  name: string;
   password: string;
+  resetToken: string;
 };
 
 const ResetPasswordForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -23,11 +24,8 @@ const ResetPasswordForm = () => {
 
     try {
       // TODO: リセットコード作成
-      const resposne = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
-      );
-      const body = await resposne.json();
-      console.log(body);
+
+      router.push("reset-password/done");
     } catch (e) {
       // TODO: 失敗したときのコード
     } finally {
@@ -40,6 +38,24 @@ const ResetPasswordForm = () => {
       className="flex flex-col gap-8 rounded-xl"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div className="flex flex-col">
+        <label>인증번호</label>
+        <input
+          type="password"
+          className={`border border-gray-400 rounded p-2 mt-3 ${
+            errors.resetToken && "border-red-400"
+          }`}
+          {...register("resetToken", {
+            required: "인증번호를 입력해주세요",
+          })}
+        />
+        {errors.resetToken && (
+          <span className="text-sm text-red-400 mt-2">
+            {errors.resetToken.message}
+          </span>
+        )}
+      </div>
+
       <div className="flex flex-col">
         <label>비밀번호 (영문, 숫자 조합 6자리 이상)</label>
         <input

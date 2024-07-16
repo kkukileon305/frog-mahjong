@@ -3,6 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 type SignInInputs = {
   email: string;
 };
@@ -22,7 +23,7 @@ const ForgotPasswordForm = () => {
 
     try {
       // TODO: ログインコード作成
-      // router.push("forgot-password/done");
+      router.push("reset-password");
     } catch (e) {
       // TODO: 失敗したときのコード
     } finally {
