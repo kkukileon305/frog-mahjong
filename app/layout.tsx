@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import Header from "@/app/Header";
 
 const font = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -17,7 +18,8 @@ const RootLayout = ({
   return (
     <html lang="kr">
       <body className={font.className}>
-        <main className="min-h-screen">{children}</main>
+        <Header />
+        {children}
       </body>
     </html>
   );
