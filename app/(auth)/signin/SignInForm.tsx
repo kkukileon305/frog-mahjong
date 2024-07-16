@@ -73,7 +73,7 @@ const SignInForm = () => {
             {errors.password.message}
           </span>
         )}
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-1">
           <Link href="/forgot-password" className="underline text-gray-600">
             비밀번호를 잊으셨나요?
           </Link>
@@ -82,7 +82,7 @@ const SignInForm = () => {
 
       <button
         type="submit"
-        className="w-full bg-sky-500 rounded-lg py-4 text-white font-bold disabled:bg-gray-400"
+        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
         로그인

@@ -3,26 +3,26 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 
-type SignUpInputs = {
+type ResetPasswordInputs = {
   email: string;
   name: string;
   password: string;
 };
 
-const SignUpForm = () => {
+const ResetPasswordForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpInputs>();
+  } = useForm<ResetPasswordInputs>();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (inputs) => {
+  const onSubmit: SubmitHandler<ResetPasswordInputs> = async (inputs) => {
     setIsLoading(true);
 
     try {
-      // TODO: 加入コード作成
+      // TODO: リセットコード作成
       const resposne = await fetch(
         "https://jsonplaceholder.typicode.com/todos/1"
       );
@@ -37,31 +37,9 @@ const SignUpForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-8 bg-gray-200 p-4 rounded-xl"
+      className="flex flex-col gap-8 rounded-xl"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col">
-        <label>이메일</label>
-        <input
-          type="email"
-          className={`border border-gray-400 rounded p-2 mt-3 ${
-            errors.email && "border-red-400"
-          }`}
-          {...register("email", {
-            required: "이메일을 입력해주세요",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "올바른 이메일 주소를 입력해주세요",
-            },
-          })}
-        />
-        {errors.email && (
-          <span className="text-sm text-red-400 mt-2">
-            {errors.email.message}
-          </span>
-        )}
-      </div>
-
       <div className="flex flex-col">
         <label>비밀번호 (영문, 숫자 조합 6자리 이상)</label>
         <input
@@ -84,38 +62,17 @@ const SignUpForm = () => {
         )}
       </div>
 
-      <div className="flex flex-col">
-        <label>이름</label>
-        <input
-          className={`border border-gray-400 rounded p-2 mt-3 ${
-            errors.name && "border-red-400"
-          }`}
-          {...register("name", {
-            required: "이름을 입력해주세요",
-          })}
-        />
-        {errors.name && (
-          <span className="text-sm text-red-400 mt-2">
-            {errors.name.message}
-          </span>
-        )}
-      </div>
-
       <div>
-        <p className="text-sm text-gray-800 mb-2">
-          회원가입시 <span className="underline">이용약관</span>에 동의한 것으로
-          간주됩니다.
-        </p>
         <button
           type="submit"
           className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
           disabled={isLoading}
         >
-          회원가입
+          비밀번호 재설정
         </button>
       </div>
     </form>
   );
 };
 
-export default SignUpForm;
+export default ResetPasswordForm;

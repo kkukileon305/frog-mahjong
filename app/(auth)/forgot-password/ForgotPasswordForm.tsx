@@ -2,13 +2,13 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 type SignInInputs = {
   email: string;
 };
 
 const ForgotPasswordForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -22,6 +22,7 @@ const ForgotPasswordForm = () => {
 
     try {
       // TODO: ログインコード作成
+      // router.push("forgot-password/done");
     } catch (e) {
       // TODO: 失敗したときのコード
     } finally {
@@ -58,7 +59,7 @@ const ForgotPasswordForm = () => {
 
       <button
         type="submit"
-        className="w-full bg-sky-500 rounded-lg py-4 text-white font-bold disabled:bg-gray-400"
+        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
         비밀번호 재설정 이메일 받기
