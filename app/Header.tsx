@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { hasCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
 import { cookies } from "next/headers";
-import MyInfo from "@/app/MyInfo";
+import SignOutBtn from "@/app/SignOutBtn";
 
-const Header = () => {
-  const isSignIn = hasCookie("refreshToken", {
+const Header = async () => {
+  const refreshToken = getCookie("refreshToken", {
     cookies,
   });
 
@@ -16,7 +16,7 @@ const Header = () => {
           메인
         </Link>
 
-        {isSignIn && <MyInfo />}
+        {refreshToken && <SignOutBtn />}
       </div>
     </header>
   );
