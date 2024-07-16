@@ -1,5 +1,10 @@
 import axios from "axios";
 
+export type SignInType = {
+  accessToken: string;
+  refreshToken: string;
+};
+
 export type ErrorType = {
   errType: string;
   msg: string;

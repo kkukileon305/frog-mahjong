@@ -3,6 +3,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
+import axiosInstance, { ErrorType, SignInType } from "@/utils/axios";
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 
 type SignInInputs = {
   email: string;
@@ -10,11 +13,14 @@ type SignInInputs = {
 };
 
 const SignInForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignInInputs>();
+
+  const [isSignInFailed, setIsSignInFailed] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,9 +28,22 @@ const SignInForm = () => {
     setIsLoading(true);
 
     try {
-      // TODO: ログインコード作成
+      const { data } = await axiosInstance.post<SignInType>(
+        "/v0.1/auth/signin",
+        {
+          email: inputs.email,
+          password: inputs.password,
+        }
+      );
+
+      router.push("/");
     } catch (e) {
-      // TODO: 失敗したときのコード
+      const error = e as AxiosError<ErrorType>;
+
+      // login failed
+      if (error.response?.data.errType === "USER_NOT_FOUND") {
+        setIsSignInFailed(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +98,12 @@ const SignInForm = () => {
           </Link>
         </div>
       </div>
+
+      {isSignInFailed && (
+        <p className="text-sm text-red-400 text-center">
+          비밀번호가 틀렸거나 없는 회원입니다
+        </p>
+      )}
 
       <button
         type="submit"
