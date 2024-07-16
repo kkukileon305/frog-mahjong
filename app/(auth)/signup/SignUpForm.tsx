@@ -2,6 +2,9 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axiosInstance, { ErrorType } from "@/utils/axios";
+import { AxiosError } from "axios";
 
 type SignUpInputs = {
   email: string;
@@ -10,11 +13,14 @@ type SignUpInputs = {
 };
 
 const SignUpForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpInputs>();
+
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,14 +28,20 @@ const SignUpForm = () => {
     setIsLoading(true);
 
     try {
-      // TODO: 加入コード作成
-      const resposne = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
-      );
-      const body = await resposne.json();
-      console.log(body);
+      await axiosInstance.post("/v0.1/auth/signup", {
+        email: inputs.email,
+        password: inputs.password,
+        name: inputs.name,
+      });
+
+      router.push("signup/done");
     } catch (e) {
-      // TODO: 失敗したときのコード
+      const error = e as AxiosError<ErrorType>;
+
+      // user already exist
+      if (error.response?.data.errType === "USER_ALREADY_EXISTED") {
+        setIsAlreadyRegistered(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +113,11 @@ const SignUpForm = () => {
         )}
       </div>
 
+      {isAlreadyRegistered && (
+        <p className="text-sm text-red-400 text-center">
+          이미 가입된 회원입니다
+        </p>
+      )}
       <div>
         <p className="text-sm text-gray-800 mb-2">
           회원가입시 <span className="underline">이용약관</span>에 동의한 것으로
