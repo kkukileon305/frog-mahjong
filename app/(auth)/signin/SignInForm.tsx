@@ -6,6 +6,7 @@ import Link from "next/link";
 import axiosInstance, { ErrorType, SignInType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 
 type SignInInputs = {
   email: string;
@@ -28,15 +29,24 @@ const SignInForm = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await axiosInstance.post<SignInType>(
-        "/v0.1/auth/signin",
-        {
-          email: inputs.email,
-          password: inputs.password,
-        }
-      );
+      const {
+        data: { accessToken, refreshToken },
+      } = await axiosInstance.post<SignInType>("/v0.1/auth/signin", {
+        email: inputs.email,
+        password: inputs.password,
+      });
+
+      const today = new Date();
+
+      setCookie("accessToken", accessToken, {
+        expires: new Date(today.getTime() + 3600000 * 24 * 7),
+      });
+      setCookie("refreshToken", refreshToken, {
+        expires: new Date(today.getTime() + 3600000 * 24 * 7),
+      });
 
       router.push("/");
+      router.refresh();
     } catch (e) {
       const error = e as AxiosError<ErrorType>;
 
