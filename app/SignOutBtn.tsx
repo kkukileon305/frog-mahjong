@@ -7,7 +7,6 @@ import { useState } from "react";
 
 const SignOutBtn = () => {
   const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
   const accessToken = getCookie("accessToken");
 
