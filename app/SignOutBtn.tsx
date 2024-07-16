@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 
-const MyInfo = () => {
+const SignOutBtn = () => {
   const router = useRouter();
 
   const signOut = () => {
@@ -17,4 +17,4 @@ const MyInfo = () => {
   return <button onClick={signOut}>로그아웃</button>;
 };
 
-export default MyInfo;
+export default SignOutBtn;

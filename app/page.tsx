@@ -3,11 +3,11 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 
 const Home = () => {
-  const isSignIn = hasCookie("refreshToken", {
+  const refreshToken = getCookie("refreshToken", {
     cookies,
   });
 
-  if (isSignIn) {
+  if (refreshToken) {
     return (
       <div className="min-h-[calc(100vh-64px)] flex justify-center items-center gap-4">
         <Link href="/rooms">방 살펴보기</Link>
