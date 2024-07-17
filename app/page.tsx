@@ -1,6 +1,7 @@
 import { getCookie, hasCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import TestComponent from "@/utils/TestComponent";
 
 const Home = () => {
   const refreshToken = getCookie("refreshToken", {
@@ -9,8 +10,9 @@ const Home = () => {
 
   if (refreshToken) {
     return (
-      <div className="min-h-[calc(100vh-64px)] flex justify-center items-center gap-4">
+      <div className="min-h-[calc(100vh-64px)] flex flex-col justify-center items-center gap-4">
         <Link href="/rooms">방 살펴보기</Link>
+        <TestComponent />
       </div>
     );
   }
