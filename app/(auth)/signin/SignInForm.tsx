@@ -3,7 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
-import axiosInstance, { ErrorType, SignInType } from "@/utils/axios";
+import axiosInstance, { ErrorType, TokenType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
@@ -31,7 +31,7 @@ const SignInForm = () => {
     try {
       const {
         data: { accessToken, refreshToken },
-      } = await axiosInstance.post<SignInType>("/v0.1/auth/signin", {
+      } = await axiosInstance.post<TokenType>("/v0.1/auth/signin", {
         email: inputs.email,
         password: inputs.password,
       });
@@ -39,8 +39,9 @@ const SignInForm = () => {
       const today = new Date();
 
       setCookie("accessToken", accessToken, {
-        expires: new Date(today.getTime() + 3600000 * 24 * 7),
+        expires: new Date(today.getTime() + 3600000 * 24 * 1),
       });
+
       setCookie("refreshToken", refreshToken, {
         expires: new Date(today.getTime() + 3600000 * 24 * 7),
       });
