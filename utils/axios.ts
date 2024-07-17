@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { Router } from "next/router";
+import { TOKEN_BAD } from "@/utils/errTypes";
 
 export type TokenType = {
   accessToken: string;
@@ -34,7 +35,7 @@ axiosInstance.interceptors.response.use(
   async (e) => {
     const error = e as AxiosError<ErrorType>;
 
-    if (error.response && error.response.data.errType === "TOKEN_BAD") {
+    if (error.response && error.response.data.errType === TOKEN_BAD) {
       const beforeAccessToken = getCookie("accessToken");
       const beforeRefreshToken = getCookie("refreshToken");
 

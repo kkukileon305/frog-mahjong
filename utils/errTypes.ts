@@ -1,0 +1,3 @@
+export const TOKEN_BAD = "TOKEN_BAD";
+export const USER_NOT_FOUND = "USER_NOT_FOUND";
+export const USER_ALREADY_EXISTED = "USER_ALREADY_EXISTED";

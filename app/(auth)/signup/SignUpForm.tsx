@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance, { ErrorType } from "@/utils/axios";
 import { AxiosError } from "axios";
+import { USER_ALREADY_EXISTED } from "@/utils/errTypes";
 
 type SignUpInputs = {
   email: string;
@@ -39,7 +40,7 @@ const SignUpForm = () => {
       const error = e as AxiosError<ErrorType>;
 
       // user already exist
-      if (error.response?.data.errType === "USER_ALREADY_EXISTED") {
+      if (error.response?.data.errType === USER_ALREADY_EXISTED) {
         setIsAlreadyRegistered(true);
       }
     } finally {

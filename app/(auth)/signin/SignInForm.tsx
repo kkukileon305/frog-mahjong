@@ -7,6 +7,7 @@ import axiosInstance, { ErrorType, TokenType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { USER_NOT_FOUND } from "@/utils/errTypes";
 
 type SignInInputs = {
   email: string;
@@ -52,7 +53,7 @@ const SignInForm = () => {
       const error = e as AxiosError<ErrorType>;
 
       // login failed
-      if (error.response?.data.errType === "USER_NOT_FOUND") {
+      if (error.response?.data.errType === USER_NOT_FOUND) {
         setIsSignInFailed(true);
       }
     } finally {
