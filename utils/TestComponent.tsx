@@ -4,9 +4,9 @@ import axiosInstance, { GetUserListType } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 
 const TestComponent = () => {
-  const accessToken = getCookie("accessToken");
-
   const onClick = async () => {
+    const accessToken = getCookie("accessToken");
+
     try {
       const { data } = await axiosInstance.get<GetUserListType>("/v0.1/users", {
         headers: {

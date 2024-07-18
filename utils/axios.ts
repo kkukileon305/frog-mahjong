@@ -1,7 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
-import { Router } from "next/router";
-import { TOKEN_BAD } from "@/utils/errTypes";
+import { INTERNAL_DB, TOKEN_BAD } from "@/utils/errTypes";
 
 export type TokenType = {
   accessToken: string;
@@ -35,6 +34,12 @@ axiosInstance.interceptors.response.use(
   async (e) => {
     const error = e as AxiosError<ErrorType>;
 
+    // db error
+    if (error.response && error.response.data.errType === INTERNAL_DB) {
+      window.location.href = "/error";
+    }
+
+    // token error
     if (error.response && error.response.data.errType === TOKEN_BAD) {
       const beforeAccessToken = getCookie("accessToken");
       const beforeRefreshToken = getCookie("refreshToken");
@@ -61,6 +66,8 @@ axiosInstance.interceptors.response.use(
         // 以前リクエスト中でデータ(body)だけを変更して再リクエストする
         const newConfig = error.config as InternalAxiosRequestConfig;
 
+        newConfig.headers.tkn = data.accessToken;
+
         newConfig.data = {
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,
@@ -71,9 +78,12 @@ axiosInstance.interceptors.response.use(
         // refresh 消滅　=> logout
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
+
         window.location.href = "/signin";
       }
     }
+
+    return Promise.reject(error);
   }
 );
 
