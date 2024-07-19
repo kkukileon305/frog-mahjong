@@ -1,5 +1,6 @@
 import SignInForm from "@/app/(auth)/signin/SignInForm";
 import Link from "next/link";
+import GoogleSignInBtn from "@/app/(auth)/GoogleSignInBtn";
 
 const Page = () => {
   return (
@@ -16,9 +17,7 @@ const Page = () => {
           </p>
         </div>
 
-        <div className="flex justify-center py-2 border border-black rounded">
-          구글로 시작 버튼 추가 예정
-        </div>
+        <GoogleSignInBtn />
 
         <div className="flex justify-center mt-4">
           <Link href="/signup" className="text-blue-400">

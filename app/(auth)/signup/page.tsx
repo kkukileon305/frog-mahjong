@@ -1,14 +1,13 @@
 import SignUpForm from "@/app/(auth)/signup/SignUpForm";
 import Link from "next/link";
+import GoogleSignInBtn from "@/app/(auth)/GoogleSignInBtn";
 
 const Page = () => {
   return (
     <div className="bg-slate-50">
       <div className="max-w-[358px] mx-auto py-24">
         <h2 className="font-bold text-2xl text-center mb-6">회원가입</h2>
-        <div className="flex justify-center py-2 border border-black rounded">
-          구글로 시작 버튼 추가 예정
-        </div>
+        <GoogleSignInBtn />
 
         <div className="flex relative my-8">
           <div className="w-full h-[1px] bg-gray-400" />
