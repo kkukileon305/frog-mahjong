@@ -2,6 +2,27 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { INTERNAL_DB, TOKEN_BAD } from "@/utils/errTypes";
 
+export interface RoomsResponse {
+  rooms: Room[];
+  total: number;
+}
+
+export interface Room {
+  created: number;
+  currentCount: number;
+  id: number;
+  maxCount: number;
+  minCount: number;
+  name: string;
+  ownerID: number;
+  password?: string;
+  state: string;
+}
+
+export interface RoomCreatedResponse {
+  roomID: number;
+}
+
 export type TokenType = {
   accessToken: string;
   refreshToken: string;

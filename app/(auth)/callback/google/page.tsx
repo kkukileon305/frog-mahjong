@@ -32,7 +32,7 @@ const Page = () => {
         router.push("/");
         router.refresh();
       } catch (e) {
-        // router.push("/");
+        router.push("/");
       }
     } else {
       router.push("/");
