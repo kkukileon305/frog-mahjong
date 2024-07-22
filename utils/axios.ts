@@ -47,7 +47,7 @@ export type ErrorType = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASEURL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 axiosInstance.interceptors.response.use(
@@ -67,7 +67,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const { data } = await axios.put<TokenType>(
-          process.env.NEXT_PUBLIC_BASEURL + "/v0.1/auth/token/reissue",
+          process.env.NEXT_PUBLIC_BACKEND_URL + "/v0.1/auth/token/reissue",
           {
             accessToken: beforeAccessToken,
             refreshToken: beforeRefreshToken,

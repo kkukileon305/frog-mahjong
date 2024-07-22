@@ -16,7 +16,7 @@ const RoomsNavigator = ({
   const allPagesSize = Math.ceil(total / SIZE);
 
   return (
-    <div>
+    <div className="flex justify-center">
       <FaLongArrowAltLeft />
       <ul className="flex gap-2">
         {Array(allPagesSize)

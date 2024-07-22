@@ -10,7 +10,7 @@ type RoomComponentProps = {
 
 const RoomList = async ({ currentPage }: RoomComponentProps) => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_BASEURL +
+    process.env.NEXT_PUBLIC_BACKEND_URL +
       `/v0.1/rooms?page=${currentPage}&pageSize=${SIZE}`,
     {
       cache: "no-cache",
