@@ -29,5 +29,6 @@ export const config = {
     "/forgot-password",
     "/reset-password/:path*",
     "/rooms/:path*",
+    "/callback/:path*",
   ],
 };

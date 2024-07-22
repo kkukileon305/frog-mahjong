@@ -1,20 +1,38 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import axiosInstance from "@/utils/axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import axiosInstance, { TokenType } from "@/utils/axios";
+import { setCookie } from "cookies-next";
 
 const Page = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
 
   const onSignInWithCode = async () => {
-    console.log(code);
-
     try {
-      // TODO: グーグルコードを送る
-      // const {} = await axiosInstance.post("")
-    } catch (e) {}
+      const {
+        data: { accessToken, refreshToken },
+      } = await axiosInstance.get<TokenType>(
+        `/v0.2/auth/google/callback?code=${code}`
+      );
+
+      const today = new Date();
+
+      setCookie("accessToken", accessToken, {
+        expires: new Date(today.getTime() + 3600000 * 24 * 1),
+      });
+
+      setCookie("refreshToken", refreshToken, {
+        expires: new Date(today.getTime() + 3600000 * 24 * 7),
+      });
+
+      router.push("/");
+      router.refresh();
+    } catch (e) {
+      // router.push("/");
+    }
   };
 
   useEffect(() => {

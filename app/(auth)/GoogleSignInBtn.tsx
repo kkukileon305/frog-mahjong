@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const GoogleSignInBtn = () => {
   const devUrl = "http://localhost:3000";
+  // TODO: Change DOMAIN
   const productionUrl = "https://frog-mahjong.vercel.app";
 
   const redirect_uri = `${
