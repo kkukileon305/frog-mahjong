@@ -10,6 +10,12 @@ const Page = () => {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
 
+  if (code === null) {
+    router.push("/");
+    router.refresh();
+    return <></>;
+  }
+
   const onSignInWithCode = async () => {
     try {
       const {
