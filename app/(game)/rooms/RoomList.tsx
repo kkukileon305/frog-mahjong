@@ -3,6 +3,7 @@ import { FaLock } from "react-icons/fa";
 import React from "react";
 import RoomsNavigator from "@/app/(game)/rooms/RoomsNavigator";
 import { SIZE } from "@/utils/const";
+import Link from "next/link";
 
 type RoomComponentProps = {
   currentPage: number;
@@ -31,13 +32,15 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
             key={room.id}
             className="mb-4 border border-gray-700 p-2 rounded-xl"
           >
-            <div className="flex items-center gap-2">
-              <p>{room.name}</p>
-              {room.password && <FaLock />}
-            </div>
-            <div>
-              <p>{room.state}</p>
-            </div>
+            <Link href={`/rooms/${room.id}`}>
+              <div className="flex items-center gap-2">
+                <p>{room.name}</p>
+                {room.password && <FaLock />}
+              </div>
+              <div>
+                <p>{room.state}</p>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>

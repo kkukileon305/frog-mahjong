@@ -23,6 +23,23 @@ export interface RoomCreatedResponse {
   roomID: number;
 }
 
+export interface RoomUserInfoResponse {
+  users: User[];
+}
+
+export interface User {
+  ownedCardCount: number;
+  owner: boolean;
+  playerState: string;
+  roomID: number;
+  roomUserID: number;
+  score: number;
+  turnNumber: number;
+  userEmail: string;
+  userID: number;
+  userName: string;
+}
+
 export type TokenType = {
   accessToken: string;
   refreshToken: string;

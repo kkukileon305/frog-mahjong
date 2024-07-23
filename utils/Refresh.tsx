@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const Refresh = () => {
+type RefreshProps = {
+  className: string;
+};
+
+const Refresh = ({ className }: RefreshProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -11,7 +15,7 @@ const Refresh = () => {
   }, []);
 
   return (
-    <button className="w-1/2 border py-2 rounded-xl" onClick={router.refresh}>
+    <button className={className} onClick={router.refresh}>
       새로고침
     </button>
   );
