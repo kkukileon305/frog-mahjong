@@ -19,11 +19,13 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
 
   const data = (await response.json()) as RoomsResponse;
 
-  const height = `h-[${82 * SIZE}px]`;
-
   return (
     <>
-      <ul className={height}>
+      <ul
+        style={{
+          height: `${82 * SIZE}px`,
+        }}
+      >
         {data.rooms.map((room) => (
           <li
             key={room.id}
