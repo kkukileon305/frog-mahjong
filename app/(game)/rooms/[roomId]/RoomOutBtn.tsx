@@ -34,7 +34,6 @@ const RoomOutBtn = ({ roomId }: RoomOutProps) => {
       router.refresh();
     } catch (e) {
       console.log(e);
-    } finally {
       setIsLoading(false);
     }
   };

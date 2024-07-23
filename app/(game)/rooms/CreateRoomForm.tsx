@@ -78,7 +78,6 @@ const CreateRoomForm = () => {
         router.push(`/rooms/${data.roomID}`);
       } catch (e) {
         console.log(e);
-      } finally {
         setIsLoading(false);
       }
     }

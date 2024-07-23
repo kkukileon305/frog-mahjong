@@ -56,7 +56,6 @@ const SignInForm = () => {
       if (error.response?.data.errType === USER_NOT_FOUND) {
         setIsSignInFailed(true);
       }
-    } finally {
       setIsLoading(false);
     }
   };

@@ -53,14 +53,13 @@ const EnterRoomForm = ({ room }: EnterRoomFormProps) => {
 
       await axiosInstance.post("/v0.1/rooms/join", requestData, {
         headers: {
-          tkn: getCookie("accessToken"),
+          tkn: accessToken,
         },
       });
       router.push(`/rooms/${room.id}`);
     } catch (e) {
       setIsError(true);
       console.log(e);
-    } finally {
       setIsLoading(false);
     }
   };

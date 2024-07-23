@@ -43,7 +43,7 @@ const SignUpForm = () => {
       if (error.response?.data.errType === USER_ALREADY_EXISTED) {
         setIsAlreadyRegistered(true);
       }
-    } finally {
+
       setIsLoading(false);
     }
   };
