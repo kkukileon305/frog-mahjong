@@ -83,6 +83,12 @@ const EnterRoomForm = ({ room }: EnterRoomFormProps) => {
         />
       </div>
 
+      {isError && (
+        <p className="text-sm text-red-400 text-center">
+          비밀번호가 일치하지 않습니다
+        </p>
+      )}
+
       <button
         type="submit"
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
