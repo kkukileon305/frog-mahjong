@@ -15,7 +15,7 @@ export interface Room {
   minCount: number;
   name: string;
   ownerID: number;
-  password?: string;
+  password: boolean;
   state: string;
 }
 
@@ -24,20 +24,20 @@ export interface RoomCreatedResponse {
 }
 
 export interface RoomUserInfoResponse {
-  users: User[];
+  users: RoomUser[];
 }
 
-export interface User {
-  ownedCardCount: number;
-  owner: boolean;
-  playerState: string;
-  roomID: number;
-  roomUserID: number;
-  score: number;
-  turnNumber: number;
-  userEmail: string;
+export interface RoomUser {
   userID: number;
+  roomUserID: number;
+  playerState: string;
+  turnNumber: number;
+  ownedCardCount: number;
+  roomID: number;
+  score: number;
   userName: string;
+  userEmail: string;
+  owner: boolean;
 }
 
 export type TokenType = {
