@@ -10,7 +10,7 @@ type RoomOutProps = {
   roomId: string;
 };
 
-const RoomOut = ({ roomId }: RoomOutProps) => {
+const RoomOutBtn = ({ roomId }: RoomOutProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const accessToken = getCookie("accessToken");
@@ -43,11 +43,13 @@ const RoomOut = ({ roomId }: RoomOutProps) => {
     <button
       onClick={onClick}
       disabled={isLoading}
-      className="flex justify-center items-center border rounded-xl w-full py-2 mt-2"
+      className={`flex justify-center items-center text-white font-bold rounded-xl w-full py-2 mt-2 ${
+        isLoading ? "bg-gray-300" : "bg-red-500"
+      }`}
     >
       나가기 <IoIosExit size={24} />
     </button>
   );
 };
 
-export default RoomOut;
+export default RoomOutBtn;

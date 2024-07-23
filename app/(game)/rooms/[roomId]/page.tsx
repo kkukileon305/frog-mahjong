@@ -1,6 +1,6 @@
 import React from "react";
 import Refresh from "@/utils/Refresh";
-import RoomOut from "@/app/(game)/rooms/[roomId]/RoomOut";
+import RoomOutBtn from "@/app/(game)/rooms/[roomId]/RoomOutBtn";
 
 type RoomDetailProps = {
   params: { roomId: string };
@@ -30,7 +30,7 @@ const Page = async ({ params: { roomId } }: RoomDetailProps) => {
         <ul className="h-[calc(100%-109px)]">유저리스트 추가예정</ul>
         <div className="h-[109px] border-t p-2">
           <Refresh className="flex justify-center items-center gap-4 border rounded-xl w-full py-2" />
-          <RoomOut roomId={roomId} />
+          <RoomOutBtn roomId={roomId} />
         </div>
       </div>
     </div>
