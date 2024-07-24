@@ -4,7 +4,6 @@ import RoomOutBtn from "@/app/(game)/rooms/[roomId]/RoomOutBtn";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { RoomUserInfoResponse } from "@/utils/axios";
-import Game from "@/app/(game)/rooms/[roomId]/Game";
 
 type RoomDetailProps = {
   params: { roomId: string };
@@ -40,7 +39,6 @@ const Page = async ({ params: { roomId } }: RoomDetailProps) => {
           <RoomOutBtn roomId={roomId} />
         </div>
       </div>
-      <Game />
     </div>
   );
 };
