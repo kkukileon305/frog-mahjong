@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import { CLOSE, JOIN } from "@/utils/const";
-import {
-  CLOSERequest,
-  JOINResponseBody,
-  UserSocket,
-} from "@/utils/socketTypes";
+import { JOINResponseBody, UserSocket } from "@/utils/socketTypes";
 
 const useWebsocket = (roomId: string) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
