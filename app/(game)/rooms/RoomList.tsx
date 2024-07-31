@@ -2,7 +2,7 @@ import { RoomsResponse } from "@/utils/axios";
 import React from "react";
 import RoomsNavigator from "@/app/(game)/rooms/RoomsNavigator";
 import { SIZE } from "@/utils/const";
-import EnterRoomLink from "@/app/(game)/rooms/EnterRoomLink";
+import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 
 type RoomComponentProps = {
   currentPage: number;
@@ -21,16 +21,17 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
 
   return (
     <>
-      <ul
+      <div
         style={{
           height: `${82 * SIZE}px`,
         }}
         className="flex flex-col"
       >
         {data.rooms.map((room) => (
-          <EnterRoomLink key={room.id} room={room} />
+          <EnterRoomBtn key={room.id} room={room} />
         ))}
-      </ul>
+      </div>
+
       <RoomsNavigator currentPage={currentPage} data={data} />
     </>
   );

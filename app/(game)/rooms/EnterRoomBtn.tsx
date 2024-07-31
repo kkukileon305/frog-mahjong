@@ -1,0 +1,57 @@
+"use client";
+
+import { Room } from "@/utils/axios";
+import { FaLock } from "react-icons/fa";
+import { MouseEventHandler, useState } from "react";
+import { useRouter } from "next/navigation";
+import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
+
+type EnterRoomLinkProps = {
+  room: Room;
+};
+
+const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
+    if ((e.target as HTMLElement).id === "back") {
+      setIsOpen(false);
+    }
+  };
+
+  const onClick = () => {
+    if (room.password) {
+      // パスワードある場合
+      setIsOpen(true);
+    } else {
+      router.push(`/rooms/${room.id}`);
+    }
+  };
+
+  return (
+    <>
+      {isOpen && (
+        <div
+          id="back"
+          className="absolute left-0 top-0 w-full bg-black/50 min-h-screen z-10 flex justify-center items-center"
+          onClick={onClose}
+        >
+          <div className="max-w-2xl w-full p-4 bg-white rounded shadow">
+            <EnterRoomForm roomId={room.id} />
+          </div>
+        </div>
+      )}
+
+      <button
+        onClick={onClick}
+        className="flex h-[66px] mb-4 border border-gray-700 p-2 rounded-xl items-center gap-4"
+      >
+        {room.name}
+        {room.password && <FaLock />}
+      </button>
+    </>
+  );
+};
+
+export default EnterRoomBtn;
