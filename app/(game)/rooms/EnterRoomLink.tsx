@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Room } from "@/utils/axios";
+import { FaLock } from "react-icons/fa";
 
 type EnterRoomLinkProps = {
   room: Room;
@@ -12,6 +13,8 @@ const EnterRoomLink = ({ room }: EnterRoomLinkProps) => {
       href={`/rooms/${room.id}`}
     >
       {room.name}
+
+      {room.password && <FaLock />}
     </Link>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import { CLOSE, JOIN } from "@/utils/const";
-import { JOINResponseBody, UserSocket } from "@/utils/socketTypes";
+import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
 
 const useWebsocket = (roomId: string) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
@@ -25,7 +25,13 @@ const useWebsocket = (roomId: string) => {
   useEffect(() => {
     if (ws) {
       ws.addEventListener("open", () => {
-        console.log("open");
+        const body: JOINRequest = {
+          event: "JOIN",
+          roomID: Number(roomId),
+          message: "",
+        };
+
+        ws?.send(JSON.stringify(body));
       });
 
       ws.addEventListener("message", (event) => {

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import ConnectForm from "@/app/(game)/rooms/[roomId]/ConnectForm";
 import useWebsocket from "@/app/hooks/useWebsocket";
 import CloseBtn from "@/app/(game)/rooms/[roomId]/CloseBtn";
 import UserList from "@/app/(game)/rooms/[roomId]/UserList";
@@ -18,8 +17,8 @@ const Page = ({ params: { roomId } }: RoomDetailProps) => {
   if (!isConnected) {
     return (
       <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
-        <div className="w-full max-w-3xl bg-white rounded-xl">
-          <ConnectForm ws={ws} roomId={roomId} />
+        <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center">
+          <p className="font-bold text-3xl">접속중</p>
         </div>
       </div>
     );
