@@ -16,7 +16,7 @@ const useWebsocket = (roomId: string) => {
 
   useEffect(() => {
     const newWs = new WebSocket(
-      `ws://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
+      `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
     );
     setWs(newWs);
 
@@ -53,7 +53,7 @@ const useWebsocket = (roomId: string) => {
         } else {
           // 비정상 종료
           const newWs = new WebSocket(
-            `ws://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
+            `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
           );
 
           setWs(newWs);
