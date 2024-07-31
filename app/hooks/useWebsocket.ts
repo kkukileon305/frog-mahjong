@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 import { CLOSE, JOIN } from "@/utils/const";
 import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
 
-const useWebsocket = (roomId: string) => {
+const useWebsocket = (roomId: string, password: string = "") => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [users, setUsers] = useState<UserSocket[]>([]);
 
@@ -28,7 +28,7 @@ const useWebsocket = (roomId: string) => {
         const body: JOINRequest = {
           event: "JOIN",
           roomID: Number(roomId),
-          message: "",
+          message: password,
         };
 
         ws?.send(JSON.stringify(body));

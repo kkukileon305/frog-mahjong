@@ -7,10 +7,14 @@ import UserList from "@/app/(game)/rooms/[roomId]/UserList";
 
 type RoomDetailProps = {
   params: { roomId: string };
+  searchParams: { password?: string };
 };
 
-const Page = ({ params: { roomId } }: RoomDetailProps) => {
-  const { ws, accessToken, users, userID } = useWebsocket(roomId);
+const Page = ({
+  params: { roomId },
+  searchParams: { password },
+}: RoomDetailProps) => {
+  const { ws, users, userID } = useWebsocket(roomId, password);
 
   const isConnected = users.find((user) => user.id === Number(userID));
 
