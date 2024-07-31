@@ -1,3 +1,9 @@
+export interface CLOSERequest {
+  roomID: number;
+  event: "CLOSE";
+  message: string;
+}
+
 export interface JOINRequest {
   roomID: number;
   event: "JOIN";
@@ -5,7 +11,7 @@ export interface JOINRequest {
 }
 
 export interface JOINResponseBody {
-  users: User[];
+  users: UserSocket[];
   gameInfo: GameInfo;
 }
 
@@ -15,7 +21,7 @@ export interface GameInfo {
   allReady: boolean;
 }
 
-export interface User {
+export interface UserSocket {
   id: number;
   email: string;
   name: string;

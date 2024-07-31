@@ -8,13 +8,12 @@ type ConnectInputs = {
   password: string;
 };
 
-type ConnectFromProps = {
+type ConnectFormProps = {
   ws: WebSocket | null;
   roomId: string;
-  accessToken: string;
 };
 
-const ConnectForm = ({ ws, roomId, accessToken }: ConnectFromProps) => {
+const ConnectForm = ({ ws, roomId }: ConnectFormProps) => {
   const {
     register,
     handleSubmit,

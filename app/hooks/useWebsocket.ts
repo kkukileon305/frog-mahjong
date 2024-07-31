@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
-import { JOIN } from "@/utils/const";
-import { JOINResponseBody, User } from "@/utils/socketTypes";
+import { CLOSE, JOIN } from "@/utils/const";
+import {
+  CLOSERequest,
+  JOINResponseBody,
+  UserSocket,
+} from "@/utils/socketTypes";
 
 const useWebsocket = (roomId: string) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserSocket[]>([]);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -32,23 +36,22 @@ const useWebsocket = (roomId: string) => {
         const body = event.data;
         const eventName = JSON.parse(body).event;
 
-        switch (eventName) {
-          case JOIN:
-            const data = JSON.parse(
-              JSON.parse(body).message
-            ) as JOINResponseBody;
+        if (eventName === JOIN) {
+          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
 
-            setUsers(data.users);
-            break;
-          default:
+          setUsers(data.users);
+        } else if (eventName === CLOSE) {
+          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
+
+          setUsers(data.users);
         }
       });
 
       ws.addEventListener("close", (event) => {
         if (event.wasClean) {
-          console.log("정상종료");
+          // 정상 종료
         } else {
-          console.log("비정상 종료.", event);
+          // 비정상 종료
           const newWs = new WebSocket(
             `ws://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
           );

@@ -3,6 +3,8 @@
 import React from "react";
 import ConnectForm from "@/app/(game)/rooms/[roomId]/ConnectForm";
 import useWebsocket from "@/app/hooks/useWebsocket";
+import CloseBtn from "@/app/(game)/rooms/[roomId]/CloseBtn";
+import UserList from "@/app/(game)/rooms/[roomId]/UserList";
 
 type RoomDetailProps = {
   params: { roomId: string };
@@ -17,7 +19,7 @@ const Page = ({ params: { roomId } }: RoomDetailProps) => {
     return (
       <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
         <div className="w-full max-w-3xl bg-white rounded-xl">
-          <ConnectForm ws={ws} accessToken={accessToken} roomId={roomId} />
+          <ConnectForm ws={ws} roomId={roomId} />
         </div>
       </div>
     );
@@ -25,11 +27,15 @@ const Page = ({ params: { roomId } }: RoomDetailProps) => {
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      <div className="w-[300px] flex flex-col justify-between">
+        <ul className="w-full p-2">
+          {users.map((user) => (
+            <UserList key={user.id} user={user} />
+          ))}
+        </ul>
+
+        <CloseBtn ws={ws} roomId={roomId} />
+      </div>
     </div>
   );
 };
