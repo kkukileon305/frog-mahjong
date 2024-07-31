@@ -14,7 +14,7 @@ const Page = () => {
     if (code !== null) {
       try {
         const {
-          data: { accessToken, refreshToken },
+          data: { accessToken, refreshToken, userID },
         } = await axiosInstance.get<TokenType>(
           `/v0.2/auth/google/callback?code=${code}`
         );
@@ -26,6 +26,10 @@ const Page = () => {
         });
 
         setCookie("refreshToken", refreshToken, {
+          expires: new Date(today.getTime() + 3600000 * 24 * 7),
+        });
+
+        setCookie("userID", userID, {
           expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
 

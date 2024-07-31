@@ -31,7 +31,7 @@ const SignInForm = () => {
 
     try {
       const {
-        data: { accessToken, refreshToken },
+        data: { accessToken, refreshToken, userID },
       } = await axiosInstance.post<TokenType>("/v0.1/auth/signin", {
         email: inputs.email,
         password: inputs.password,
@@ -44,6 +44,10 @@ const SignInForm = () => {
       });
 
       setCookie("refreshToken", refreshToken, {
+        expires: new Date(today.getTime() + 3600000 * 24 * 7),
+      });
+
+      setCookie("userID", userID, {
         expires: new Date(today.getTime() + 3600000 * 24 * 7),
       });
 

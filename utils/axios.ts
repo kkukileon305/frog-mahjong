@@ -43,6 +43,7 @@ export interface RoomUser {
 export type TokenType = {
   accessToken: string;
   refreshToken: string;
+  userID: number;
 };
 
 export type GetUserListType = {
