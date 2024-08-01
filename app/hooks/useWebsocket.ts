@@ -61,6 +61,7 @@ const useWebsocket = (roomId: string, password: string = "") => {
       ws.addEventListener("close", (event) => {
         if (event.wasClean) {
           // 정상 종료
+          setWs(null);
         } else {
           // 비정상 종료
           const newWs = new WebSocket(
