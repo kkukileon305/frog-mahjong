@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 const useWebsocket = (roomId: string, password: string = "") => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [users, setUsers] = useState<UserSocket[] | null>([]);
+  const [isEnterFailed, setIsEnterFailed] = useState(false);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -44,10 +45,12 @@ const useWebsocket = (roomId: string, password: string = "") => {
           const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
 
           if (data.errorInfo?.code === 500) {
-            router.push("/rooms");
-          }
+            setIsEnterFailed(true);
 
-          setUsers(data.users);
+            ws.close();
+          } else {
+            setUsers(data.users);
+          }
         } else if (eventName === CLOSE) {
           const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
 
@@ -83,6 +86,7 @@ const useWebsocket = (roomId: string, password: string = "") => {
     accessToken,
     users,
     userID,
+    isEnterFailed,
   };
 };
 
