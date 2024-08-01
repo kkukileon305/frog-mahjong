@@ -75,7 +75,11 @@ const CreateRoomForm = () => {
         );
 
         router.refresh();
-        router.push(`/rooms/${data.roomID}`);
+
+        const roomUrl = `/rooms/${data.roomID}${
+          requestData.password ? `?password=${requestData.password}` : ""
+        }`;
+        router.push(roomUrl);
       } catch (e) {
         console.log(e);
         setIsLoading(false);

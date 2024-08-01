@@ -11,8 +11,14 @@ export interface JOINRequest {
 }
 
 export interface JOINResponseBody {
-  users: UserSocket[];
+  users: UserSocket[] | null;
   gameInfo: GameInfo;
+  errorInfo?: ErrorInfo;
+}
+
+export interface ErrorInfo {
+  code: number;
+  msg: string;
 }
 
 export interface GameInfo {

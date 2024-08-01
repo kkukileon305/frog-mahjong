@@ -16,7 +16,7 @@ const Page = ({
 }: RoomDetailProps) => {
   const { ws, users, userID } = useWebsocket(roomId, password);
 
-  const isConnected = users.find((user) => user.id === Number(userID));
+  const isConnected = users?.find((user) => user.id === Number(userID));
 
   if (!isConnected) {
     return (
@@ -32,7 +32,7 @@ const Page = ({
     <div className="flex h-[calc(100vh-64px)]">
       <div className="w-[300px] flex flex-col justify-between">
         <ul className="w-full p-2">
-          {users.map((user) => (
+          {users?.map((user) => (
             <UserList key={user.id} user={user} />
           ))}
         </ul>

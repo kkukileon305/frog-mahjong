@@ -41,7 +41,7 @@ const EnterRoomForm = ({ roomId }: { roomId: number }) => {
 
       <button
         type="submit"
-        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
+        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400 mt-4"
       >
         입장
       </button>

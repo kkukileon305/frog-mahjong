@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import { CLOSE, JOIN } from "@/utils/const";
 import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
+import { useRouter } from "next/navigation";
 
 const useWebsocket = (roomId: string, password: string = "") => {
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [users, setUsers] = useState<UserSocket[]>([]);
+  const [users, setUsers] = useState<UserSocket[] | null>([]);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
+  const router = useRouter();
 
   useEffect(() => {
     const newWs = new WebSocket(
@@ -40,6 +42,10 @@ const useWebsocket = (roomId: string, password: string = "") => {
 
         if (eventName === JOIN) {
           const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
+
+          if (data.errorInfo?.code === 500) {
+            router.push("/rooms");
+          }
 
           setUsers(data.users);
         } else if (eventName === CLOSE) {
