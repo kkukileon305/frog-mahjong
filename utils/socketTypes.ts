@@ -22,7 +22,13 @@ export interface READYCANCELRequest {
   message: string;
 }
 
-export interface JOINResponseBody {
+export interface STARTRequest {
+  roomID: number;
+  event: "START";
+  message: string;
+}
+
+export interface SocketResponseBody {
   users: UserSocket[] | null;
   gameInfo: GameInfo;
   errorInfo?: ErrorInfo;

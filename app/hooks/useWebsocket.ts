@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import { CLOSE, JOIN, READY, READY_CANCEL } from "@/utils/const";
-import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
+import {
+  GameInfo,
+  JOINRequest,
+  SocketResponseBody,
+  UserSocket,
+} from "@/utils/socketTypes";
 
 const useWebsocket = (roomID: string, password: string = "") => {
+  // util
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [users, setUsers] = useState<UserSocket[] | null>([]);
   const [isEnterFailed, setIsEnterFailed] = useState(false);
+
+  // room state
+  const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -39,28 +47,16 @@ const useWebsocket = (roomID: string, password: string = "") => {
         const body = event.data;
         const eventName = JSON.parse(body).event;
 
-        if (eventName === JOIN) {
-          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
+        const data = JSON.parse(JSON.parse(body).message) as SocketResponseBody;
 
+        setGameState(data);
+
+        if (eventName === JOIN) {
           if (data.errorInfo?.code === 500) {
             setIsEnterFailed(true);
 
             ws.close();
-          } else {
-            setUsers(data.users);
           }
-        } else if (eventName === CLOSE) {
-          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
-
-          setUsers(data.users);
-        } else if (eventName === READY) {
-          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
-
-          setUsers(data.users);
-        } else if (eventName === READY_CANCEL) {
-          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
-
-          setUsers(data.users);
         }
       });
 
@@ -92,9 +88,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
   return {
     ws,
     accessToken,
-    users,
     userID,
     isEnterFailed,
+    users: gameState?.users ?? null,
+    gameInfo: gameState?.gameInfo ?? null,
   };
 };
 

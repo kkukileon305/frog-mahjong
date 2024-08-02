@@ -5,10 +5,10 @@ import { UserSocket } from "@/utils/socketTypes";
 
 type UserListProps = {
   user: UserSocket;
-  currentUserID: string;
+  currentUser: UserSocket;
 };
 
-const UserList = ({ user, currentUserID }: UserListProps) => {
+const UserList = ({ user, currentUser }: UserListProps) => {
   return (
     <motion.div
       className="w-1/4 p-2 h-full"
@@ -33,7 +33,7 @@ const UserList = ({ user, currentUserID }: UserListProps) => {
         <div className="flex flex-col">
           <div className="flex gap-2">
             <p>{user.name}</p>
-            {currentUserID === user.id.toString() && (
+            {currentUser.id === user.id && (
               <p className="text-black px-1 rounded-xl bg-white text-sm flex justify-center items-center">
                 ME
               </p>

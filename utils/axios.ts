@@ -23,41 +23,11 @@ export interface RoomCreatedResponse {
   roomID: number;
 }
 
-export interface RoomUserInfoResponse {
-  users: RoomUser[];
-}
-
-export interface RoomUser {
-  userID: number;
-  roomUserID: number;
-  playerState: string;
-  turnNumber: number;
-  ownedCardCount: number;
-  roomID: number;
-  score: number;
-  userName: string;
-  userEmail: string;
-  owner: boolean;
-}
-
 export type TokenType = {
   accessToken: string;
   refreshToken: string;
   userID: number;
 };
-
-export type GetUserListType = {
-  total: number;
-  users: User[];
-};
-
-export interface User {
-  email: string;
-  name: string;
-  score: number;
-  state: string;
-  userID: number;
-}
 
 export type ErrorType = {
   errType: string;
