@@ -2,20 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import { CLOSE, JOIN } from "@/utils/const";
 import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
-import { useRouter } from "next/navigation";
 
-const useWebsocket = (roomId: string, password: string = "") => {
+const useWebsocket = (roomID: string, password: string = "") => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [users, setUsers] = useState<UserSocket[] | null>([]);
   const [isEnterFailed, setIsEnterFailed] = useState(false);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
-  const router = useRouter();
 
   useEffect(() => {
     const newWs = new WebSocket(
-      `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
+      `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomID}`
     );
     setWs(newWs);
 
@@ -30,7 +28,7 @@ const useWebsocket = (roomId: string, password: string = "") => {
       ws.addEventListener("open", () => {
         const body: JOINRequest = {
           event: "JOIN",
-          roomID: Number(roomId),
+          roomID: Number(roomID),
           message: password,
         };
 
@@ -64,8 +62,9 @@ const useWebsocket = (roomId: string, password: string = "") => {
           setWs(null);
         } else {
           // 비정상 종료
+
           const newWs = new WebSocket(
-            `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomId}`
+            `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomID}`
           );
 
           setWs(newWs);

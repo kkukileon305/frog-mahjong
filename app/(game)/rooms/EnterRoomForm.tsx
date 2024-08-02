@@ -7,7 +7,7 @@ type EnterRoomInputs = {
   password: string;
 };
 
-const EnterRoomForm = ({ roomId }: { roomId: number }) => {
+const EnterRoomForm = ({ roomID }: { roomID: number }) => {
   const router = useRouter();
   const {
     register,
@@ -16,7 +16,7 @@ const EnterRoomForm = ({ roomId }: { roomId: number }) => {
   } = useForm<EnterRoomInputs>();
 
   const onSubmit: SubmitHandler<EnterRoomInputs> = (inputs) => {
-    router.push(`/rooms/${roomId}?password=${inputs.password}`);
+    router.push(`/rooms/${roomID}?password=${inputs.password}`);
   };
 
   return (

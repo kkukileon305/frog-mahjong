@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 
 type CloseBtnProps = {
   ws: WebSocket | null;
-  roomId: string;
+  roomID: string;
 };
 
-const CloseBtn = ({ ws, roomId }: CloseBtnProps) => {
+const CloseBtn = ({ ws, roomID }: CloseBtnProps) => {
   const router = useRouter();
 
   const onClick = () => {
     const closeReq: CLOSERequest = {
-      roomID: Number(roomId),
+      roomID: Number(roomID),
       event: "CLOSE",
       message: "",
     };

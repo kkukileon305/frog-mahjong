@@ -10,6 +10,12 @@ export interface JOINRequest {
   message: string;
 }
 
+export interface READYRequest {
+  roomID: number;
+  event: "READY";
+  message: string;
+}
+
 export interface JOINResponseBody {
   users: UserSocket[] | null;
   gameInfo: GameInfo;

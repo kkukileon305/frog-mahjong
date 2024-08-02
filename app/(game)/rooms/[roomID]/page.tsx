@@ -2,20 +2,21 @@
 
 import React from "react";
 import useWebsocket from "@/app/hooks/useWebsocket";
-import CloseBtn from "@/app/(game)/rooms/[roomId]/CloseBtn";
-import UserList from "@/app/(game)/rooms/[roomId]/UserList";
+import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
+import UserList from "@/app/(game)/rooms/[roomID]/UserList";
 import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
 
 type RoomDetailProps = {
-  params: { roomId: string };
+  params: { roomID: string };
   searchParams: { password?: string };
 };
 
 const Page = ({
-  params: { roomId },
+  params: { roomID },
   searchParams: { password },
 }: RoomDetailProps) => {
-  const { ws, users, userID, isEnterFailed } = useWebsocket(roomId, password);
+  const { ws, users, userID, isEnterFailed } = useWebsocket(roomID, password);
 
   const isConnected = users?.find((user) => user.id === Number(userID));
 
@@ -48,13 +49,15 @@ const Page = ({
   return (
     <div className="flex h-[calc(100vh-64px)]">
       <div className="w-[300px] flex flex-col justify-between">
-        <ul className="w-full p-2">
-          {users?.map((user) => (
-            <UserList key={user.id} user={user} />
-          ))}
-        </ul>
+        <div className="w-full p-2">
+          <AnimatePresence>
+            {users?.map((user) => (
+              <UserList key={user.id} user={user} />
+            ))}
+          </AnimatePresence>
+        </div>
 
-        <CloseBtn ws={ws} roomId={roomId} />
+        <CloseBtn ws={ws} roomID={roomID} />
       </div>
     </div>
   );

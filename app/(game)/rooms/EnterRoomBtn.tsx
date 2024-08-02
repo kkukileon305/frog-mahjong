@@ -38,7 +38,7 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
           onClick={onClose}
         >
           <div className="max-w-2xl w-full p-4 bg-white rounded shadow">
-            <EnterRoomForm roomId={room.id} />
+            <EnterRoomForm roomID={room.id} />
           </div>
         </div>
       )}
