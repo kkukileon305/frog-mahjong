@@ -11,7 +11,6 @@ type ReadyBtnProps = {
   ws: WebSocket | null;
   roomID: string;
   currentUser: UserSocket;
-  isStarted: boolean;
 };
 
 const ReadyBtn = ({

@@ -14,7 +14,13 @@ type GameProps = {
 
 const Game = ({ currentUser, gameInfo, ws, roomID, isStarted }: GameProps) => {
   if (isStarted) {
-    return <div>게임 시작!</div>;
+    return (
+      <div className="w-full h-full p-2">
+        <div className="w-full h-full flex justify-center items-center bg-gray-400">
+          시작!
+        </div>
+      </div>
+    );
   }
 
   return (

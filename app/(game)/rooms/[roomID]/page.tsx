@@ -4,10 +4,11 @@ import React from "react";
 import useWebsocket from "@/app/hooks/useWebsocket";
 import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
 import UserList from "@/app/(game)/rooms/[roomID]/UserList";
-import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
 import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
+import EnterFailedDiv from "@/app/(game)/rooms/[roomID]/EnterFailedDiv";
+import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -30,29 +31,11 @@ const Page = ({
   const currentUser = users?.find((user) => user.id === Number(userID));
 
   if (isEnterFailed) {
-    return (
-      <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
-        <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center flex-col">
-          <p className="font-bold text-3xl">비밀번호가 잘못되었습니다</p>
-          <Link
-            className="py-2 px-4 mt-4 border border-blue-400 rounded-xl text-blue-400 font-bold"
-            href={"/rooms"}
-          >
-            돌아가기
-          </Link>
-        </div>
-      </div>
-    );
+    return <EnterFailedDiv />;
   }
 
   if (!currentUser) {
-    return (
-      <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
-        <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center">
-          <p className="font-bold text-3xl">접속중</p>
-        </div>
-      </div>
-    );
+    return <EnteringDiv />;
   }
 
   return (
@@ -75,13 +58,16 @@ const Page = ({
             </AnimatePresence>
           </div>
           <div className="h-[80px] flex p-2 gap-2">
-            <CloseBtn ws={ws} roomID={roomID} isStarted={isStarted} />
-            <ReadyBtn
-              ws={ws}
-              roomID={roomID}
-              currentUser={currentUser}
-              isStarted={isStarted}
-            />
+            {isStarted ? (
+              <div className="flex items-center justify-center w-full bg-gray-400 rounded-xl">
+                진행중
+              </div>
+            ) : (
+              <>
+                <CloseBtn ws={ws} roomID={roomID} />
+                <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
+              </>
+            )}
           </div>
         </div>
       </div>
