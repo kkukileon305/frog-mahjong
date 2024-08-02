@@ -6,6 +6,8 @@ import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
 import UserList from "@/app/(game)/rooms/[roomID]/UserList";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
+import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
+import Game from "@/app/(game)/rooms/[roomID]/Game";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -48,16 +50,21 @@ const Page = ({
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
-      <div className="w-[300px] flex flex-col justify-between">
-        <div className="w-full p-2">
-          <AnimatePresence>
-            {users?.map((user) => (
-              <UserList key={user.id} user={user} />
-            ))}
-          </AnimatePresence>
+      <div className="w-full flex flex-col justify-between">
+        <Game ws={ws} roomID={roomID} />
+        <div>
+          <div className="w-full h-[80px] flex">
+            <AnimatePresence>
+              {users?.map((user) => (
+                <UserList key={user.id} user={user} />
+              ))}
+            </AnimatePresence>
+          </div>
+          <div className="h-[80px] flex p-2 gap-2">
+            <ReadyBtn ws={ws} roomID={roomID} />
+            <CloseBtn ws={ws} roomID={roomID} />
+          </div>
         </div>
-
-        <CloseBtn ws={ws} roomID={roomID} />
       </div>
     </div>
   );
