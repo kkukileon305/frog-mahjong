@@ -3,7 +3,12 @@
 import { motion } from "framer-motion";
 import { UserSocket } from "@/utils/socketTypes";
 
-const UserList = ({ user }: { user: UserSocket }) => {
+type UserListProps = {
+  user: UserSocket;
+  currentUserID: string;
+};
+
+const UserList = ({ user, currentUserID }: UserListProps) => {
   return (
     <motion.div
       className="w-1/4 p-2 h-full"
@@ -20,8 +25,17 @@ const UserList = ({ user }: { user: UserSocket }) => {
         y: 30,
       }}
     >
-      <div className="h-16 p-2 bg-blue-400 text-white font-bold rounded-xl">
-        <p>{user.name}</p>
+      <div
+        className={`h-16 p-2 text-white font-bold rounded-xl ${
+          user.isOwner ? "bg-pink-400" : "bg-blue-400"
+        }`}
+      >
+        <div className="flex justify-between">
+          <p>{user.name}</p>
+          {currentUserID === user.id.toString() && (
+            <p className="text-black bg-white px-2 rounded-xl">ME</p>
+          )}
+        </div>
         <p>{user.email}</p>
       </div>
     </motion.div>

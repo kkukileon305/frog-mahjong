@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
-import { CLOSE, JOIN } from "@/utils/const";
+import { CLOSE, JOIN, READY, READY_CANCEL } from "@/utils/const";
 import { JOINRequest, JOINResponseBody, UserSocket } from "@/utils/socketTypes";
 
 const useWebsocket = (roomID: string, password: string = "") => {
@@ -50,6 +50,14 @@ const useWebsocket = (roomID: string, password: string = "") => {
             setUsers(data.users);
           }
         } else if (eventName === CLOSE) {
+          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
+
+          setUsers(data.users);
+        } else if (eventName === READY) {
+          const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
+
+          setUsers(data.users);
+        } else if (eventName === READY_CANCEL) {
           const data = JSON.parse(JSON.parse(body).message) as JOINResponseBody;
 
           setUsers(data.users);
