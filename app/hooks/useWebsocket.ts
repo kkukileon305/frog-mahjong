@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
-import { CLOSE, JOIN, READY, READY_CANCEL } from "@/utils/const";
+import { CLOSE, JOIN, READY, READY_CANCEL, START } from "@/utils/const";
 import {
   GameInfo,
   JOINRequest,
@@ -15,6 +15,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
+  const [isStarted, setIsStarted] = useState(false);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -57,6 +58,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
             ws.close();
           }
+        } else if (eventName === START) {
+          setIsStarted(true);
         }
       });
 
@@ -92,6 +95,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isEnterFailed,
     users: gameState?.users ?? null,
     gameInfo: gameState?.gameInfo ?? null,
+    isStarted,
   };
 };
 

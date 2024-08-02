@@ -18,10 +18,14 @@ const Page = ({
   params: { roomID },
   searchParams: { password },
 }: RoomDetailProps) => {
-  const { ws, users, userID, isEnterFailed, gameInfo } = useWebsocket(
-    roomID,
-    password
-  );
+  const {
+    ws, //
+    users,
+    userID,
+    isEnterFailed,
+    gameInfo,
+    isStarted,
+  } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
 
@@ -60,6 +64,7 @@ const Page = ({
           users={users}
           currentUser={currentUser}
           gameInfo={gameInfo}
+          isStarted={isStarted}
         />
         <div>
           <div className="w-full h-[80px] flex">
@@ -70,8 +75,13 @@ const Page = ({
             </AnimatePresence>
           </div>
           <div className="h-[80px] flex p-2 gap-2">
-            <CloseBtn ws={ws} roomID={roomID} />
-            <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
+            <CloseBtn ws={ws} roomID={roomID} isStarted={isStarted} />
+            <ReadyBtn
+              ws={ws}
+              roomID={roomID}
+              currentUser={currentUser}
+              isStarted={isStarted}
+            />
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 type CloseBtnProps = {
   ws: WebSocket | null;
   roomID: string;
+  isStarted: boolean;
 };
 
 const CloseBtn = ({ ws, roomID }: CloseBtnProps) => {
