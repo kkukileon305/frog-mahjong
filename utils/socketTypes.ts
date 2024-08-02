@@ -16,6 +16,12 @@ export interface READYRequest {
   message: string;
 }
 
+export interface READYCANCELRequest {
+  roomID: number;
+  event: "READY_CANCEL";
+  message: string;
+}
+
 export interface JOINResponseBody {
   users: UserSocket[] | null;
   gameInfo: GameInfo;

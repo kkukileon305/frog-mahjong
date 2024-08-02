@@ -20,7 +20,7 @@ const Page = ({
 }: RoomDetailProps) => {
   const { ws, users, userID, isEnterFailed } = useWebsocket(roomID, password);
 
-  const isConnected = users?.find((user) => user.id === Number(userID));
+  const currentUser = users?.find((user) => user.id === Number(userID));
 
   if (isEnterFailed) {
     return (
@@ -38,7 +38,7 @@ const Page = ({
     );
   }
 
-  if (!isConnected) {
+  if (!currentUser) {
     return (
       <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
         <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center">
@@ -62,7 +62,7 @@ const Page = ({
           </div>
           <div className="h-[80px] flex p-2 gap-2">
             <CloseBtn ws={ws} roomID={roomID} />
-            <ReadyBtn ws={ws} roomID={roomID} />
+            <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
           </div>
         </div>
       </div>

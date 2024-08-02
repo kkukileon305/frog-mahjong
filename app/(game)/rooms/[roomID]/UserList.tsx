@@ -41,7 +41,9 @@ const UserList = ({ user, currentUserID }: UserListProps) => {
           </div>
           <p>{user.email}</p>
         </div>
-        <p className="text-2xl">{user.playerState}</p>
+        <p className="text-2xl">
+          {user.playerState === "wait" ? "준비 안됨" : "준비"}
+        </p>
       </div>
     </motion.div>
   );
