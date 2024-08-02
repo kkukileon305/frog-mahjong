@@ -61,8 +61,8 @@ const Page = ({
             </AnimatePresence>
           </div>
           <div className="h-[80px] flex p-2 gap-2">
-            <ReadyBtn ws={ws} roomID={roomID} />
             <CloseBtn ws={ws} roomID={roomID} />
+            <ReadyBtn ws={ws} roomID={roomID} />
           </div>
         </div>
       </div>

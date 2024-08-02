@@ -26,17 +26,22 @@ const UserList = ({ user, currentUserID }: UserListProps) => {
       }}
     >
       <div
-        className={`h-16 p-2 text-white font-bold rounded-xl ${
+        className={`h-16 flex justify-between items-center p-2 text-white font-bold rounded-xl ${
           user.isOwner ? "bg-pink-400" : "bg-blue-400"
         }`}
       >
-        <div className="flex justify-between">
-          <p>{user.name}</p>
-          {currentUserID === user.id.toString() && (
-            <p className="text-black bg-white px-2 rounded-xl">ME</p>
-          )}
+        <div className="flex flex-col">
+          <div className="flex gap-2">
+            <p>{user.name}</p>
+            {currentUserID === user.id.toString() && (
+              <p className="text-black px-1 rounded-xl bg-white text-sm flex justify-center items-center">
+                ME
+              </p>
+            )}
+          </div>
+          <p>{user.email}</p>
         </div>
-        <p>{user.email}</p>
+        <p className="text-2xl">{user.playerState}</p>
       </div>
     </motion.div>
   );
