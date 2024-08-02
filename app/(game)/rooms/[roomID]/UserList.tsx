@@ -41,9 +41,11 @@ const UserList = ({ user, currentUser }: UserListProps) => {
           </div>
           <p>{user.email}</p>
         </div>
-        <p className="text-2xl">
-          {user.playerState === "wait" ? "준비 안됨" : "준비"}
-        </p>
+        {!user.isOwner && (
+          <p className="text-2xl">
+            {user.playerState === "wait" ? "준비 안됨" : "준비"}
+          </p>
+        )}
       </div>
     </motion.div>
   );

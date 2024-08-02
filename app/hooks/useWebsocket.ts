@@ -59,7 +59,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
             ws.close();
           }
         } else if (eventName === START) {
-          setIsStarted(true);
+          if (data.errorInfo === null) {
+            setIsStarted(true);
+          }
         }
       });
 

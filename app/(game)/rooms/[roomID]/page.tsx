@@ -9,6 +9,7 @@ import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
 import EnterFailedDiv from "@/app/(game)/rooms/[roomID]/EnterFailedDiv";
 import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
+import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -65,7 +66,11 @@ const Page = ({
             ) : (
               <>
                 <CloseBtn ws={ws} roomID={roomID} />
-                <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
+                {currentUser.isOwner ? (
+                  <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
+                ) : (
+                  <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
+                )}
               </>
             )}
           </div>

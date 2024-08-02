@@ -21,11 +21,11 @@ const StartBtn = ({ gameInfo, ws, roomID }: StartBtnProps) => {
 
   return (
     <button
-      className="bg-white p-2 rounded-xl font-bold"
-      disabled={!gameInfo?.allReady}
+      className={`text-white p-2 w-full bg-blue-400 disabled:bg-gray-400`}
       onClick={onClick}
+      disabled={!gameInfo?.allReady}
     >
-      {gameInfo?.allReady ? "시작하기" : "시작 불가능"}
+      {gameInfo?.allReady ? "시작하기" : "시작 불가"}
     </button>
   );
 };

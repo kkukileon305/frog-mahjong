@@ -1,7 +1,7 @@
 "use client";
 
 import { GameInfo, UserSocket } from "@/utils/socketTypes";
-import StartBtn from "@/app/(game)/rooms/[roomID]/game/StartBtn";
+import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -26,11 +26,7 @@ const Game = ({ currentUser, gameInfo, ws, roomID, isStarted }: GameProps) => {
   return (
     <div className="w-full h-full p-2">
       <div className="w-full h-full flex justify-center items-center bg-gray-400">
-        {currentUser.isOwner ? (
-          <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
-        ) : (
-          <p>방장의 시작을 기다리는 중</p>
-        )}
+        시작 대기중
       </div>
     </div>
   );
