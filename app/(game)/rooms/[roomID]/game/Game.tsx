@@ -9,6 +9,9 @@ import {
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
+import { getTurn } from "@/utils/etc";
+import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
+import MyCards from "@/app/(game)/rooms/[roomID]/game/MyCards";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -19,7 +22,14 @@ type GameProps = {
   isStarted: boolean;
 };
 
-const Game = ({ currentUser, gameInfo, ws, roomID, isStarted }: GameProps) => {
+const Game = ({
+  currentUser,
+  gameInfo,
+  ws,
+  roomID,
+  isStarted,
+  users,
+}: GameProps) => {
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
 
   const selectDora = (card: CardImage) => {
@@ -48,12 +58,26 @@ const Game = ({ currentUser, gameInfo, ws, roomID, isStarted }: GameProps) => {
   if (isStarted) {
     return (
       <div className="w-full h-full p-2">
-        <div className="w-full h-full">
-          <div className="h-[200px] border border-black"></div>
-          <div className="h-[300px] border border-black flex justify-center">
-            <div className="h-full w-[300px] border border-black"></div>
-            <div className="w-full flex">
-              <div className="w-full flex flex-wrap items-center justify-center">
+        <div className="w-full h-full relative">
+          <div className="flex justify-center items-center">
+            <OtherCards
+              user={users?.find(
+                (user) =>
+                  user.turnNumber === getTurn(currentUser.turnNumber + 2)
+              )}
+            />
+          </div>
+          <div className="flex justify-center items-center">
+            <div>
+              <OtherCards
+                user={users?.find(
+                  (user) =>
+                    user.turnNumber === getTurn(currentUser.turnNumber + 3)
+                )}
+              />
+            </div>
+            <div className="w-[700px] h-[400px] border border-black flex">
+              <div className="w-[400px] h-full flex flex-wrap items-center justify-center">
                 {cards.map((card) => (
                   <Card
                     card={card}
@@ -63,13 +87,22 @@ const Game = ({ currentUser, gameInfo, ws, roomID, isStarted }: GameProps) => {
                   />
                 ))}
               </div>
-              <div className="w-[300px] border border-black">도라</div>
+              <div className="w-[300px]">
+                도라
+                {gameInfo?.dora?.color}
+              </div>
             </div>
-            <div className="h-full w-[300px] border border-black"></div>
+            <div>
+              <OtherCards
+                user={users?.find(
+                  (user) =>
+                    user.turnNumber === getTurn(currentUser.turnNumber + 1)
+                )}
+              />
+            </div>
           </div>
-          <div className="h-[200px] border border-black">
-            current User
-            {isUserTurn ? "패를 선택해주세요" : "당신의 차례가 아닙니다"}
+          <div className="flex justify-center items-center">
+            <MyCards user={users?.find((user) => currentUser.id == user.id)} />
           </div>
         </div>
       </div>

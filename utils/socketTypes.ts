@@ -58,8 +58,15 @@ export interface ErrorInfo {
 
 export interface GameInfo {
   playTurn: number;
-  dora: null;
+  dora: null | SelectedDora;
   allReady: boolean;
+}
+
+export interface SelectedDora {
+  name: string;
+  color: string;
+  state: string;
+  userID: number;
 }
 
 export interface UserSocket {
