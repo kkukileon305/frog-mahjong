@@ -28,6 +28,23 @@ export interface STARTRequest {
   message: string;
 }
 
+export interface DORARequest {
+  userID: number;
+  roomID: number;
+  event: "DORA";
+  message: string;
+}
+
+export interface DORABody {
+  cards: CardWithState[];
+}
+
+export interface CardWithState {
+  name: string;
+  color: string;
+  state: string;
+}
+
 export interface SocketResponseBody {
   users: UserSocket[] | null;
   gameInfo: GameInfo;
