@@ -64,6 +64,13 @@ export interface SelectedDora {
   userID: number;
 }
 
+export interface ImportRequest {
+  userID: number;
+  roomID: number;
+  event: "IMPORT_CARDS";
+  message: string;
+}
+
 export interface ImportCardBody {
   cards: {
     cardID: number;

@@ -1,1 +1,2 @@
-export const getTurn = (turn: number) => (turn % 4 === 0 ? 4 : turn % 4);
+export const getTurn = (turn: number, totalUsers: number) =>
+  turn % totalUsers === 0 ? totalUsers : turn % totalUsers;
