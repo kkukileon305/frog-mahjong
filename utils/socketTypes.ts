@@ -36,13 +36,10 @@ export interface DORARequest {
 }
 
 export interface DORABody {
-  cards: CardWithState[];
-}
-
-export interface CardWithState {
-  name: string;
-  color: string;
-  state: string;
+  cards: {
+    cardID: number;
+  }[];
+  playTurn: number;
 }
 
 export interface SocketResponseBody {
@@ -63,10 +60,15 @@ export interface GameInfo {
 }
 
 export interface SelectedDora {
-  name: string;
-  color: string;
-  state: string;
+  cardID: number;
   userID: number;
+}
+
+export interface ImportCardBody {
+  cards: {
+    cardID: number;
+  }[];
+  playTurn: number;
 }
 
 export interface UserSocket {
@@ -75,8 +77,13 @@ export interface UserSocket {
   name: string;
   playerState: string;
   isOwner: boolean;
-  cards: null;
-  discardedCards: null;
+  cards: null | UserCard[];
+  discardedCards: null | UserCard[];
   coin: number;
   turnNumber: number;
 }
+
+export type UserCard = {
+  cardID: number;
+  userID: number;
+};

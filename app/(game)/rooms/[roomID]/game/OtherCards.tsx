@@ -2,8 +2,19 @@
 
 import { UserSocket } from "@/utils/socketTypes";
 
-const OtherCards = ({ user }: { user?: UserSocket }) => {
-  return <div>{user?.name}</div>;
+type OtherCard = {
+  user?: UserSocket;
+  playTurn?: number;
+};
+
+const OtherCards = ({ user, playTurn }: OtherCard) => {
+  return (
+    <div
+      className={`${user?.turnNumber === playTurn ? "bg-red-400" : "bg-white"}`}
+    >
+      {user?.name}
+    </div>
+  );
 };
 
 export default OtherCards;

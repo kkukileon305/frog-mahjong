@@ -4,9 +4,9 @@ import {
   DORABody,
   DORARequest,
   GameInfo,
+  ImportCardBody,
   UserSocket,
 } from "@/utils/socketTypes";
-import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
 import { getTurn } from "@/utils/etc";
@@ -30,30 +30,56 @@ const Game = ({
   isStarted,
   users,
 }: GameProps) => {
+  const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
 
-  const selectDora = (card: CardImage) => {
+  const getCard = (card: CardImage) => {
     if (isUserTurn) {
-      const requestBody: DORABody = {
-        cards: [
-          {
-            color: card.color,
-            name: card.name,
-            state: "dora",
-          },
-        ],
-      };
+      if (dora) {
+        // TODO: 패 가져오기 구현 => 카드 ID로 변경, DORA도
+      } else {
+        const requestBody: DORABody = {
+          cards: [
+            {
+              cardID: card.id,
+            },
+          ],
+          playTurn: gameInfo.playTurn,
+        };
 
-      const request: DORARequest = {
-        userID: currentUser.id,
-        roomID: Number(roomID),
-        event: "DORA",
-        message: JSON.stringify(requestBody),
-      };
+        const request: DORARequest = {
+          userID: currentUser.id,
+          roomID: Number(roomID),
+          event: "DORA",
+          message: JSON.stringify(requestBody),
+        };
 
-      ws?.send(JSON.stringify(request));
+        ws?.send(JSON.stringify(request));
+      }
     }
   };
+
+  const cardWithoutDora = cards.filter(
+    (card) => gameInfo?.dora?.cardID !== card.id
+  );
+
+  const allUserCardIds = users
+    ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
+    .flat();
+
+  const allUserDiscardedIds = users
+    ?.map((user) =>
+      user.discardedCards ? user.discardedCards.map((card) => card.cardID) : []
+    )
+    .flat();
+
+  const leftCards = cardWithoutDora.filter(
+    (card) =>
+      !(
+        allUserCardIds?.includes(card.id) ||
+        allUserDiscardedIds?.includes(card.id)
+      )
+  );
 
   if (isStarted) {
     return (
@@ -65,6 +91,7 @@ const Game = ({
                 (user) =>
                   user.turnNumber === getTurn(currentUser.turnNumber + 2)
               )}
+              playTurn={gameInfo?.playTurn}
             />
           </div>
           <div className="flex justify-center items-center">
@@ -74,22 +101,23 @@ const Game = ({
                   (user) =>
                     user.turnNumber === getTurn(currentUser.turnNumber + 3)
                 )}
+                playTurn={gameInfo?.playTurn}
               />
             </div>
             <div className="w-[700px] h-[400px] border border-black flex">
               <div className="w-[400px] h-full flex flex-wrap items-center justify-center">
-                {cards.map((card) => (
+                {leftCards.map((card) => (
                   <Card
                     card={card}
                     key={card.id}
                     disabled={!isUserTurn}
-                    onClick={() => selectDora(card)}
+                    onClick={() => getCard(card)}
                   />
                 ))}
               </div>
               <div className="w-[300px]">
                 도라
-                {gameInfo?.dora?.color}
+                {gameInfo?.dora?.cardID}
               </div>
             </div>
             <div>
@@ -98,11 +126,12 @@ const Game = ({
                   (user) =>
                     user.turnNumber === getTurn(currentUser.turnNumber + 1)
                 )}
+                playTurn={gameInfo?.playTurn}
               />
             </div>
           </div>
           <div className="flex justify-center items-center">
-            <MyCards user={users?.find((user) => currentUser.id == user.id)} />
+            <MyCards user={currentUser} isUserTurn={isUserTurn} />
           </div>
         </div>
       </div>
