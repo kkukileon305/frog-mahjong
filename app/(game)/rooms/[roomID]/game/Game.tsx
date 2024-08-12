@@ -189,7 +189,9 @@ const Game = ({
               isUserTurn && (
                 <p>
                   {currentUser.cards === null
-                    ? "분배받을 5개의 패를 선택해주세요"
+                    ? gameInfo.dora === null
+                      ? "도라를 선택해주세요"
+                      : "가져올 패 5개를 선택해주세요"
                     : "가져올 패 1개를 선택해주세요"}
                 </p>
               )}
