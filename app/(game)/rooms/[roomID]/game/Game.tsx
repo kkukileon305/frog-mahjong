@@ -6,6 +6,8 @@ import {
   GameInfo,
   ImportCardBody,
   ImportRequest,
+  ImportSingleCardBody,
+  ImportSingleCardRequest,
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
@@ -14,6 +16,7 @@ import { getTurn } from "@/utils/etc";
 import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
 import MyCards from "@/app/(game)/rooms/[roomID]/game/MyCards";
 import Image from "next/image";
+import { useState } from "react";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -35,33 +38,77 @@ const Game = ({
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
 
-  const getCard = (card: CardImage) => {
+  const [random, setRandom] = useState(Math.random);
+  const [selectedCards, setSelectedCards] = useState<CardImage[]>([]);
+
+  const isFullSelectedCards = selectedCards.length === 5;
+  const isOneSelectedCard =
+    selectedCards.length === 1 && currentUser.cards !== null;
+  const isFullSixCard =
+    currentUser.cards !== null && currentUser.cards.length === 6;
+
+  const getCards = () => {
+    if (isFullSelectedCards && gameInfo?.playTurn) {
+      const body: ImportCardBody = {
+        cards: selectedCards.map((ic) => ({
+          cardID: ic.id,
+        })),
+        playTurn: gameInfo.playTurn as number,
+      };
+
+      const request: ImportRequest = {
+        userID: currentUser?.id,
+        event: "IMPORT_CARDS",
+        roomID: Number(roomID),
+        message: JSON.stringify(body),
+      };
+
+      ws?.send(JSON.stringify(request));
+
+      setSelectedCards([]);
+    }
+
+    if (isOneSelectedCard && gameInfo?.playTurn) {
+      const body: ImportSingleCardBody = {
+        cardID: selectedCards[0].id,
+        playTurn: gameInfo.playTurn as number,
+      };
+
+      const request: ImportSingleCardRequest = {
+        userID: currentUser?.id,
+        event: "IMPORT_SINGLE_CARD",
+        roomID: Number(roomID),
+        message: JSON.stringify(body),
+      };
+
+      ws?.send(JSON.stringify(request));
+
+      setSelectedCards([]);
+    }
+  };
+
+  const onSelectCard = (card: CardImage) => {
     if (isUserTurn) {
       if (dora) {
-        const requestBody: ImportCardBody = {
-          cards: [
-            {
-              cardID: card.id,
-            },
-          ],
-          playTurn: gameInfo?.playTurn,
-        };
+        //  중복검사
+        if (selectedCards.find((sc) => sc.id === card.id)) {
+          setSelectedCards(selectedCards.filter((sc) => sc.id !== card.id));
+          return;
+        }
 
-        const request: ImportRequest = {
-          roomID: Number(roomID),
-          event: "IMPORT_CARDS",
-          userID: currentUser.id,
-          message: JSON.stringify(requestBody),
-        };
-
-        ws?.send(JSON.stringify(request));
+        if (currentUser.cards === null) {
+          // 5개 뽑기 차례 selected에 추가
+          if (selectedCards.length < 5) {
+            setSelectedCards([...selectedCards, card]);
+          }
+        } else {
+          //  1개씩 뽑는 차례 selected에 추가
+          setSelectedCards([card]);
+        }
       } else {
+        // set dora
         const requestBody: DORABody = {
-          cards: [
-            {
-              cardID: card.id,
-            },
-          ],
+          cardID: card.id,
           playTurn: gameInfo.playTurn,
         };
 
@@ -99,21 +146,16 @@ const Game = ({
       )
   );
 
-  const nextUser = users?.find(
-    (user) =>
-      user.turnNumber === getTurn(currentUser.turnNumber + 1, users?.length)
-  );
-
   const doraImage = cards.find((ci) => ci.id === gameInfo?.dora?.cardID);
 
   if (isStarted) {
     return (
       <div className="w-full h-full bg-green-500 flex">
         <div className="w-[calc(100%-400px)] h-full">
-          <div className="w-full h-[calc(100%-160px)] border border-black flex justify-center">
+          <div className="w-full h-[calc(100%-220px)] border border-black flex justify-center">
             <div className="w-[400px] h-full grid grid-cols-10 gap-1 p-4">
               {leftCards
-                .sort(() => Math.random() - 0.5)
+                .sort(() => random - 0.5)
                 .map((card) => (
                   <div
                     key={card.id}
@@ -121,8 +163,9 @@ const Game = ({
                   >
                     <Card
                       card={card}
-                      disabled={!isUserTurn}
-                      onClick={() => getCard(card)}
+                      disabled={!isUserTurn || isFullSixCard}
+                      onClick={() => onSelectCard(card)}
+                      isSelected={selectedCards.includes(card)}
                     />
                   </div>
                 ))}
@@ -139,10 +182,51 @@ const Game = ({
             </div>
           </div>
 
+          <div className="h-[60px] justify-center items-center border-r border-black flex gap-2">
+            {!isOneSelectedCard &&
+              !isFullSelectedCards &&
+              !isFullSixCard &&
+              isUserTurn && (
+                <p>
+                  {currentUser.cards === null
+                    ? "분배받을 5개의 패를 선택해주세요"
+                    : "가져올 패 1개를 선택해주세요"}
+                </p>
+              )}
+
+            {!isUserTurn && <p>차례를 기다려주세요</p>}
+
+            {isFullSelectedCards && (
+              <button
+                onClick={getCards}
+                disabled={!isFullSelectedCards}
+                className="bg-white p-1 border border-black rounded-full"
+              >
+                분배 받기
+              </button>
+            )}
+
+            {isOneSelectedCard && (
+              <button
+                onClick={getCards}
+                disabled={!isOneSelectedCard}
+                className="bg-white p-1 border border-black rounded-full"
+              >
+                패 가져오기
+              </button>
+            )}
+
+            {isFullSixCard && (
+              <p>버릴 카드를 골라주시거나 쯔모버튼을 눌러주세요</p>
+            )}
+          </div>
+
           <MyCards
             currentUser={currentUser}
             isUserTurn={isUserTurn}
             gameInfo={gameInfo}
+            roomID={roomID}
+            ws={ws}
           />
         </div>
         <div className="w-[400px] h-[calc(100vh-224px)] overflow-y-auto">

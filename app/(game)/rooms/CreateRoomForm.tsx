@@ -166,13 +166,21 @@ const CreateRoomForm = () => {
           </span>
         )}
       </div>
-      <button
-        type="submit"
-        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
-        disabled={isLoading}
-      >
-        방 만들기
-      </button>
+      <div className="flex gap-4">
+        <div
+          className="w-full bg-white border border-gray-400 flex justify-center items-center rounded-lg py-3 font-bold cursor-pointer"
+          id="back"
+        >
+          닫기
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
+          disabled={isLoading}
+        >
+          방 만들기
+        </button>
+      </div>
     </form>
   );
 };

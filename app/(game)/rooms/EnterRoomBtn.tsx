@@ -45,10 +45,16 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
 
       <button
         onClick={onClick}
-        className="flex h-[66px] mb-4 border border-gray-700 p-2 rounded-xl items-center gap-4"
+        className="flex flex-col h-[66px] mb-4 border border-gray-700 p-2 rounded-xl"
       >
-        {room.name}
-        {room.password && <FaLock />}
+        <p className="flex gap-4 items-center justify-center">
+          {room.name}
+          {room.password && <FaLock />}
+        </p>
+
+        <p>
+          {room.minCount} ~ {room.maxCount}명까지 이용가능
+        </p>
       </button>
     </>
   );

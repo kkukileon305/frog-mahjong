@@ -36,9 +36,7 @@ export interface DORARequest {
 }
 
 export interface DORABody {
-  cards: {
-    cardID: number;
-  }[];
+  cardID: number;
   playTurn: number;
 }
 
@@ -75,6 +73,30 @@ export interface ImportCardBody {
   cards: {
     cardID: number;
   }[];
+  playTurn: number;
+}
+
+export interface ImportSingleCardRequest {
+  userID: number;
+  roomID: number;
+  event: "IMPORT_SINGLE_CARD";
+  message: string;
+}
+
+export interface ImportSingleCardBody {
+  cardID: number;
+  playTurn: number;
+}
+
+export interface DiscardRequest {
+  userID: number;
+  roomID: number;
+  event: "DISCARD";
+  message: string;
+}
+
+export interface DiscardBody {
+  cardID: number;
   playTurn: number;
 }
 
