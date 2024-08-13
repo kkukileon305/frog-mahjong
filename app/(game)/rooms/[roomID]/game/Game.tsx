@@ -17,6 +17,7 @@ import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import Image from "next/image";
 import { useState } from "react";
+import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -38,7 +39,8 @@ const Game = ({
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
 
-  const [random, setRandom] = useState(Math.random);
+  const [discardMode, setDiscardMode] = useState(false);
+
   const [selectedCards, setSelectedCards] = useState<CardImage[]>([]);
 
   const isFullSelectedCards = selectedCards.length === 5;
@@ -153,23 +155,13 @@ const Game = ({
       <div className="w-full h-full bg-green-500 flex">
         <div className="w-[calc(100%-400px)] h-full">
           <div className="w-full h-[calc(100%-220px)] border border-black flex justify-center">
-            <div className="w-[400px] h-full grid grid-cols-10 gap-1 p-4">
-              {leftCards
-                .sort(() => random - 0.5)
-                .map((card) => (
-                  <div
-                    key={card.id}
-                    className="flex justify-center items-center"
-                  >
-                    <Card
-                      card={card}
-                      disabled={!isUserTurn || isFullSixCard}
-                      onClick={() => onSelectCard(card)}
-                      isSelected={selectedCards.includes(card)}
-                    />
-                  </div>
-                ))}
-            </div>
+            <ShuffleLeftCards
+              leftCards={leftCards}
+              isUserTurn={isUserTurn}
+              isFullSixCard={isFullSixCard}
+              onSelectCard={onSelectCard}
+              selectedCards={selectedCards}
+            />
             <div className="w-[300px] flex justify-center items-center">
               {doraImage && (
                 <Image
@@ -219,7 +211,17 @@ const Game = ({
             )}
 
             {isFullSixCard && (
-              <p>버릴 카드를 골라주시거나 쯔모버튼을 눌러주세요</p>
+              <>
+                <button
+                  onClick={() => setDiscardMode(!discardMode)}
+                  className="bg-white p-1 border border-black rounded-full"
+                >
+                  {discardMode ? "버리기 취소" : "버리기"}
+                </button>
+                <button className="bg-white p-1 border border-black rounded-full">
+                  쯔모
+                </button>
+              </>
             )}
           </div>
 
@@ -229,6 +231,8 @@ const Game = ({
             gameInfo={gameInfo}
             roomID={roomID}
             ws={ws}
+            discardMode={discardMode}
+            setDiscardMode={setDiscardMode}
           />
         </div>
         <div className="w-[400px] h-[calc(100vh-224px)] overflow-y-auto">

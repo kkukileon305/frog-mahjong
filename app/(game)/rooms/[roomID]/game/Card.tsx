@@ -25,6 +25,7 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
       className="w-[40px] h-[58px] bg-white border border-red-400 disabled:border-gray-200"
     >
       {isSelected && "선택됨"}
+      {card.id}
     </button>
   );
 };

@@ -4,12 +4,19 @@ import { Reorder } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import { IoRemoveCircle } from "react-icons/io5";
 
 type MyCardListProps = {
   userCardImages: CardImage[];
+  discardMode: boolean;
+  handleDiscard: (card: CardImage) => void;
 };
 
-const MyCardList = ({ userCardImages }: MyCardListProps) => {
+const MyCardList = ({
+  userCardImages,
+  discardMode,
+  handleDiscard,
+}: MyCardListProps) => {
   const [items, setItems] = useState<CardImage[]>(userCardImages);
 
   useEffect(() => {
@@ -35,6 +42,34 @@ const MyCardList = ({ userCardImages }: MyCardListProps) => {
       }
     }
   }, [userCardImages]);
+
+  if (discardMode) {
+    return (
+      <div className="flex gap-2">
+        {items.map((item, i) => (
+          <button
+            key={item.id}
+            onClick={() => handleDiscard(item)}
+            className={`group relative ${i === 2 && "mr-4"}`}
+            disabled={!discardMode}
+          >
+            <Image
+              src={item.imageSrc}
+              alt={item.color + item.name}
+              width={40}
+              height={58}
+              draggable={false}
+            />
+
+            <IoRemoveCircle
+              color="red"
+              className="w-8 h-8 invisible absolute group-hover:visible left-[calc(50%-16px)] top-[calc(50%-16px)]"
+            />
+          </button>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <Reorder.Group

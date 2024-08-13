@@ -9,6 +9,7 @@ import {
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
+import { Dispatch, SetStateAction } from "react";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -16,6 +17,8 @@ type MyCardProps = {
   gameInfo: GameInfo | null;
   roomID: string;
   ws: null | WebSocket;
+  discardMode: boolean;
+  setDiscardMode: Dispatch<SetStateAction<boolean>>;
 };
 
 const MyCardBoard = ({
@@ -24,6 +27,8 @@ const MyCardBoard = ({
   gameInfo,
   roomID,
   ws,
+  discardMode,
+  setDiscardMode,
 }: MyCardProps) => {
   // list 컴포넌트 분리하여 무한반복 해결
   const userCardImages = currentUser?.cards?.map(
@@ -38,21 +43,22 @@ const MyCardBoard = ({
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
 
-  const onDiscard = (ci: CardImage) => {
+  const handleDiscard = (ci: CardImage) => {
     if (isFullSixCard) {
-      // const body: DiscardBody = {
-      //   cardID: ci.id,
-      //   playTurn: gameInfo?.playTurn as number,
-      // };
-      //
-      // const request: DiscardRequest = {
-      //   userID: currentUser?.id,
-      //   event: "DISCARD",
-      //   roomID: Number(roomID),
-      //   message: JSON.stringify(body),
-      // };
-      //
-      // ws?.send(JSON.stringify(request));
+      const body: DiscardBody = {
+        cardID: ci.id,
+        playTurn: gameInfo?.playTurn as number,
+      };
+
+      const request: DiscardRequest = {
+        userID: currentUser?.id,
+        event: "DISCARD",
+        roomID: Number(roomID),
+        message: JSON.stringify(body),
+      };
+
+      ws?.send(JSON.stringify(request));
+      setDiscardMode(false);
     }
   };
 
@@ -67,7 +73,11 @@ const MyCardBoard = ({
 
         <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
           {userCardImages ? (
-            <MyCardList userCardImages={userCardImages} />
+            <MyCardList
+              userCardImages={userCardImages}
+              discardMode={discardMode}
+              handleDiscard={handleDiscard}
+            />
           ) : (
             <p className="text-center">
               아직 가진 패가 <br /> 없습니다
