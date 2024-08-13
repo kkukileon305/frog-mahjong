@@ -14,7 +14,7 @@ import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
 import { getTurn } from "@/utils/etc";
 import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
-import MyCards from "@/app/(game)/rooms/[roomID]/game/MyCards";
+import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -223,7 +223,7 @@ const Game = ({
             )}
           </div>
 
-          <MyCards
+          <MyCardBoard
             currentUser={currentUser}
             isUserTurn={isUserTurn}
             gameInfo={gameInfo}

@@ -8,6 +8,7 @@ import {
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
+import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -17,19 +18,20 @@ type MyCardProps = {
   ws: null | WebSocket;
 };
 
-const MyCards = ({
+const MyCardBoard = ({
   currentUser,
   isUserTurn,
   gameInfo,
   roomID,
   ws,
 }: MyCardProps) => {
-  const isFullSixCard = currentUser?.cards?.length === 6;
-
+  // list 컴포넌트 분리하여 무한반복 해결
   const userCardImages = currentUser?.cards?.map(
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
+
+  const isFullSixCard = currentUser?.cards?.length === 6;
 
   const userDiscardImages = currentUser?.discardedCards?.map(
     (card) =>
@@ -38,19 +40,19 @@ const MyCards = ({
 
   const onDiscard = (ci: CardImage) => {
     if (isFullSixCard) {
-      const body: DiscardBody = {
-        cardID: ci.id,
-        playTurn: gameInfo?.playTurn as number,
-      };
-
-      const request: DiscardRequest = {
-        userID: currentUser?.id,
-        event: "DISCARD",
-        roomID: Number(roomID),
-        message: JSON.stringify(body),
-      };
-
-      ws?.send(JSON.stringify(request));
+      // const body: DiscardBody = {
+      //   cardID: ci.id,
+      //   playTurn: gameInfo?.playTurn as number,
+      // };
+      //
+      // const request: DiscardRequest = {
+      //   userID: currentUser?.id,
+      //   event: "DISCARD",
+      //   roomID: Number(roomID),
+      //   message: JSON.stringify(body),
+      // };
+      //
+      // ws?.send(JSON.stringify(request));
     }
   };
 
@@ -63,22 +65,9 @@ const MyCards = ({
       <div className="flex flex-col items-center gap-2">
         {/* TODO: 드래그해서 조합 확인해볼 수 있게 */}
 
-        <div className="min-w-[60px] flex items-center gap-2 h-[80px] border p-2 rounded">
+        <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
           {userCardImages ? (
-            userCardImages?.map((ci) => (
-              <button
-                onClick={() => onDiscard(ci)}
-                key={ci.id}
-                disabled={!isFullSixCard}
-              >
-                <Image
-                  src={ci.imageSrc}
-                  alt={ci.color + ci.name}
-                  width={40}
-                  height={58}
-                />
-              </button>
-            ))
+            <MyCardList userCardImages={userCardImages} />
           ) : (
             <p className="text-center">
               아직 가진 패가 <br /> 없습니다
@@ -114,4 +103,4 @@ const MyCards = ({
   );
 };
 
-export default MyCards;
+export default MyCardBoard;
