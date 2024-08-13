@@ -34,6 +34,11 @@ export type ErrorType = {
   msg: string;
 };
 
+export type Result = {
+  bonuses: string[];
+  score: number;
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

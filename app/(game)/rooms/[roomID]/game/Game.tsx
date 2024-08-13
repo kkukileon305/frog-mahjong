@@ -46,8 +46,7 @@ const Game = ({
   const isFullSelectedCards = selectedCards.length === 5;
   const isOneSelectedCard =
     selectedCards.length === 1 && currentUser.cards !== null;
-  const isFullSixCard =
-    currentUser.cards !== null && currentUser.cards.length === 6;
+  const isFullSixCard = currentUser?.cards?.length === 6;
 
   const getCards = () => {
     if (isFullSelectedCards && gameInfo?.playTurn) {
@@ -208,20 +207,6 @@ const Game = ({
               >
                 패 가져오기
               </button>
-            )}
-
-            {isFullSixCard && (
-              <>
-                <button
-                  onClick={() => setDiscardMode(!discardMode)}
-                  className="bg-white p-1 border border-black rounded-full"
-                >
-                  {discardMode ? "버리기 취소" : "버리기"}
-                </button>
-                <button className="bg-white p-1 border border-black rounded-full">
-                  쯔모
-                </button>
-              </>
             )}
           </div>
 

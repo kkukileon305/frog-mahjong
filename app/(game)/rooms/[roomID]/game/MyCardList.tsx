@@ -2,22 +2,55 @@
 
 import { Reorder } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { IoRemoveCircle } from "react-icons/io5";
+import axiosInstance, { Result } from "@/utils/axios";
+import { getCookie } from "cookies-next";
 
 type MyCardListProps = {
   userCardImages: CardImage[];
   discardMode: boolean;
   handleDiscard: (card: CardImage) => void;
+  setResult: Dispatch<SetStateAction<Result>>;
+  roomID: string;
 };
 
 const MyCardList = ({
   userCardImages,
   discardMode,
   handleDiscard,
+  setResult,
+  roomID,
 }: MyCardListProps) => {
   const [items, setItems] = useState<CardImage[]>(userCardImages);
+
+  const calScore = async (values: CardImage[]) => {
+    if (values.length === 6) {
+      try {
+        const { data } = await axiosInstance.post<Result>(
+          "/v0.1/game/score/calculate",
+          {
+            cards: values.map((ci) => ({ cardID: ci.id })),
+            roomID: Number(roomID),
+          },
+          {
+            headers: {
+              tkn: getCookie("accessToken"),
+            },
+          }
+        );
+
+        setResult(data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const onDragEnd = async () => {
+    await calScore(items);
+  };
 
   useEffect(() => {
     const newItems = userCardImages.sort((ci) => ci.id);
@@ -31,7 +64,9 @@ const MyCardList = ({
           (nic) => !oldItems.find((oic) => oic.id === nic.id)
         )!!;
 
-        setItems([...items, newItem]);
+        const newList = [...items, newItem];
+        calScore(newList);
+        setItems(newList);
       } else {
         // 빠진 경우
         const removedItem = oldItems.find(
@@ -83,6 +118,7 @@ const MyCardList = ({
           className={`cursor-pointer ${i === 2 && "mr-4"}`}
           key={item.id}
           value={item}
+          onDragEnd={onDragEnd}
         >
           <Image
             src={item.imageSrc}

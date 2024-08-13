@@ -9,7 +9,8 @@ import {
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Result } from "@/utils/axios";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -30,6 +31,11 @@ const MyCardBoard = ({
   discardMode,
   setDiscardMode,
 }: MyCardProps) => {
+  const [result, setResult] = useState<Result>({
+    score: 0,
+    bonuses: [],
+  });
+
   // list 컴포넌트 분리하여 무한반복 해결
   const userCardImages = currentUser?.cards?.map(
     (card) =>
@@ -59,6 +65,10 @@ const MyCardBoard = ({
 
       ws?.send(JSON.stringify(request));
       setDiscardMode(false);
+      setResult({
+        score: 0,
+        bonuses: [],
+      });
     }
   };
 
@@ -68,15 +78,16 @@ const MyCardBoard = ({
         isUserTurn ? "bg-red-400" : "bg-gray-400"
       }`}
     >
+      <div>{result.score}점</div>
       <div className="flex flex-col items-center gap-2">
-        {/* TODO: 드래그해서 조합 확인해볼 수 있게 */}
-
         <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
           {userCardImages ? (
             <MyCardList
               userCardImages={userCardImages}
               discardMode={discardMode}
               handleDiscard={handleDiscard}
+              setResult={setResult}
+              roomID={roomID}
             />
           ) : (
             <p className="text-center">
@@ -87,7 +98,6 @@ const MyCardBoard = ({
 
         <p>가진 패</p>
       </div>
-
       <div className="flex flex-col items-center gap-2">
         <div className="min-w-[60px] flex items-center gap-2 h-[80px] border p-2 rounded">
           {userDiscardImages ? (
@@ -108,6 +118,33 @@ const MyCardBoard = ({
         </div>
 
         <p>버린 패</p>
+      </div>
+      <div className="flex">
+        <div className="w-24 flex flex-col gap-2">
+          <button
+            disabled={!isFullSixCard}
+            className="text-white p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+          >
+            쯔모!
+          </button>
+          <button
+            disabled={!isFullSixCard}
+            onClick={() => setDiscardMode(!discardMode)}
+            className={`text-white p-2 rounded-xl font-bold ${
+              discardMode ? "bg-gray-400" : "bg-gray-600"
+            } disabled:bg-gray-500 disabled:text-gray-400`}
+          >
+            {discardMode ? "버리기 취소" : "버리기"}
+          </button>
+        </div>
+        <div className="w-24 ml-4 flex justify-center flex-col gap-2">
+          <button
+            disabled={!isFullSixCard}
+            className="h-full text-white p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400"
+          >
+            론!
+          </button>
+        </div>
       </div>
     </div>
   );
