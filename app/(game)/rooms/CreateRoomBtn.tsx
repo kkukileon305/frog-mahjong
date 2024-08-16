@@ -17,7 +17,6 @@ const CreateRoomBtn = () => {
     <>
       {isOpen && (
         <div
-          id="back"
           className="absolute left-0 top-0 w-full bg-black/50 min-h-screen z-10 flex justify-center items-center"
           onClick={onClose}
         >
