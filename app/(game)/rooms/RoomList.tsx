@@ -30,6 +30,12 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
         {data.rooms.map((room) => (
           <EnterRoomBtn key={room.id} room={room} />
         ))}
+
+        {data.rooms.length === 0 && (
+          <div className="h-full flex justify-center items-center">
+            아직 개설된 방이 없습니다.
+          </div>
+        )}
       </div>
 
       <RoomsNavigator currentPage={currentPage} data={data} />

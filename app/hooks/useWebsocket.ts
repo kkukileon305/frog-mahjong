@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
-import { CLOSE, JOIN, READY, READY_CANCEL, START } from "@/utils/const";
+import {
+  ERR_ABNORMAL_EXIT,
+  ERR_WRONG_PASSWORD,
+  JOIN,
+  START,
+} from "@/utils/const";
 import {
   GameInfo,
   JOINRequest,
@@ -12,6 +17,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
   // util
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isEnterFailed, setIsEnterFailed] = useState(false);
+  const [isAbnormalExit, setIsAbnormalExit] = useState(false);
 
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
@@ -36,7 +42,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     if (ws) {
       ws.addEventListener("open", () => {
         const body: JOINRequest = {
-          event: "JOIN",
+          event: JOIN,
           roomID: Number(roomID),
           message: password,
         };
@@ -52,10 +58,17 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
         setGameState(data);
 
-        if (eventName === JOIN) {
-          if (data.errorInfo?.code === 500) {
-            setIsEnterFailed(true);
+        if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
+          // 비정상 종료
+          setIsAbnormalExit(true);
+          ws.close();
+          return;
+        }
 
+        if (eventName === JOIN) {
+          if (data.errorInfo?.type === ERR_WRONG_PASSWORD) {
+            // password 실패
+            setIsEnterFailed(true);
             ws.close();
           }
         } else if (eventName === START) {
@@ -69,14 +82,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
         if (event.wasClean) {
           // 정상 종료
           setWs(null);
-        } else {
-          // 비정상 종료
-
-          const newWs = new WebSocket(
-            `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/join/ws?tkn=${accessToken}&roomID=${roomID}`
-          );
-
-          setWs(newWs);
         }
       });
 
@@ -98,6 +103,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     users: gameState?.users ?? null,
     gameInfo: gameState?.gameInfo ?? null,
     isStarted,
+    isAbnormalExit,
   };
 };
 

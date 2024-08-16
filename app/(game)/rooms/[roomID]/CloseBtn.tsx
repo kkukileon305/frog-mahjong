@@ -2,6 +2,7 @@
 
 import { CLOSERequest } from "@/utils/socketTypes";
 import { useRouter } from "next/navigation";
+import { CLOSE } from "@/utils/const";
 
 type CloseBtnProps = {
   ws: WebSocket | null;
@@ -14,7 +15,7 @@ const CloseBtn = ({ ws, roomID }: CloseBtnProps) => {
   const onClick = () => {
     const closeReq: CLOSERequest = {
       roomID: Number(roomID),
-      event: "CLOSE",
+      event: CLOSE,
       message: "",
     };
 

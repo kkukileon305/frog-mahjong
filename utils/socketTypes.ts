@@ -49,6 +49,7 @@ export interface SocketResponseBody {
 export interface ErrorInfo {
   code: number;
   msg: string;
+  type: string;
 }
 
 export interface GameInfo {

@@ -10,6 +10,7 @@ import Game from "@/app/(game)/rooms/[roomID]/game/Game";
 import EnterFailedDiv from "@/app/(game)/rooms/[roomID]/EnterFailedDiv";
 import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
+import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -27,6 +28,7 @@ const Page = ({
     isEnterFailed,
     gameInfo,
     isStarted,
+    isAbnormalExit,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -37,6 +39,10 @@ const Page = ({
 
   if (!currentUser) {
     return <EnteringDiv />;
+  }
+
+  if (isAbnormalExit) {
+    return <AbnormalExit />;
   }
 
   return (
