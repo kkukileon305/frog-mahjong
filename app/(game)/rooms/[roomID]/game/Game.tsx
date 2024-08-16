@@ -11,8 +11,6 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
-import Card from "@/app/(game)/rooms/[roomID]/game/Card";
-import { getTurn } from "@/utils/etc";
 import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import Image from "next/image";
@@ -153,7 +151,7 @@ const Game = ({
     return (
       <div className="w-full h-full bg-green-500 flex">
         <div className="w-[calc(100%-400px)] h-full">
-          <div className="w-full h-[calc(100%-220px)] border border-black flex justify-center">
+          <div className="w-full h-[calc(100%-320px)] border border-black flex justify-center">
             <ShuffleLeftCards
               leftCards={leftCards}
               isUserTurn={isUserTurn}
@@ -220,6 +218,7 @@ const Game = ({
             setDiscardMode={setDiscardMode}
           />
         </div>
+
         <div className="w-[400px] h-[calc(100vh-224px)] overflow-y-auto">
           {users
             ?.filter((user) => user.id !== currentUser.id)

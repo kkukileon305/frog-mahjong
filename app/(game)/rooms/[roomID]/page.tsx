@@ -37,12 +37,12 @@ const Page = ({
     return <EnterFailedDiv />;
   }
 
-  if (!currentUser) {
-    return <EnteringDiv />;
-  }
-
   if (isAbnormalExit) {
     return <AbnormalExit />;
+  }
+
+  if (!currentUser) {
+    return <EnteringDiv />;
   }
 
   return (

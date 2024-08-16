@@ -42,7 +42,7 @@ export interface DORABody {
 
 export interface SocketResponseBody {
   users: UserSocket[] | null;
-  gameInfo: GameInfo;
+  gameInfo?: GameInfo;
   errorInfo?: ErrorInfo;
 }
 

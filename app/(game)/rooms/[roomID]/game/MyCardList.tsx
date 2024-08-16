@@ -44,6 +44,10 @@ const MyCardList = ({
         setResult(data);
       } catch (e) {
         console.log(e);
+        setResult({
+          score: 0,
+          bonuses: [],
+        });
       }
     }
   };
