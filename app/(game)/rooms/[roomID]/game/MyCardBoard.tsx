@@ -4,13 +4,16 @@ import {
   DiscardBody,
   DiscardRequest,
   GameInfo,
+  RequestWin,
+  RequestWinBody,
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
-import { Dispatch, SetStateAction, useState } from "react";
-import { Result } from "@/utils/axios";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import axiosInstance, { Result } from "@/utils/axios";
+import { getCookie } from "cookies-next";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -36,11 +39,13 @@ const MyCardBoard = ({
     bonuses: [],
   });
 
-  // list 컴포넌트 분리하여 무한반복 해결
   const userCardImages = currentUser?.cards?.map(
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
+
+  // 유저의 배열상태 저장
+  const [items, setItems] = useState<CardImage[]>(userCardImages || []);
 
   const isFullSixCard = currentUser?.cards?.length === 6;
 
@@ -48,6 +53,59 @@ const MyCardBoard = ({
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
+
+  const calScore = async (values: CardImage[]) => {
+    if (values.length === 6) {
+      try {
+        const { data } = await axiosInstance.post<Result>(
+          "/v0.1/game/score/calculate",
+          {
+            cards: values.map((ci) => ({ cardID: ci.id })),
+            roomID: Number(roomID),
+          },
+          {
+            headers: {
+              tkn: getCookie("accessToken"),
+            },
+          }
+        );
+
+        setResult(data);
+      } catch (e) {
+        console.log(e);
+        setResult({
+          score: 0,
+          bonuses: [],
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    const newItems = userCardImages?.sort((ci) => ci.id) || [];
+    const oldItems = items?.sort((ci) => ci.id) || [];
+
+    // 길이가 같다면 같은 패로 간주
+    if (newItems.length !== oldItems.length) {
+      if (newItems.length > oldItems.length) {
+        // 추가 된 경우
+        const newItem = newItems.find(
+          (nic) => !oldItems.find((oic) => oic.id === nic.id)
+        )!!;
+
+        const newList = [...items, newItem];
+        calScore(newList);
+        setItems(newList);
+      } else {
+        // 빠진 경우
+        const removedItem = oldItems.find(
+          (oic) => !newItems.find((nic) => oic.id === nic.id)
+        )!!;
+
+        setItems(items.filter((item) => item.id !== removedItem.id));
+      }
+    }
+  }, [userCardImages]);
 
   const handleDiscard = (ci: CardImage) => {
     if (isFullSixCard) {
@@ -69,6 +127,25 @@ const MyCardBoard = ({
         score: 0,
         bonuses: [],
       });
+    }
+  };
+
+  const handleWin = () => {
+    if (isFullSixCard && result.score >= 5) {
+      const body: RequestWinBody = {
+        cards: items.map((card) => ({ cardID: card.id })),
+        playTurn: gameInfo?.playTurn as number,
+        score: result.score,
+      };
+
+      const request: RequestWin = {
+        userID: currentUser?.id,
+        event: "REQUEST_WIN",
+        roomID: Number(roomID),
+        message: JSON.stringify(body),
+      };
+
+      ws?.send(JSON.stringify(request));
     }
   };
 
@@ -103,13 +180,15 @@ const MyCardBoard = ({
         <div>{result.score}점</div>
         <div className="flex flex-col items-center gap-2">
           <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
-            {userCardImages ? (
+            {userCardImages && items ? (
               <MyCardList
-                userCardImages={userCardImages}
+                items={items}
+                setItems={setItems}
                 discardMode={discardMode}
                 handleDiscard={handleDiscard}
                 setResult={setResult}
                 roomID={roomID}
+                calScore={calScore}
               />
             ) : (
               <p className="text-center">
@@ -122,7 +201,8 @@ const MyCardBoard = ({
         <div className="flex">
           <div className="w-24 flex flex-col gap-2">
             <button
-              disabled={!isFullSixCard}
+              disabled={!isFullSixCard || result.score < 5}
+              onClick={handleWin}
               className="text-white p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               쯔모!

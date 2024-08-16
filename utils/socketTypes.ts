@@ -101,6 +101,21 @@ export interface DiscardBody {
   playTurn: number;
 }
 
+export interface RequestWin {
+  userID: number;
+  roomID: number;
+  event: "REQUEST_WIN";
+  message: string;
+}
+
+export interface RequestWinBody {
+  cards: {
+    cardID: number;
+  }[];
+  playTurn: number;
+  score: number;
+}
+
 export interface UserSocket {
   id: number;
   email: string;

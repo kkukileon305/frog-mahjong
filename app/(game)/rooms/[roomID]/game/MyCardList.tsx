@@ -9,78 +9,25 @@ import axiosInstance, { Result } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 
 type MyCardListProps = {
-  userCardImages: CardImage[];
+  items: CardImage[];
   discardMode: boolean;
   handleDiscard: (card: CardImage) => void;
   setResult: Dispatch<SetStateAction<Result>>;
   roomID: string;
+  calScore: (card: CardImage[]) => void;
+  setItems: Dispatch<SetStateAction<CardImage[]>>;
 };
 
 const MyCardList = ({
-  userCardImages,
+  items,
   discardMode,
   handleDiscard,
-  setResult,
-  roomID,
+  calScore,
+  setItems,
 }: MyCardListProps) => {
-  const [items, setItems] = useState<CardImage[]>(userCardImages);
-
-  const calScore = async (values: CardImage[]) => {
-    if (values.length === 6) {
-      try {
-        const { data } = await axiosInstance.post<Result>(
-          "/v0.1/game/score/calculate",
-          {
-            cards: values.map((ci) => ({ cardID: ci.id })),
-            roomID: Number(roomID),
-          },
-          {
-            headers: {
-              tkn: getCookie("accessToken"),
-            },
-          }
-        );
-
-        setResult(data);
-      } catch (e) {
-        console.log(e);
-        setResult({
-          score: 0,
-          bonuses: [],
-        });
-      }
-    }
-  };
-
   const onDragEnd = async () => {
-    await calScore(items);
+    calScore(items);
   };
-
-  useEffect(() => {
-    const newItems = userCardImages.sort((ci) => ci.id);
-    const oldItems = items.sort((ci) => ci.id);
-
-    // 길이가 같다면 같은 패로 간주
-    if (newItems.length !== oldItems.length) {
-      if (newItems.length > oldItems.length) {
-        // 추가 된 경우
-        const newItem = newItems.find(
-          (nic) => !oldItems.find((oic) => oic.id === nic.id)
-        )!!;
-
-        const newList = [...items, newItem];
-        calScore(newList);
-        setItems(newList);
-      } else {
-        // 빠진 경우
-        const removedItem = oldItems.find(
-          (oic) => !newItems.find((nic) => oic.id === nic.id)
-        )!!;
-
-        setItems(items.filter((item) => item.id !== removedItem.id));
-      }
-    }
-  }, [userCardImages]);
 
   if (discardMode) {
     return (

@@ -4,6 +4,7 @@ import {
   ERR_ABNORMAL_EXIT,
   ERR_WRONG_PASSWORD,
   JOIN,
+  REQUEST_WIN,
   START,
 } from "@/utils/const";
 import {
@@ -75,6 +76,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
           if (data.errorInfo === null) {
             setIsStarted(true);
           }
+        } else if (eventName === REQUEST_WIN) {
+          setIsStarted(false);
         }
       });
 

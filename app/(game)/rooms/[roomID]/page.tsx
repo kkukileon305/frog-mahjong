@@ -11,6 +11,7 @@ import EnterFailedDiv from "@/app/(game)/rooms/[roomID]/EnterFailedDiv";
 import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
+import GameResult from "@/app/(game)/rooms/[roomID]/GameResult";
 
 type RoomDetailProps = {
   params: { roomID: string };
