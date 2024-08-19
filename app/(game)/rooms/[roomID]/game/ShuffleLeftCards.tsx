@@ -3,7 +3,6 @@
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { useEffect, useState } from "react";
-import { GameInfo } from "@/utils/socketTypes";
 
 type ShuffleLeftCardsProps = {
   leftCards: CardImage[];
@@ -12,6 +11,7 @@ type ShuffleLeftCardsProps = {
   onSelectCard: (card: CardImage) => void;
   selectedCards: CardImage[];
   isLoan: boolean;
+  onGameOver: () => void;
 };
 
 const ShuffleLeftCards = ({
@@ -21,6 +21,7 @@ const ShuffleLeftCards = ({
   isFullSixCard,
   isUserTurn,
   isLoan,
+  onGameOver,
 }: ShuffleLeftCardsProps) => {
   const [shuffledCards, setShuffledCards] = useState<CardImage[]>(
     leftCards.sort(() => Math.random() - 0.5)
@@ -44,6 +45,19 @@ const ShuffleLeftCards = ({
           />
         </div>
       ))}
+      {shuffledCards.length === 0 &&
+        isUserTurn &&
+        !isLoan &&
+        !isFullSixCard && (
+          <div className="w-[400px] flex justify-center items-center">
+            <button
+              onClick={onGameOver}
+              className="p-2 rounded-xl bg-white font-bold text-xl"
+            >
+              종료
+            </button>
+          </div>
+        )}
     </div>
   );
 };

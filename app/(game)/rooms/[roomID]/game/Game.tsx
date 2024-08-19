@@ -4,6 +4,7 @@ import {
   DORABody,
   DORARequest,
   GameInfo,
+  GameOverRequest,
   ImportCardBody,
   ImportRequest,
   ImportSingleCardBody,
@@ -36,7 +37,7 @@ const Game = ({
 }: GameProps) => {
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
-  const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.turnNumber;
+  const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.id;
 
   const [discardMode, setDiscardMode] = useState(false);
 
@@ -126,6 +127,17 @@ const Game = ({
     }
   };
 
+  const onGameOver = () => {
+    const req: GameOverRequest = {
+      roomID: Number(roomID),
+      message: "",
+      event: "GAME_OVER",
+      userID: currentUser.id,
+    };
+
+    ws?.send(JSON.stringify(req));
+  };
+
   const cardWithoutDora = cards.filter(
     (card) => gameInfo?.dora?.cardID !== card.id
   );
@@ -162,6 +174,7 @@ const Game = ({
               onSelectCard={onSelectCard}
               selectedCards={selectedCards}
               isLoan={!!gameInfo?.loanInfo}
+              onGameOver={onGameOver}
             />
             <div className="w-[300px] flex justify-center items-center">
               {doraImage && (
@@ -196,7 +209,7 @@ const Game = ({
             ) : (
               <p>
                 {gameInfo?.loanInfo.userID === currentUser?.id
-                  ? `쯔모(승리)를 선언하시거나 포기해주세요`
+                  ? `쯔모(승리)를 선언하시거나 포기(버리기)해주세요`
                   : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
               </p>
             )}
@@ -240,6 +253,7 @@ const Game = ({
         <div className="w-[400px] h-[calc(100vh-224px)] overflow-y-auto">
           {users
             ?.filter((user) => user.id !== currentUser.id)
+            .sort((user1, user2) => user1.turnNumber - user2.turnNumber)
             .map((user) => (
               <OtherCards
                 key={user.id}

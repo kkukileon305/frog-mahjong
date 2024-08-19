@@ -148,6 +148,13 @@ export interface LoanFailedBody {
   playTurn: number;
 }
 
+export interface GameOverRequest {
+  userID: number;
+  roomID: number;
+  event: "GAME_OVER";
+  message: "";
+}
+
 export interface UserSocket {
   id: number;
   email: string;

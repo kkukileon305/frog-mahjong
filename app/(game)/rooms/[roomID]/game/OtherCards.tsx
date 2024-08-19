@@ -60,13 +60,19 @@ const OtherCards = ({
     }
   }, [gameInfo?.loanInfo]);
 
+  const isActive = gameInfo?.loanInfo
+    ? gameInfo.loanInfo.userID === user?.id
+    : user?.turnNumber === gameInfo?.playTurn;
+
   return (
     <div
       className={`border-t p-2 border-black ${
-        user?.turnNumber === playTurn ? "bg-red-400" : "bg-green-500"
+        isActive ? "bg-red-400" : "bg-green-500"
       }`}
     >
-      <p>{user?.name}의 버린패</p>
+      <p>
+        {user?.name}의 버린패 {user?.turnNumber}
+      </p>
       <div className="flex flex-col gap-2 mt-2">
         {userDiscardImages ? (
           <div className="min-w-[60px] min-h-[80px] flex gap-2 border p-2 rounded flex-wrap">

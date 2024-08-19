@@ -3,6 +3,7 @@ import { getCookie } from "cookies-next";
 import {
   ERR_ABNORMAL_EXIT,
   ERR_WRONG_PASSWORD,
+  GAME_OVER,
   JOIN,
   LOAN,
   REQUEST_WIN,
@@ -77,7 +78,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
           if (data.errorInfo === null) {
             setIsStarted(true);
           }
-        } else if (eventName === REQUEST_WIN) {
+        } else if (eventName === REQUEST_WIN || eventName === GAME_OVER) {
           setIsStarted(false);
         }
       });

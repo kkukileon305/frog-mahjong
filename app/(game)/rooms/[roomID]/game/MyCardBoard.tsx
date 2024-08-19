@@ -212,7 +212,7 @@ const MyCardBoard = ({
         </div>
       </div>
       <div className="h-[140px] flex justify-center items-center gap-4">
-        <div>{result.score}점</div>
+        <p className="font-bold text-xl text-white">{result.score}점</p>
         <div className="flex flex-col items-center gap-2">
           <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
             {userCardImages && items ? (
