@@ -56,6 +56,14 @@ export interface GameInfo {
   playTurn: number;
   dora: null | SelectedDora;
   allReady: boolean;
+  isLoanAllowed: boolean;
+  loanInfo: LoanInfo | null;
+}
+
+export interface LoanInfo {
+  userID: number;
+  targetUserID: number;
+  cardID: 33;
 }
 
 export interface SelectedDora {
@@ -114,6 +122,30 @@ export interface RequestWinBody {
   }[];
   playTurn: number;
   score: number;
+}
+
+export interface LoanRequest {
+  roomID: number;
+  event: "LOAN";
+  message: string;
+}
+
+export interface LoanBody {
+  cardID: number;
+  targetUserID: number;
+  playTurn: number;
+}
+
+export interface LoanFailedRequest {
+  roomID: number;
+  event: "FAILED_LOAN";
+  message: string;
+}
+
+export interface LoanFailedBody {
+  cardID: number;
+  targetUserID: number;
+  playTurn: number;
 }
 
 export interface UserSocket {

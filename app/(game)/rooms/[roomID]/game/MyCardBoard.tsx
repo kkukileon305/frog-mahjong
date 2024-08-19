@@ -4,6 +4,8 @@ import {
   DiscardBody,
   DiscardRequest,
   GameInfo,
+  LoanFailedBody,
+  LoanFailedRequest,
   RequestWin,
   RequestWinBody,
   UserSocket,
@@ -14,6 +16,7 @@ import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axiosInstance, { Result } from "@/utils/axios";
 import { getCookie } from "cookies-next";
+import getPrevTurn from "@/utils/getPrevTurn";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -23,6 +26,10 @@ type MyCardProps = {
   ws: null | WebSocket;
   discardMode: boolean;
   setDiscardMode: Dispatch<SetStateAction<boolean>>;
+  totalUsers?: number;
+  isLoanSelectMode: boolean;
+  setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
+  isUserLoan: boolean;
 };
 
 const MyCardBoard = ({
@@ -33,6 +40,10 @@ const MyCardBoard = ({
   ws,
   discardMode,
   setDiscardMode,
+  totalUsers,
+  isLoanSelectMode,
+  setIsLoanSelectMode,
+  isUserLoan,
 }: MyCardProps) => {
   const [result, setResult] = useState<Result>({
     score: 0,
@@ -149,10 +160,34 @@ const MyCardBoard = ({
     }
   };
 
+  const isActive = gameInfo?.loanInfo ? isUserLoan : isUserTurn;
+
+  const onSuteru = () => {
+    if (isUserLoan) {
+      if (gameInfo?.loanInfo?.cardID) {
+        const body: LoanFailedBody = {
+          cardID: gameInfo?.loanInfo?.cardID,
+          playTurn: gameInfo?.playTurn,
+          targetUserID: gameInfo?.loanInfo.targetUserID,
+        };
+
+        const req: LoanFailedRequest = {
+          roomID: Number(roomID),
+          message: JSON.stringify(body),
+          event: "FAILED_LOAN",
+        };
+
+        ws?.send(JSON.stringify(req));
+      }
+    } else {
+      setDiscardMode(!discardMode);
+    }
+  };
+
   return (
     <div
       className={`relative h-[260px] border-r border-t border-black ${
-        isUserTurn ? "bg-red-400" : "bg-gray-400"
+        isActive ? "bg-red-400" : "bg-gray-400"
       }`}
     >
       <div className="h-[120px] flex justify-center items-center border-b border-black">
@@ -209,7 +244,7 @@ const MyCardBoard = ({
             </button>
             <button
               disabled={!isFullSixCard}
-              onClick={() => setDiscardMode(!discardMode)}
+              onClick={onSuteru}
               className={`text-white p-2 rounded-xl font-bold ${
                 discardMode ? "bg-gray-400" : "bg-gray-600"
               } disabled:bg-gray-500 disabled:text-gray-400`}
@@ -219,8 +254,17 @@ const MyCardBoard = ({
           </div>
           <div className="w-24 ml-4 flex justify-center flex-col gap-2">
             <button
-              disabled={!isFullSixCard}
-              className="h-full text-white p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400"
+              disabled={
+                !(
+                  gameInfo?.isLoanAllowed &&
+                  currentUser?.turnNumber!! !==
+                    getPrevTurn(gameInfo?.playTurn!!, totalUsers!!)
+                )
+              }
+              onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
+              className={`h-full text-white p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400 ${
+                isLoanSelectMode && "bg-blue-800"
+              }`}
             >
               론!
             </button>

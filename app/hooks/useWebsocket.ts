@@ -4,6 +4,7 @@ import {
   ERR_ABNORMAL_EXIT,
   ERR_WRONG_PASSWORD,
   JOIN,
+  LOAN,
   REQUEST_WIN,
   START,
 } from "@/utils/const";

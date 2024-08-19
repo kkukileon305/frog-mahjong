@@ -3,6 +3,7 @@
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { useEffect, useState } from "react";
+import { GameInfo } from "@/utils/socketTypes";
 
 type ShuffleLeftCardsProps = {
   leftCards: CardImage[];
@@ -10,6 +11,7 @@ type ShuffleLeftCardsProps = {
   isFullSixCard: boolean;
   onSelectCard: (card: CardImage) => void;
   selectedCards: CardImage[];
+  isLoan: boolean;
 };
 
 const ShuffleLeftCards = ({
@@ -18,6 +20,7 @@ const ShuffleLeftCards = ({
   selectedCards,
   isFullSixCard,
   isUserTurn,
+  isLoan,
 }: ShuffleLeftCardsProps) => {
   const [shuffledCards, setShuffledCards] = useState<CardImage[]>(
     leftCards.sort(() => Math.random() - 0.5)
@@ -35,7 +38,7 @@ const ShuffleLeftCards = ({
         <div key={card.id} className="flex justify-center items-center">
           <Card
             card={card}
-            disabled={!isUserTurn || isFullSixCard}
+            disabled={!isUserTurn || isFullSixCard || isLoan}
             onClick={() => onSelectCard(card)}
             isSelected={selectedCards.includes(card)}
           />

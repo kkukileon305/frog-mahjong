@@ -36,10 +36,13 @@ const Game = ({
 }: GameProps) => {
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
+  const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.turnNumber;
 
   const [discardMode, setDiscardMode] = useState(false);
 
   const [selectedCards, setSelectedCards] = useState<CardImage[]>([]);
+
+  const [isLoanSelectMode, setIsLoanSelectMode] = useState(false);
 
   const isFullSelectedCards = selectedCards.length === 5;
   const isOneSelectedCard =
@@ -158,6 +161,7 @@ const Game = ({
               isFullSixCard={isFullSixCard}
               onSelectCard={onSelectCard}
               selectedCards={selectedCards}
+              isLoan={!!gameInfo?.loanInfo}
             />
             <div className="w-[300px] flex justify-center items-center">
               {doraImage && (
@@ -172,20 +176,30 @@ const Game = ({
           </div>
 
           <div className="h-[60px] justify-center items-center border-r border-black flex gap-2">
-            {!isOneSelectedCard &&
-              !isFullSelectedCards &&
-              !isFullSixCard &&
-              isUserTurn && (
-                <p>
-                  {currentUser.cards === null
-                    ? gameInfo.dora === null
-                      ? "도라를 선택해주세요"
-                      : "가져올 패 5개를 선택해주세요"
-                    : "가져올 패 1개를 선택해주세요"}
-                </p>
-              )}
+            {gameInfo?.loanInfo === null ? (
+              <>
+                {!isOneSelectedCard &&
+                  !isFullSelectedCards &&
+                  !isFullSixCard &&
+                  isUserTurn && (
+                    <p>
+                      {currentUser.cards === null
+                        ? gameInfo.dora === null
+                          ? "도라를 선택해주세요"
+                          : "가져올 패 5개를 선택해주세요"
+                        : "가져올 패 1개를 선택해주세요"}
+                    </p>
+                  )}
 
-            {!isUserTurn && <p>차례를 기다려주세요</p>}
+                {!isUserTurn && <p>차례를 기다려주세요</p>}
+              </>
+            ) : (
+              <p>
+                {gameInfo?.loanInfo.userID === currentUser?.id
+                  ? `쯔모(승리)를 선언하시거나 포기해주세요`
+                  : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
+              </p>
+            )}
 
             {isFullSelectedCards && (
               <button
@@ -216,6 +230,10 @@ const Game = ({
             ws={ws}
             discardMode={discardMode}
             setDiscardMode={setDiscardMode}
+            totalUsers={users?.length}
+            isLoanSelectMode={isLoanSelectMode}
+            setIsLoanSelectMode={setIsLoanSelectMode}
+            isUserLoan={isUserLoan}
           />
         </div>
 
@@ -227,6 +245,11 @@ const Game = ({
                 key={user.id}
                 user={user}
                 playTurn={gameInfo?.playTurn}
+                isLoanSelectMode={isLoanSelectMode}
+                setIsLoanSelectMode={setIsLoanSelectMode}
+                ws={ws}
+                gameInfo={gameInfo}
+                roomID={Number(roomID)}
               />
             ))}
         </div>
