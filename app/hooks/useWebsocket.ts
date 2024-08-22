@@ -17,9 +17,10 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 
-type Result = {
-  isShow: boolean;
-  isDraw: null | boolean;
+export type GameResult = {
+  beforeUsers: UserSocket[] | null;
+  afterUsers: UserSocket[] | null;
+  isShowModal: boolean;
 };
 
 const useWebsocket = (roomID: string, password: string = "") => {
@@ -31,9 +32,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
   const [isStarted, setIsStarted] = useState(false);
-  const [result, setResult] = useState<Result>({
-    isShow: false,
-    isDraw: null,
+  const [result, setResult] = useState<GameResult>({
+    beforeUsers: null,
+    afterUsers: null,
+    isShowModal: false,
   });
 
   const accessToken = getCookie("accessToken") as string;
@@ -87,6 +89,12 @@ const useWebsocket = (roomID: string, password: string = "") => {
         } else if (eventName === START) {
           if (data.errorInfo === null) {
             setIsStarted(true);
+
+            setResult({
+              beforeUsers: data.users,
+              afterUsers: null,
+              isShowModal: false,
+            });
           }
         } else if (
           eventName === REQUEST_WIN ||
@@ -94,6 +102,12 @@ const useWebsocket = (roomID: string, password: string = "") => {
           eventName === SUCCESS_LOAN
         ) {
           setIsStarted(false);
+
+          setResult((prev) => ({
+            beforeUsers: prev.beforeUsers,
+            afterUsers: data.users,
+            isShowModal: true,
+          }));
         }
         // TODO: 게임 결과
       });
