@@ -6,9 +6,11 @@ import {
   GameInfo,
   LoanFailedBody,
   LoanFailedRequest,
-  RequestWin,
-  RequestWinBody,
+  LoanSuccessBody,
+  LoanSuccessRequest,
   UserSocket,
+  WinRequest,
+  WinRequestBody,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
@@ -143,20 +145,41 @@ const MyCardBoard = ({
 
   const handleWin = () => {
     if (isFullSixCard && result.score >= 5) {
-      const body: RequestWinBody = {
-        cards: items.map((card) => ({ cardID: card.id })),
-        playTurn: gameInfo?.playTurn as number,
-        score: result.score,
-      };
+      if (isUserLoan) {
+        const body: LoanSuccessBody = {
+          cards: items.map((card) => ({ cardID: card.id })),
+          playTurn: gameInfo?.playTurn as number,
+          score: result.score,
+          loanInfo: {
+            cardID: gameInfo?.loanInfo?.cardID!,
+            targetUserID: gameInfo?.loanInfo?.targetUserID!,
+          },
+        };
 
-      const request: RequestWin = {
-        userID: currentUser?.id,
-        event: "REQUEST_WIN",
-        roomID: Number(roomID),
-        message: JSON.stringify(body),
-      };
+        const request: LoanSuccessRequest = {
+          userID: currentUser?.id,
+          event: "SUCCESS_LOAN",
+          roomID: Number(roomID),
+          message: JSON.stringify(body),
+        };
 
-      ws?.send(JSON.stringify(request));
+        ws?.send(JSON.stringify(request));
+      } else {
+        const body: WinRequestBody = {
+          cards: items.map((card) => ({ cardID: card.id })),
+          playTurn: gameInfo?.playTurn as number,
+          score: result.score,
+        };
+
+        const request: WinRequest = {
+          userID: currentUser?.id,
+          event: "REQUEST_WIN",
+          roomID: Number(roomID),
+          message: JSON.stringify(body),
+        };
+
+        ws?.send(JSON.stringify(request));
+      }
     }
   };
 

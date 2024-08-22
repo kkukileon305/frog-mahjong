@@ -28,6 +28,7 @@ const SignOutBtn = () => {
       setIsLoading(false);
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
+      deleteCookie("userID");
 
       router.push("/signin");
       router.refresh();

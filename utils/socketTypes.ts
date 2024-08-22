@@ -109,14 +109,14 @@ export interface DiscardBody {
   playTurn: number;
 }
 
-export interface RequestWin {
+export interface WinRequest {
   userID: number;
   roomID: number;
   event: "REQUEST_WIN";
   message: string;
 }
 
-export interface RequestWinBody {
+export interface WinRequestBody {
   cards: {
     cardID: number;
   }[];
@@ -146,6 +146,25 @@ export interface LoanFailedBody {
   cardID: number;
   targetUserID: number;
   playTurn: number;
+}
+
+export interface LoanSuccessRequest {
+  userID: number;
+  roomID: number;
+  event: "SUCCESS_LOAN";
+  message: string;
+}
+
+export interface LoanSuccessBody {
+  cards: {
+    cardID: number;
+  }[];
+  playTurn: number;
+  score: number;
+  loanInfo: {
+    targetUserID: number;
+    cardID: number;
+  };
 }
 
 export interface GameOverRequest {

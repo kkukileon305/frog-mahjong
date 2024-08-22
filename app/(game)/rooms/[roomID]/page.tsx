@@ -29,6 +29,8 @@ const Page = ({
     gameInfo,
     isStarted,
     isAbnormalExit,
+    result,
+    setResult,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -47,7 +49,24 @@ const Page = ({
 
   return (
     <div className="flex h-[calc(100vh-64px)]">
-      <div className="w-full flex flex-col justify-between">
+      <div className="w-full flex flex-col justify-between relative">
+        {result.isShow && (
+          <div className="absolute flex justify-center items-center w-full h-full left-0 top-0 bg-black/50">
+            <div className="bg-white max-w-3xl w-full rounded-xl p-4">
+              <h3 className="text-3xl font-bold">결과</h3>
+
+              <p className="my-4">
+                {JSON.stringify(
+                  users?.map((u) => ({ name: u.name, coin: u.coin }))
+                )}
+              </p>
+
+              <button className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400">
+                닫기
+              </button>
+            </div>
+          </div>
+        )}
         <Game
           ws={ws}
           roomID={roomID}

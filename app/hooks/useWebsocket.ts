@@ -8,6 +8,7 @@ import {
   LOAN,
   REQUEST_WIN,
   START,
+  SUCCESS_LOAN,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -15,6 +16,11 @@ import {
   SocketResponseBody,
   UserSocket,
 } from "@/utils/socketTypes";
+
+type Result = {
+  isShow: boolean;
+  isDraw: null | boolean;
+};
 
 const useWebsocket = (roomID: string, password: string = "") => {
   // util
@@ -25,6 +31,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
   const [isStarted, setIsStarted] = useState(false);
+  const [result, setResult] = useState<Result>({
+    isShow: false,
+    isDraw: null,
+  });
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -78,9 +88,14 @@ const useWebsocket = (roomID: string, password: string = "") => {
           if (data.errorInfo === null) {
             setIsStarted(true);
           }
-        } else if (eventName === REQUEST_WIN || eventName === GAME_OVER) {
+        } else if (
+          eventName === REQUEST_WIN ||
+          eventName === GAME_OVER ||
+          eventName === SUCCESS_LOAN
+        ) {
           setIsStarted(false);
         }
+        // TODO: 게임 결과
       });
 
       ws.addEventListener("close", (event) => {
@@ -109,6 +124,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
     gameInfo: gameState?.gameInfo ?? null,
     isStarted,
     isAbnormalExit,
+    result,
+    setResult,
   };
 };
 
