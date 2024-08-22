@@ -2,15 +2,13 @@
 
 import { GameResult } from "@/app/hooks/useWebsocket";
 import React, { Dispatch, SetStateAction } from "react";
-import { UserSocket } from "@/utils/socketTypes";
 
 type ResultProps = {
   result: GameResult;
   setResult: Dispatch<SetStateAction<GameResult>>;
-  users: UserSocket[] | null;
 };
 
-const ResultModal = ({ setResult, result, users }: ResultProps) => {
+const ResultModal = ({ setResult, result }: ResultProps) => {
   const winner = result.afterUsers?.find(
     (au) => au.coin > result.beforeUsers?.find((bu) => bu.id === au.id)?.coin!
   );
@@ -46,7 +44,7 @@ const ResultModal = ({ setResult, result, users }: ResultProps) => {
                   +{winnerAddedCoin}
                 </p>
               </div>
-              <ul className="flex gap-2">{JSON.stringify(users)}</ul>
+              <p className="font-bold text-2xl">{winner.coin}</p>
             </div>
 
             <p className="font-bold text-red-400 text-2xl mb-2">패배</p>
