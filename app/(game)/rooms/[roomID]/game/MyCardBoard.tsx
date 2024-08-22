@@ -263,7 +263,7 @@ const MyCardBoard = ({
               onClick={handleWin}
               className="text-white p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
-              쯔모!
+              {isUserLoan ? "론 승리" : "쯔모"}
             </button>
             <button
               disabled={!isFullSixCard}
@@ -285,11 +285,11 @@ const MyCardBoard = ({
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
-              className={`h-full text-white p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400 ${
-                isLoanSelectMode && "bg-blue-800"
+              className={`h-full text-white p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
+                isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
-              론!
+              {isLoanSelectMode ? "론 취소" : "론!"}
             </button>
           </div>
         </div>
