@@ -15,7 +15,7 @@ import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
 
 type GameProps = {
@@ -38,6 +38,8 @@ const Game = ({
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
   const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.id;
+
+  const [isLoanEnd, setIsLoanEnd] = useState(false);
 
   const [discardMode, setDiscardMode] = useState(false);
 
@@ -162,6 +164,10 @@ const Game = ({
 
   const doraImage = cards.find((ci) => ci.id === gameInfo?.dora?.cardID);
 
+  useEffect(() => {
+    setIsLoanEnd(false);
+  }, [gameInfo?.playTurn]);
+
   if (isStarted) {
     return (
       <div className="w-full h-full bg-green-500 flex">
@@ -209,7 +215,7 @@ const Game = ({
             ) : (
               <p>
                 {gameInfo?.loanInfo.userID === currentUser?.id
-                  ? `쯔모(승리)를 선언하시거나 포기(버리기)해주세요`
+                  ? `론 승리를 선언하시거나 버리기(포기)해주세요`
                   : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
               </p>
             )}
@@ -247,6 +253,7 @@ const Game = ({
             isLoanSelectMode={isLoanSelectMode}
             setIsLoanSelectMode={setIsLoanSelectMode}
             isUserLoan={isUserLoan}
+            isLoanEnd={isLoanEnd}
           />
         </div>
 
@@ -264,6 +271,7 @@ const Game = ({
                 ws={ws}
                 gameInfo={gameInfo}
                 roomID={Number(roomID)}
+                setIsLoanEnd={setIsLoanEnd}
               />
             ))}
         </div>

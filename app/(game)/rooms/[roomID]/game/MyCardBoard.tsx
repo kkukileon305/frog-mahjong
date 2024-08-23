@@ -16,7 +16,7 @@ import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axiosInstance, { Result } from "@/utils/axios";
+import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/getPrevTurn";
 
@@ -32,6 +32,7 @@ type MyCardProps = {
   isLoanSelectMode: boolean;
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
   isUserLoan: boolean;
+  isLoanEnd: boolean;
 };
 
 const MyCardBoard = ({
@@ -46,8 +47,10 @@ const MyCardBoard = ({
   isLoanSelectMode,
   setIsLoanSelectMode,
   isUserLoan,
+  isLoanEnd,
 }: MyCardProps) => {
-  const [result, setResult] = useState<Result>({
+  // 패 조합 점수
+  const [scoreResult, setScoreResult] = useState<ScoreResult>({
     score: 0,
     bonuses: [],
   });
@@ -70,7 +73,7 @@ const MyCardBoard = ({
   const calScore = async (values: CardImage[]) => {
     if (values.length === 6) {
       try {
-        const { data } = await axiosInstance.post<Result>(
+        const { data } = await axiosInstance.post<ScoreResult>(
           "/v0.1/game/score/calculate",
           {
             cards: values.map((ci) => ({ cardID: ci.id })),
@@ -83,10 +86,10 @@ const MyCardBoard = ({
           }
         );
 
-        setResult(data);
+        setScoreResult(data);
       } catch (e) {
         console.log(e);
-        setResult({
+        setScoreResult({
           score: 0,
           bonuses: [],
         });
@@ -136,7 +139,7 @@ const MyCardBoard = ({
 
       ws?.send(JSON.stringify(request));
       setDiscardMode(false);
-      setResult({
+      setScoreResult({
         score: 0,
         bonuses: [],
       });
@@ -144,12 +147,12 @@ const MyCardBoard = ({
   };
 
   const handleWin = () => {
-    if (isFullSixCard && result.score >= 5) {
+    if (isFullSixCard && scoreResult.score >= 5) {
       if (isUserLoan) {
         const body: LoanSuccessBody = {
           cards: items.map((card) => ({ cardID: card.id })),
           playTurn: gameInfo?.playTurn as number,
-          score: result.score,
+          score: scoreResult.score,
           loanInfo: {
             cardID: gameInfo?.loanInfo?.cardID!,
             targetUserID: gameInfo?.loanInfo?.targetUserID!,
@@ -168,7 +171,7 @@ const MyCardBoard = ({
         const body: WinRequestBody = {
           cards: items.map((card) => ({ cardID: card.id })),
           playTurn: gameInfo?.playTurn as number,
-          score: result.score,
+          score: scoreResult.score,
         };
 
         const request: WinRequest = {
@@ -235,7 +238,7 @@ const MyCardBoard = ({
         </div>
       </div>
       <div className="h-[140px] flex justify-center items-center gap-4">
-        <p className="font-bold text-xl text-white">{result.score}점</p>
+        <p className="font-bold text-xl text-white">{scoreResult.score}점</p>
         <div className="flex flex-col items-center gap-2">
           <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
             {userCardImages && items ? (
@@ -244,7 +247,7 @@ const MyCardBoard = ({
                 setItems={setItems}
                 discardMode={discardMode}
                 handleDiscard={handleDiscard}
-                setResult={setResult}
+                setResult={setScoreResult}
                 roomID={roomID}
                 calScore={calScore}
               />
@@ -259,7 +262,7 @@ const MyCardBoard = ({
         <div className="flex">
           <div className="w-24 flex flex-col gap-2">
             <button
-              disabled={!isFullSixCard || result.score < 5}
+              disabled={!isFullSixCard || scoreResult.score < 5}
               onClick={handleWin}
               className="text-white p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
@@ -281,7 +284,8 @@ const MyCardBoard = ({
                 !(
                   gameInfo?.isLoanAllowed &&
                   currentUser?.turnNumber!! !==
-                    getPrevTurn(gameInfo?.playTurn!!, totalUsers!!)
+                    getPrevTurn(gameInfo?.playTurn!!, totalUsers!!) &&
+                  !isLoanEnd
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}

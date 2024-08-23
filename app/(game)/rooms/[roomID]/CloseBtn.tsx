@@ -7,9 +7,10 @@ import { CLOSE } from "@/utils/const";
 type CloseBtnProps = {
   ws: WebSocket | null;
   roomID: string;
+  userID: number;
 };
 
-const CloseBtn = ({ ws, roomID }: CloseBtnProps) => {
+const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
   const router = useRouter();
 
   const onClick = () => {
@@ -17,6 +18,7 @@ const CloseBtn = ({ ws, roomID }: CloseBtnProps) => {
       roomID: Number(roomID),
       event: CLOSE,
       message: "",
+      userID,
     };
 
     ws?.send(JSON.stringify(closeReq));

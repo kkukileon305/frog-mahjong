@@ -18,26 +18,33 @@ type OtherCard = {
   ws: null | WebSocket;
   gameInfo: GameInfo | null;
   roomID: number;
+  setIsLoanEnd: Dispatch<SetStateAction<boolean>>;
 };
 
 const OtherCards = ({
   user,
-  playTurn,
   ws,
   gameInfo,
   isLoanSelectMode,
   setIsLoanSelectMode,
   roomID,
+  setIsLoanEnd,
 }: OtherCard) => {
   const userDiscardImages = user?.discardedCards?.map(
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
 
-  const onLoanCard = (ci: CardImage) => {
-    if (gameInfo?.loanInfo === null && isLoanSelectMode) {
+  const onLoanCard = () => {
+    if (
+      gameInfo?.loanInfo === null &&
+      isLoanSelectMode &&
+      user?.discardedCards
+    ) {
+      const lastCard = user.discardedCards[user.discardedCards.length - 1];
+
       const requestBody: LoanBody = {
-        cardID: ci.id,
+        cardID: lastCard.cardID,
         playTurn: gameInfo?.playTurn,
         targetUserID: user?.id!,
       };
@@ -50,6 +57,7 @@ const OtherCards = ({
 
       ws?.send(JSON.stringify(request));
 
+      setIsLoanEnd(true);
       setIsLoanSelectMode(false);
     }
   };
@@ -65,31 +73,29 @@ const OtherCards = ({
     : user?.turnNumber === gameInfo?.playTurn;
 
   return (
-    <div
-      className={`border-t p-2 border-black ${
-        isActive ? "bg-red-400" : "bg-green-500"
-      }`}
+    <button
+      disabled={!isLoanSelectMode}
+      onClick={onLoanCard}
+      className={`flex flex-col w-full border-t p-2 border-black ${
+        isLoanSelectMode && "hover:bg-white/50"
+      } ${isActive ? "bg-red-400" : "bg-green-500"}`}
     >
       <p>
         {user?.name}의 버린패 {user?.turnNumber}
       </p>
-      <div className="flex flex-col gap-2 mt-2">
+
+      <div className="flex flex-col w-full gap-2 mt-2">
         {userDiscardImages ? (
           <div className="min-w-[60px] min-h-[80px] flex gap-2 border p-2 rounded flex-wrap">
             {userDiscardImages?.map((ci) => (
-              <button
-                key={ci.id}
-                disabled={!isLoanSelectMode}
-                className="border border-red-400 disabled:border-gray-200"
-                onClick={() => onLoanCard(ci)}
-              >
+              <div key={ci.id}>
                 <Image
                   src={ci.imageSrc}
                   alt={ci.color + ci.name}
                   width={40}
                   height={58}
                 />
-              </button>
+              </div>
             ))}
           </div>
         ) : (
@@ -100,7 +106,7 @@ const OtherCards = ({
           </div>
         )}
       </div>
-    </div>
+    </button>
   );
 };
 

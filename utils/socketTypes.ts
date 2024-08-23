@@ -2,6 +2,7 @@ export interface CLOSERequest {
   roomID: number;
   event: "CLOSE";
   message: string;
+  userID: number;
 }
 
 export interface JOINRequest {

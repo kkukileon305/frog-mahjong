@@ -77,7 +77,7 @@ const Page = ({
               </div>
             ) : (
               <>
-                <CloseBtn ws={ws} roomID={roomID} />
+                <CloseBtn ws={ws} roomID={roomID} userID={Number(userID)} />
                 {currentUser.isOwner ? (
                   <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
                 ) : (

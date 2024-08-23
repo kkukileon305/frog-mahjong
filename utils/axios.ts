@@ -34,7 +34,7 @@ export type ErrorType = {
   msg: string;
 };
 
-export type Result = {
+export type ScoreResult = {
   bonuses: string[];
   score: number;
 };
