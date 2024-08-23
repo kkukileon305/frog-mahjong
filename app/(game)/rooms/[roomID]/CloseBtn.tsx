@@ -11,8 +11,6 @@ type CloseBtnProps = {
 };
 
 const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
-  const router = useRouter();
-
   const onClick = () => {
     const quitReq: QUITRequest = {
       roomID: Number(roomID),

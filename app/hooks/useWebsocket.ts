@@ -80,7 +80,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
         if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
           // 비정상 종료
           setIsAbnormalExit(true);
-          ws.close();
           return;
         }
 
@@ -117,10 +116,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
       ws.addEventListener("close", (event) => {
         router.push("/rooms");
-        if (event.wasClean) {
-          // 정상 끊김
-          setWs(null);
-        }
+        setWs(null);
       });
 
       ws.addEventListener("error", (body) => {
