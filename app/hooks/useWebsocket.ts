@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import {
+  QUIT_GAME,
   ERR_ABNORMAL_EXIT,
   ERR_WRONG_PASSWORD,
   GAME_OVER,
@@ -16,6 +17,7 @@ import {
   SocketResponseBody,
   UserSocket,
 } from "@/utils/socketTypes";
+import { useRouter } from "next/navigation";
 
 export type GameResult = {
   beforeUsers: UserSocket[] | null;
@@ -24,6 +26,8 @@ export type GameResult = {
 };
 
 const useWebsocket = (roomID: string, password: string = "") => {
+  const router = useRouter();
+
   // util
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isEnterFailed, setIsEnterFailed] = useState(false);
@@ -84,7 +88,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
           if (data.errorInfo?.type === ERR_WRONG_PASSWORD) {
             // password 실패
             setIsEnterFailed(true);
-            ws.close();
           }
         } else if (eventName === START) {
           if (data.errorInfo === null) {
@@ -113,8 +116,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
       });
 
       ws.addEventListener("close", (event) => {
+        router.push("/rooms");
         if (event.wasClean) {
-          // 정상 종료
+          // 정상 끊김
           setWs(null);
         }
       });
@@ -123,10 +127,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
         console.log(body, "error");
       });
     }
-
-    return () => {
-      ws?.close();
-    };
   }, [ws]);
 
   return {

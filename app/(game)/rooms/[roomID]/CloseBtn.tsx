@@ -1,8 +1,8 @@
 "use client";
 
-import { CLOSERequest } from "@/utils/socketTypes";
+import { QUITRequest } from "@/utils/socketTypes";
 import { useRouter } from "next/navigation";
-import { CLOSE } from "@/utils/const";
+import { QUIT_GAME } from "@/utils/const";
 
 type CloseBtnProps = {
   ws: WebSocket | null;
@@ -14,16 +14,14 @@ const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
   const router = useRouter();
 
   const onClick = () => {
-    const closeReq: CLOSERequest = {
+    const quitReq: QUITRequest = {
       roomID: Number(roomID),
-      event: CLOSE,
+      event: QUIT_GAME,
       message: "",
       userID,
     };
 
-    ws?.send(JSON.stringify(closeReq));
-    ws?.close();
-    router.push("/rooms");
+    ws?.send(JSON.stringify(quitReq));
   };
 
   return (

@@ -1,6 +1,6 @@
-export interface CLOSERequest {
+export interface QUITRequest {
   roomID: number;
-  event: "CLOSE";
+  event: "QUIT_GAME";
   message: string;
   userID: number;
 }
