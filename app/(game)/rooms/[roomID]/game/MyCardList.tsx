@@ -5,14 +5,12 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { IoRemoveCircle } from "react-icons/io5";
-import axiosInstance, { Result } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 
 type MyCardListProps = {
   items: CardImage[];
   discardMode: boolean;
   handleDiscard: (card: CardImage) => void;
-  setResult: Dispatch<SetStateAction<Result>>;
   roomID: string;
   calScore: (card: CardImage[]) => void;
   setItems: Dispatch<SetStateAction<CardImage[]>>;

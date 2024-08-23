@@ -247,7 +247,6 @@ const MyCardBoard = ({
                 setItems={setItems}
                 discardMode={discardMode}
                 handleDiscard={handleDiscard}
-                setResult={setScoreResult}
                 roomID={roomID}
                 calScore={calScore}
               />
