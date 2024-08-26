@@ -52,7 +52,7 @@ const Page = ({
     <div className="flex h-[calc(100vh-64px)]">
       <div className="w-full flex flex-col justify-between">
         {result.isShowModal && (
-          <ResultModal result={result} setResult={setResult} />
+          <ResultModal result={result} setResult={setResult} roomID={roomID} />
         )}
         <Game
           ws={ws}
