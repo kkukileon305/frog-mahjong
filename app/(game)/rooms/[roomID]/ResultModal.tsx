@@ -133,7 +133,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
                 <div className="my-4 border-t-8 border-dotted" />
                 <ul className="mb-8">
                   {losers?.map((lo) => (
-                    <li className="flex gap-4 justify-between">
+                    <li className="flex gap-4 justify-between mb-8">
                       <div className="w-[120px] flex flex-col items-center gap-2">
                         <p className="text-2xl font-bold">{lo.name}</p>
                         <p className="font-bold text-red-400 text-3xl">패배</p>
@@ -177,7 +177,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
                             ))}
                         </div>
                       </div>
-                      <div className="w-[92px]"></div>
+                      <div className="w-[92px]" />
                     </li>
                   ))}
                 </ul>

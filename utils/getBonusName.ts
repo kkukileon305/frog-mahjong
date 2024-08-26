@@ -1,9 +1,9 @@
 const getBonusName = (engName: string) => {
   switch (engName) {
     case "same":
-      return "똑같은 숫자 쌍";
+      return "똑같은 숫자";
     case "continuous":
-      return "연속된 숫자 쌍";
+      return "연속된 숫자";
     case "allGreen":
       return "올 그린";
     case "superRed":
