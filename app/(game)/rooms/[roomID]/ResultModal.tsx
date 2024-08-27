@@ -46,7 +46,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
     setIsLoading(true);
     try {
       const { data } = await axiosInstance.post<ScoreResult>(
-        "/v0.1/game/score/calculate",
+        "/v0.1/game/result",
         {
           cards: winner?.cards?.map((ci) => ({ cardID: ci.cardID })),
           roomID: Number(roomID),
