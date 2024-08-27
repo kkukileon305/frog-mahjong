@@ -10,6 +10,7 @@ import {
   REQUEST_WIN,
   START,
   SUCCESS_LOAN,
+  ROOM_OUT,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -41,6 +42,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     afterUsers: null,
     isShowModal: false,
   });
+  const [kicked, setKicked] = useState<boolean>(false);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -110,8 +112,15 @@ const useWebsocket = (roomID: string, password: string = "") => {
             afterUsers: data.users,
             isShowModal: true,
           }));
+        } else if (eventName === ROOM_OUT) {
+          const currentUser = data.users?.find(
+            (user) => user.id === Number(userID)
+          );
+
+          if (!currentUser) {
+            setKicked(true);
+          }
         }
-        // TODO: 게임 결과
       });
 
       ws.addEventListener("close", (event) => {
@@ -136,6 +145,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isAbnormalExit,
     result,
     setResult,
+    kicked,
   };
 };
 

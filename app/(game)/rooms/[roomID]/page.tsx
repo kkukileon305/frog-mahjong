@@ -12,6 +12,7 @@ import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
 import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
+import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -32,6 +33,7 @@ const Page = ({
     isAbnormalExit,
     result,
     setResult,
+    kicked,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -42,6 +44,10 @@ const Page = ({
 
   if (isAbnormalExit) {
     return <AbnormalExit />;
+  }
+
+  if (kicked) {
+    return <KickedGame />;
   }
 
   if (!currentUser) {
