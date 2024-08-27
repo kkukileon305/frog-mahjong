@@ -2,6 +2,7 @@ export const SIZE = 6;
 
 //event names
 export const JOIN = "JOIN";
+export const CLOSE = "CLOSE";
 export const QUIT_GAME = "QUIT_GAME";
 export const READY = "READY";
 export const READY_CANCEL = "READY_CANCEL";

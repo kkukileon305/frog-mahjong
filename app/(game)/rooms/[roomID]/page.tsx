@@ -72,7 +72,13 @@ const Page = ({
           <div className="w-full h-[80px] flex">
             <AnimatePresence>
               {users?.map((user) => (
-                <UserList key={user.id} user={user} currentUser={currentUser} />
+                <UserList
+                  key={user.id}
+                  user={user}
+                  currentUser={currentUser}
+                  roomID={roomID}
+                  ws={ws}
+                />
               ))}
             </AnimatePresence>
           </div>

@@ -11,6 +11,7 @@ import {
   START,
   SUCCESS_LOAN,
   ROOM_OUT,
+  CLOSE,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -90,6 +91,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
             // password 실패
             setIsEnterFailed(true);
           }
+        } else if (eventName === QUIT_GAME) {
+          // 서버에서 먼저 끊어서 안옴
+          // 나중에 수정해야할 거 같음
         } else if (eventName === START) {
           if (data.errorInfo === null) {
             setIsStarted(true);
@@ -124,7 +128,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
       });
 
       ws.addEventListener("close", (event) => {
-        router.push("/rooms");
         setWs(null);
       });
 
