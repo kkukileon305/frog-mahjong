@@ -33,8 +33,8 @@ const Page = () => {
           expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
 
-        router.push("/");
         router.refresh();
+        router.push("/rooms");
       } catch (e) {
         router.push("/");
       }
