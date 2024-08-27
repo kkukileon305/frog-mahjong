@@ -8,6 +8,7 @@ import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getBonusName from "@/utils/getBonusName";
+import mergeBonus from "@/utils/mergeBonus";
 
 type ResultProps = {
   result: GameResult;
@@ -77,9 +78,12 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
             <h3 className="text-3xl font-bold mb-8 text-center">결과</h3>
             {winner && (
               <div className="my-4">
-                <ul className="bg-red-400 py-2 rounded-full mb-4">
-                  {bonuses?.bonuses.join("+")}
-                </ul>
+                <p className="bg-red-400 py-2 rounded-full mb-4 font-bold text-center text-white">
+                  {bonuses &&
+                    mergeBonus(
+                      bonuses.bonuses.map((b) => getBonusName(b))!
+                    ).join(" + ")}
+                </p>
                 <div className="flex gap-4 justify-between">
                   <div className="w-[120px] flex flex-col items-center gap-2">
                     <p className="text-2xl font-bold">{winner.name}</p>
@@ -123,7 +127,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
                         ))}
                     </div>
                   </div>
-                  <div className="w-[92px] flex items-center gap-4">
+                  <div className="w-[120px] flex items-center gap-4">
                     <FaEquals color="green" size="32" />
                     <p className="font-bold text-3xl text-green-500">
                       {bonuses?.score}점
@@ -136,7 +140,11 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
                     <li className="flex gap-4 justify-between mb-8" key={lo.id}>
                       <div className="w-[120px] flex flex-col items-center gap-2">
                         <p className="text-2xl font-bold">{lo.name}</p>
-                        <p className="font-bold text-red-400 text-3xl">패배</p>
+                        <p className="font-bold text-red-400 text-3xl">
+                          패배 -
+                          {result.beforeUsers?.find((bu) => bu.id === lo.id)!
+                            .coin! - lo.coin}
+                        </p>
                         <p className="font-bold text-red-400 text-2xl">
                           {lo.coin}point
                         </p>
@@ -177,7 +185,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
                             ))}
                         </div>
                       </div>
-                      <div className="w-[92px]" />
+                      <div className="w-[120px]" />
                     </li>
                   ))}
                 </ul>

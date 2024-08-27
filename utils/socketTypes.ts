@@ -175,6 +175,17 @@ export interface GameOverRequest {
   message: "";
 }
 
+export interface RoomOutRequest {
+  userID: number;
+  roomID: number;
+  event: "ROOM_OUT";
+  message: string;
+}
+
+export interface RoomOutBody {
+  targetUserID: number;
+}
+
 export interface UserSocket {
   id: number;
   email: string;
