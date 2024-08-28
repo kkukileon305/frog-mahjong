@@ -78,6 +78,7 @@ const Page = ({
                   currentUser={currentUser}
                   roomID={roomID}
                   ws={ws}
+                  isStarted={isStarted}
                 />
               ))}
             </AnimatePresence>

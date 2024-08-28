@@ -24,9 +24,7 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
       className={`w-[40px] h-[58px] border border-red-400 disabled:border-gray-200 ${
         isSelected ? "bg-blue-400" : "bg-white"
       }`}
-    >
-      {card.id}
-    </button>
+    />
   );
 };
 

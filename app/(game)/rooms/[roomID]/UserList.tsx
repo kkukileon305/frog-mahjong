@@ -8,9 +8,16 @@ type UserListProps = {
   currentUser: UserSocket;
   roomID: string;
   ws: WebSocket | null;
+  isStarted: boolean;
 };
 
-const UserList = ({ user, currentUser, roomID, ws }: UserListProps) => {
+const UserList = ({
+  user,
+  currentUser,
+  roomID,
+  ws,
+  isStarted,
+}: UserListProps) => {
   const onClick = () => {
     const body: RoomOutBody = {
       targetUserID: user.id,
@@ -25,6 +32,8 @@ const UserList = ({ user, currentUser, roomID, ws }: UserListProps) => {
 
     ws?.send(JSON.stringify(request));
   };
+
+  // TODO: 게임중 강퇴막기
 
   return (
     <motion.div
@@ -65,7 +74,7 @@ const UserList = ({ user, currentUser, roomID, ws }: UserListProps) => {
             </p>
           )}
 
-          {currentUser.isOwner && user.id !== currentUser.id && (
+          {!isStarted && currentUser.isOwner && user.id !== currentUser.id && (
             <button
               onClick={onClick}
               className="text-black px-1 rounded-xl bg-white text-sm"
