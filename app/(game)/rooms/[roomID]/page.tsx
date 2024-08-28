@@ -13,6 +13,7 @@ import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
 import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
 import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
+import JoinError from "@/app/(game)/rooms/[roomID]/JoinError";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -27,29 +28,43 @@ const Page = ({
     ws, //
     users,
     userID,
-    isEnterFailed,
     gameInfo,
     isStarted,
-    isAbnormalExit,
     result,
     setResult,
     kicked,
+    isAbnormalExit,
+    isPasswordFailed,
+    isProgress,
+    isFullPlayer,
+    isNoRoom,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
 
-  if (isEnterFailed) {
-    return <EnterFailedDiv />;
+  // join
+  if (isPasswordFailed || isProgress || isFullPlayer || isNoRoom) {
+    return (
+      <JoinError
+        isPasswordFailed={isPasswordFailed}
+        isProgress={isProgress}
+        isFullPlayer={isFullPlayer}
+        isNoRoom={isNoRoom}
+      />
+    );
   }
 
+  // abnormal
   if (isAbnormalExit) {
     return <AbnormalExit />;
   }
 
+  // kick
   if (kicked) {
     return <KickedGame />;
   }
 
+  // loading
   if (!currentUser) {
     return <EnteringDiv />;
   }

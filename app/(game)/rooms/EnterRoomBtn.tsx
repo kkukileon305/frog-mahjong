@@ -51,9 +51,13 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
           {room.password && <FaLock />}
         </p>
 
-        <p>
-          {room.minCount} ~ {room.maxCount}명까지 이용가능
-        </p>
+        <div className="flex justify-between w-full">
+          <p>
+            {room.currentCount}/{room.maxCount}
+          </p>
+
+          <p>{room.state}</p>
+        </div>
       </button>
     </>
   );

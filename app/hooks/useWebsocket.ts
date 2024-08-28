@@ -12,6 +12,9 @@ import {
   SUCCESS_LOAN,
   ROOM_OUT,
   CLOSE,
+  ERR_GAME_IN_PROGRESS,
+  ERR_ROOM_FULL,
+  ERR_INTERNAL_SERVER,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -28,12 +31,15 @@ export type GameResult = {
 };
 
 const useWebsocket = (roomID: string, password: string = "") => {
-  const router = useRouter();
-
-  // util
+  // ws
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [isEnterFailed, setIsEnterFailed] = useState(false);
+
+  // errors
+  const [isPasswordFailed, setIsPasswordFailed] = useState(false);
   const [isAbnormalExit, setIsAbnormalExit] = useState(false);
+  const [isProgress, setIsProgress] = useState(false);
+  const [isFullPlayer, setIsFullPlayer] = useState(false);
+  const [isNoRoom, setIsNoRoom] = useState(false);
 
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
@@ -89,8 +95,16 @@ const useWebsocket = (roomID: string, password: string = "") => {
         if (eventName === JOIN) {
           if (data.errorInfo?.type === ERR_WRONG_PASSWORD) {
             // password 실패
-            setIsEnterFailed(true);
+            setIsPasswordFailed(true);
+          } else if (data.errorInfo?.type === ERR_GAME_IN_PROGRESS) {
+            setIsProgress(true);
+          } else if (data.errorInfo?.type === ERR_ROOM_FULL) {
+            setIsFullPlayer(true);
+          } else if (data.errorInfo?.type === ERR_INTERNAL_SERVER) {
+            setIsNoRoom(true);
           }
+
+          // TODO: 진행중인 방 에러
         } else if (eventName === QUIT_GAME) {
           // 서버에서 먼저 끊어서 안옴
           // 나중에 수정해야할 거 같음
@@ -141,7 +155,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     ws,
     accessToken,
     userID,
-    isEnterFailed,
+    isPasswordFailed,
     users: gameState?.users ?? null,
     gameInfo: gameState?.gameInfo ?? null,
     isStarted,
@@ -149,6 +163,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
     result,
     setResult,
     kicked,
+    isProgress,
+    isFullPlayer,
+    isNoRoom,
   };
 };
 

@@ -40,7 +40,7 @@ const SignInForm = () => {
       const today = new Date();
 
       setCookie("accessToken", accessToken, {
-        expires: new Date(today.getTime() + 3600000 * 24 * 1),
+        expires: new Date(today.getTime() + 3600000 * 24 * 7),
       });
 
       setCookie("refreshToken", refreshToken, {
