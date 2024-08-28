@@ -44,7 +44,10 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
 
       <button
         onClick={onClick}
-        className="flex flex-col h-[66px] mb-4 border border-gray-700 p-2 rounded-xl"
+        disabled={room.state === "play"}
+        className={`flex flex-col h-[66px] mb-4 font-bold text-white p-2 rounded-xl ${
+          room.state === "play" ? "bg-red-600 " : "bg-green-600 "
+        }`}
       >
         <p className="flex gap-4 items-center justify-center">
           {room.name}
@@ -56,7 +59,7 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
             {room.currentCount}/{room.maxCount}
           </p>
 
-          <p>{room.state}</p>
+          <p>{room.state === "play" ? "진행중" : "대기중"}</p>
         </div>
       </button>
     </>
