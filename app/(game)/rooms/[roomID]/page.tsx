@@ -7,7 +7,6 @@ import UserList from "@/app/(game)/rooms/[roomID]/UserList";
 import { AnimatePresence } from "framer-motion";
 import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
-import EnterFailedDiv from "@/app/(game)/rooms/[roomID]/EnterFailedDiv";
 import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
