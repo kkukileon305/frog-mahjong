@@ -41,6 +41,11 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
   };
 
   const getBonus = async () => {
+    if (!winner) {
+      setIsLoading(false);
+      return;
+    }
+
     if (winner?.cards?.length !== 6) return;
 
     setIsLoading(true);
