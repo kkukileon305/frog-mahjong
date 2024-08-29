@@ -25,7 +25,10 @@ const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
   };
 
   return (
-    <button onClick={onClick} className="bg-red-400 text-white p-2 w-full">
+    <button
+      onClick={onClick}
+      className="bg-red-400 text-white font-bold p-2 w-full"
+    >
       나가기
     </button>
   );

@@ -33,8 +33,21 @@ const ShuffleLeftCards = ({
     }
   }, [leftCards]);
 
+  if (shuffledCards.length === 0 && isUserTurn && !isLoan && !isFullSixCard) {
+    return (
+      <div className="max-w-xl w-full flex justify-center items-center">
+        <button
+          onClick={onGameOver}
+          className="p-2 rounded-xl bg-white font-bold text-xl"
+        >
+          종료
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-[400px] h-full grid grid-cols-10 gap-1 p-4">
+    <div className="max-w-[600px] w-full h-full grid grid-cols-12 gap-1 p-4">
       {shuffledCards.map((card) => (
         <div key={card.id} className="flex justify-center items-center">
           <Card
@@ -45,19 +58,6 @@ const ShuffleLeftCards = ({
           />
         </div>
       ))}
-      {shuffledCards.length === 0 &&
-        isUserTurn &&
-        !isLoan &&
-        !isFullSixCard && (
-          <div className="w-[400px] flex justify-center items-center">
-            <button
-              onClick={onGameOver}
-              className="p-2 rounded-xl bg-white font-bold text-xl"
-            >
-              종료
-            </button>
-          </div>
-        )}
     </div>
   );
 };

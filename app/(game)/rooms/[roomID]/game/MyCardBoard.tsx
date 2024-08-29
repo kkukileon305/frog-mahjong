@@ -15,7 +15,7 @@ import {
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/getPrevTurn";
@@ -210,56 +210,52 @@ const MyCardBoard = ({
     }
   };
 
+  const doraImage = cards.find((ci) => ci.id === gameInfo?.dora?.cardID);
+
   return (
-    <div
-      className={`relative h-[260px] border-r border-t border-black ${
-        isActive ? "bg-red-400" : "bg-gray-400"
-      }`}
-    >
-      <div className="h-[120px] flex justify-center items-center border-b border-black">
-        <div className="flex flex-col items-center gap-2">
-          <div className="min-w-[60px] flex items-center gap-2 h-[80px] border p-2 rounded">
-            {userDiscardImages ? (
-              userDiscardImages?.map((ci) => (
-                <Image
-                  src={ci.imageSrc}
-                  alt={ci.color + ci.name}
-                  key={ci.id}
-                  width={40}
-                  height={58}
-                />
-              ))
-            ) : (
-              <p className="text-center">
-                아직 버린 패가 <br /> 없습니다
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="h-[140px] flex justify-center items-center gap-4">
-        <p className="font-bold text-xl text-white">{scoreResult.score}점</p>
-        <div className="flex flex-col items-center gap-2">
-          <div className="min-w-[60px] flex items-center h-[80px] border p-2 rounded">
-            {userCardImages && items ? (
-              <MyCardList
-                items={items}
-                setItems={setItems}
-                discardMode={discardMode}
-                handleDiscard={handleDiscard}
-                roomID={roomID}
-                calScore={calScore}
+    <div className="h-[120px] flex items-center justify-center relative">
+      <div className="flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center border-white border-2 py-4 px-8 rounded-xl bg-white/20">
+          {doraImage && (
+            <div className="flex gap-8 items-center">
+              <Image
+                src={doraImage.imageSrc}
+                alt={doraImage.color + doraImage.name}
+                width={40}
+                height={58}
               />
-            ) : (
-              <p className="text-center">
-                아직 가진 패가 <br /> 없습니다
+              <p className="font-bold text-white">
+                도라 <br />
+                +1점
               </p>
-            )}
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-center items-center border-white border-2 px-4 py-2 gap-4 rounded-xl bg-white/20">
+          <p className="font-bold text-xl text-white">{scoreResult.score}점</p>
+          <div className="flex flex-col items-center gap-2">
+            <div className="min-w-[60px] flex items-center h-[80px] p-2 rounded">
+              {userCardImages && items ? (
+                <MyCardList
+                  items={items}
+                  setItems={setItems}
+                  discardMode={discardMode}
+                  handleDiscard={handleDiscard}
+                  roomID={roomID}
+                  calScore={calScore}
+                />
+              ) : (
+                <p className="text-center">
+                  아직 가진 패가 <br /> 없습니다
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
         <div className="flex">
-          <div className="w-24 flex flex-col gap-2">
+          <div className="w-24 flex flex-col gap-1">
             <button
               disabled={!isFullSixCard || scoreResult.score < 5}
               onClick={handleWin}
@@ -277,7 +273,7 @@ const MyCardBoard = ({
               {discardMode ? "버리기 취소" : "버리기"}
             </button>
           </div>
-          <div className="w-24 ml-4 flex justify-center flex-col gap-2">
+          <div className="w-24 ml-1 flex justify-center flex-col gap-2">
             <button
               disabled={
                 !(

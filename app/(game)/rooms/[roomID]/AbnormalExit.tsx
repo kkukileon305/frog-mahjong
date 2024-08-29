@@ -5,7 +5,7 @@ import React from "react";
 
 const AbnormalExit = () => {
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
+    <div className="flex h-[calc(100vh)] bg-gray-200 justify-center items-center">
       <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center flex-col">
         <p className="font-bold text-3xl">
           다른 유저가 이탈하여 게임을 종료합니다

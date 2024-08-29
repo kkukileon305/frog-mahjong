@@ -3,7 +3,7 @@ import React from "react";
 
 const KickedGame = () => {
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gray-200 justify-center items-center">
+    <div className="flex h-[calc(100vh)] bg-gray-200 justify-center items-center">
       <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center flex-col">
         <p className="font-bold text-3xl">강제퇴장 되었습니다</p>
         <Link

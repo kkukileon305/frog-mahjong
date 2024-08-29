@@ -33,7 +33,7 @@ const ReadyBtn = ({
   return (
     <button
       onClick={onClick}
-      className={`text-white p-2 w-full ${
+      className={`rounded-xl font-bold text-white p-2 w-full ${
         isReady ? "bg-red-400" : "bg-blue-400"
       }`}
     >

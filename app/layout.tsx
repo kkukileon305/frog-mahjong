@@ -17,10 +17,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="kr">
-      <body className={font.className}>
-        <Header />
-        {children}
-      </body>
+      <body className={font.className}>{children}</body>
     </html>
   );
 };

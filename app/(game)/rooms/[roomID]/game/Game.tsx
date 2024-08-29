@@ -15,8 +15,11 @@ import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
+import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
+import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
+import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -168,123 +171,176 @@ const Game = ({
     setIsLoanEnd(false);
   }, [gameInfo?.playTurn]);
 
-  if (isStarted) {
-    return (
-      <div className="w-full h-full bg-green-500 flex">
-        <div className="w-[calc(100%-400px)] h-full">
-          <div className="w-full h-[calc(100%-320px)] border border-black flex justify-center">
-            <ShuffleLeftCards
-              leftCards={leftCards}
-              isUserTurn={isUserTurn}
-              isFullSixCard={isFullSixCard}
-              onSelectCard={onSelectCard}
-              selectedCards={selectedCards}
-              isLoan={!!gameInfo?.loanInfo}
-              onGameOver={onGameOver}
+  const userWithoutMe = users?.filter((user) => user.id !== currentUser.id);
+
+  return (
+    <>
+      <div className="w-full h-[calc(100%-40px)] bg-green-500 flex gap-4 p-8">
+        <div className="w-[304px] h-full flex flex-col gap-4">
+          {userWithoutMe && (
+            <OtherCards
+              user={userWithoutMe[0]}
+              playTurn={gameInfo?.playTurn}
+              isLoanSelectMode={isLoanSelectMode}
+              setIsLoanSelectMode={setIsLoanSelectMode}
+              ws={ws}
+              gameInfo={gameInfo}
+              roomID={Number(roomID)}
+              setIsLoanEnd={setIsLoanEnd}
+              currentUser={currentUser}
+              isStarted={isStarted}
             />
-            <div className="w-[300px] flex justify-center items-center">
-              {doraImage && (
-                <Image
-                  src={doraImage.imageSrc}
-                  alt={doraImage.color + doraImage.name}
-                  width={40}
-                  height={58}
-                />
+          )}
+
+          {userWithoutMe && (
+            <OtherCards
+              user={userWithoutMe[1]}
+              playTurn={gameInfo?.playTurn}
+              isLoanSelectMode={isLoanSelectMode}
+              setIsLoanSelectMode={setIsLoanSelectMode}
+              ws={ws}
+              gameInfo={gameInfo}
+              roomID={Number(roomID)}
+              setIsLoanEnd={setIsLoanEnd}
+              currentUser={currentUser}
+              isStarted={isStarted}
+            />
+          )}
+        </div>
+
+        {isStarted ? (
+          <div className="w-[calc(100%-608px-32px)] py-8">
+            <div className="h-[60px] font-bold text-white text-3xl justify-center items-center flex gap-2">
+              {gameInfo?.loanInfo === null ? (
+                <>
+                  {!isOneSelectedCard &&
+                    !isFullSelectedCards &&
+                    !isFullSixCard &&
+                    isUserTurn && (
+                      <p>
+                        {currentUser.cards === null
+                          ? gameInfo.dora === null
+                            ? "도라를 선택해주세요"
+                            : "가져올 패 5개를 선택해주세요"
+                          : "가져올 패 1개를 선택해주세요"}
+                      </p>
+                    )}
+
+                  {!isUserTurn && <p>차례를 기다려주세요</p>}
+                </>
+              ) : (
+                <p>
+                  {gameInfo?.loanInfo.userID === currentUser?.id
+                    ? `론 승리를 선언하시거나 버리기(포기)해주세요`
+                    : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
+                </p>
+              )}
+
+              {isFullSelectedCards && (
+                <button
+                  onClick={getCards}
+                  disabled={!isFullSelectedCards}
+                  className="bg-white p-1 border border-black rounded-full"
+                >
+                  분배 받기
+                </button>
+              )}
+
+              {isOneSelectedCard && (
+                <button
+                  onClick={getCards}
+                  disabled={!isOneSelectedCard}
+                  className="bg-white p-1 border border-black rounded-full"
+                >
+                  패 가져오기
+                </button>
+              )}
+            </div>
+
+            <div className="w-full h-[calc(100%-180px)] flex justify-center">
+              <ShuffleLeftCards
+                leftCards={leftCards}
+                isUserTurn={isUserTurn}
+                isFullSixCard={isFullSixCard}
+                onSelectCard={onSelectCard}
+                selectedCards={selectedCards}
+                isLoan={!!gameInfo?.loanInfo}
+                onGameOver={onGameOver}
+              />
+            </div>
+
+            <MyCardBoard
+              currentUser={currentUser}
+              isUserTurn={isUserTurn}
+              gameInfo={gameInfo}
+              roomID={roomID}
+              ws={ws}
+              discardMode={discardMode}
+              setDiscardMode={setDiscardMode}
+              totalUsers={users?.length}
+              isLoanSelectMode={isLoanSelectMode}
+              setIsLoanSelectMode={setIsLoanSelectMode}
+              isUserLoan={isUserLoan}
+              isLoanEnd={isLoanEnd}
+            />
+          </div>
+        ) : (
+          <div className="w-[calc(100%-608px-32px)] h-full flex justify-center items-center">
+            <div className="w-[120px]">
+              {currentUser.isOwner ? (
+                <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
+              ) : (
+                <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
               )}
             </div>
           </div>
+        )}
 
-          <div className="h-[60px] justify-center items-center border-r border-black flex gap-2">
-            {gameInfo?.loanInfo === null ? (
-              <>
-                {!isOneSelectedCard &&
-                  !isFullSelectedCards &&
-                  !isFullSixCard &&
-                  isUserTurn && (
-                    <p>
-                      {currentUser.cards === null
-                        ? gameInfo.dora === null
-                          ? "도라를 선택해주세요"
-                          : "가져올 패 5개를 선택해주세요"
-                        : "가져올 패 1개를 선택해주세요"}
-                    </p>
-                  )}
+        <div className="w-[304px] h-full flex flex-col gap-4">
+          {userWithoutMe && (
+            <OtherCards
+              user={userWithoutMe[2]}
+              playTurn={gameInfo?.playTurn}
+              isLoanSelectMode={isLoanSelectMode}
+              setIsLoanSelectMode={setIsLoanSelectMode}
+              ws={ws}
+              gameInfo={gameInfo}
+              roomID={Number(roomID)}
+              setIsLoanEnd={setIsLoanEnd}
+              currentUser={currentUser}
+              isStarted={isStarted}
+            />
+          )}
 
-                {!isUserTurn && <p>차례를 기다려주세요</p>}
-              </>
-            ) : (
-              <p>
-                {gameInfo?.loanInfo.userID === currentUser?.id
-                  ? `론 승리를 선언하시거나 버리기(포기)해주세요`
-                  : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
-              </p>
-            )}
-
-            {isFullSelectedCards && (
-              <button
-                onClick={getCards}
-                disabled={!isFullSelectedCards}
-                className="bg-white p-1 border border-black rounded-full"
-              >
-                분배 받기
-              </button>
-            )}
-
-            {isOneSelectedCard && (
-              <button
-                onClick={getCards}
-                disabled={!isOneSelectedCard}
-                className="bg-white p-1 border border-black rounded-full"
-              >
-                패 가져오기
-              </button>
-            )}
-          </div>
-
-          <MyCardBoard
-            currentUser={currentUser}
-            isUserTurn={isUserTurn}
-            gameInfo={gameInfo}
-            roomID={roomID}
-            ws={ws}
-            discardMode={discardMode}
-            setDiscardMode={setDiscardMode}
-            totalUsers={users?.length}
+          <OtherCards
+            user={currentUser}
+            playTurn={gameInfo?.playTurn}
             isLoanSelectMode={isLoanSelectMode}
             setIsLoanSelectMode={setIsLoanSelectMode}
-            isUserLoan={isUserLoan}
-            isLoanEnd={isLoanEnd}
+            ws={ws}
+            gameInfo={gameInfo}
+            roomID={Number(roomID)}
+            setIsLoanEnd={setIsLoanEnd}
+            currentUser={currentUser}
+            isStarted={isStarted}
           />
         </div>
-
-        <div className="w-[400px] h-[calc(100vh-224px)] overflow-y-auto">
-          {users
-            ?.filter((user) => user.id !== currentUser.id)
-            .sort((user1, user2) => user1.turnNumber - user2.turnNumber)
-            .map((user) => (
-              <OtherCards
-                key={user.id}
-                user={user}
-                playTurn={gameInfo?.playTurn}
-                isLoanSelectMode={isLoanSelectMode}
-                setIsLoanSelectMode={setIsLoanSelectMode}
-                ws={ws}
-                gameInfo={gameInfo}
-                roomID={Number(roomID)}
-                setIsLoanEnd={setIsLoanEnd}
-              />
-            ))}
+      </div>
+      <div className="flex h-10 justify-end bg-green-600">
+        <button className="w-[200px] bg-green-400 font-bold text-white">
+          설명서
+        </button>
+        <div className="w-[200px]">
+          {isStarted ? (
+            <div className="flex items-center justify-center w-full h-full bg-gray-400">
+              진행중
+            </div>
+          ) : (
+            <CloseBtn ws={ws} roomID={roomID} userID={Number(currentUser.id)} />
+          )}
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full p-2">
-      <div className="w-full h-full flex justify-center items-center bg-gray-400">
-        시작 대기중
-      </div>
-    </div>
+    </>
   );
 };
 

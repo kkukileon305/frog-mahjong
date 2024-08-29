@@ -1,14 +1,18 @@
 "use client";
 
+import { motion } from "framer-motion";
 import {
   GameInfo,
   LoanBody,
   LoanRequest,
+  RoomOutBody,
+  RoomOutRequest,
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { FaChessQueen } from "react-icons/fa6";
 
 type OtherCard = {
   user?: UserSocket;
@@ -19,6 +23,8 @@ type OtherCard = {
   gameInfo: GameInfo | null;
   roomID: number;
   setIsLoanEnd: Dispatch<SetStateAction<boolean>>;
+  currentUser: UserSocket;
+  isStarted: boolean;
 };
 
 const OtherCards = ({
@@ -29,7 +35,16 @@ const OtherCards = ({
   setIsLoanSelectMode,
   roomID,
   setIsLoanEnd,
+  currentUser,
+  isStarted,
 }: OtherCard) => {
+  // TODO: 강퇴기능
+
+  const lastCard =
+    user?.discardedCards &&
+    user?.discardedCards[user.discardedCards.length - 1];
+  const lastCardImage = cards.find((ci) => ci.id === lastCard?.cardID);
+
   const userDiscardImages = user?.discardedCards?.map(
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
@@ -72,41 +87,151 @@ const OtherCards = ({
     ? gameInfo.loanInfo.userID === user?.id
     : user?.turnNumber === gameInfo?.playTurn;
 
-  return (
-    <button
-      disabled={!isLoanSelectMode}
-      onClick={onLoanCard}
-      className={`flex flex-col w-full border-t p-2 border-black ${
-        isLoanSelectMode && "hover:bg-white/50"
-      } ${isActive ? "bg-red-400" : "bg-green-500"}`}
-    >
-      <p>
-        {user?.name}의 버린패 {user?.turnNumber}
-      </p>
+  if (!user) {
+    return <div className="h-1/2" />;
+  }
 
-      <div className="flex flex-col w-full gap-2 mt-2">
-        {userDiscardImages ? (
-          <div className="min-w-[60px] min-h-[80px] flex gap-2 border p-2 rounded flex-wrap">
-            {userDiscardImages?.map((ci) => (
-              <div key={ci.id}>
-                <Image
-                  src={ci.imageSrc}
-                  alt={ci.color + ci.name}
-                  width={40}
-                  height={58}
-                />
-              </div>
-            ))}
+  const onClick = () => {
+    const body: RoomOutBody = {
+      targetUserID: user.id,
+    };
+
+    const request: RoomOutRequest = {
+      userID: currentUser.id,
+      roomID: Number(roomID),
+      event: "ROOM_OUT",
+      message: JSON.stringify(body),
+    };
+
+    ws?.send(JSON.stringify(request));
+  };
+
+  if (user.id === currentUser.id) {
+    return (
+      <div className="border-4 flex flex-col overflow-hidden bg-white/20 border-white rounded-xl text-white w-full h-1/2">
+        <div
+          className={`flex items-center justify-between w-full p-2 ${
+            isActive && "bg-red-500"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-12 h-12 relative border-white border rounded-full">
+              {user.isOwner && (
+                <FaChessQueen className="absolute right-0 top-0" />
+              )}
+            </div>
+            <div>
+              <p className="font-bold text-xl">{user.name}</p>
+              <p>{user.coin} Point</p>
+            </div>
           </div>
-        ) : (
-          <div className="h-20 flex justify-center items-center border p-2 rounded">
-            <p className="text-center">
-              아직 버린 패가 <br /> 없습니다
+
+          {!user.isOwner && user.playerState !== "play" && (
+            <p className="font-bold text-xl">
+              {user.playerState === "ready" ? "준비" : "대기"}
             </p>
+          )}
+
+          {lastCardImage && (
+            <Image
+              src={lastCardImage.imageSrc}
+              alt={lastCardImage.color + lastCardImage.name}
+              width={40}
+              height={58}
+              className={`${isLoanSelectMode && "hover:bg-white/50"}`}
+            />
+          )}
+        </div>
+
+        <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
+          {userDiscardImages?.map((ci) => (
+            <div key={ci.id}>
+              <Image
+                src={ci.imageSrc}
+                alt={ci.color + ci.name}
+                width={40}
+                height={58}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      exit={{
+        opacity: 0,
+        y: 30,
+      }}
+      className="border-4 flex flex-col overflow-hidden bg-white/20 border-white rounded-xl text-white w-full h-1/2"
+    >
+      <div
+        className={`flex items-center justify-between w-full p-2 ${
+          isActive && "bg-red-500"
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <div className="w-12 h-12 relative border-white border rounded-full">
+            {user.isOwner && (
+              <FaChessQueen className="absolute right-0 top-0" />
+            )}
           </div>
+          <div>
+            <p className="font-bold text-xl">{user.name}</p>
+            <p>{user.coin} Point</p>
+          </div>
+        </div>
+
+        {!user.isOwner && user.playerState !== "play" && (
+          <p className="font-bold text-xl">
+            {user.playerState === "ready" ? "준비" : "대기"}
+          </p>
+        )}
+
+        {lastCardImage && (
+          <button disabled={!isLoanSelectMode} onClick={onLoanCard}>
+            <Image
+              src={lastCardImage.imageSrc}
+              alt={lastCardImage.color + lastCardImage.name}
+              width={40}
+              height={58}
+            />
+          </button>
         )}
       </div>
-    </button>
+      <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
+        {userDiscardImages?.map((ci) => (
+          <div key={ci.id}>
+            <Image
+              src={ci.imageSrc}
+              alt={ci.color + ci.name}
+              width={40}
+              height={58}
+              className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
+            />
+          </div>
+        ))}
+      </div>
+
+      {!isStarted && currentUser.isOwner && user.id !== currentUser.id && (
+        <button
+          onClick={onClick}
+          className="text-black px-1 rounded-xl bg-white text-sm"
+        >
+          강퇴
+        </button>
+      )}
+    </motion.div>
   );
 };
 

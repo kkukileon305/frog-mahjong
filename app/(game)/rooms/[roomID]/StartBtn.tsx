@@ -21,7 +21,7 @@ const StartBtn = ({ gameInfo, ws, roomID }: StartBtnProps) => {
 
   return (
     <button
-      className={`text-white p-2 w-full bg-blue-400 disabled:bg-gray-400`}
+      className={`rounded-xl font-bold text-white p-2 w-full bg-blue-400 disabled:bg-gray-400`}
       onClick={onClick}
       disabled={!gameInfo?.allReady}
     >

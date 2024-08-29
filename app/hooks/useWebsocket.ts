@@ -103,8 +103,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
           } else if (data.errorInfo?.type === ERR_INTERNAL_SERVER) {
             setIsNoRoom(true);
           }
-
-          // TODO: 진행중인 방 에러
         } else if (eventName === QUIT_GAME) {
           // 서버에서 먼저 끊어서 안옴
           // 나중에 수정해야할 거 같음

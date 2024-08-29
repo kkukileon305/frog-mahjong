@@ -20,6 +20,8 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
   const [bonuses, setBonuses] = useState<ScoreResult>();
   const [isLoading, setIsLoading] = useState(true);
 
+  // TODO:winner api 변경됨, 이 winner는 단순히 코인이 늘어난 사람
+
   const winner = result.afterUsers?.find(
     (au) => au.coin > result.beforeUsers?.find((bu) => bu.id === au.id)?.coin!
   );
