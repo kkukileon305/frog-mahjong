@@ -33,8 +33,6 @@ const UserList = ({
     ws?.send(JSON.stringify(request));
   };
 
-  // TODO: 게임중 강퇴막기
-
   return (
     <motion.div
       className="w-1/4 p-2 h-full"

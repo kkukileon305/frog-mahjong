@@ -198,7 +198,60 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
             )}
 
             {!winner && (
-              <p className="font-bold text-2xl text-center my-8">무승부</p>
+              <div className="my-4">
+                <p className="bg-red-400 py-2 rounded-full mb-4 font-bold text-center text-white">
+                  무승부
+                </p>
+
+                <ul className="mb-8">
+                  {losers?.map((lo) => (
+                    <li className="flex gap-8 justify-center mb-8" key={lo.id}>
+                      <div className="w-[120px] flex flex-col items-center gap-2">
+                        <p className="text-2xl font-bold">{lo.name}</p>
+                        <p className="font-bold text-red-400 text-2xl">
+                          {lo.coin}point
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex gap-2">
+                          {lo.cards
+                            ?.slice(0, 3)
+                            ?.map((wc) =>
+                              cards.find((ac) => ac.id === wc.cardID)
+                            )
+                            .map((card, index) => (
+                              <Image
+                                src={card?.imageSrc!}
+                                alt={card?.color! + card?.name!}
+                                width={40}
+                                height={58}
+                                draggable={false}
+                                key={card?.id!}
+                              />
+                            ))}
+                        </div>
+                        <div className="flex gap-2">
+                          {lo.cards
+                            ?.slice(3, 6)
+                            ?.map((wc) =>
+                              cards.find((ac) => ac.id === wc.cardID)
+                            )
+                            .map((card, index) => (
+                              <Image
+                                src={card?.imageSrc!}
+                                alt={card?.color! + card?.name!}
+                                width={40}
+                                height={58}
+                                draggable={false}
+                                key={card?.id!}
+                              />
+                            ))}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </>
         ) : (
