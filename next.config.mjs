@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-  missingSuspenseWithCSRBailout: false,
+  reactStrictMode: false
 };
 
 export default nextConfig;

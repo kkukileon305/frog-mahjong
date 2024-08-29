@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axiosInstance, { TokenType } from "@/utils/axios";
 import { setCookie } from "cookies-next";
 
-const Page = () => {
+const InnerPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -54,6 +54,14 @@ const Page = () => {
         <p className="text-3xl font-bold">인증중</p>
       </div>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense>
+      <InnerPage />
+    </Suspense>
   );
 };
 
