@@ -26,6 +26,7 @@ import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
+import ChatForm from "@/app/(game)/rooms/[roomID]/game/ChatForm";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -343,6 +344,10 @@ const Game = ({
         </div>
       </div>
       <div className="flex h-10 justify-end bg-green-600">
+        <div className="w-[calc(100%-400px)] p-1">
+          <ChatForm ws={ws} roomID={roomID} currentUser={currentUser} />
+        </div>
+
         <button
           onClick={() => setIsHelpModal(true)}
           className="w-[200px] bg-green-400 font-bold text-white"
