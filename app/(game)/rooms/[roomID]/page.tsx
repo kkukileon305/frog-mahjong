@@ -8,6 +8,8 @@ import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
 import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
 import JoinError from "@/app/(game)/rooms/[roomID]/JoinError";
 import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
+import { useEffect } from "react";
+import useDetectNavigation from "@/app/hooks/useDetectNavigation";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -37,6 +39,8 @@ const Page = ({
     setIsLoanFailed,
     isLoanFailed,
   } = useWebsocket(roomID, password);
+
+  useDetectNavigation();
 
   const currentUser = users?.find((user) => user.id === Number(userID));
 
