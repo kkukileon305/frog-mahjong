@@ -33,6 +33,7 @@ type MyCardProps = {
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
   isUserLoan: boolean;
   isLoanEnd: boolean;
+  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
 };
 
 const MyCardBoard = ({
@@ -64,11 +65,6 @@ const MyCardBoard = ({
   const [items, setItems] = useState<CardImage[]>(userCardImages || []);
 
   const isFullSixCard = currentUser?.cards?.length === 6;
-
-  const userDiscardImages = currentUser?.discardedCards?.map(
-    (card) =>
-      cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
-  );
 
   const calScore = async (values: CardImage[]) => {
     if (values.length === 6) {

@@ -50,6 +50,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isShowModal: false,
   });
   const [kicked, setKicked] = useState<boolean>(false);
+  const [winner, setWinner] = useState<UserSocket | null>(null);
 
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
@@ -123,11 +124,16 @@ const useWebsocket = (roomID: string, password: string = "") => {
         ) {
           setIsStarted(false);
 
+          const newWinner =
+            data.users?.find((us) => us?.cards?.length === 6) || null;
+
           setResult((prev) => ({
             beforeUsers: prev.beforeUsers,
             afterUsers: data.users,
             isShowModal: true,
           }));
+
+          setWinner(newWinner);
         } else if (eventName === ROOM_OUT) {
           const currentUser = data.users?.find(
             (user) => user.id === Number(userID)
@@ -164,6 +170,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isProgress,
     isFullPlayer,
     isNoRoom,
+    winner,
+    setWinner,
   };
 };
 

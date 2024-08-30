@@ -12,10 +12,9 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
-import OtherCards from "@/app/(game)/rooms/[roomID]/game/OtherCards";
+import CardPanel from "@/app/(game)/rooms/[roomID]/game/CardPanel";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
 import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
@@ -28,6 +27,7 @@ type GameProps = {
   gameInfo: GameInfo | null;
   currentUser: UserSocket;
   isStarted: boolean;
+  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
 };
 
 const Game = ({
@@ -37,6 +37,7 @@ const Game = ({
   roomID,
   isStarted,
   users,
+  setWinner,
 }: GameProps) => {
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
@@ -178,7 +179,7 @@ const Game = ({
       <div className="w-full h-[calc(100%-40px)] bg-green-500 flex gap-4 p-8">
         <div className="w-[304px] h-full flex flex-col gap-4">
           {userWithoutMe && (
-            <OtherCards
+            <CardPanel
               user={userWithoutMe[0]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -193,7 +194,7 @@ const Game = ({
           )}
 
           {userWithoutMe && (
-            <OtherCards
+            <CardPanel
               user={userWithoutMe[1]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -282,6 +283,7 @@ const Game = ({
               setIsLoanSelectMode={setIsLoanSelectMode}
               isUserLoan={isUserLoan}
               isLoanEnd={isLoanEnd}
+              setWinner={setWinner}
             />
           </div>
         ) : (
@@ -298,7 +300,7 @@ const Game = ({
 
         <div className="w-[304px] h-full flex flex-col gap-4">
           {userWithoutMe && (
-            <OtherCards
+            <CardPanel
               user={userWithoutMe[2]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -312,7 +314,7 @@ const Game = ({
             />
           )}
 
-          <OtherCards
+          <CardPanel
             user={currentUser}
             playTurn={gameInfo?.playTurn}
             isLoanSelectMode={isLoanSelectMode}

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import useWebsocket from "@/app/hooks/useWebsocket";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
 import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
@@ -32,6 +31,8 @@ const Page = ({
     isProgress,
     isFullPlayer,
     isNoRoom,
+    winner,
+    setWinner,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -67,7 +68,13 @@ const Page = ({
     <div className="flex h-dvh">
       <div className="w-full flex flex-col justify-between">
         {result.isShowModal && (
-          <ResultModal result={result} setResult={setResult} roomID={roomID} />
+          <ResultModal
+            result={result}
+            setResult={setResult}
+            roomID={roomID}
+            winner={winner}
+            setWinner={setWinner}
+          />
         )}
 
         <Game
@@ -77,6 +84,7 @@ const Page = ({
           currentUser={currentUser}
           gameInfo={gameInfo}
           isStarted={isStarted}
+          setWinner={setWinner}
         />
       </div>
     </div>

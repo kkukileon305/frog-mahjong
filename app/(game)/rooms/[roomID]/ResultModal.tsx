@@ -5,24 +5,31 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import cards from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
-import axiosInstance, { ScoreResult } from "@/utils/axios";
+import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getBonusName from "@/utils/getBonusName";
 import mergeBonus from "@/utils/mergeBonus";
+import { UserSocket } from "@/utils/socketTypes";
 
 type ResultProps = {
   result: GameResult;
   setResult: Dispatch<SetStateAction<GameResult>>;
   roomID: string;
+  winner: UserSocket | null;
+  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
 };
 
-const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
-  const [bonuses, setBonuses] = useState<ScoreResult>();
+const ResultModal = ({
+  setResult,
+  result,
+  roomID,
+  winner,
+  setWinner,
+}: ResultProps) => {
+  const [bonuses, setBonuses] = useState<ScoreEndResult>();
   const [isLoading, setIsLoading] = useState(true);
 
   // TODO:winner api 변경됨, 이 winner는 단순히 코인이 늘어난 사람
-
-  const winner = result.afterUsers?.find((au) => au.id === bonuses?.winner);
 
   const winnerBeforeCoin = result.beforeUsers?.find(
     (bu) => bu.id === winner?.id
@@ -43,7 +50,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
   const getBonus = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axiosInstance.post<ScoreResult>(
+      const { data } = await axiosInstance.post<ScoreEndResult>(
         "/v0.1/game/result",
         {
           cards: winner?.cards?.map((ci) => ({ cardID: ci.cardID })),
