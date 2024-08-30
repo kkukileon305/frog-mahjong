@@ -7,6 +7,7 @@ import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
 import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
 import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
 import JoinError from "@/app/(game)/rooms/[roomID]/JoinError";
+import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -33,6 +34,8 @@ const Page = ({
     isNoRoom,
     winner,
     setWinner,
+    setIsLoanFailed,
+    isLoanFailed,
   } = useWebsocket(roomID, password);
 
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -67,6 +70,14 @@ const Page = ({
   return (
     <div className="flex h-dvh">
       <div className="w-full flex flex-col justify-between">
+        {isLoanFailed !== 0 && (
+          <LoanFailedModal
+            isLoanFailed={isLoanFailed}
+            setIsLoanFailed={setIsLoanFailed}
+            users={users}
+          />
+        )}
+
         {result.isShowModal && (
           <ResultModal
             result={result}

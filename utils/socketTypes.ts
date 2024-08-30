@@ -59,6 +59,7 @@ export interface GameInfo {
   allReady: boolean;
   isLoanAllowed: boolean;
   loanInfo: LoanInfo | null;
+  failedLoanUserID: number;
 }
 
 export interface LoanInfo {

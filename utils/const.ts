@@ -12,6 +12,7 @@ export const LOAN = "LOAN";
 export const GAME_OVER = "GAME_OVER";
 export const SUCCESS_LOAN = "SUCCESS_LOAN";
 export const ROOM_OUT = "ROOM_OUT";
+export const FAILED_LOAN = "FAILED_LOAN";
 
 // errors
 export const ERR_WRONG_PASSWORD = "ERR_WRONG_PASSWORD";

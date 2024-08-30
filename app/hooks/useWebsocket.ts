@@ -15,6 +15,7 @@ import {
   ERR_GAME_IN_PROGRESS,
   ERR_ROOM_FULL,
   ERR_INTERNAL_SERVER,
+  FAILED_LOAN,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -40,6 +41,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
   const [isProgress, setIsProgress] = useState(false);
   const [isFullPlayer, setIsFullPlayer] = useState(false);
   const [isNoRoom, setIsNoRoom] = useState(false);
+  const [isLoanFailed, setIsLoanFailed] = useState(0);
 
   // room state
   const [gameState, setGameState] = useState<SocketResponseBody | null>(null);
@@ -93,6 +95,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
           return;
         }
 
+        if (eventName !== FAILED_LOAN) {
+          setIsLoanFailed(0);
+        }
+
         if (eventName === JOIN) {
           if (data.errorInfo?.type === ERR_WRONG_PASSWORD) {
             // password 실패
@@ -104,9 +110,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
           } else if (data.errorInfo?.type === ERR_INTERNAL_SERVER) {
             setIsNoRoom(true);
           }
-        } else if (eventName === QUIT_GAME) {
-          // 서버에서 먼저 끊어서 안옴
-          // 나중에 수정해야할 거 같음
+        } else if (eventName === FAILED_LOAN) {
+          setIsLoanFailed(data.gameInfo?.failedLoanUserID || 0);
         } else if (eventName === START) {
           if (data.errorInfo === null) {
             setIsStarted(true);
@@ -172,6 +177,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isNoRoom,
     winner,
     setWinner,
+    isLoanFailed,
+    setIsLoanFailed,
   };
 };
 
