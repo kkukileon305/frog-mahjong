@@ -210,22 +210,21 @@ const Game = ({
         </div>
 
         {isStarted ? (
-          <div className="w-[calc(100%-608px-32px)] py-8">
+          <div className="w-[calc(100%-608px-32px)] py-4">
             <div className="h-[60px] font-bold text-white text-3xl justify-center items-center flex gap-2">
               {gameInfo?.loanInfo === null ? (
                 <>
-                  {!isOneSelectedCard &&
-                    !isFullSelectedCards &&
-                    !isFullSixCard &&
-                    isUserTurn && (
-                      <p>
-                        {currentUser.cards === null
-                          ? gameInfo.dora === null
-                            ? "도라를 선택해주세요"
-                            : "가져올 패 5개를 선택해주세요"
-                          : "가져올 패 1개를 선택해주세요"}
-                      </p>
-                    )}
+                  {!isFullSixCard && isUserTurn && (
+                    <p>
+                      {currentUser.cards === null
+                        ? gameInfo.dora === null
+                          ? "도라를 선택해주세요"
+                          : "가져올 패 5개를 선택해주세요"
+                        : "가져올 패 1개를 선택해주세요"}
+                    </p>
+                  )}
+                  {isFullSixCard &&
+                    "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요"}
 
                   {!isUserTurn && <p>차례를 기다려주세요</p>}
                 </>
@@ -236,7 +235,21 @@ const Game = ({
                     : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
                 </p>
               )}
+            </div>
 
+            <div className="w-full h-[calc(100%-260px)] flex justify-center">
+              <ShuffleLeftCards
+                leftCards={leftCards}
+                isUserTurn={isUserTurn}
+                isFullSixCard={isFullSixCard}
+                onSelectCard={onSelectCard}
+                selectedCards={selectedCards}
+                isLoan={!!gameInfo?.loanInfo}
+                onGameOver={onGameOver}
+              />
+            </div>
+
+            <div className="h-[80px] flex justify-center items-center text-white font-bold">
               {isFullSelectedCards && (
                 <button
                   onClick={getCards}
@@ -256,18 +269,6 @@ const Game = ({
                   패 가져오기
                 </button>
               )}
-            </div>
-
-            <div className="w-full h-[calc(100%-180px)] flex justify-center">
-              <ShuffleLeftCards
-                leftCards={leftCards}
-                isUserTurn={isUserTurn}
-                isFullSixCard={isFullSixCard}
-                onSelectCard={onSelectCard}
-                selectedCards={selectedCards}
-                isLoan={!!gameInfo?.loanInfo}
-                onGameOver={onGameOver}
-              />
             </div>
 
             <MyCardBoard
