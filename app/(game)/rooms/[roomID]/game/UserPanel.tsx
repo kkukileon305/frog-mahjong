@@ -11,9 +11,16 @@ import {
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
-import { Dispatch, MouseEventHandler, SetStateAction, useEffect } from "react";
+import React, {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from "react";
 import { FaChessQueen } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
+import cardChapWavSrc from "@/public/audios/card_chap.wav";
 
 type OtherCard = {
   user?: UserSocket;
@@ -39,6 +46,8 @@ const UserPanel = ({
   currentUser,
   isStarted,
 }: OtherCard) => {
+  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+
   const lastCard =
     user?.discardedCards &&
     user?.discardedCards[user.discardedCards.length - 1];
@@ -73,6 +82,8 @@ const UserPanel = ({
 
       setIsLoanEnd(true);
       setIsLoanSelectMode(false);
+
+      cardChapAudioRef.current?.play();
     }
   };
 
@@ -249,6 +260,7 @@ const UserPanel = ({
             </div>
           ))}
       </div>
+      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
     </motion.div>
   );
 };

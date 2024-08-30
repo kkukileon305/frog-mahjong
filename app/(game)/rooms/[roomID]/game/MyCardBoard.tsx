@@ -57,9 +57,9 @@ const MyCardBoard = ({
   isUserLoan,
   isLoanEnd,
 }: MyCardProps) => {
-  // 패 조합 점수
   const cardChapAudioRef = useRef<HTMLAudioElement>(null);
 
+  // 패 조합 점수
   const [scoreResult, setScoreResult] = useState<ScoreResult>({
     score: 0,
     bonuses: [],
