@@ -12,7 +12,7 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
-import CardPanel from "@/app/(game)/rooms/[roomID]/game/CardPanel";
+import UserPanel from "@/app/(game)/rooms/[roomID]/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
@@ -179,7 +179,7 @@ const Game = ({
       <div className="w-full h-[calc(100%-40px)] bg-green-500 flex gap-4 p-8">
         <div className="w-[304px] h-full flex flex-col gap-4">
           {userWithoutMe && (
-            <CardPanel
+            <UserPanel
               user={userWithoutMe[0]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -194,7 +194,7 @@ const Game = ({
           )}
 
           {userWithoutMe && (
-            <CardPanel
+            <UserPanel
               user={userWithoutMe[1]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -300,7 +300,7 @@ const Game = ({
 
         <div className="w-[304px] h-full flex flex-col gap-4">
           {userWithoutMe && (
-            <CardPanel
+            <UserPanel
               user={userWithoutMe[2]}
               playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
@@ -314,7 +314,7 @@ const Game = ({
             />
           )}
 
-          <CardPanel
+          <UserPanel
             user={currentUser}
             playTurn={gameInfo?.playTurn}
             isLoanSelectMode={isLoanSelectMode}

@@ -27,7 +27,7 @@ type OtherCard = {
   isStarted: boolean;
 };
 
-const CardPanel = ({
+const UserPanel = ({
   user,
   ws,
   gameInfo,
@@ -85,7 +85,7 @@ const CardPanel = ({
 
   const isActive = gameInfo?.loanInfo
     ? gameInfo.loanInfo.userID === user?.id
-    : user?.turnNumber === gameInfo?.playTurn;
+    : user?.turnNumber === gameInfo?.playTurn && isStarted;
 
   if (!user) {
     return <div className="h-1/2" />;
@@ -132,7 +132,7 @@ const CardPanel = ({
             </p>
           )}
 
-          {lastCardImage && (
+          {isStarted && lastCardImage && (
             <Image
               src={lastCardImage.imageSrc}
               alt={lastCardImage.color + lastCardImage.name}
@@ -144,16 +144,17 @@ const CardPanel = ({
         </div>
 
         <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
-          {userDiscardImages?.map((ci) => (
-            <div key={ci.id}>
-              <Image
-                src={ci.imageSrc}
-                alt={ci.color + ci.name}
-                width={40}
-                height={58}
-              />
-            </div>
-          ))}
+          {isStarted &&
+            userDiscardImages?.map((ci) => (
+              <div key={ci.id}>
+                <Image
+                  src={ci.imageSrc}
+                  alt={ci.color + ci.name}
+                  width={40}
+                  height={58}
+                />
+              </div>
+            ))}
         </div>
       </div>
     );
@@ -198,7 +199,7 @@ const CardPanel = ({
           </p>
         )}
 
-        {lastCardImage && (
+        {isStarted && lastCardImage && (
           <button disabled={!isLoanSelectMode} onClick={onLoanCard}>
             <Image
               src={lastCardImage.imageSrc}
@@ -210,17 +211,18 @@ const CardPanel = ({
         )}
       </div>
       <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
-        {userDiscardImages?.map((ci) => (
-          <div key={ci.id}>
-            <Image
-              src={ci.imageSrc}
-              alt={ci.color + ci.name}
-              width={40}
-              height={58}
-              className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
-            />
-          </div>
-        ))}
+        {isStarted &&
+          userDiscardImages?.map((ci) => (
+            <div key={ci.id}>
+              <Image
+                src={ci.imageSrc}
+                alt={ci.color + ci.name}
+                width={40}
+                height={58}
+                className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
+              />
+            </div>
+          ))}
       </div>
 
       {!isStarted && currentUser.isOwner && user.id !== currentUser.id && (
@@ -235,4 +237,4 @@ const CardPanel = ({
   );
 };
 
-export default CardPanel;
+export default UserPanel;

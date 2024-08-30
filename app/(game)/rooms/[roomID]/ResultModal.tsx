@@ -29,8 +29,6 @@ const ResultModal = ({
   const [bonuses, setBonuses] = useState<ScoreEndResult>();
   const [isLoading, setIsLoading] = useState(true);
 
-  // TODO:winner api 변경됨, 이 winner는 단순히 코인이 늘어난 사람
-
   const winnerBeforeCoin = result.beforeUsers?.find(
     (bu) => bu.id === winner?.id
   )?.coin;
@@ -45,6 +43,7 @@ const ResultModal = ({
       isShowModal: false,
       beforeUsers: null,
     });
+    setWinner(null);
   };
 
   const getBonus = async () => {
