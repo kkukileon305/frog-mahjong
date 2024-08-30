@@ -11,8 +11,9 @@ import {
 } from "@/utils/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction, useEffect } from "react";
 import { FaChessQueen } from "react-icons/fa6";
+import { IoMdExit } from "react-icons/io";
 
 type OtherCard = {
   user?: UserSocket;
@@ -38,8 +39,6 @@ const UserPanel = ({
   currentUser,
   isStarted,
 }: OtherCard) => {
-  // TODO: 강퇴기능
-
   const lastCard =
     user?.discardedCards &&
     user?.discardedCards[user.discardedCards.length - 1];
@@ -91,7 +90,7 @@ const UserPanel = ({
     return <div className="h-1/2" />;
   }
 
-  const onClick = () => {
+  const onClick: MouseEventHandler<HTMLElement> = (e) => {
     const body: RoomOutBody = {
       targetUserID: user.id,
     };
@@ -182,10 +181,36 @@ const UserPanel = ({
         }`}
       >
         <div className="flex items-center gap-2">
-          <div className="w-12 h-12 relative border-white border rounded-full">
+          <div
+            tabIndex={0}
+            className="w-12 h-12 relative border-white border rounded-full group cursor-pointer"
+          >
             {user.isOwner && (
               <FaChessQueen className="absolute right-0 top-0" />
             )}
+
+            <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
+              <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
+              <div
+                className="bg-white w-[240px] rounded -translate-x-2 text-black"
+                onClick={(e) => e.preventDefault()}
+              >
+                <div className="p-2 border-b">
+                  <p className="font-bold">{user.name}</p>
+                  <span className="">{user.email}</span>
+                </div>
+                {!isStarted &&
+                  currentUser.isOwner &&
+                  user.id !== currentUser.id && (
+                    <div
+                      onClick={onClick}
+                      className="cursor-pointer p-2 w-full text-red-400 hover:bg-gray-400 flex items-center gap-2 font-bold"
+                    >
+                      강퇴 <IoMdExit />
+                    </div>
+                  )}
+              </div>
+            </div>
           </div>
           <div>
             <p className="font-bold text-xl">{user.name}</p>
@@ -224,15 +249,6 @@ const UserPanel = ({
             </div>
           ))}
       </div>
-
-      {!isStarted && currentUser.isOwner && user.id !== currentUser.id && (
-        <button
-          onClick={onClick}
-          className="text-black px-1 rounded-xl bg-white text-sm"
-        >
-          강퇴
-        </button>
-      )}
     </motion.div>
   );
 };
