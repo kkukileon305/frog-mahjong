@@ -140,6 +140,7 @@ const Game = ({
         };
 
         ws?.send(JSON.stringify(request));
+        cardChapAudioRef.current?.play();
       }
     }
   };
