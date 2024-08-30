@@ -15,10 +15,17 @@ import {
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/getPrevTurn";
+import cardChapWavSrc from "@/public/audios/card_chap.wav";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -51,6 +58,8 @@ const MyCardBoard = ({
   isLoanEnd,
 }: MyCardProps) => {
   // 패 조합 점수
+  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+
   const [scoreResult, setScoreResult] = useState<ScoreResult>({
     score: 0,
     bonuses: [],
@@ -139,6 +148,8 @@ const MyCardBoard = ({
         score: 0,
         bonuses: [],
       });
+
+      cardChapAudioRef.current?.play();
     }
   };
 
@@ -182,8 +193,6 @@ const MyCardBoard = ({
     }
   };
 
-  const isActive = gameInfo?.loanInfo ? isUserLoan : isUserTurn;
-
   const onSuteru = () => {
     if (isUserLoan) {
       if (gameInfo?.loanInfo?.cardID) {
@@ -200,6 +209,8 @@ const MyCardBoard = ({
         };
 
         ws?.send(JSON.stringify(req));
+
+        cardChapAudioRef.current?.play();
       }
     } else {
       setDiscardMode(!discardMode);
@@ -289,6 +300,7 @@ const MyCardBoard = ({
           </div>
         </div>
       </div>
+      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
     </div>
   );
 };

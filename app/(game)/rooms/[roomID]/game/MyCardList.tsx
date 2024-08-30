@@ -2,10 +2,10 @@
 
 import { Reorder } from "framer-motion";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { IoRemoveCircle } from "react-icons/io5";
-import { getCookie } from "cookies-next";
+import cardMoveSrc from "@/public/audios/card_move.wav";
 
 type MyCardListProps = {
   items: CardImage[];
@@ -23,8 +23,11 @@ const MyCardList = ({
   calScore,
   setItems,
 }: MyCardListProps) => {
+  const cardMoveAudioRef = useRef<HTMLAudioElement>(null);
+
   const onDragEnd = async () => {
     calScore(items);
+    cardMoveAudioRef.current?.play();
   };
 
   if (discardMode) {
@@ -56,29 +59,32 @@ const MyCardList = ({
   }
 
   return (
-    <Reorder.Group
-      className="flex gap-2"
-      axis="x"
-      values={items}
-      onReorder={setItems}
-    >
-      {items.map((item, i) => (
-        <Reorder.Item
-          className={`cursor-pointer ${i === 2 && "mr-4"}`}
-          key={item.id}
-          value={item}
-          onDragEnd={onDragEnd}
-        >
-          <Image
-            src={item.imageSrc}
-            alt={item.color + item.name}
-            width={40}
-            height={58}
-            draggable={false}
-          />
-        </Reorder.Item>
-      ))}
-    </Reorder.Group>
+    <>
+      <Reorder.Group
+        className="flex gap-2"
+        axis="x"
+        values={items}
+        onReorder={setItems}
+      >
+        {items.map((item, i) => (
+          <Reorder.Item
+            className={`cursor-pointer ${i === 2 && "mr-4"}`}
+            key={item.id}
+            value={item}
+            onDragEnd={onDragEnd}
+          >
+            <Image
+              src={item.imageSrc}
+              alt={item.color + item.name}
+              width={40}
+              height={58}
+              draggable={false}
+            />
+          </Reorder.Item>
+        ))}
+      </Reorder.Group>
+      <audio src={cardMoveSrc} hidden ref={cardMoveAudioRef} />
+    </>
   );
 };
 

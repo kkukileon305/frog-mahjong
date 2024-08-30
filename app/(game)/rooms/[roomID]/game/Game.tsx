@@ -14,11 +14,18 @@ import {
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import UserPanel from "@/app/(game)/rooms/[roomID]/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
 import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
 import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
+import cardChapWavSrc from "@/public/audios/card_chap.wav";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -39,6 +46,8 @@ const Game = ({
   users,
   setWinner,
 }: GameProps) => {
+  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
   const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.id;
@@ -94,6 +103,8 @@ const Game = ({
 
       setSelectedCards([]);
     }
+
+    cardChapAudioRef.current?.play();
   };
 
   const onSelectCard = (card: CardImage) => {
@@ -165,8 +176,6 @@ const Game = ({
         allUserDiscardedIds?.includes(card.id)
       )
   );
-
-  const doraImage = cards.find((ci) => ci.id === gameInfo?.dora?.cardID);
 
   useEffect(() => {
     setIsLoanEnd(false);
@@ -343,6 +352,8 @@ const Game = ({
           )}
         </div>
       </div>
+
+      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
     </>
   );
 };
