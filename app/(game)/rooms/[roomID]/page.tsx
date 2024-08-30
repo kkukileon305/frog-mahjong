@@ -8,8 +8,9 @@ import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
 import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
 import JoinError from "@/app/(game)/rooms/[roomID]/JoinError";
 import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useDetectNavigation from "@/app/hooks/useDetectNavigation";
+import HelpModal from "@/app/(game)/rooms/[roomID]/HelpModal";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -39,6 +40,12 @@ const Page = ({
     setIsLoanFailed,
     isLoanFailed,
   } = useWebsocket(roomID, password);
+
+  const [isHelpModal, setIsHelpModal] = useState(false);
+
+  useEffect(() => {
+    setIsHelpModal(false);
+  }, [gameInfo]);
 
   useDetectNavigation();
 
@@ -92,6 +99,8 @@ const Page = ({
           />
         )}
 
+        {isHelpModal && <HelpModal setIsHelpModal={setIsHelpModal} />}
+
         <Game
           ws={ws}
           roomID={roomID}
@@ -100,6 +109,7 @@ const Page = ({
           gameInfo={gameInfo}
           isStarted={isStarted}
           setWinner={setWinner}
+          setIsHelpModal={setIsHelpModal}
         />
       </div>
     </div>

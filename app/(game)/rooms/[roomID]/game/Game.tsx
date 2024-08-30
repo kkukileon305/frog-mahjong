@@ -35,6 +35,7 @@ type GameProps = {
   currentUser: UserSocket;
   isStarted: boolean;
   setWinner: Dispatch<SetStateAction<UserSocket | null>>;
+  setIsHelpModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const Game = ({
@@ -45,6 +46,7 @@ const Game = ({
   isStarted,
   users,
   setWinner,
+  setIsHelpModal,
 }: GameProps) => {
   const cardChapAudioRef = useRef<HTMLAudioElement>(null);
 
@@ -341,7 +343,10 @@ const Game = ({
         </div>
       </div>
       <div className="flex h-10 justify-end bg-green-600">
-        <button className="w-[200px] bg-green-400 font-bold text-white">
+        <button
+          onClick={() => setIsHelpModal(true)}
+          className="w-[200px] bg-green-400 font-bold text-white"
+        >
           설명서
         </button>
         <div className="w-[200px]">

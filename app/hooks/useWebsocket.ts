@@ -16,6 +16,7 @@ import {
   ERR_ROOM_FULL,
   ERR_INTERNAL_SERVER,
   FAILED_LOAN,
+  CHAT,
 } from "@/utils/const";
 import {
   GameInfo,
@@ -83,10 +84,16 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
       ws.addEventListener("message", (event) => {
         const body = event.data;
-        const eventName = JSON.parse(body).event;
+        const parsedBody = JSON.parse(body);
+        const eventName = parsedBody.event;
 
-        const data = JSON.parse(JSON.parse(body).message) as SocketResponseBody;
+        if (eventName === CHAT) {
+          console.log(parsedBody);
 
+          return;
+        }
+
+        const data = JSON.parse(parsedBody.message) as SocketResponseBody;
         setGameState(data);
 
         if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {

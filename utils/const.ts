@@ -13,6 +13,7 @@ export const GAME_OVER = "GAME_OVER";
 export const SUCCESS_LOAN = "SUCCESS_LOAN";
 export const ROOM_OUT = "ROOM_OUT";
 export const FAILED_LOAN = "FAILED_LOAN";
+export const CHAT = "CHAT";
 
 // errors
 export const ERR_WRONG_PASSWORD = "ERR_WRONG_PASSWORD";
