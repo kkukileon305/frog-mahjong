@@ -240,7 +240,7 @@ const Game = ({
                 <button
                   onClick={getCards}
                   disabled={!isFullSelectedCards}
-                  className="bg-white p-1 border border-black rounded-full"
+                  className="py-1 px-4 border-2 border-white rounded-full"
                 >
                   분배 받기
                 </button>
@@ -250,7 +250,7 @@ const Game = ({
                 <button
                   onClick={getCards}
                   disabled={!isOneSelectedCard}
-                  className="bg-white p-1 border border-black rounded-full"
+                  className="py-1 px-4 border-2 border-white rounded-full"
                 >
                   패 가져오기
                 </button>

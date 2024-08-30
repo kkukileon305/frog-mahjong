@@ -22,9 +22,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
 
   // TODO:winner api 변경됨, 이 winner는 단순히 코인이 늘어난 사람
 
-  const winner = result.afterUsers?.find(
-    (au) => au.coin > result.beforeUsers?.find((bu) => bu.id === au.id)?.coin!
-  );
+  const winner = result.afterUsers?.find((au) => au.id === bonuses?.winner);
 
   const winnerBeforeCoin = result.beforeUsers?.find(
     (bu) => bu.id === winner?.id
@@ -43,13 +41,6 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
   };
 
   const getBonus = async () => {
-    if (!winner) {
-      setIsLoading(false);
-      return;
-    }
-
-    if (winner?.cards?.length !== 6) return;
-
     setIsLoading(true);
     try {
       const { data } = await axiosInstance.post<ScoreResult>(
@@ -78,7 +69,7 @@ const ResultModal = ({ setResult, result, roomID }: ResultProps) => {
   }, []);
 
   return (
-    <div className="absolute flex justify-center items-center w-full h-full left-0 top-0 bg-black/50">
+    <div className="absolute flex justify-center items-center w-full h-full left-0 top-0 bg-black/50 z-10">
       <div className="bg-white max-w-3xl w-full rounded-xl p-8">
         {!isLoading ? (
           <>

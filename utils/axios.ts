@@ -37,6 +37,7 @@ export type ErrorType = {
 export type ScoreResult = {
   bonuses: string[];
   score: number;
+  winner: number;
 };
 
 const axiosInstance = axios.create({
