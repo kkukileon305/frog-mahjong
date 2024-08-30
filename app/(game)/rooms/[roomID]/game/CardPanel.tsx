@@ -27,7 +27,7 @@ type OtherCard = {
   isStarted: boolean;
 };
 
-const OtherCards = ({
+const CardPanel = ({
   user,
   ws,
   gameInfo,
@@ -235,4 +235,4 @@ const OtherCards = ({
   );
 };
 
-export default OtherCards;
+export default CardPanel;
