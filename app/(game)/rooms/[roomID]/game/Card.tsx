@@ -36,7 +36,10 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
           alt={"sealed card"}
         />
       )}
-      <p className="absolute">{card.id}</p>
+
+      {process.env.NODE_ENV === "development" && (
+        <p className="absolute">{card.id}</p>
+      )}
     </button>
   );
 };
