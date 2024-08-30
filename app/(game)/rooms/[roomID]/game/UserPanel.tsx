@@ -236,7 +236,11 @@ const UserPanel = ({
         )}
 
         {isStarted && lastCardImage && (
-          <button disabled={!isLoanSelectMode} onClick={onLoanCard}>
+          <button
+            className="border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+            disabled={!isLoanSelectMode}
+            onClick={onLoanCard}
+          >
             <Image
               src={lastCardImage.imageSrc}
               alt={lastCardImage.color + lastCardImage.name}

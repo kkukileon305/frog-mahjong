@@ -229,7 +229,7 @@ const Game = ({
                         ? gameInfo.dora === null
                           ? "도라를 선택해주세요"
                           : "가져올 패 5개를 선택해주세요"
-                        : "가져올 패 1개를 선택해주세요"}
+                        : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요"}
                     </p>
                   )}
                   {isFullSixCard &&
@@ -255,6 +255,7 @@ const Game = ({
                 selectedCards={selectedCards}
                 isLoan={!!gameInfo?.loanInfo}
                 onGameOver={onGameOver}
+                isLoanSelectMode={isLoanSelectMode}
               />
             </div>
 

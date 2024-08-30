@@ -12,6 +12,7 @@ type ShuffleLeftCardsProps = {
   selectedCards: CardImage[];
   isLoan: boolean;
   onGameOver: () => void;
+  isLoanSelectMode: boolean;
 };
 
 const ShuffleLeftCards = ({
@@ -22,6 +23,7 @@ const ShuffleLeftCards = ({
   isUserTurn,
   isLoan,
   onGameOver,
+  isLoanSelectMode,
 }: ShuffleLeftCardsProps) => {
   const [shuffledCards, setShuffledCards] = useState<CardImage[]>(
     leftCards.sort(() => Math.random() - 0.5)
@@ -52,7 +54,9 @@ const ShuffleLeftCards = ({
         <div key={card.id} className="flex justify-center items-center">
           <Card
             card={card}
-            disabled={!isUserTurn || isFullSixCard || isLoan}
+            disabled={
+              !isUserTurn || isFullSixCard || isLoan || isLoanSelectMode
+            }
             onClick={() => onSelectCard(card)}
             isSelected={selectedCards.includes(card)}
           />
