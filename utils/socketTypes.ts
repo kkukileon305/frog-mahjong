@@ -1,3 +1,11 @@
+export interface ChatResponse {
+  event: "CHAT";
+  message: string;
+  name: string;
+  roomID: number;
+  userID: number;
+}
+
 export interface QUITRequest {
   roomID: number;
   event: "QUIT_GAME";
