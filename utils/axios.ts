@@ -45,6 +45,19 @@ export type ScoreEndResult = {
   winner: number;
 };
 
+export type ChatHistory = {
+  chats: ChatHistoryBody[];
+  total: number;
+};
+
+export type ChatHistoryBody = {
+  created: string;
+  id: number;
+  message: string;
+  name: string;
+  userID: number;
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
