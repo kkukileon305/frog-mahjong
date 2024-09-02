@@ -100,7 +100,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
             setChatList((prev) =>
               prev.filter((chat) => chat.chatID !== chatBody.chatID)
             );
-          }, 3000);
+          }, 5000);
           return;
         }
 

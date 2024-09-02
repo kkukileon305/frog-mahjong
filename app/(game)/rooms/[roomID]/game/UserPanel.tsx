@@ -22,6 +22,8 @@ import React, {
 import { FaChessQueen } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
+import ChatItem from "@/app/(game)/rooms/[roomID]/game/ChatItem";
+import { AnimatePresence } from "framer";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -49,8 +51,13 @@ const UserPanel = ({
   currentUser,
   isStarted,
   place = "left",
+  chatList,
 }: UserPanelProps) => {
   const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+
+  const targetUserChatList = chatList
+    .filter((chat) => chat.userID === user?.id)
+    .reverse();
 
   const lastCard =
     user?.discardedCards &&
@@ -122,7 +129,15 @@ const UserPanel = ({
 
   if (user.id === currentUser.id) {
     return (
-      <div className="border-4 flex flex-col overflow-hidden bg-white/20 border-white rounded-xl text-white w-full h-1/2">
+      <div className="relative border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-1/2">
+        <ul className="absolute right-full text-black top-0 p-2 w-40 h-full overflow-hidden z-10">
+          <AnimatePresence>
+            {targetUserChatList.map((chat) => (
+              <ChatItem key={chat.chatID} chat={chat} place={place} />
+            ))}
+          </AnimatePresence>
+        </ul>
+
         <div
           className={`flex items-center justify-between w-full p-2 ${
             isActive && "bg-red-500"
@@ -188,8 +203,20 @@ const UserPanel = ({
         opacity: 0,
         y: 30,
       }}
-      className="border-4 flex flex-col overflow-hidden bg-white/20 border-white rounded-xl text-white w-full h-1/2"
+      className="relative border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-1/2"
     >
+      <ul
+        className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
+          place === "left" ? "left-full" : "right-full"
+        }`}
+      >
+        <AnimatePresence>
+          {targetUserChatList.map((chat) => (
+            <ChatItem key={chat.chatID} chat={chat} place={place} />
+          ))}
+        </AnimatePresence>
+      </ul>
+
       <div
         className={`flex items-center justify-between w-full p-2 ${
           isActive && "bg-red-500"
