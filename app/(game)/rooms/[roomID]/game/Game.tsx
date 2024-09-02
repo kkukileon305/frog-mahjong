@@ -354,7 +354,12 @@ const Game = ({
       </div>
       <div className="flex h-10 justify-end bg-green-600">
         <div className="w-[calc(100%-400px)] p-1">
-          <ChatForm ws={ws} roomID={roomID} currentUser={currentUser} />
+          <ChatForm
+            ws={ws}
+            roomID={roomID}
+            currentUser={currentUser}
+            gameInfo={gameInfo}
+          />
         </div>
 
         <button

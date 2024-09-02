@@ -1,23 +1,24 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { UserSocket } from "@/utils/socketTypes";
+import { GameInfo, UserSocket } from "@/utils/socketTypes";
 import { FaTelegramPlane } from "react-icons/fa";
 import { BsList } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatHistoryModal from "@/app/(game)/rooms/[roomID]/game/ChatHistoryModal";
 
 type ChatFormProps = {
   ws: WebSocket | null;
   roomID: string;
   currentUser: UserSocket;
+  gameInfo: GameInfo | null;
 };
 
 type Inputs = {
   message: string;
 };
 
-const ChatForm = ({ roomID, ws, currentUser }: ChatFormProps) => {
+const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
   const { register, reset, handleSubmit } = useForm<Inputs>();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,6 +34,10 @@ const ChatForm = ({ roomID, ws, currentUser }: ChatFormProps) => {
     ws?.send(JSON.stringify(request));
     reset();
   };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [gameInfo]);
 
   return (
     <>

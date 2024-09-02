@@ -14,7 +14,7 @@ const ChatItem = ({ chat, place }: ChatItemProps) => {
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 100, height: "fit-content" }}
       exit={{ opacity: 0, height: 0 }}
-      className={`overflow-y-hidden flex ${
+      className={`overflow-y-hidden flex drop-shadow-lg ${
         place === "right" && "flex-row-reverse"
       }`}
     >
