@@ -129,7 +129,7 @@ const UserPanel = ({
 
   if (user.id === currentUser.id) {
     return (
-      <div className="relative border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-1/2">
+      <div className="relative w-full h-1/2">
         <ul className="absolute right-full text-black top-0 p-2 w-40 h-full overflow-hidden z-10">
           <AnimatePresence>
             {targetUserChatList.map((chat) => (
@@ -138,16 +138,124 @@ const UserPanel = ({
           </AnimatePresence>
         </ul>
 
+        <div className="overflow-hidden border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-full">
+          <div
+            className={`flex items-center justify-between w-full p-2 ${
+              isActive && "bg-red-500"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-12 relative border-white border rounded-full">
+                {user.isOwner && (
+                  <FaChessQueen className="absolute right-0 top-0" />
+                )}
+              </div>
+              <div>
+                <p className="font-bold text-xl">{user.name}</p>
+                <p>{user.coin} Point</p>
+              </div>
+            </div>
+
+            {!user.isOwner && user.playerState !== "play" && (
+              <p className="font-bold text-xl">
+                {user.playerState === "ready" ? "준비" : "대기"}
+              </p>
+            )}
+
+            {isStarted && lastCardImage && (
+              <Image
+                src={lastCardImage.imageSrc}
+                alt={lastCardImage.color + lastCardImage.name}
+                width={40}
+                height={58}
+                className={`${isLoanSelectMode && "hover:bg-white/50"}`}
+              />
+            )}
+          </div>
+
+          <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
+            {isStarted &&
+              userDiscardImages?.map((ci) => (
+                <div key={ci.id}>
+                  <Image
+                    src={ci.imageSrc}
+                    alt={ci.color + ci.name}
+                    width={40}
+                    height={58}
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-1/2">
+      <ul
+        className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
+          place === "left" ? "left-full" : "right-full"
+        }`}
+      >
+        <AnimatePresence>
+          {targetUserChatList.map((chat) => (
+            <ChatItem key={chat.chatID} chat={chat} place={place} />
+          ))}
+        </AnimatePresence>
+      </ul>
+
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 30,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        exit={{
+          opacity: 0,
+          y: 30,
+        }}
+        className="overflow-hidden border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
+      >
         <div
           className={`flex items-center justify-between w-full p-2 ${
             isActive && "bg-red-500"
           }`}
         >
           <div className="flex items-center gap-2">
-            <div className="w-12 h-12 relative border-white border rounded-full">
+            <div
+              tabIndex={0}
+              className="w-12 h-12 relative border-white border rounded-full group cursor-pointer"
+            >
               {user.isOwner && (
                 <FaChessQueen className="absolute right-0 top-0" />
               )}
+
+              <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
+                <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
+                <div
+                  className="bg-white w-[240px] rounded -translate-x-2 text-black"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <div className="p-2 border-b">
+                    <p className="font-bold">{user.name}</p>
+                    <span className="">{user.email}</span>
+                  </div>
+                  {!isStarted &&
+                    currentUser.isOwner &&
+                    user.id !== currentUser.id && (
+                      <div
+                        onClick={onClick}
+                        className="cursor-pointer p-2 w-full text-red-400 hover:bg-gray-400 flex items-center gap-2 font-bold"
+                      >
+                        강퇴 <IoMdExit />
+                      </div>
+                    )}
+                </div>
+              </div>
             </div>
             <div>
               <p className="font-bold text-xl">{user.name}</p>
@@ -162,16 +270,20 @@ const UserPanel = ({
           )}
 
           {isStarted && lastCardImage && (
-            <Image
-              src={lastCardImage.imageSrc}
-              alt={lastCardImage.color + lastCardImage.name}
-              width={40}
-              height={58}
-              className={`${isLoanSelectMode && "hover:bg-white/50"}`}
-            />
+            <button
+              className="border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+              disabled={!isLoanSelectMode}
+              onClick={onLoanCard}
+            >
+              <Image
+                src={lastCardImage.imageSrc}
+                alt={lastCardImage.color + lastCardImage.name}
+                width={40}
+                height={58}
+              />
+            </button>
           )}
         </div>
-
         <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
           {isStarted &&
             userDiscardImages?.map((ci) => (
@@ -181,122 +293,14 @@ const UserPanel = ({
                   alt={ci.color + ci.name}
                   width={40}
                   height={58}
+                  className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
                 />
               </div>
             ))}
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      exit={{
-        opacity: 0,
-        y: 30,
-      }}
-      className="relative border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-1/2"
-    >
-      <ul
-        className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
-          place === "left" ? "left-full" : "right-full"
-        }`}
-      >
-        <AnimatePresence>
-          {targetUserChatList.map((chat) => (
-            <ChatItem key={chat.chatID} chat={chat} place={place} />
-          ))}
-        </AnimatePresence>
-      </ul>
-
-      <div
-        className={`flex items-center justify-between w-full p-2 ${
-          isActive && "bg-red-500"
-        }`}
-      >
-        <div className="flex items-center gap-2">
-          <div
-            tabIndex={0}
-            className="w-12 h-12 relative border-white border rounded-full group cursor-pointer"
-          >
-            {user.isOwner && (
-              <FaChessQueen className="absolute right-0 top-0" />
-            )}
-
-            <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
-              <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
-              <div
-                className="bg-white w-[240px] rounded -translate-x-2 text-black"
-                onClick={(e) => e.preventDefault()}
-              >
-                <div className="p-2 border-b">
-                  <p className="font-bold">{user.name}</p>
-                  <span className="">{user.email}</span>
-                </div>
-                {!isStarted &&
-                  currentUser.isOwner &&
-                  user.id !== currentUser.id && (
-                    <div
-                      onClick={onClick}
-                      className="cursor-pointer p-2 w-full text-red-400 hover:bg-gray-400 flex items-center gap-2 font-bold"
-                    >
-                      강퇴 <IoMdExit />
-                    </div>
-                  )}
-              </div>
-            </div>
-          </div>
-          <div>
-            <p className="font-bold text-xl">{user.name}</p>
-            <p>{user.coin} Point</p>
-          </div>
-        </div>
-
-        {!user.isOwner && user.playerState !== "play" && (
-          <p className="font-bold text-xl">
-            {user.playerState === "ready" ? "준비" : "대기"}
-          </p>
-        )}
-
-        {isStarted && lastCardImage && (
-          <button
-            className="border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
-            disabled={!isLoanSelectMode}
-            onClick={onLoanCard}
-          >
-            <Image
-              src={lastCardImage.imageSrc}
-              alt={lastCardImage.color + lastCardImage.name}
-              width={40}
-              height={58}
-            />
-          </button>
-        )}
-      </div>
-      <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
-        {isStarted &&
-          userDiscardImages?.map((ci) => (
-            <div key={ci.id}>
-              <Image
-                src={ci.imageSrc}
-                alt={ci.color + ci.name}
-                width={40}
-                height={58}
-                className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
-              />
-            </div>
-          ))}
-      </div>
-      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
-    </motion.div>
+        <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
+      </motion.div>
+    </div>
   );
 };
 
