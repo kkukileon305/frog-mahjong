@@ -39,6 +39,7 @@ const Page = ({
     setWinner,
     setIsLoanFailed,
     isLoanFailed,
+    chatList,
   } = useWebsocket(roomID, password);
 
   const [isHelpModal, setIsHelpModal] = useState(false);
@@ -110,6 +111,7 @@ const Page = ({
           isStarted={isStarted}
           setWinner={setWinner}
           setIsHelpModal={setIsHelpModal}
+          chatList={chatList}
         />
       </div>
     </div>

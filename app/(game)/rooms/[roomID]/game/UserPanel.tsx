@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
+  ChatResponse,
   GameInfo,
   LoanBody,
   LoanRequest,
@@ -22,7 +23,7 @@ import { FaChessQueen } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 
-type OtherCard = {
+type UserPanelProps = {
   user?: UserSocket;
   playTurn?: number;
   isLoanSelectMode: boolean;
@@ -33,6 +34,8 @@ type OtherCard = {
   setIsLoanEnd: Dispatch<SetStateAction<boolean>>;
   currentUser: UserSocket;
   isStarted: boolean;
+  place?: "left" | "right";
+  chatList: ChatResponse[];
 };
 
 const UserPanel = ({
@@ -45,7 +48,8 @@ const UserPanel = ({
   setIsLoanEnd,
   currentUser,
   isStarted,
-}: OtherCard) => {
+  place = "left",
+}: UserPanelProps) => {
   const cardChapAudioRef = useRef<HTMLAudioElement>(null);
 
   const lastCard =

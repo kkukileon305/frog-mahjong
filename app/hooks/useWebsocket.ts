@@ -19,6 +19,7 @@ import {
   CHAT,
 } from "@/utils/const";
 import {
+  ChatResponse,
   GameInfo,
   JOINRequest,
   SocketResponseBody,
@@ -55,6 +56,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
   const [kicked, setKicked] = useState<boolean>(false);
   const [winner, setWinner] = useState<UserSocket | null>(null);
 
+  // chats
+  const [chatList, setChatList] = useState<ChatResponse[]>([]);
+
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
@@ -88,8 +92,15 @@ const useWebsocket = (roomID: string, password: string = "") => {
         const eventName = parsedBody.event;
 
         if (eventName === CHAT) {
-          console.log(parsedBody);
+          const chatBody = parsedBody as ChatResponse;
 
+          setChatList((prev) => [...prev, chatBody]);
+
+          setTimeout(() => {
+            setChatList((prev) =>
+              prev.filter((chat) => chat.chatID !== chatBody.chatID)
+            );
+          }, 3000);
           return;
         }
 
@@ -186,6 +197,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     setWinner,
     isLoanFailed,
     setIsLoanFailed,
+    chatList,
   };
 };
 

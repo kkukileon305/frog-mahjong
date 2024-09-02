@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ChatResponse,
   DORABody,
   DORARequest,
   GameInfo,
@@ -37,6 +38,7 @@ type GameProps = {
   isStarted: boolean;
   setWinner: Dispatch<SetStateAction<UserSocket | null>>;
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
+  chatList: ChatResponse[];
 };
 
 const Game = ({
@@ -48,6 +50,7 @@ const Game = ({
   users,
   setWinner,
   setIsHelpModal,
+  chatList,
 }: GameProps) => {
   const cardChapAudioRef = useRef<HTMLAudioElement>(null);
 
@@ -203,6 +206,7 @@ const Game = ({
               setIsLoanEnd={setIsLoanEnd}
               currentUser={currentUser}
               isStarted={isStarted}
+              chatList={chatList}
             />
           )}
 
@@ -218,6 +222,7 @@ const Game = ({
               setIsLoanEnd={setIsLoanEnd}
               currentUser={currentUser}
               isStarted={isStarted}
+              chatList={chatList}
             />
           )}
         </div>
@@ -326,6 +331,8 @@ const Game = ({
               setIsLoanEnd={setIsLoanEnd}
               currentUser={currentUser}
               isStarted={isStarted}
+              place={"right"}
+              chatList={chatList}
             />
           )}
 
@@ -340,6 +347,8 @@ const Game = ({
             setIsLoanEnd={setIsLoanEnd}
             currentUser={currentUser}
             isStarted={isStarted}
+            place={"right"}
+            chatList={chatList}
           />
         </div>
       </div>

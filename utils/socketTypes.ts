@@ -4,6 +4,7 @@ export interface ChatResponse {
   name: string;
   roomID: number;
   userID: number;
+  chatID: number;
 }
 
 export interface QUITRequest {
