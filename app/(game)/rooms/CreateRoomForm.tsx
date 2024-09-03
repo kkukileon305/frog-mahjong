@@ -11,6 +11,7 @@ type CreateRoomInputs = {
   minCount: string;
   maxCount: string;
   password?: string;
+  timeOut: string;
 };
 
 type RequestType = {
@@ -18,6 +19,7 @@ type RequestType = {
   minCount: number;
   maxCount: number;
   password?: string;
+  timeOut: number;
 };
 
 const CreateRoomForm = () => {
@@ -33,6 +35,7 @@ const CreateRoomForm = () => {
       maxCount: "4",
       minCount: "2",
       password: "",
+      timeOut: "30",
     },
   });
 
@@ -57,6 +60,7 @@ const CreateRoomForm = () => {
           minCount: Number(inputs.minCount),
           name: inputs.name,
           password: inputs.password,
+          timeOut: Number(inputs.timeOut),
         };
 
         // 만약 password가 빈 문자열이면 해당 키를 제거
@@ -139,6 +143,24 @@ const CreateRoomForm = () => {
               }`}
             >
               <input type="radio" value={i} {...register("maxCount")} hidden />
+              {i}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col">
+        <label>턴 제한 시간</label>
+        <div className="flex justify-between gap-2 mt-3">
+          {["30", "45", "60"].map((i) => (
+            <label
+              key={i}
+              className={`w-1/3 rounded border flex justify-center cursor-pointer py-2 ${
+                watch("timeOut") === i &&
+                "border-blue-400 font-bold text-blue-400"
+              }`}
+            >
+              <input type="radio" value={i} {...register("timeOut")} hidden />
               {i}
             </label>
           ))}
