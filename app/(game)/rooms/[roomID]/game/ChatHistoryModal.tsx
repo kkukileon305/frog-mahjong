@@ -28,8 +28,9 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const skeletonRef = useRef<HTMLLIElement | null>(null);
+  const containerRef = useRef<HTMLUListElement | null>(null);
 
-  const pageSize = 30;
+  const pageSize = 15;
 
   useEffect(() => {
     const loadChats = async () => {
@@ -61,6 +62,17 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
   }, [page]);
 
   useEffect(() => {
+    // 처음 데이터를 로드한 후 가장 아래로 스크롤
+    if (items.length > 0 && containerRef.current) {
+      if (page === 1) {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+      } else {
+        containerRef.current.scrollTop = 44 * pageSize;
+      }
+    }
+  }, [items]);
+
+  useEffect(() => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries;
       if (entry.isIntersecting && !isFirst) {
@@ -86,8 +98,20 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
   return (
     <div className="absolute left-0 top-0 w-full h-full bg-black/50 flex justify-center items-center py-12 z-10">
       <div className="bg-black/50 max-w-3xl w-full rounded-xl p-8 h-full flex flex-col gap-4">
-        <ul className="w-full border border-white overflow-y-auto h-[calc(100%-48px)]">
-          {items.map((item) => (
+        <ul
+          ref={containerRef}
+          className="w-full border border-white overflow-y-auto h-[calc(100%-48px)]"
+        >
+          {!isEnd && (
+            <li
+              ref={skeletonRef}
+              className="flex justify-center items-center text-white py-4"
+            >
+              <AiOutlineLoading3Quarters size={60} className="animate-spin" />
+            </li>
+          )}
+
+          {items.reverse().map((item) => (
             <li
               key={item.id}
               className="text-xl flex justify-between p-2 text-white"
@@ -98,14 +122,6 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
               <p>{item.created}</p>
             </li>
           ))}
-          {!isEnd && (
-            <li
-              ref={skeletonRef}
-              className="flex justify-center items-center text-white py-4"
-            >
-              <AiOutlineLoading3Quarters size={100} className="animate-spin" />
-            </li>
-          )}
         </ul>
 
         <button
