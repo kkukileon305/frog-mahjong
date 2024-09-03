@@ -49,7 +49,7 @@ const ShuffleLeftCards = ({
   }
 
   return (
-    <div className="max-w-[600px] w-full h-full grid grid-cols-12 gap-1 py-24">
+    <div className="max-w-[600px] w-full h-full grid grid-cols-12 gap-1 py-12">
       {shuffledCards.map((card) => (
         <div key={card.id} className="flex justify-center items-center">
           <Card

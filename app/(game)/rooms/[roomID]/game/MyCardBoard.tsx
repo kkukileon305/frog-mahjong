@@ -26,6 +26,7 @@ import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/getPrevTurn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
+import { DISCARD, FAILED_LOAN, REQUEST_WIN, SUCCESS_LOAN } from "@/utils/const";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -124,6 +125,11 @@ const MyCardBoard = ({
         )!!;
 
         setItems(items.filter((item) => item.id !== removedItem.id));
+        setDiscardMode(false);
+        setScoreResult({
+          score: 0,
+          bonuses: [],
+        });
       }
     }
   }, [userCardImages]);
@@ -137,7 +143,7 @@ const MyCardBoard = ({
 
       const request: DiscardRequest = {
         userID: currentUser?.id,
-        event: "DISCARD",
+        event: DISCARD,
         roomID: Number(roomID),
         message: JSON.stringify(body),
       };
@@ -168,7 +174,7 @@ const MyCardBoard = ({
 
         const request: LoanSuccessRequest = {
           userID: currentUser?.id,
-          event: "SUCCESS_LOAN",
+          event: SUCCESS_LOAN,
           roomID: Number(roomID),
           message: JSON.stringify(body),
         };
@@ -183,7 +189,7 @@ const MyCardBoard = ({
 
         const request: WinRequest = {
           userID: currentUser?.id,
-          event: "REQUEST_WIN",
+          event: REQUEST_WIN,
           roomID: Number(roomID),
           message: JSON.stringify(body),
         };
@@ -205,7 +211,7 @@ const MyCardBoard = ({
         const req: LoanFailedRequest = {
           roomID: Number(roomID),
           message: JSON.stringify(body),
-          event: "FAILED_LOAN",
+          event: FAILED_LOAN,
         };
 
         ws?.send(JSON.stringify(req));

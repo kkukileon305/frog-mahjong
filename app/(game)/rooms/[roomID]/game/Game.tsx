@@ -28,6 +28,8 @@ import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
 import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatForm from "@/app/(game)/rooms/[roomID]/game/ChatForm";
+import Timer from "@/app/(game)/rooms/[roomID]/game/Timer";
+import { DORA, IMPORT_CARDS, IMPORT_SINGLE_CARD } from "@/utils/const";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -82,7 +84,7 @@ const Game = ({
 
       const request: ImportRequest = {
         userID: currentUser?.id,
-        event: "IMPORT_CARDS",
+        event: IMPORT_CARDS,
         roomID: Number(roomID),
         message: JSON.stringify(body),
       };
@@ -100,7 +102,7 @@ const Game = ({
 
       const request: ImportSingleCardRequest = {
         userID: currentUser?.id,
-        event: "IMPORT_SINGLE_CARD",
+        event: IMPORT_SINGLE_CARD,
         roomID: Number(roomID),
         message: JSON.stringify(body),
       };
@@ -116,7 +118,7 @@ const Game = ({
   const onSelectCard = (card: CardImage) => {
     if (isUserTurn) {
       if (dora) {
-        //  중복검사
+        // 중복검사
         if (selectedCards.find((sc) => sc.id === card.id)) {
           setSelectedCards(selectedCards.filter((sc) => sc.id !== card.id));
           return;
@@ -141,7 +143,7 @@ const Game = ({
         const request: DORARequest = {
           userID: currentUser.id,
           roomID: Number(roomID),
-          event: "DORA",
+          event: DORA,
           message: JSON.stringify(requestBody),
         };
 
@@ -229,7 +231,7 @@ const Game = ({
 
         {isStarted ? (
           <div className="w-[calc(100%-608px-32px)] py-4">
-            <div className="h-[60px] font-bold text-white text-3xl justify-center items-center flex gap-2">
+            <div className="h-[100px] font-bold text-white text-2xl text-center justify-center items-center flex gap-2 flex-col">
               {gameInfo?.loanInfo === null ? (
                 <>
                   {!isFullSixCard && isUserTurn && (
@@ -253,9 +255,18 @@ const Game = ({
                     : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
                 </p>
               )}
+              {gameInfo?.timeOut && (
+                <Timer
+                  ws={ws}
+                  gameInfo={gameInfo}
+                  users={users}
+                  leftCards={leftCards}
+                  setSelectedCards={setSelectedCards}
+                />
+              )}
             </div>
 
-            <div className="w-full h-[calc(100%-260px)] flex justify-center">
+            <div className="w-full h-[calc(100%-300px)] flex justify-center">
               <ShuffleLeftCards
                 leftCards={leftCards}
                 isUserTurn={isUserTurn}

@@ -17,9 +17,8 @@ type ChatHistoryModalProps = {
 };
 
 const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
-  const path = useParams<{ roomID: string }>();
+  const { roomID } = useParams<{ roomID: string }>();
   const accessToken = getCookie("accessToken") as string;
-  const userID = getCookie("userID") as string;
 
   const [items, setItems] = useState<ChatHistoryBody[]>([]);
   const [page, setPage] = useState(1);
@@ -38,7 +37,7 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
 
       try {
         const { data } = await axiosInstance.get<ChatHistory>(
-          `/v0.1/chats?page=${page}&pageSize=${pageSize}&roomID=${path.roomID}`,
+          `/v0.1/chats?page=${page}&pageSize=${pageSize}&roomID=${roomID}`,
           {
             headers: {
               tkn: accessToken,
@@ -62,7 +61,6 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
   }, [page]);
 
   useEffect(() => {
-    // 처음 데이터를 로드한 후 가장 아래로 스크롤
     if (items.length > 0 && containerRef.current) {
       if (page === 1) {
         containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -76,16 +74,16 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       const [entry] = entries;
       if (entry.isIntersecting && !isFirst) {
-        setPage((prevPage) => prevPage + 1); // 페이지 번호 증가
+        setPage((prevPage) => prevPage + 1);
       }
     };
 
-    if (observerRef.current) observerRef.current.disconnect(); //
+    if (observerRef.current) observerRef.current.disconnect();
 
     observerRef.current = new IntersectionObserver(observerCallback, {
       root: null,
       rootMargin: "0px",
-      threshold: 1.0, // 100% 요소가 보여야 콜백 호출
+      threshold: 1.0,
     });
 
     if (skeletonRef.current) observerRef.current.observe(skeletonRef.current);

@@ -69,6 +69,7 @@ export interface GameInfo {
   isLoanAllowed: boolean;
   loanInfo: LoanInfo | null;
   failedLoanUserID: number;
+  timeOut: number;
 }
 
 export interface LoanInfo {
