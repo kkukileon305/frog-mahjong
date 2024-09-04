@@ -61,11 +61,8 @@ const Game = ({
   const isUserLoan = gameInfo?.loanInfo?.userID === currentUser.id;
 
   const [isLoanEnd, setIsLoanEnd] = useState(false);
-
   const [discardMode, setDiscardMode] = useState(false);
-
   const [selectedCards, setSelectedCards] = useState<CardImage[]>([]);
-
   const [isLoanSelectMode, setIsLoanSelectMode] = useState(false);
 
   const isFullSelectedCards = selectedCards.length === 5;

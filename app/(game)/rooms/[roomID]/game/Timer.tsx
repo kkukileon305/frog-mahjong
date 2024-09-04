@@ -28,6 +28,7 @@ import { useParams } from "next/navigation";
 import getRandomElements from "@/utils/getRandomElements";
 import {
   DISCARD,
+  DORA,
   FAILED_LOAN,
   IMPORT_CARDS,
   IMPORT_SINGLE_CARD,
@@ -98,10 +99,10 @@ const Timer = ({
         return;
       } else {
         // 일반 버리기
-        const [randomCard] = getRandomElements(leftCards, 1);
+        const [randomCard] = getRandomElements(currentUser.cards, 1);
 
         const body: DiscardBody = {
-          cardID: randomCard.id,
+          cardID: randomCard.cardID,
           playTurn: gameInfo?.playTurn as number,
         };
 
@@ -131,7 +132,7 @@ const Timer = ({
       const request: DORARequest = {
         userID: currentUser?.id!,
         roomID: Number(roomID),
-        event: "DORA",
+        event: DORA,
         message: JSON.stringify(requestBody),
       };
 
