@@ -6,6 +6,7 @@ import {
   DORABody,
   DORARequest,
   GameInfo,
+  GameOverRequest,
   ImportCardBody,
   ImportRequest,
   ImportSingleCardBody,
@@ -30,6 +31,7 @@ import {
   DISCARD,
   DORA,
   FAILED_LOAN,
+  GAME_OVER,
   IMPORT_CARDS,
   IMPORT_SINGLE_CARD,
 } from "@/utils/const";
@@ -165,6 +167,19 @@ const Timer = ({
       return;
     } else {
       const [randomCard] = getRandomElements(leftCards, 1);
+
+      if (!randomCard) {
+        const req: GameOverRequest = {
+          roomID: Number(roomID),
+          message: "",
+          event: GAME_OVER,
+          userID: currentUser?.id!,
+        };
+
+        ws?.send(JSON.stringify(req));
+
+        return;
+      }
 
       const body: ImportSingleCardBody = {
         cardID: randomCard.id,

@@ -29,7 +29,12 @@ import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatForm from "@/app/(game)/rooms/[roomID]/game/ChatForm";
 import Timer from "@/app/(game)/rooms/[roomID]/game/Timer";
-import { DORA, IMPORT_CARDS, IMPORT_SINGLE_CARD } from "@/utils/const";
+import {
+  DORA,
+  GAME_OVER,
+  IMPORT_CARDS,
+  IMPORT_SINGLE_CARD,
+} from "@/utils/const";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -154,7 +159,7 @@ const Game = ({
     const req: GameOverRequest = {
       roomID: Number(roomID),
       message: "",
-      event: "GAME_OVER",
+      event: GAME_OVER,
       userID: currentUser.id,
     };
 
