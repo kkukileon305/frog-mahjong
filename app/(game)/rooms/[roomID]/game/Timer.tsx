@@ -100,6 +100,7 @@ const Timer = ({
         cardChapAudioRef.current?.play();
         return;
       } else {
+        // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
         // 일반 버리기
         const [randomCard] = getRandomElements(currentUser.cards, 1);
 
@@ -166,9 +167,12 @@ const Timer = ({
       cardChapAudioRef.current?.play();
       return;
     } else {
+      // 카드를 고르지않고 타임아웃
+      // 카드 1개 선택해서 바로 버리기
       const [randomCard] = getRandomElements(leftCards, 1);
 
       if (!randomCard) {
+        // 남은 카드 없는경우 (무승부)
         const req: GameOverRequest = {
           roomID: Number(roomID),
           message: "",
@@ -181,21 +185,20 @@ const Timer = ({
         return;
       }
 
-      const body: ImportSingleCardBody = {
+      const body: DiscardBody = {
         cardID: randomCard.id,
-        playTurn: gameInfo.playTurn as number,
+        playTurn: gameInfo?.playTurn as number,
       };
 
-      const request: ImportSingleCardRequest = {
+      const request: DiscardRequest = {
         userID: currentUser?.id!,
-        event: IMPORT_SINGLE_CARD,
+        event: DISCARD,
         roomID: Number(roomID),
         message: JSON.stringify(body),
       };
 
       ws?.send(JSON.stringify(request));
 
-      setSelectedCards([]);
       cardChapAudioRef.current?.play();
       return;
     }
