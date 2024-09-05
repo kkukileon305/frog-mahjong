@@ -11,6 +11,7 @@ import {
   ImportRequest,
   LoanFailedBody,
   LoanFailedRequest,
+  TimeoutDiscardRequest,
   UserSocket,
 } from "@/utils/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
@@ -31,6 +32,7 @@ import {
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_CARDS,
+  TIME_OUT_DISCARD,
 } from "@/utils/const";
 
 type TimerProps = {
@@ -186,9 +188,9 @@ const Timer = ({
         playTurn: gameInfo?.playTurn as number,
       };
 
-      const request: DiscardRequest = {
+      const request: TimeoutDiscardRequest = {
         userID: currentUser?.id!,
-        event: DISCARD,
+        event: TIME_OUT_DISCARD,
         roomID: Number(roomID),
         message: JSON.stringify(body),
       };

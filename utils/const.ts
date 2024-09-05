@@ -18,6 +18,7 @@ export const ROOM_OUT = "ROOM_OUT";
 export const CHAT = "CHAT";
 export const IMPORT_SINGLE_CARD = "IMPORT_SINGLE_CARD";
 export const IMPORT_CARDS = "IMPORT_CARDS";
+export const TIME_OUT_DISCARD = "TIME_OUT_DISCARD";
 
 // errors
 export const ERR_WRONG_PASSWORD = "ERR_WRONG_PASSWORD";

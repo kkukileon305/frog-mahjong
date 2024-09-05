@@ -121,6 +121,13 @@ export interface DiscardBody {
   playTurn: number;
 }
 
+export interface TimeoutDiscardRequest {
+  userID: number;
+  roomID: number;
+  event: "TIME_OUT_DISCARD";
+  message: string;
+}
+
 export interface WinRequest {
   userID: number;
   roomID: number;

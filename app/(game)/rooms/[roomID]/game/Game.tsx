@@ -289,7 +289,10 @@ const Game = ({
                 <p>
                   {gameInfo?.loanInfo.userID === currentUser?.id
                     ? `론 승리를 선언하시거나 버리기(포기)해주세요`
-                    : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
+                    : `${
+                        users?.find((u) => gameInfo?.loanInfo?.userID === u.id)
+                          ?.name
+                      }님의 론을 선언했습니다`}
                 </p>
               )}
               {gameInfo?.timeOut && (
