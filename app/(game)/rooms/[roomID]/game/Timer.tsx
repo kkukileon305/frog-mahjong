@@ -178,7 +178,6 @@ const Timer = ({
         };
 
         ws?.send(JSON.stringify(req));
-
         return;
       }
 
@@ -195,7 +194,7 @@ const Timer = ({
       };
 
       ws?.send(JSON.stringify(request));
-
+      setSelectedCards([]);
       cardChapAudioRef.current?.play();
       return;
     }
