@@ -366,7 +366,7 @@ const Game = ({
         </div>
       </div>
       <div className="flex h-10 justify-end bg-green-600">
-        <div className="w-[400px]"></div>
+        <div className="w-[400px]" />
 
         <div className="w-[calc(100%-800px)] p-1">
           <ChatForm
