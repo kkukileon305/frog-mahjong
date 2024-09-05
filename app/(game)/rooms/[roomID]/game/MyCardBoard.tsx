@@ -225,11 +225,15 @@ const MyCardBoard = ({
 
   const doraImage = cards.find((ci) => ci.id === gameInfo?.dora?.cardID);
 
+  const isActive = gameInfo?.loanInfo
+    ? gameInfo.loanInfo.userID === currentUser?.id
+    : currentUser?.turnNumber === gameInfo?.playTurn;
+
   return (
     <div className="h-[120px] flex items-center justify-center relative">
       <div className="flex justify-center items-center gap-4">
         <div className="flex justify-center items-center border-white border-2 py-4 px-8 rounded-xl bg-white/20">
-          {doraImage && (
+          {doraImage ? (
             <div className="flex gap-8 items-center">
               <Image
                 src={doraImage.imageSrc}
@@ -242,10 +246,18 @@ const MyCardBoard = ({
                 +1점
               </p>
             </div>
+          ) : (
+            <p className="text-center">
+              아직 도라가 <br /> 없습니다
+            </p>
           )}
         </div>
 
-        <div className="flex justify-center items-center border-white border-2 px-4 py-2 gap-4 rounded-xl bg-white/20">
+        <div
+          className={`flex justify-center items-center border-2 px-4 py-2 gap-4 rounded-xl bg-white/20 ${
+            isActive ? "border-red-500" : "border-white"
+          }`}
+        >
           <p className="font-bold text-xl text-white">{scoreResult.score}점</p>
           <div className="flex flex-col items-center gap-2">
             <div className="min-w-[60px] flex items-center h-[80px] p-2 rounded">
