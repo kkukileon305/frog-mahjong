@@ -9,8 +9,6 @@ import {
   GameOverRequest,
   ImportCardBody,
   ImportRequest,
-  ImportSingleCardBody,
-  ImportSingleCardRequest,
   LoanFailedBody,
   LoanFailedRequest,
   UserSocket,
@@ -33,7 +31,6 @@ import {
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_CARDS,
-  IMPORT_SINGLE_CARD,
 } from "@/utils/const";
 
 type TimerProps = {
