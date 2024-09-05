@@ -16,6 +16,7 @@ import { getCookie } from "cookies-next";
 import getBonusName from "@/utils/getBonusName";
 import mergeBonus from "@/utils/mergeBonus";
 import { UserSocket } from "@/utils/socketTypes";
+import commonDrawSrc from "@/public/audios/draw.mp3";
 import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
 
@@ -37,6 +38,7 @@ const ResultModal = ({
   const userID = getCookie("userID") as string;
 
   // sounds
+  const drawAudio = useRef<HTMLAudioElement>(new Audio(commonDrawSrc));
   const winAudio = useRef<HTMLAudioElement>(new Audio(winAudioSrc));
   const failAudio = useRef<HTMLAudioElement>(new Audio(failAudioSrc));
 
@@ -82,6 +84,8 @@ const ResultModal = ({
         winner.id === Number(userID)
           ? await winAudio.current.play()
           : await failAudio.current.play();
+      } else {
+        await drawAudio.current.play();
       }
     } catch (e) {
       console.log(e);

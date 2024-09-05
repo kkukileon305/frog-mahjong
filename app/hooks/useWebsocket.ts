@@ -23,7 +23,6 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 import commonAllReadySrc from "@/public/audios/all_ready.mp3";
-import commonDrawSrc from "@/public/audios/draw.mp3";
 import commonLoanSrc from "@/public/audios/loan.mp3";
 import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";
 import commonStartSrc from "@/public/audios/start.mp3";
@@ -64,7 +63,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
   const commonAllReadyAudio = useRef<HTMLAudioElement>(
     new Audio(commonAllReadySrc)
   );
-  const commonDrawAudio = useRef<HTMLAudioElement>(new Audio(commonDrawSrc));
   const commonLoanAudio = useRef<HTMLAudioElement>(new Audio(commonLoanSrc));
   const commonLoanFailedAudio = useRef<HTMLAudioElement>(
     new Audio(commonLoanFailedSrc)
@@ -167,10 +165,6 @@ const useWebsocket = (roomID: string, password: string = "") => {
           eventName === SUCCESS_LOAN
         ) {
           setIsStarted(false);
-
-          if (eventName === GAME_OVER) {
-            commonDrawAudio.current.play();
-          }
 
           const newWinner =
             data.users?.find((us) => us?.cards?.length === 6) || null;

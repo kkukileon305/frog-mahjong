@@ -263,7 +263,7 @@ const UserPanel = ({
             </div>
           </div>
 
-          {!user.isOwner && user.playerState !== "play" && (
+          {!user.isOwner && !isStarted && (
             <p className="font-bold text-xl">
               {user.playerState === "ready" ? "준비" : "대기"}
             </p>
