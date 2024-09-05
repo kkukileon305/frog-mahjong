@@ -233,41 +233,6 @@ const Game = ({
 
         {isStarted ? (
           <div className="w-[calc(100%-608px-32px)] py-4">
-            <div className="h-[100px] font-bold text-white text-2xl text-center justify-center items-center flex gap-2 flex-col">
-              {gameInfo?.loanInfo === null ? (
-                <>
-                  {!isFullSixCard && isUserTurn && (
-                    <p>
-                      {currentUser.cards === null
-                        ? gameInfo.dora === null
-                          ? "도라를 선택해주세요"
-                          : "가져올 패 5개를 선택해주세요"
-                        : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요"}
-                    </p>
-                  )}
-                  {isFullSixCard &&
-                    "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요"}
-
-                  {!isUserTurn && <p>차례를 기다려주세요</p>}
-                </>
-              ) : (
-                <p>
-                  {gameInfo?.loanInfo.userID === currentUser?.id
-                    ? `론 승리를 선언하시거나 버리기(포기)해주세요`
-                    : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
-                </p>
-              )}
-              {gameInfo?.timeOut && (
-                <Timer
-                  ws={ws}
-                  gameInfo={gameInfo}
-                  users={users}
-                  leftCards={leftCards}
-                  setSelectedCards={setSelectedCards}
-                />
-              )}
-            </div>
-
             <div className="w-full h-[calc(100%-300px)] flex justify-center">
               <ShuffleLeftCards
                 leftCards={leftCards}
@@ -300,6 +265,41 @@ const Game = ({
                 >
                   패 가져오기
                 </button>
+              )}
+            </div>
+
+            <div className="h-[100px] font-bold text-white text-2xl text-center justify-center items-center flex gap-2 flex-col">
+              {gameInfo?.loanInfo === null ? (
+                <>
+                  {!isFullSixCard && isUserTurn && (
+                    <p>
+                      {currentUser.cards === null
+                        ? gameInfo.dora === null
+                          ? "도라를 선택해주세요"
+                          : "가져올 패 5개를 선택해주세요"
+                        : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요"}
+                    </p>
+                  )}
+                  {isFullSixCard &&
+                    "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요"}
+
+                  {!isUserTurn && <p>차례를 기다려주세요</p>}
+                </>
+              ) : (
+                <p>
+                  {gameInfo?.loanInfo.userID === currentUser?.id
+                    ? `론 승리를 선언하시거나 버리기(포기)해주세요`
+                    : `${gameInfo?.loanInfo.userID}님의 론을 선언했습니다`}
+                </p>
+              )}
+              {gameInfo?.timeOut && (
+                <Timer
+                  ws={ws}
+                  gameInfo={gameInfo}
+                  users={users}
+                  leftCards={leftCards}
+                  setSelectedCards={setSelectedCards}
+                />
               )}
             </div>
 
