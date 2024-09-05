@@ -59,7 +59,7 @@ const Game = ({
   setIsHelpModal,
   chatList,
 }: GameProps) => {
-  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
@@ -114,7 +114,7 @@ const Game = ({
       setSelectedCards([]);
     }
 
-    cardChapAudioRef.current?.play();
+    audioRef.current?.play();
   };
 
   const onSelectCard = (card: CardImage) => {
@@ -150,7 +150,7 @@ const Game = ({
         };
 
         ws?.send(JSON.stringify(request));
-        cardChapAudioRef.current?.play();
+        audioRef.current?.play();
       }
     }
   };
@@ -393,8 +393,6 @@ const Game = ({
           )}
         </div>
       </div>
-
-      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
     </>
   );
 };

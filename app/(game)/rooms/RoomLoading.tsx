@@ -1,11 +1,11 @@
-import { SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/const";
 
 const RoomLoading = () => {
   return (
     <>
       <div
         style={{
-          height: `${82 * SIZE - 16}px`,
+          height: `${82 * ROOM_BTN_SIZE - 16}px`,
         }}
         className="bg-gray-200 mb-4 animate-pulse flex justify-center items-center rounded-xl"
       />

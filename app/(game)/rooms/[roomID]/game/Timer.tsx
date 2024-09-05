@@ -50,7 +50,7 @@ const Timer = ({
 }: TimerProps) => {
   const { roomID } = useParams<{ roomID: string }>();
 
-  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
   const [time, setTime] = useState(gameInfo.timeOut);
 
   const userID = getCookie("userID") as string;
@@ -94,7 +94,7 @@ const Timer = ({
 
         ws?.send(JSON.stringify(req));
 
-        cardChapAudioRef.current?.play();
+        audioRef.current?.play();
         return;
       } else {
         // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
@@ -115,7 +115,7 @@ const Timer = ({
 
         ws?.send(JSON.stringify(request));
 
-        cardChapAudioRef.current?.play();
+        audioRef.current?.play();
         return;
       }
     }
@@ -137,7 +137,7 @@ const Timer = ({
       };
 
       ws?.send(JSON.stringify(request));
-      cardChapAudioRef.current?.play();
+      audioRef.current?.play();
       return;
     }
 
@@ -161,7 +161,7 @@ const Timer = ({
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      cardChapAudioRef.current?.play();
+      audioRef.current?.play();
       return;
     } else {
       // 카드를 고르지않고 타임아웃
@@ -195,17 +195,12 @@ const Timer = ({
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      cardChapAudioRef.current?.play();
+      audioRef.current?.play();
       return;
     }
   }, [time]);
 
-  return (
-    <>
-      <div>{isActive && <p>{time}</p>}</div>
-      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
-    </>
-  );
+  return <div>{isActive && <p>{time}</p>}</div>;
 };
 
 export default Timer;

@@ -1,7 +1,13 @@
 "use client";
 
 import { GameResult } from "@/app/hooks/useWebsocket";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import cards from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
@@ -10,6 +16,8 @@ import { getCookie } from "cookies-next";
 import getBonusName from "@/utils/getBonusName";
 import mergeBonus from "@/utils/mergeBonus";
 import { UserSocket } from "@/utils/socketTypes";
+import winAudioSrc from "@/public/audios/win.mp3";
+import failAudioSrc from "@/public/audios/fail.mp3";
 
 type ResultProps = {
   result: GameResult;
@@ -26,6 +34,12 @@ const ResultModal = ({
   winner,
   setWinner,
 }: ResultProps) => {
+  const userID = getCookie("userID") as string;
+
+  // sounds
+  const winAudio = useRef<HTMLAudioElement>(new Audio(winAudioSrc));
+  const failAudio = useRef<HTMLAudioElement>(new Audio(failAudioSrc));
+
   const [bonuses, setBonuses] = useState<ScoreEndResult>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,6 +77,12 @@ const ResultModal = ({
       );
 
       setBonuses(data);
+
+      if (winner) {
+        winner.id === Number(userID)
+          ? await winAudio.current.play()
+          : await failAudio.current.play();
+      }
     } catch (e) {
       console.log(e);
     } finally {

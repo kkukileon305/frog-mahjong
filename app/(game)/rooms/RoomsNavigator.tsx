@@ -2,7 +2,7 @@
 
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { RoomsResponse } from "@/utils/axios";
-import { SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/const";
 import Link from "next/link";
 
 type RoomsNavigatorProps = {
@@ -14,7 +14,7 @@ const RoomsNavigator = ({
   data: { rooms, total },
   currentPage,
 }: RoomsNavigatorProps) => {
-  const allPagesSize = Math.ceil(total / SIZE);
+  const allPagesSize = Math.ceil(total / ROOM_BTN_SIZE);
   const previousPage = currentPage - 1 >= 1 ? currentPage - 1 : 1;
   const nextPage = currentPage + 1;
 

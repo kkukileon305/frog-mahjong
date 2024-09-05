@@ -53,7 +53,7 @@ const UserPanel = ({
   place = "left",
   chatList,
 }: UserPanelProps) => {
-  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   const targetUserChatList = chatList
     .filter((chat) => chat.userID === user?.id)
@@ -94,7 +94,7 @@ const UserPanel = ({
       setIsLoanEnd(true);
       setIsLoanSelectMode(false);
 
-      cardChapAudioRef.current?.play();
+      audioRef.current?.play();
     }
   };
 
@@ -298,7 +298,6 @@ const UserPanel = ({
               </div>
             ))}
         </div>
-        <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
       </motion.div>
     </div>
   );

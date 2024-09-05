@@ -58,7 +58,7 @@ const MyCardBoard = ({
   isUserLoan,
   isLoanEnd,
 }: MyCardProps) => {
-  const cardChapAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   // 패 조합 점수
   const [scoreResult, setScoreResult] = useState<ScoreResult>({
@@ -155,7 +155,7 @@ const MyCardBoard = ({
         bonuses: [],
       });
 
-      cardChapAudioRef.current?.play();
+      audioRef.current?.play();
     }
   };
 
@@ -216,7 +216,7 @@ const MyCardBoard = ({
 
         ws?.send(JSON.stringify(req));
 
-        cardChapAudioRef.current?.play();
+        audioRef.current?.play();
       }
     } else {
       setDiscardMode(!discardMode);
@@ -318,7 +318,6 @@ const MyCardBoard = ({
           </div>
         </div>
       </div>
-      <audio src={cardChapWavSrc} hidden ref={cardChapAudioRef} />
     </div>
   );
 };

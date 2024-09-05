@@ -1,7 +1,7 @@
 import { RoomsResponse } from "@/utils/axios";
 import React from "react";
 import RoomsNavigator from "@/app/(game)/rooms/RoomsNavigator";
-import { SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/const";
 import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 
 type RoomComponentProps = {
@@ -11,7 +11,7 @@ type RoomComponentProps = {
 const RoomList = async ({ currentPage }: RoomComponentProps) => {
   const response = await fetch(
     process.env.NEXT_PUBLIC_BACKEND_URL +
-      `/v0.1/rooms?page=${currentPage}&pageSize=${SIZE}`,
+      `/v0.1/rooms?page=${currentPage}&pageSize=${ROOM_BTN_SIZE}`,
     {
       cache: "no-cache",
     }
@@ -23,7 +23,7 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
     <>
       <div
         style={{
-          height: `${82 * SIZE}px`,
+          height: `${82 * ROOM_BTN_SIZE}px`,
         }}
         className="flex flex-col"
       >

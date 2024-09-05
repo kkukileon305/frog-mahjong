@@ -1,31 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import { getCookie } from "cookies-next";
 import {
-  QUIT_GAME,
   ERR_ABNORMAL_EXIT,
   ERR_WRONG_PASSWORD,
   GAME_OVER,
   JOIN,
-  LOAN,
   REQUEST_WIN,
   START,
   SUCCESS_LOAN,
   ROOM_OUT,
-  CLOSE,
   ERR_GAME_IN_PROGRESS,
   ERR_ROOM_FULL,
   ERR_INTERNAL_SERVER,
   FAILED_LOAN,
   CHAT,
+  LOAN,
 } from "@/utils/const";
 import {
   ChatResponse,
-  GameInfo,
   JOINRequest,
   SocketResponseBody,
   UserSocket,
 } from "@/utils/socketTypes";
-import { useRouter } from "next/navigation";
+import commonAllReadySrc from "@/public/audios/all_ready.mp3";
+import commonDrawSrc from "@/public/audios/draw.mp3";
+import commonLoanSrc from "@/public/audios/loan.mp3";
+import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";
+import commonStartSrc from "@/public/audios/start.mp3";
 
 export type GameResult = {
   beforeUsers: UserSocket[] | null;
@@ -59,6 +60,18 @@ const useWebsocket = (roomID: string, password: string = "") => {
   // chats
   const [chatList, setChatList] = useState<ChatResponse[]>([]);
 
+  // sounds
+  const commonAllReadyAudio = useRef<HTMLAudioElement>(
+    new Audio(commonAllReadySrc)
+  );
+  const commonDrawAudio = useRef<HTMLAudioElement>(new Audio(commonDrawSrc));
+  const commonLoanAudio = useRef<HTMLAudioElement>(new Audio(commonLoanSrc));
+  const commonLoanFailedAudio = useRef<HTMLAudioElement>(
+    new Audio(commonLoanFailedSrc)
+  );
+  const commonStartAudio = useRef<HTMLAudioElement>(new Audio(commonStartSrc));
+
+  // user token info
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
@@ -107,6 +120,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
         const data = JSON.parse(parsedBody.message) as SocketResponseBody;
         setGameState(data);
 
+        if (data.gameInfo?.allReady) {
+          commonAllReadyAudio.current.play();
+        }
+
         if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
           // 비정상 종료
           setIsAbnormalExit(true);
@@ -128,11 +145,15 @@ const useWebsocket = (roomID: string, password: string = "") => {
           } else if (data.errorInfo?.type === ERR_INTERNAL_SERVER) {
             setIsNoRoom(true);
           }
+        } else if (eventName === LOAN) {
+          commonLoanAudio.current.play();
         } else if (eventName === FAILED_LOAN) {
           setIsLoanFailed(data.gameInfo?.failedLoanUserID || 0);
+          commonLoanFailedAudio.current.play();
         } else if (eventName === START) {
           if (data.errorInfo === null) {
             setIsStarted(true);
+            commonStartAudio.current.play();
 
             setResult({
               beforeUsers: data.users,
@@ -146,6 +167,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
           eventName === SUCCESS_LOAN
         ) {
           setIsStarted(false);
+
+          if (eventName === GAME_OVER) {
+            commonDrawAudio.current.play();
+          }
 
           const newWinner =
             data.users?.find((us) => us?.cards?.length === 6) || null;

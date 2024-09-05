@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: false,
   webpack: (config, options) => {
     config.module.rules.push({
-      test: /\.(wav)$/,
+      test: /\.(mp3|ogg|wav|flac)$/,
       use: {
         loader: "file-loader",
         options: {

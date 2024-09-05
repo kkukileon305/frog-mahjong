@@ -1,4 +1,4 @@
-export const SIZE = 6;
+export const ROOM_BTN_SIZE = 6;
 
 // event names
 export const JOIN = "JOIN";
@@ -10,11 +10,11 @@ export const START = "START";
 export const DORA = "DORA";
 export const REQUEST_WIN = "REQUEST_WIN";
 export const LOAN = "LOAN";
+export const FAILED_LOAN = "FAILED_LOAN";
 export const DISCARD = "DISCARD";
 export const GAME_OVER = "GAME_OVER";
 export const SUCCESS_LOAN = "SUCCESS_LOAN";
 export const ROOM_OUT = "ROOM_OUT";
-export const FAILED_LOAN = "FAILED_LOAN";
 export const CHAT = "CHAT";
 export const IMPORT_SINGLE_CARD = "IMPORT_SINGLE_CARD";
 export const IMPORT_CARDS = "IMPORT_CARDS";

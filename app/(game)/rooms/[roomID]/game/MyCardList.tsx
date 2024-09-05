@@ -23,11 +23,11 @@ const MyCardList = ({
   calScore,
   setItems,
 }: MyCardListProps) => {
-  const cardMoveAudioRef = useRef<HTMLAudioElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(cardMoveSrc));
 
   const onDragEnd = async () => {
     calScore(items);
-    cardMoveAudioRef.current?.play();
+    audioRef.current?.play();
   };
 
   if (discardMode) {
@@ -59,32 +59,29 @@ const MyCardList = ({
   }
 
   return (
-    <>
-      <Reorder.Group
-        className="flex gap-2"
-        axis="x"
-        values={items}
-        onReorder={setItems}
-      >
-        {items.map((item, i) => (
-          <Reorder.Item
-            className={`cursor-pointer ${i === 2 && "mr-4"}`}
-            key={item.id}
-            value={item}
-            onDragEnd={onDragEnd}
-          >
-            <Image
-              src={item.imageSrc}
-              alt={item.color + item.name}
-              width={40}
-              height={58}
-              draggable={false}
-            />
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
-      <audio src={cardMoveSrc} hidden ref={cardMoveAudioRef} />
-    </>
+    <Reorder.Group
+      className="flex gap-2"
+      axis="x"
+      values={items}
+      onReorder={setItems}
+    >
+      {items.map((item, i) => (
+        <Reorder.Item
+          className={`cursor-pointer ${i === 2 && "mr-4"}`}
+          key={item.id}
+          value={item}
+          onDragEnd={onDragEnd}
+        >
+          <Image
+            src={item.imageSrc}
+            alt={item.color + item.name}
+            width={40}
+            height={58}
+            draggable={false}
+          />
+        </Reorder.Item>
+      ))}
+    </Reorder.Group>
   );
 };
 
