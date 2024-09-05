@@ -22,24 +22,26 @@ const Page = ({
   searchParams: { password },
 }: RoomDetailProps) => {
   const {
-    ws, //
+    ws,
     users,
     userID,
     gameInfo,
     isStarted,
     result,
     setResult,
-    kicked,
-    isAbnormalExit,
-    isPasswordFailed,
-    isProgress,
-    isFullPlayer,
-    isNoRoom,
     winner,
     setWinner,
-    setIsLoanFailed,
-    isLoanFailed,
     chatList,
+    errors: {
+      kicked,
+      isAbnormalExit,
+      isPasswordFailed,
+      isProgress,
+      isFullPlayer,
+      isNoRoom,
+      isLoanFailed,
+      setIsLoanFailed,
+    },
   } = useWebsocket(roomID, password);
 
   const [isHelpModal, setIsHelpModal] = useState(false);
