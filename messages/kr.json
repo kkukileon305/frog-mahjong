@@ -112,5 +112,8 @@
   "KickedGame": {
     "title": "강제퇴장 되었습니다",
     "back": "돌아가기"
+  },
+  "Entering": {
+    "title": "접속 중"
   }
 }

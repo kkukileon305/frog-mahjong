@@ -2,7 +2,7 @@
 
 import useWebsocket from "@/app/hooks/useWebsocket";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
-import EnteringDiv from "@/app/(game)/rooms/[roomID]/EnteringDiv";
+import Entering from "@/app/(game)/rooms/[roomID]/Entering";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
 import ResultModal from "@/app/(game)/rooms/[roomID]/ResultModal";
 import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
@@ -81,7 +81,7 @@ const Page = ({
 
   // loading
   if (!currentUser) {
-    return <EnteringDiv />;
+    return <Entering />;
   }
 
   return (
