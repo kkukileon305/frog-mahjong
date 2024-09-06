@@ -3,11 +3,14 @@ import Link from "next/link";
 import { getCookie, hasCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import SignOutBtn from "@/app/SignOutBtn";
+import { getTranslations } from "next-intl/server";
 
 const Header = async () => {
   const refreshToken = getCookie("refreshToken", {
     cookies,
   });
+
+  const t = await getTranslations("HomePage");
 
   return (
     <header className="h-16 border-b px-2">
@@ -15,6 +18,8 @@ const Header = async () => {
         <Link href="/" className="font-bold text-2xl">
           메인
         </Link>
+
+        {t("title")}
 
         {refreshToken && <SignOutBtn />}
       </div>
