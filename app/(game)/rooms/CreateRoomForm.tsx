@@ -199,6 +199,7 @@ const CreateRoomForm = () => {
         </button>
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         >
           방 만들기
