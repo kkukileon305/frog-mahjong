@@ -3,6 +3,7 @@
 import Card from "@/app/(game)/rooms/[roomID]/game/Card";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 type ShuffleLeftCardsProps = {
   leftCards: CardImage[];
@@ -25,6 +26,8 @@ const ShuffleLeftCards = ({
   onGameOver,
   isLoanSelectMode,
 }: ShuffleLeftCardsProps) => {
+  const m = useTranslations("ShuffleLeftCards");
+
   const [shuffledCards, setShuffledCards] = useState<CardImage[]>(
     leftCards.sort(() => Math.random() - 0.5)
   );
@@ -42,7 +45,7 @@ const ShuffleLeftCards = ({
           onClick={onGameOver}
           className="p-2 rounded-xl bg-white font-bold text-xl"
         >
-          종료
+          {m("end")}
         </button>
       </div>
     );

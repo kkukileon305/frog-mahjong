@@ -27,6 +27,7 @@ import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/getPrevTurn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import { DISCARD, FAILED_LOAN, REQUEST_WIN, SUCCESS_LOAN } from "@/utils/const";
+import { useTranslations } from "next-intl";
 
 type MyCardProps = {
   currentUser?: UserSocket;
@@ -46,7 +47,6 @@ type MyCardProps = {
 
 const MyCardBoard = ({
   currentUser,
-  isUserTurn,
   gameInfo,
   roomID,
   ws,
@@ -58,6 +58,8 @@ const MyCardBoard = ({
   isUserLoan,
   isLoanEnd,
 }: MyCardProps) => {
+  const m = useTranslations("MyCardBoard");
+
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   // 패 조합 점수
@@ -242,13 +244,13 @@ const MyCardBoard = ({
                 height={58}
               />
               <p className="font-bold text-white">
-                도라 <br />
-                +1점
+                {m("dora")} <br />
+                +1{m("score")}
               </p>
             </div>
           ) : (
             <p className="text-center">
-              아직 도라가 <br /> 없습니다
+              {m("noDora1")} <br /> {m("noDora2")}
             </p>
           )}
         </div>
@@ -258,7 +260,10 @@ const MyCardBoard = ({
             isActive ? "border-red-500" : "border-white"
           }`}
         >
-          <p className="font-bold text-xl text-white">{scoreResult.score}점</p>
+          <p className="font-bold text-xl text-white">
+            {scoreResult.score}
+            {m("score")}
+          </p>
           <div className="flex flex-col items-center gap-2">
             <div className="min-w-[60px] flex items-center h-[80px] p-2 rounded">
               {userCardImages && items ? (
@@ -272,7 +277,7 @@ const MyCardBoard = ({
                 />
               ) : (
                 <p className="text-center">
-                  아직 가진 패가 <br /> 없습니다
+                  {m("noCards1")} <br /> {m("noCards2")}
                 </p>
               )}
             </div>
@@ -286,7 +291,7 @@ const MyCardBoard = ({
               onClick={handleWin}
               className="text-white p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
-              {isUserLoan ? "론 승리" : "쯔모"}
+              {isUserLoan ? m("loanVictory") : m("normalVictory")}
             </button>
             <button
               disabled={!isFullSixCard}
@@ -295,7 +300,7 @@ const MyCardBoard = ({
                 discardMode ? "bg-gray-400" : "bg-gray-600"
               } disabled:bg-gray-500 disabled:text-gray-400`}
             >
-              {discardMode ? "버리기 취소" : "버리기"}
+              {discardMode ? m("cancelSuteru") : m("suteru")}
             </button>
           </div>
           <div className="w-24 ml-1 flex justify-center flex-col gap-2">
@@ -313,7 +318,7 @@ const MyCardBoard = ({
                 isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
-              {isLoanSelectMode ? "론 취소" : "론!"}
+              {isLoanSelectMode ? m("cancelLoan") : m("loan")}
             </button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { GameInfo, STARTRequest } from "@/utils/socketTypes";
+import { useTranslations } from "next-intl";
 
 type StartBtnProps = {
   gameInfo: GameInfo | null;
@@ -9,6 +10,8 @@ type StartBtnProps = {
 };
 
 const StartBtn = ({ gameInfo, ws, roomID }: StartBtnProps) => {
+  const m = useTranslations("StartBtn");
+
   const onClick = () => {
     const request: STARTRequest = {
       roomID: Number(roomID),
@@ -25,7 +28,7 @@ const StartBtn = ({ gameInfo, ws, roomID }: StartBtnProps) => {
       onClick={onClick}
       disabled={!gameInfo?.allReady}
     >
-      {gameInfo?.allReady ? "시작하기" : "시작 불가"}
+      {gameInfo?.allReady ? m("start") : m("canNotStart")}
     </button>
   );
 };

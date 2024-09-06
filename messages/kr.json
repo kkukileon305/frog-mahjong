@@ -142,5 +142,48 @@
     "calRule": "점수계산 규칙",
     "cardsInfo": "패의 구성",
     "close": "닫기"
+  },
+  "Game": {
+    "getDora": "도라를 선택해주세요",
+    "getFiveCards": "가져올 패 5개를 선택해주세요",
+    "noLeftCards": "패가 없으므로 론을 클릭하여 상대 패를 가져오거나 종료를 클릭하여 종료해주세요",
+    "getCard" : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요",
+    "goVictory": "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요",
+    "waitYourTurn": "차례를 기다려주세요",
+    "goLoanVictory":"론 승리를 선언하시거나 버리기(포기)해주세요",
+    "someoneLoan": "님이 론을 선언했습니다",
+    "getSelectedCard": "패 가져오기",
+    "help": "설명서",
+    "playing": "진행중"
+  },
+  "UserPanel": {
+    "ready": "준비",
+    "waiting": "대기",
+    "kick": "강퇴"
+  },
+  "MyCardBoard": {
+    "dora": "도라",
+    "score": "점",
+    "noDora1": "아직 도라가",
+    "noDora2": "없습니다",
+    "noCards1": "아직 버린 패가",
+    "noCards2": "없습니다",
+    "loanVictory": "론 승리",
+    "normalVictory": "쯔모",
+    "suteru": "버리기",
+    "cancelSuteru": "버리기 취소",
+    "loan": "론!",
+    "cancelLoan": "론 취소"
+  },
+  "ShuffleLeftCards": {
+    "end": "종료"
+  },
+  "StartBtn": {
+    "start": "시작하기",
+    "canNotStart": "시작불가"
+  },
+  "ReadyBtn": {
+    "ready": "준비",
+    "cancelReady": "준비 취소"
   }
 }

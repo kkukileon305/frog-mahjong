@@ -35,6 +35,7 @@ import {
   IMPORT_CARDS,
   IMPORT_SINGLE_CARD,
 } from "@/utils/const";
+import { useTranslations } from "next-intl";
 
 type GameProps = {
   ws: WebSocket | null;
@@ -59,6 +60,8 @@ const Game = ({
   setIsHelpModal,
   chatList,
 }: GameProps) => {
+  const m = useTranslations("Game");
+
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   const dora = gameInfo?.dora;
@@ -198,29 +201,25 @@ const Game = ({
     if (gameInfo?.loanInfo === null) {
       if (!isFullSixCard && isUserTurn) {
         if (currentUser.cards === null) {
-          return gameInfo.dora === null
-            ? "도라를 선택해주세요"
-            : "가져올 패 5개를 선택해주세요";
+          return gameInfo.dora === null ? m("getDora") : m("getFiveCards");
         } else {
-          return leftCards.length === 0
-            ? "패가 없으므로 론을 클릭하여 상대 패를 가져오거나 종료를 클릭하여 종료해주세요"
-            : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요";
+          return leftCards.length === 0 ? m("noLeftCards") : m("getCard");
         }
       }
 
       if (isFullSixCard) {
-        return "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요";
+        return m("goVictory");
       }
 
       if (!isUserTurn) {
-        return "차례를 기다려주세요";
+        return m("waitYourTurn");
       }
     } else {
       return gameInfo?.loanInfo.userID === currentUser?.id
-        ? "론 승리를 선언하시거나 버리기(포기)해주세요"
-        : `${
-            users?.find((u) => gameInfo?.loanInfo?.userID === u.id)?.name
-          }님의 론을 선언했습니다`;
+        ? m("goLoanVictory")
+        : `${users?.find((u) => gameInfo?.loanInfo?.userID === u.id)?.name}${m(
+            "someoneLoan"
+          )}`;
     }
   };
 
@@ -283,7 +282,7 @@ const Game = ({
                   disabled={!isFullSelectedCards}
                   className="py-1 px-4 border-2 border-white rounded-full"
                 >
-                  분배 받기
+                  {m("getSelectedCard")}
                 </button>
               )}
 
@@ -293,7 +292,7 @@ const Game = ({
                   disabled={!isOneSelectedCard}
                   className="py-1 px-4 border-2 border-white rounded-full"
                 >
-                  패 가져오기
+                  {m("getSelectedCard")}
                 </button>
               )}
             </div>
@@ -390,12 +389,12 @@ const Game = ({
           onClick={() => setIsHelpModal(true)}
           className="w-[200px] bg-green-400 font-bold text-white"
         >
-          설명서
+          {m("help")}
         </button>
         <div className="w-[200px]">
           {isStarted ? (
             <div className="flex items-center justify-center w-full h-full bg-gray-400">
-              진행중
+              {m("playing")}
             </div>
           ) : (
             <CloseBtn ws={ws} roomID={roomID} userID={Number(currentUser.id)} />

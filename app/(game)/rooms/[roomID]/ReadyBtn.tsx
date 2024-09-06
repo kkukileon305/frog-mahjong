@@ -6,6 +6,7 @@ import {
   UserSocket,
 } from "@/utils/socketTypes";
 import { READY, READY_CANCEL } from "@/utils/const";
+import { useTranslations } from "next-intl";
 
 type ReadyBtnProps = {
   ws: WebSocket | null;
@@ -18,6 +19,8 @@ const ReadyBtn = ({
   roomID,
   currentUser: { playerState },
 }: ReadyBtnProps) => {
+  const m = useTranslations("ReadyBtn");
+
   const isReady = playerState === "ready";
 
   const onClick = () => {
@@ -37,7 +40,7 @@ const ReadyBtn = ({
         isReady ? "bg-red-400" : "bg-blue-400"
       }`}
     >
-      {isReady ? "준비 취소" : "준비"}
+      {isReady ? m("cancelReady") : m("ready")}
     </button>
   );
 };

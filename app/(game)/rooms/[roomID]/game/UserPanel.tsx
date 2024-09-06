@@ -24,6 +24,8 @@ import { IoMdExit } from "react-icons/io";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatItem from "@/app/(game)/rooms/[roomID]/game/ChatItem";
 import { AnimatePresence } from "framer";
+import { useTranslations } from "next-intl";
+import { ROOM_OUT } from "@/utils/const";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -53,6 +55,8 @@ const UserPanel = ({
   place = "left",
   chatList,
 }: UserPanelProps) => {
+  const m = useTranslations("UserPanel");
+
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
   const targetUserChatList = chatList
@@ -120,7 +124,7 @@ const UserPanel = ({
     const request: RoomOutRequest = {
       userID: currentUser.id,
       roomID: Number(roomID),
-      event: "ROOM_OUT",
+      event: ROOM_OUT,
       message: JSON.stringify(body),
     };
 
@@ -158,7 +162,7 @@ const UserPanel = ({
 
             {!user.isOwner && user.playerState !== "play" && (
               <p className="font-bold text-xl">
-                {user.playerState === "ready" ? "준비" : "대기"}
+                {user.playerState === "ready" ? m("ready") : m("waiting")}
               </p>
             )}
 
@@ -251,7 +255,7 @@ const UserPanel = ({
                         onClick={onClick}
                         className="cursor-pointer p-2 w-full text-red-400 hover:bg-gray-400 flex items-center gap-2 font-bold"
                       >
-                        강퇴 <IoMdExit />
+                        {m("kick")} <IoMdExit />
                       </div>
                     )}
                 </div>
@@ -265,7 +269,7 @@ const UserPanel = ({
 
           {!user.isOwner && !isStarted && (
             <p className="font-bold text-xl">
-              {user.playerState === "ready" ? "준비" : "대기"}
+              {user.playerState === "ready" ? m("ready") : m("waiting")}
             </p>
           )}
 
