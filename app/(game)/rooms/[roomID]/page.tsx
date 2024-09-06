@@ -11,6 +11,7 @@ import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
 import { useEffect, useState } from "react";
 import useDetectNavigation from "@/app/hooks/useDetectNavigation";
 import HelpModal from "@/app/(game)/rooms/[roomID]/HelpModal";
+import ModalContainer from "@/utils/ModalContainer";
 
 type RoomDetailProps = {
   params: { roomID: string };
@@ -32,6 +33,8 @@ const Page = ({
     winner,
     setWinner,
     chatList,
+    setIsOpenResultModal,
+    isOpenResultModal,
     errors: {
       kicked,
       isAbnormalExit,
@@ -92,17 +95,23 @@ const Page = ({
           />
         )}
 
-        {result.isShowModal && (
-          <ResultModal
-            result={result}
-            setResult={setResult}
-            roomID={roomID}
-            winner={winner}
-            setWinner={setWinner}
-          />
+        {isOpenResultModal && (
+          <ModalContainer setIsOpen={setIsOpenResultModal}>
+            <ResultModal
+              result={result}
+              setResult={setResult}
+              roomID={roomID}
+              winner={winner}
+              setWinner={setWinner}
+            />
+          </ModalContainer>
         )}
 
-        {isHelpModal && <HelpModal setIsHelpModal={setIsHelpModal} />}
+        {isHelpModal && (
+          <ModalContainer setIsOpen={setIsHelpModal} isInGame>
+            <HelpModal />
+          </ModalContainer>
+        )}
 
         <Game
           ws={ws}

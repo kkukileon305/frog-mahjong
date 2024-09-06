@@ -5,6 +5,7 @@ import { FaLock } from "react-icons/fa";
 import { MouseEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
 import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
+import ModalContainer from "@/utils/ModalContainer";
 
 type EnterRoomLinkProps = {
   room: Room;
@@ -13,12 +14,6 @@ type EnterRoomLinkProps = {
 const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
-  const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
-    if ((e.target as HTMLElement).id === "back") {
-      setIsOpen(false);
-    }
-  };
 
   const onClick = () => {
     if (room.password) {
@@ -32,14 +27,9 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
   return (
     <>
       {isOpen && (
-        <div
-          className="absolute left-0 top-0 w-full bg-black/50 min-h-screen z-10 flex justify-center items-center"
-          onClick={onClose}
-        >
-          <div className="max-w-2xl w-full p-4 bg-white rounded shadow">
-            <EnterRoomForm roomID={room.id} />
-          </div>
-        </div>
+        <ModalContainer setIsOpen={setIsOpen}>
+          <EnterRoomForm roomID={room.id} />
+        </ModalContainer>
       )}
 
       <button

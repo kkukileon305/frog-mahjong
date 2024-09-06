@@ -30,7 +30,6 @@ import commonStartSrc from "@/public/audios/start.mp3";
 export type GameResult = {
   beforeUsers: UserSocket[] | null;
   afterUsers: UserSocket[] | null;
-  isShowModal: boolean;
 };
 
 const useWebsocket = (roomID: string, password: string = "") => {
@@ -51,8 +50,9 @@ const useWebsocket = (roomID: string, password: string = "") => {
   const [result, setResult] = useState<GameResult>({
     beforeUsers: null,
     afterUsers: null,
-    isShowModal: false,
   });
+  const [isOpenResultModal, setIsOpenResultModal] = useState(false);
+
   const [kicked, setKicked] = useState<boolean>(false);
   const [winner, setWinner] = useState<UserSocket | null>(null);
 
@@ -156,8 +156,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
             setResult({
               beforeUsers: data.users,
               afterUsers: null,
-              isShowModal: false,
             });
+            setIsOpenResultModal(false);
           }
         } else if (
           eventName === REQUEST_WIN ||
@@ -174,6 +174,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
             afterUsers: data.users,
             isShowModal: true,
           }));
+          setIsOpenResultModal(true);
 
           setWinner(newWinner);
         } else if (eventName === ROOM_OUT) {
@@ -208,6 +209,8 @@ const useWebsocket = (roomID: string, password: string = "") => {
     isStarted,
     winner,
     setWinner,
+    isOpenResultModal,
+    setIsOpenResultModal,
     errors: {
       kicked,
       isProgress,

@@ -12,11 +12,7 @@ import { useParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-type ChatHistoryModalProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
+const ChatHistoryModal = () => {
   const { roomID } = useParams<{ roomID: string }>();
   const accessToken = getCookie("accessToken") as string;
 
@@ -94,41 +90,37 @@ const ChatHistoryModal = ({ setIsOpen }: ChatHistoryModalProps) => {
   }, [isFirst]);
 
   return (
-    <div className="absolute left-0 top-0 w-full h-full bg-black/50 flex justify-center items-center py-12 z-10">
-      <div className="bg-black/50 max-w-3xl w-full rounded-xl p-8 h-full flex flex-col gap-4">
-        <ul
-          ref={containerRef}
-          className="w-full border border-white overflow-y-auto h-[calc(100%-48px)]"
-        >
-          {!isEnd && (
-            <li
-              ref={skeletonRef}
-              className="flex justify-center items-center text-white py-4"
-            >
-              <AiOutlineLoading3Quarters size={60} className="animate-spin" />
-            </li>
-          )}
+    <div className="flex flex-col gap-4">
+      <ul
+        ref={containerRef}
+        className="w-full border border-white overflow-y-auto max-h-[calc(72px*6)] md:max-h-[calc(72px*10)]"
+      >
+        {!isEnd && (
+          <li
+            ref={skeletonRef}
+            className="flex justify-center items-center text-white py-4"
+          >
+            <AiOutlineLoading3Quarters size={60} className="animate-spin" />
+          </li>
+        )}
 
-          {items.reverse().map((item) => (
-            <li
-              key={item.id}
-              className="text-xl flex justify-between p-2 text-white"
-            >
-              <p>
-                {item.name}:{item.message}
-              </p>
+        {items.reverse().map((item) => (
+          <li key={item.id} className="text-xl p-2 text-white mb-2">
+            <div className="flex">
+              <p>{item.name}</p>
               <p>{item.created}</p>
-            </li>
-          ))}
-        </ul>
+            </div>
+            <p className="break-words">{item.message}</p>
+          </li>
+        ))}
+      </ul>
 
-        <button
-          onClick={() => setIsOpen(false)}
-          className="w-full bg-sky-500/50 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
-        >
-          닫기
-        </button>
-      </div>
+      <button
+        id="back"
+        className="w-full bg-sky-500/50 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
+      >
+        닫기
+      </button>
     </div>
   );
 };

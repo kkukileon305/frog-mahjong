@@ -6,6 +6,7 @@ import { FaTelegramPlane } from "react-icons/fa";
 import { BsList } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import ChatHistoryModal from "@/app/(game)/rooms/[roomID]/game/ChatHistoryModal";
+import ModalContainer from "@/utils/ModalContainer";
 
 type ChatFormProps = {
   ws: WebSocket | null;
@@ -41,7 +42,11 @@ const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
 
   return (
     <>
-      {isOpen && <ChatHistoryModal setIsOpen={setIsOpen} />}
+      {isOpen && (
+        <ModalContainer setIsOpen={setIsOpen} isInGame>
+          <ChatHistoryModal />
+        </ModalContainer>
+      )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
