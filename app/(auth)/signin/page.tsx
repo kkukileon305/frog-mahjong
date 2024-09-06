@@ -19,9 +19,13 @@ const Page = () => {
 
         <GoogleSignInBtn />
 
-        <div className="flex justify-center mt-4">
+        <div className="flex flex-col items-center gap-4 justify-center mt-4">
           <Link href="/signup" className="text-blue-400">
             계정이 없으신가요?
+          </Link>
+
+          <Link href="/" className="text-blue-400">
+            돌아가기
           </Link>
         </div>
       </div>
