@@ -3,12 +3,15 @@ import React from "react";
 import RoomsNavigator from "@/app/(game)/rooms/RoomsNavigator";
 import { ROOM_BTN_SIZE } from "@/utils/const";
 import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
+import { getTranslations } from "next-intl/server";
 
 type RoomComponentProps = {
   currentPage: number;
 };
 
 const RoomList = async ({ currentPage }: RoomComponentProps) => {
+  const m = await getTranslations("RoomList");
+
   const response = await fetch(
     process.env.NEXT_PUBLIC_BACKEND_URL +
       `/v0.1/rooms?page=${currentPage}&pageSize=${ROOM_BTN_SIZE}`,
@@ -33,7 +36,7 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
 
         {data.rooms.length === 0 && (
           <div className="h-full flex justify-center items-center">
-            아직 개설된 방이 없습니다.
+            {m("noRooms")}
           </div>
         )}
       </div>
