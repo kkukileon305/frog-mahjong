@@ -3,6 +3,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type ResetPasswordInputs = {
   password: string;
@@ -10,6 +11,8 @@ type ResetPasswordInputs = {
 };
 
 const ResetPasswordForm = () => {
+  const m = useTranslations("ResetPassword");
+
   const router = useRouter();
   const {
     register,
@@ -39,14 +42,14 @@ const ResetPasswordForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>인증번호</label>
+        <label>{m("verifyCode")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.resetToken && "border-red-400"
           }`}
           {...register("resetToken", {
-            required: "인증번호를 입력해주세요",
+            required: m("writeCode"),
           })}
         />
         {errors.resetToken && (
@@ -57,17 +60,17 @@ const ResetPasswordForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label>비밀번호 (영문, 숫자 조합 6자리 이상)</label>
+        <label>{m("newPassword")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.password && "border-red-400"
           }`}
           {...register("password", {
-            required: "비밀번호를 입력해주세요",
+            required: m("writePassword"),
             pattern: {
               value: /^(?=.*?[0-9])(?=.*?[a-z]).{6,}$/,
-              message: "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
+              message: m("checkPassword"),
             },
           })}
         />
@@ -84,7 +87,7 @@ const ResetPasswordForm = () => {
           className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
           disabled={isLoading}
         >
-          비밀번호 재설정
+          {m("resetPassword")}
         </button>
       </div>
     </form>

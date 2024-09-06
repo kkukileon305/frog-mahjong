@@ -56,5 +56,14 @@
     "writeEmail": "이메일을 입력해주세요",
     "checkEmail": "올바른 이메일 주소를 입력해주세요",
     "requestResetPasswordEmail": "비밀번호 재설정 이메일 받기"
+  },
+  "ResetPassword" : {
+    "title": "받은 이메일을 확인해주세요",
+    "verifyCode": "인증번호",
+    "writeCode": "인증번호를 입력해주세요",
+    "newPassword": "새 비밀번호 (영문, 숫자 조합 6자리 이상)",
+    "writePassword": "새 비밀번호를 입력해주세요",
+    "checkPassword": "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
+    "resetPassword": "비밀번호 재설정"
   }
 }
