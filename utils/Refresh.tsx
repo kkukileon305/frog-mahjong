@@ -2,12 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 type RefreshProps = {
   className: string;
 };
 
 const Refresh = ({ className }: RefreshProps) => {
+  const m = useTranslations("Refresh");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -16,7 +19,7 @@ const Refresh = ({ className }: RefreshProps) => {
 
   return (
     <button className={className} onClick={router.refresh}>
-      새로고침
+      {m("title")}
     </button>
   );
 };

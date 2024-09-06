@@ -67,5 +67,8 @@
     "resetPassword": "비밀번호 재설정",
     "successResetPassword": "비밀번호가 재설정되었습니다",
     "reSignIn": "다시 로그인"
+  },
+  "Refresh": {
+    "title": "새로고침"
   }
 }
