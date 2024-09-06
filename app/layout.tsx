@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import Header from "@/app/Header";
 
 const font = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -17,7 +17,10 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="kr">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 };
