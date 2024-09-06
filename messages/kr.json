@@ -137,5 +137,10 @@
     "score" : "점",
     "loading": "결과 불러오는 중",
     "close": "닫기"
+  },
+  "HelpModal": {
+    "calRule": "점수계산 규칙",
+    "cardsInfo": "패의 구성",
+    "close": "닫기"
   }
 }

@@ -4,8 +4,11 @@ import React, { useState } from "react";
 import HelpImage1 from "@/public/helps/setsumei1.jpg";
 import HelpImage2 from "@/public/helps/setsumei2.jpg";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const HelpModal = () => {
+  const m = useTranslations("HelpModal");
+
   const [isRotated, setIsRotated] = useState<boolean>(false);
 
   return (
@@ -44,7 +47,7 @@ const HelpModal = () => {
           }`}
           onClick={() => setIsRotated(false)}
         >
-          점수계산 규칙
+          {m("calRule")}
         </button>
         <button
           className={`w-32 border-2 rounded-xl py-2 border-red-400 ${
@@ -52,7 +55,7 @@ const HelpModal = () => {
           }`}
           onClick={() => setIsRotated(true)}
         >
-          패의 구성
+          {m("cardsInfo")}
         </button>
       </div>
 
@@ -60,7 +63,7 @@ const HelpModal = () => {
         id="back"
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
       >
-        닫기
+        {m("close")}
       </button>
     </div>
   );
