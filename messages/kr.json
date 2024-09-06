@@ -104,5 +104,9 @@
     "fullPlayerMessage": "플레이어가 가득 찼습니다",
     "noRoomMessage": "이미 사라진 방입니다",
     "back": "돌아가기"
+  },
+  "AbnormalExit": {
+    "title": "다른 유저가 이탈하여 게임을 종료합니다",
+    "back": "돌아가기"
   }
 }
