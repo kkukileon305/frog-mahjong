@@ -88,5 +88,11 @@
   "EnterRoomBtn": {
     "playing": "진행중",
     "waiting": "대기중"
+  },
+  "EnterRoomForm": {
+    "password": "비밀번호",
+    "writePassword": "비밀번호를 입력해주세요",
+    "close": "닫기",
+    "enterRoom":"입장"
   }
 }
