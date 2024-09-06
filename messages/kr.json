@@ -115,5 +115,9 @@
   },
   "Entering": {
     "title": "접속 중"
+  },
+  "LoanFailedModal": {
+    "title": "님이 론을 실패하여 패가 한번 공개됩니다",
+    "back": "돌아가기"
   }
 }
