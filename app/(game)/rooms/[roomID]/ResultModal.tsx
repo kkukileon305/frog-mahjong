@@ -13,12 +13,12 @@ import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
-import getBonusName from "@/utils/getBonusName";
 import mergeBonus from "@/utils/mergeBonus";
 import { UserSocket } from "@/utils/socketTypes";
 import commonDrawSrc from "@/public/audios/draw.mp3";
 import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
+import { useTranslations } from "next-intl";
 
 type ResultProps = {
   result: GameResult;
@@ -35,6 +35,8 @@ const ResultModal = ({
   winner,
   setWinner,
 }: ResultProps) => {
+  const m = useTranslations("ResultModal");
+
   const userID = getCookie("userID") as string;
 
   // sounds
@@ -101,20 +103,18 @@ const ResultModal = ({
     <div className="p-4">
       {!isLoading ? (
         <>
-          <h3 className="text-3xl font-bold mb-8 text-center">결과</h3>
+          <h3 className="text-3xl font-bold mb-8 text-center">{m("title")}</h3>
           {winner && (
             <div className="my-4">
               <p className="bg-red-400 py-2 rounded-full mb-4 font-bold text-center text-white">
                 {bonuses &&
-                  mergeBonus(bonuses.bonuses.map((b) => getBonusName(b))!).join(
-                    " + "
-                  )}
+                  mergeBonus(bonuses.bonuses.map((b) => m(b))!).join(" + ")}
               </p>
               <div className="flex gap-4 justify-between">
                 <div className="w-[120px] flex flex-col items-center gap-2">
                   <p className="text-2xl font-bold">{winner.name}</p>
                   <p className="font-bold text-blue-400 text-3xl">
-                    승리 +{winnerAddedCoin}
+                    {m("win")} +{winnerAddedCoin}
                   </p>
                   <p className="font-bold text-blue-400 text-2xl">
                     {winner.coin}point
@@ -156,7 +156,8 @@ const ResultModal = ({
                 <div className="w-[120px] flex items-center gap-4">
                   <FaEquals color="green" size="32" />
                   <p className="font-bold text-3xl text-green-500">
-                    {bonuses?.score}점
+                    {bonuses?.score}
+                    {m("score")}
                   </p>
                 </div>
               </div>
@@ -167,7 +168,7 @@ const ResultModal = ({
                     <div className="w-[120px] flex flex-col items-center gap-2">
                       <p className="text-2xl font-bold">{lo.name}</p>
                       <p className="font-bold text-red-400 text-3xl">
-                        패배 -
+                        {m("lose")} -
                         {result.beforeUsers?.find((bu) => bu.id === lo.id)!
                           .coin! - lo.coin}
                       </p>
@@ -217,7 +218,7 @@ const ResultModal = ({
           {!winner && (
             <div className="my-4">
               <p className="bg-red-400 py-2 rounded-full mb-4 font-bold text-center text-white">
-                무승부
+                {m("draw")}
               </p>
 
               <ul className="mb-8">
@@ -268,7 +269,7 @@ const ResultModal = ({
           )}
         </>
       ) : (
-        <p className="font-bold text-2xl text-center my-8">결과 불러오는중</p>
+        <p className="font-bold text-2xl text-center my-8">{m("loading")}</p>
       )}
 
       <button
@@ -276,7 +277,7 @@ const ResultModal = ({
         id="back"
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
       >
-        닫기
+        {m("close")}
       </button>
     </div>
   );

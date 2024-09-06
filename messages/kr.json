@@ -119,5 +119,23 @@
   "LoanFailedModal": {
     "title": "님이 론을 실패하여 패가 한번 공개됩니다",
     "back": "돌아가기"
+  },
+  "ResultModal": {
+    "title": "결과",
+    "same": "같은 패 (2점)",
+    "continuous": "연속 패 (1점)",
+    "allGreen":  "올 그린 (10점)",
+    "dora": "도라 (하나당 1점)",
+    "red":  "적패 (하나당 1점)",
+    "superRed": "슈퍼 레드 (20점)",
+    "tangYao":  "탕야오 (1점)",
+    "chanTa": "찬타 (2점)",
+    "chinYao":  "칭야오 (15점)",
+    "win": "승리",
+    "lose": "패배",
+    "draw": "무승부",
+    "score" : "점",
+    "loading": "결과 불러오는 중",
+    "close": "닫기"
   }
 }
