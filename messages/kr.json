@@ -28,5 +28,24 @@
     "forgotPassword": "비밀번호를 잊으셨나요?",
     "failSignIn": "비밀번호가 틀렸거나 없는 회원입니다",
     "signIn": "로그인"
+  },
+  "SignUp": {
+    "title": "회원가입",
+    "or": "또는",
+    "haveAccountAlready": "계정이 이미 있으신가요?",
+    "back": "돌아가기",
+    "email": "이메일",
+    "writeEmail": "이메일을 입력해주세요",
+    "checkEmail": "올바른 이메일 주소를 입력해주세요",
+    "password": "비밀번호 (영문, 숫자 조합 6자리 이상)",
+    "writePassword": "비밀번호를 입력해주세요",
+    "checkPassword" : "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
+    "name": "이름",
+    "writeName": "이름을 입력해주세요",
+    "alreadySignUp": "이미 가입된 회원입니다",
+    "signUp": "회원가입",
+    "agree1": "회원가입 시 ",
+    "agree2": "이용약관",
+    "agree3": "에 동의한 것으로 간주됩니다."
   }
 }

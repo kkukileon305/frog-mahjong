@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import axiosInstance, { ErrorType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { USER_ALREADY_EXISTED } from "@/utils/errTypes";
+import { useTranslations } from "next-intl";
 
 type SignUpInputs = {
   email: string;
@@ -14,6 +15,8 @@ type SignUpInputs = {
 };
 
 const SignUpForm = () => {
+  const m = useTranslations("SignUp");
+
   const router = useRouter();
   const {
     register,
@@ -54,17 +57,17 @@ const SignUpForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>이메일</label>
+        <label>{m("email")}</label>
         <input
           type="email"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.email && "border-red-400"
           }`}
           {...register("email", {
-            required: "이메일을 입력해주세요",
+            required: m("writeEmail"),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "올바른 이메일 주소를 입력해주세요",
+              message: m("checkEmail"),
             },
           })}
         />
@@ -76,17 +79,17 @@ const SignUpForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label>비밀번호 (영문, 숫자 조합 6자리 이상)</label>
+        <label>{m("password")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.password && "border-red-400"
           }`}
           {...register("password", {
-            required: "비밀번호를 입력해주세요",
+            required: m("writePassword"),
             pattern: {
               value: /^(?=.*?[0-9])(?=.*?[a-z]).{6,}$/,
-              message: "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
+              message: m("checkPassword"),
             },
           })}
         />
@@ -98,13 +101,13 @@ const SignUpForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label>이름</label>
+        <label>{m("name")}</label>
         <input
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.name && "border-red-400"
           }`}
           {...register("name", {
-            required: "이름을 입력해주세요",
+            required: m("writeName"),
           })}
         />
         {errors.name && (
@@ -115,21 +118,21 @@ const SignUpForm = () => {
       </div>
 
       {isAlreadyRegistered && (
-        <p className="text-sm text-red-400 text-center">
-          이미 가입된 회원입니다
-        </p>
+        <p className="text-sm text-red-400 text-center">{m("alreadySignUp")}</p>
       )}
       <div>
         <p className="text-sm text-gray-800 mb-2">
-          회원가입시 <span className="underline">이용약관</span>에 동의한 것으로
-          간주됩니다.
+          {m("agree1")}
+          <span className="underline">{m("agree2")}</span>
+          {m("agree3")}
         </p>
+
         <button
           type="submit"
           className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
           disabled={isLoading}
         >
-          회원가입
+          {m("signUp")}
         </button>
       </div>
     </form>
