@@ -14,5 +14,19 @@
     "signIn": "로그인",
     "signUp": "회원가입",
     "searchRooms": "방 살펴보기"
+  },
+  "SignIn": {
+    "title": "로그인",
+    "or": "또는",
+    "noAccount": "계정이 없으신가요?",
+    "back": "돌아가기",
+    "email": "이메일",
+    "writeEmail": "이메일을 입력해주세요",
+    "checkEmail": "올바른 이메일 주소를 입력해주세요",
+    "password": "비밀번호",
+    "writePassword": "비밀번호를 입력해주세요",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "failSignIn": "비밀번호가 틀렸거나 없는 회원입니다",
+    "signIn": "로그인"
   }
 }

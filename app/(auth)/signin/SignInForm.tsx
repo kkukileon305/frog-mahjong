@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
 import { USER_NOT_FOUND } from "@/utils/errTypes";
 import { PASSWORD_NOT_MATCH } from "@/utils/const";
+import { useTranslations } from "next-intl";
 
 type SignInInputs = {
   email: string;
@@ -16,6 +17,8 @@ type SignInInputs = {
 };
 
 const SignInForm = () => {
+  const m = useTranslations("SignIn");
+
   const router = useRouter();
   const {
     register,
@@ -74,17 +77,17 @@ const SignInForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>이메일</label>
+        <label>{m("email")}</label>
         <input
           type="email"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.email && "border-red-400"
           }`}
           {...register("email", {
-            required: "이메일을 입력해주세요",
+            required: m("writeEmail"),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "올바른 이메일 주소를 입력해주세요",
+              message: m("checkEmail"),
             },
           })}
         />
@@ -96,14 +99,14 @@ const SignInForm = () => {
       </div>
 
       <div className="flex flex-col">
-        <label>비밀번호</label>
+        <label>{m("password")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.password && "border-red-400"
           }`}
           {...register("password", {
-            required: "비밀번호를 입력해주세요",
+            required: m("writePassword"),
           })}
         />
         {errors.password && (
@@ -113,15 +116,13 @@ const SignInForm = () => {
         )}
         <div className="flex justify-end mt-1">
           <Link href="/forgot-password" className="underline text-gray-600">
-            비밀번호를 잊으셨나요?
+            {m("forgotPassword")}
           </Link>
         </div>
       </div>
 
       {isSignInFailed && (
-        <p className="text-sm text-red-400 text-center">
-          비밀번호가 틀렸거나 없는 회원입니다
-        </p>
+        <p className="text-sm text-red-400 text-center">{m("failSignIn")}</p>
       )}
 
       <button
@@ -129,7 +130,7 @@ const SignInForm = () => {
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
-        로그인
+        {m("signIn")}
       </button>
     </form>
   );
