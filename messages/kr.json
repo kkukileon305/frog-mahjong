@@ -49,5 +49,12 @@
   },
   "Callback": {
     "title": "로그인 중"
+  },
+  "ForgotPassword" : {
+    "title": "비밀번호를 잊으셨나요?",
+    "email": "계정 이메일",
+    "writeEmail": "이메일을 입력해주세요",
+    "checkEmail": "올바른 이메일 주소를 입력해주세요",
+    "requestResetPasswordEmail": "비밀번호 재설정 이메일 받기"
   }
 }

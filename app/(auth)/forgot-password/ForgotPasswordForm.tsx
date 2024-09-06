@@ -3,12 +3,15 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type SignInInputs = {
   email: string;
 };
 
 const ForgotPasswordForm = () => {
+  const m = useTranslations("ForgotPassword");
+
   const router = useRouter();
   const {
     register,
@@ -37,17 +40,17 @@ const ForgotPasswordForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>계정 이메일</label>
+        <label>{m("email")}</label>
         <input
           type="email"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.email && "border-red-400"
           }`}
           {...register("email", {
-            required: "이메일을 입력해주세요",
+            required: m("writeEmail"),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "올바른 이메일 주소를 입력해주세요",
+              message: m("checkEmail"),
             },
           })}
         />
@@ -63,7 +66,7 @@ const ForgotPasswordForm = () => {
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
-        비밀번호 재설정 이메일 받기
+        {m("requestResetPasswordEmail")}
       </button>
     </form>
   );
