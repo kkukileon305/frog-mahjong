@@ -84,5 +84,9 @@
     "roomPassword": "비밀번호(선택)",
     "close": "닫기",
     "createRoom":"방 만들기"
+  },
+  "EnterRoomBtn": {
+    "playing": "진행중",
+    "waiting": "대기중"
   }
 }

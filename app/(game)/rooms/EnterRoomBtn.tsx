@@ -6,12 +6,15 @@ import { MouseEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
 import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
 import ModalContainer from "@/utils/ModalContainer";
+import { useTranslations } from "next-intl";
 
 type EnterRoomLinkProps = {
   room: Room;
 };
 
 const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
+  const m = useTranslations("EnterRoomBtn");
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +52,7 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
             {room.currentCount}/{room.maxCount}
           </p>
 
-          <p>{room.state === "play" ? "진행중" : "대기중"}</p>
+          <p>{room.state === "play" ? m("playing") : m("waiting")}</p>
         </div>
       </button>
     </>
