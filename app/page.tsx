@@ -2,23 +2,26 @@ import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/app/Header";
+import { getTranslations } from "next-intl/server";
 
-const Home = () => {
+const Home = async () => {
   const refreshToken = getCookie("refreshToken", {
     cookies,
   });
+
+  const m = await getTranslations("MainPage");
 
   return (
     <>
       <Header />
       {refreshToken ? (
         <div className="min-h-[calc(100dvh-64px)] flex flex-col justify-center items-center gap-4">
-          <Link href="/rooms">방 살펴보기</Link>
+          <Link href="/rooms">{m("searchRooms")}</Link>
         </div>
       ) : (
         <div className="min-h-[calc(100dvh-64px)] flex justify-center items-center gap-4">
-          <Link href="/signin">로그인</Link>
-          <Link href="/signup">회원가입</Link>
+          <Link href="/signin">{m("signIn")}</Link>
+          <Link href="/signup">{m("signUp")}</Link>
         </div>
       )}
     </>

@@ -9,5 +9,10 @@
   "Header": {
     "title": "메인",
     "signOut": "로그아웃"
+  },
+  "MainPage": {
+    "signIn": "로그인",
+    "signUp": "회원가입",
+    "searchRooms": "방 살펴보기"
   }
 }
