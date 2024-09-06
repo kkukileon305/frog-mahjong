@@ -36,7 +36,7 @@ const ModalContainer = ({
 
   return (
     <div
-      className="absolute left-0 top-0 w-full bg-black/50 min-h-screen z-10 flex justify-center items-center p-2"
+      className="absolute left-0 top-0 w-full h-full bg-black/50 z-10 flex justify-center items-center p-2"
       onClick={onClose}
     >
       <div
