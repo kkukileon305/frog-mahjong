@@ -1,7 +1,4 @@
 {
-  "HomePage": {
-    "title": "이건 한국어에요"
-  },
   "Metadata": {
     "title": "개굴작",
     "description": "누구나 함께 즐길 수 있는 보드게임!"
@@ -46,6 +43,8 @@
     "signUp": "회원가입",
     "agree1": "회원가입 시 ",
     "agree2": "이용약관",
-    "agree3": "에 동의한 것으로 간주됩니다."
+    "agree3": "에 동의한 것으로 간주됩니다.",
+    "successSignUp": "회원가입 완료",
+    "signIn": "로그인"
   }
 }
