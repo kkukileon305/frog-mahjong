@@ -108,5 +108,9 @@
   "AbnormalExit": {
     "title": "다른 유저가 이탈하여 게임을 종료합니다",
     "back": "돌아가기"
+  },
+  "KickedGame": {
+    "title": "강제퇴장 되었습니다",
+    "back": "돌아가기"
   }
 }
