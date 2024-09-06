@@ -3,6 +3,7 @@
 import { QUITRequest } from "@/utils/socketTypes";
 import { useRouter } from "next/navigation";
 import { QUIT_GAME } from "@/utils/const";
+import { useTranslations } from "next-intl";
 
 type CloseBtnProps = {
   ws: WebSocket | null;
@@ -11,6 +12,8 @@ type CloseBtnProps = {
 };
 
 const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
+  const m = useTranslations("Game");
+
   const router = useRouter();
   const onClick = () => {
     const quitReq: QUITRequest = {
@@ -29,7 +32,7 @@ const CloseBtn = ({ ws, roomID, userID }: CloseBtnProps) => {
       onClick={onClick}
       className="bg-red-400 text-white font-bold p-2 w-full"
     >
-      나가기
+      {m("quit")}
     </button>
   );
 };

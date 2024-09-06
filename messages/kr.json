@@ -154,7 +154,8 @@
     "someoneLoan": "님이 론을 선언했습니다",
     "getSelectedCard": "패 가져오기",
     "help": "설명서",
-    "playing": "진행중"
+    "playing": "진행중",
+    "quit": "나가기"
   },
   "UserPanel": {
     "ready": "준비",

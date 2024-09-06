@@ -154,7 +154,8 @@
     "someoneLoan": "has declared Ron",
     "getSelectedCard": "Take the selected card",
     "help": "Help",
-    "playing": "In Progress"
+    "playing": "In Progress",
+    "quit": "Quit"
   },
   "UserPanel": {
     "ready": "Ready",
