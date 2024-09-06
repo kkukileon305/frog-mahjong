@@ -4,8 +4,11 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axiosInstance, { TokenType } from "@/utils/axios";
 import { setCookie } from "cookies-next";
+import { useTranslations } from "next-intl";
 
 const InnerPage = () => {
+  const m = useTranslations("Callback");
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -51,7 +54,7 @@ const InnerPage = () => {
   return (
     <div>
       <div className="mx-auto max-w-3xl min-h-[calc(100dvh-64px)] flex justify-center items-center">
-        <p className="text-3xl font-bold">인증중</p>
+        <p className="text-3xl font-bold">{m("title")}</p>
       </div>
     </div>
   );

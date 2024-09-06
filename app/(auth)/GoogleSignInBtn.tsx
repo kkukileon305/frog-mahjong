@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const GoogleSignInBtn = () => {
   const devUrl = "http://localhost:3000";
-  // TODO: Change DOMAIN
   const productionUrl = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
   const redirect_uri = `${

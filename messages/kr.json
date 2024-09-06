@@ -46,5 +46,8 @@
     "agree3": "에 동의한 것으로 간주됩니다.",
     "successSignUp": "회원가입 완료",
     "signIn": "로그인"
+  },
+  "Callback": {
+    "title": "로그인 중"
   }
 }
