@@ -70,5 +70,19 @@
   },
   "Refresh": {
     "title": "새로고침"
+  },
+  "CreateRoomBtn": {
+    "title": "방 만들기"
+  },
+  "CreateRoomForm": {
+    "roomName": "방 이름",
+    "writeRoomName": "방 이름을 입력해주세요",
+    "minPlayerNumber": "최소 플레이어 수",
+    "maxPlayerNumber": "최대 플레이어 수",
+    "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
+    "timeout": "턴 제한 시간",
+    "roomPassword": "비밀번호(선택)",
+    "close": "닫기",
+    "createRoom":"방 만들기"
   }
 }

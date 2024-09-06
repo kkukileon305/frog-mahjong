@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import axiosInstance, { RoomCreatedResponse } from "@/utils/axios";
 import { getCookie } from "cookies-next";
+import { useTranslations } from "next-intl";
 
 type CreateRoomInputs = {
   name: string;
@@ -23,6 +24,8 @@ type RequestType = {
 };
 
 const CreateRoomForm = () => {
+  const m = useTranslations("CreateRoomForm");
+
   const router = useRouter();
   const {
     register,
@@ -97,14 +100,14 @@ const CreateRoomForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>방 이름</label>
+        <label>{m("roomName")}</label>
         <input
           type="name"
           className={`border border-gray-400 rounded p-2 mt-3 ${
             errors.name && "border-red-400"
           }`}
           {...register("name", {
-            required: "방 이름을 입력해주세요",
+            required: m("writeRoomName"),
           })}
         />
         {errors.name && (
@@ -114,7 +117,7 @@ const CreateRoomForm = () => {
         )}
       </div>
       <div className="flex flex-col">
-        <label>최소 플레이어 수</label>
+        <label>{m("minPlayerNumber")}</label>
 
         <div className="flex justify-between gap-2 mt-3">
           {["2", "3", "4"].map((i) => (
@@ -132,7 +135,7 @@ const CreateRoomForm = () => {
         </div>
       </div>
       <div className="flex flex-col">
-        <label>최대 플레이어 수</label>
+        <label>{m("maxPlayerNumber")}</label>
         <div className="flex justify-between gap-2 mt-3">
           {["2", "3", "4"].map((i) => (
             <label
@@ -149,8 +152,12 @@ const CreateRoomForm = () => {
         </div>
       </div>
 
+      {!isStable && (
+        <span className="text-sm text-red-400 mt-2">{m("stablePlayer")}</span>
+      )}
+
       <div className="flex flex-col">
-        <label>턴 제한 시간</label>
+        <label>{m("timeout")}</label>
         <div className="flex justify-between gap-2 mt-3">
           {["30", "45", "60"].map((i) => (
             <label
@@ -167,14 +174,8 @@ const CreateRoomForm = () => {
         </div>
       </div>
 
-      {!isStable && (
-        <span className="text-sm text-red-400 mt-2">
-          최대 플레이어 수는 최소 플레이어 수보다 커야합니다
-        </span>
-      )}
-
       <div className="flex flex-col">
-        <label>비밀번호(선택)</label>
+        <label>{m("roomPassword")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
@@ -195,14 +196,14 @@ const CreateRoomForm = () => {
           id="back"
           disabled={isLoading}
         >
-          닫기
+          {m("close")}
         </button>
         <button
           type="submit"
           disabled={isLoading}
           className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         >
-          방 만들기
+          {m("createRoom")}
         </button>
       </div>
     </form>
