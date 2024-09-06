@@ -1,11 +1,14 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-const Page = () => {
+const Page = async () => {
+  const m = await getTranslations("ResetPassword");
+
   return (
     <div className="bg-slate-50">
       <div className="max-w-xl mx-auto py-24">
         <h2 className="text-4xl text-center mb-6">
-          비밀번호가 재설정되었습니다.
+          {m("successResetPassword")}
         </h2>
 
         <div className="flex justify-center">
@@ -13,7 +16,7 @@ const Page = () => {
             href="/signin"
             className="border p-3 rounded border-blue-400 text-blue-400"
           >
-            다시 로그인
+            {m("reSignIn")}
           </Link>
         </div>
       </div>
