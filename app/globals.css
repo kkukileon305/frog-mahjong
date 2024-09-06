@@ -28,3 +28,11 @@ input:focus {
 .flip-card-back {
     transform: rotateY(180deg);
 }
+
+.important-height {
+    max-height: calc(100vh - 16px);
+}
+
+.hanbun-white {
+    background-color: rgb(255 255 255 / 0.5)
+}

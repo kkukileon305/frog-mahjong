@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import HelpImage1 from "@/public/helps/setsumei1.jpg";
 import HelpImage2 from "@/public/helps/setsumei2.jpg";
 import Image from "next/image";

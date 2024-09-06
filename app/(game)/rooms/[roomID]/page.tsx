@@ -108,7 +108,7 @@ const Page = ({
         )}
 
         {isHelpModal && (
-          <ModalContainer setIsOpen={setIsHelpModal} isInGame>
+          <ModalContainer setIsOpen={setIsHelpModal} isInGame={true}>
             <HelpModal />
           </ModalContainer>
         )}
