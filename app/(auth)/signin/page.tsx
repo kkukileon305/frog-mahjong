@@ -4,7 +4,7 @@ import GoogleSignInBtn from "@/app/(auth)/GoogleSignInBtn";
 
 const Page = () => {
   return (
-    <div className="bg-slate-50 min-h-[100vh]">
+    <div className="bg-slate-50 min-h-[100dvh]">
       <div className="max-w-[358px] mx-auto py-24 px-2">
         <h2 className="font-bold text-2xl text-center mb-6">로그인</h2>
 

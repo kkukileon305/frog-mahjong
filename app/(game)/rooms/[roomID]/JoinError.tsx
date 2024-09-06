@@ -20,7 +20,7 @@ const JoinError = ({
   const noRoomMessage = "이미 사라진 방입니다";
 
   return (
-    <div className="flex h-[calc(100vh)] bg-gray-200 justify-center items-center">
+    <div className="flex h-[calc(100dvh)] bg-gray-200 justify-center items-center">
       <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center flex-col">
         <p className="font-bold text-3xl">
           {isPasswordFailed && pwErrorMessage}

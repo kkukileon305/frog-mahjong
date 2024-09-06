@@ -50,7 +50,7 @@ const InnerPage = () => {
 
   return (
     <div>
-      <div className="mx-auto max-w-3xl min-h-[calc(100vh-64px)] flex justify-center items-center">
+      <div className="mx-auto max-w-3xl min-h-[calc(100dvh-64px)] flex justify-center items-center">
         <p className="text-3xl font-bold">인증중</p>
       </div>
     </div>
