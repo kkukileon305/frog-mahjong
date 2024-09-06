@@ -29,6 +29,7 @@ export const ERR_INTERNAL_SERVER = "ERR_INTERNAL_SERVER";
 export const PASSWORD_NOT_MATCH = "PASSWORD_NOT_MATCH";
 
 // languages
+export const LOCALE_COOKIE_NAME = "LOCALE_NAME";
 export const KR = "kr";
 export const JP = "jp";
 export const US = "us";

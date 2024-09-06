@@ -1,11 +1,13 @@
 import { getRequestConfig } from "next-intl/server";
 import { getCookie } from "cookies-next";
-import { KR } from "@/utils/const";
-
-const LOCALE_COOKIE_NAME = "LOCALE_NAME";
+import { KR, LOCALE_COOKIE_NAME } from "@/utils/const";
+import { cookies } from "next/headers";
 
 export default getRequestConfig(async () => {
-  const locale = getCookie(LOCALE_COOKIE_NAME)?.toString() || KR;
+  const locale =
+    getCookie(LOCALE_COOKIE_NAME, {
+      cookies,
+    })?.toString() || KR;
 
   return {
     locale,

@@ -113,7 +113,7 @@ const ResultModal = ({
               <div className="flex gap-4 justify-between">
                 <div className="w-[120px] flex flex-col items-center gap-2">
                   <p className="text-2xl font-bold">{winner.name}</p>
-                  <p className="font-bold text-blue-400 text-3xl">
+                  <p className="font-bold text-blue-400 text-2xl">
                     {m("win")} +{winnerAddedCoin}
                   </p>
                   <p className="font-bold text-blue-400 text-2xl">
@@ -167,7 +167,7 @@ const ResultModal = ({
                   <li className="flex gap-4 justify-between mb-8" key={lo.id}>
                     <div className="w-[120px] flex flex-col items-center gap-2">
                       <p className="text-2xl font-bold">{lo.name}</p>
-                      <p className="font-bold text-red-400 text-3xl">
+                      <p className="font-bold text-red-400 text-2xl text-center">
                         {m("lose")} -
                         {result.beforeUsers?.find((bu) => bu.id === lo.id)!
                           .coin! - lo.coin}

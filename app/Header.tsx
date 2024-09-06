@@ -4,6 +4,7 @@ import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import SignOutBtn from "@/app/SignOutBtn";
 import { getTranslations } from "next-intl/server";
+import SwitchLocale from "@/utils/components/SwitchLocale";
 
 const Header = async () => {
   const refreshToken = getCookie("refreshToken", {
@@ -18,6 +19,8 @@ const Header = async () => {
         <Link href="/" className="font-bold text-2xl">
           {m("title")}
         </Link>
+
+        <SwitchLocale />
 
         {refreshToken && <SignOutBtn />}
       </div>
