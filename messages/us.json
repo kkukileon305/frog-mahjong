@@ -1,0 +1,189 @@
+{
+  "Metadata": {
+    "title": "GaeGoolJak",
+    "description": "A board game that everyone can enjoy together!"
+  },
+  "Header": {
+    "title": "Main",
+    "signOut": "Sign Out"
+  },
+  "MainPage": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "searchRooms": "Browse Rooms"
+  },
+  "SignIn": {
+    "title": "Sign In",
+    "or": "Or",
+    "noAccount": "Don't have an account?",
+    "back": "Go Back",
+    "email": "Email",
+    "writeEmail": "Please enter your email",
+    "checkEmail": "Please enter a valid email address",
+    "password": "Password",
+    "writePassword": "Please enter your password",
+    "forgotPassword": "Forgot your password?",
+    "failSignIn": "Incorrect password or user does not exist",
+    "signIn": "Sign In"
+  },
+  "SignUp": {
+    "title": "Sign Up",
+    "or": "Or",
+    "haveAccountAlready": "Already have an account?",
+    "back": "Go Back",
+    "email": "Email",
+    "writeEmail": "Please enter your email",
+    "checkEmail": "Please enter a valid email address",
+    "password": "Password (6 or more characters with a combination of letters and numbers)",
+    "writePassword": "Please enter your password",
+    "checkPassword": "Please enter a password of 6 or more characters with a combination of letters and numbers",
+    "name": "Name",
+    "writeName": "Please enter your name",
+    "alreadySignUp": "You are already signed up",
+    "signUp": "Sign Up",
+    "agree1": "By signing up, you agree to the ",
+    "agree2": "Terms of Service",
+    "agree3": ".",
+    "successSignUp": "Sign Up Successful",
+    "signIn": "Sign In"
+  },
+  "Callback": {
+    "title": "Signing In"
+  },
+  "ForgotPassword": {
+    "title": "Forgot your password?",
+    "email": "Account Email",
+    "writeEmail": "Please enter your email",
+    "checkEmail": "Please enter a valid email address",
+    "requestResetPasswordEmail": "Receive Password Reset Email"
+  },
+  "ResetPassword": {
+    "title": "Check your email",
+    "verifyCode": "Verification Code",
+    "writeCode": "Please enter the verification code",
+    "newPassword": "New Password (6 or more characters with a combination of letters and numbers)",
+    "writePassword": "Please enter your new password",
+    "checkPassword": "Please enter a password of 6 or more characters with a combination of letters and numbers",
+    "resetPassword": "Reset Password",
+    "successResetPassword": "Password has been reset",
+    "reSignIn": "Sign In Again"
+  },
+  "RoomList": {
+    "noRooms": "No rooms have been created yet"
+  },
+  "Refresh": {
+    "title": "Refresh"
+  },
+  "CreateRoomBtn": {
+    "title": "Create Room"
+  },
+  "CreateRoomForm": {
+    "roomName": "Room Name",
+    "writeRoomName": "Please enter the room name",
+    "minPlayerNumber": "Minimum Number of Players",
+    "maxPlayerNumber": "Maximum Number of Players",
+    "stablePlayer": "The maximum number of players must be greater than the minimum number",
+    "timeout": "Turn Time Limit",
+    "roomPassword": "Password (optional)",
+    "close": "Close",
+    "createRoom": "Create Room"
+  },
+  "EnterRoomBtn": {
+    "playing": "In Progress",
+    "waiting": "Waiting"
+  },
+  "EnterRoomForm": {
+    "password": "Password",
+    "writePassword": "Please enter the password",
+    "close": "Close",
+    "enterRoom": "Enter"
+  },
+  "JoinError": {
+    "pwErrorMessage": "Incorrect password",
+    "progressMessage": "Already in progress",
+    "fullPlayerMessage": "The room is full",
+    "noRoomMessage": "The room no longer exists",
+    "back": "Go Back"
+  },
+  "AbnormalExit": {
+    "title": "A player has left, the game will end",
+    "back": "Go Back"
+  },
+  "KickedGame": {
+    "title": "You have been kicked out",
+    "back": "Go Back"
+  },
+  "Entering": {
+    "title": "Connecting"
+  },
+  "LoanFailedModal": {
+    "title": "has failed the Ron and a hand will be revealed",
+    "back": "Go Back"
+  },
+  "ResultModal": {
+    "title": "Result",
+    "same": "Same Hand (2 points)",
+    "continuous": "Consecutive Hand (1 point)",
+    "allGreen": "All Green (10 points)",
+    "dora": "Dora (1 point each)",
+    "red": "Red Hand (1 point each)",
+    "superRed": "Super Red (20 points)",
+    "tangYao": "Tang Yao (1 point)",
+    "chanTa": "Chan Ta (2 points)",
+    "chinYao": "Chin Yao (15 points)",
+    "win": "Win",
+    "lose": "Lose",
+    "draw": "Draw",
+    "score": "Points",
+    "loading": "Loading results",
+    "close": "Close"
+  },
+  "HelpModal": {
+    "calRule": "Score Calculation Rules",
+    "cardsInfo": "Composition of the Hand",
+    "close": "Close"
+  },
+  "Game": {
+    "getDora": "Select a Dora",
+    "getFiveCards": "Select 5 cards to take",
+    "noLeftCards": "No cards left, click Ron to take from the opponent or click End to finish",
+    "getCard": "Select 1 card to take or click Ron to take from the opponent's hand",
+    "goVictory": "Shout Tsumo or discard the card of your choice",
+    "waitYourTurn": "Please wait for your turn",
+    "goLoanVictory": "Declare Ron victory or discard (give up)",
+    "someoneLoan": "has declared Ron",
+    "getSelectedCard": "Take the selected card",
+    "help": "Help",
+    "playing": "In Progress"
+  },
+  "UserPanel": {
+    "ready": "Ready",
+    "waiting": "Waiting",
+    "kick": "Kick"
+  },
+  "MyCardBoard": {
+    "dora": "Dora",
+    "score": "Points",
+    "noDora1": "No Dora yet",
+    "noDora2": "",
+    "noCards1": "No discarded cards yet",
+    "noCards2": "",
+    "loanVictory": "Ron Victory",
+    "normalVictory": "Tsumo",
+    "suteru": "Discard",
+    "cancelSuteru": "Cancel Discard",
+    "loan": "Ron!",
+    "cancelLoan": "Cancel Ron"
+  },
+  "ShuffleLeftCards": {
+    "end": "End"
+  },
+  "StartBtn": {
+    "start": "Start",
+    "canNotStart": "Cannot Start"
+  },
+  "ReadyBtn": {
+    "ready": "Ready",
+    "cancelReady": "Cancel Ready"
+  }
+}

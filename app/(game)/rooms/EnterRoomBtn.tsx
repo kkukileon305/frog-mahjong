@@ -5,7 +5,7 @@ import { FaLock } from "react-icons/fa";
 import { MouseEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
 import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
-import ModalContainer from "@/utils/ModalContainer";
+import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 
 type EnterRoomLinkProps = {

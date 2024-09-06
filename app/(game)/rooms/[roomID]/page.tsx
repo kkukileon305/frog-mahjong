@@ -11,7 +11,7 @@ import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
 import { useEffect, useState } from "react";
 import useDetectNavigation from "@/app/hooks/useDetectNavigation";
 import HelpModal from "@/app/(game)/rooms/[roomID]/HelpModal";
-import ModalContainer from "@/utils/ModalContainer";
+import ModalContainer from "@/utils/components/ModalContainer";
 
 type RoomDetailProps = {
   params: { roomID: string };

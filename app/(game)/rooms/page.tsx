@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import RoomList from "@/app/(game)/rooms/RoomList";
 import RoomLoading from "@/app/(game)/rooms/RoomLoading";
 import CreateRoomBtn from "@/app/(game)/rooms/CreateRoomBtn";
-import Refresh from "@/utils/Refresh";
+import Refresh from "@/utils/components/Refresh";
 import Header from "@/app/Header";
 
 type RoomsPageProps = {

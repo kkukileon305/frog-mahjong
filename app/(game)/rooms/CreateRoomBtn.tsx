@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CreateRoomForm from "@/app/(game)/rooms/CreateRoomForm";
-import ModalContainer from "@/utils/ModalContainer";
+import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 
 const CreateRoomBtn = () => {
