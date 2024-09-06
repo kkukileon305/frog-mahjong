@@ -39,7 +39,7 @@ const EnterRoomForm = ({ roomID }: { roomID: number }) => {
         )}
       </div>
 
-      <div className="flex gap-4 mt-4 flex-col md:flex-row">
+      <div className="flex gap-4 mt-4 flex-col-reverse md:flex-row">
         <div
           className="w-full bg-white border border-gray-400 flex justify-center items-center rounded-lg py-3 font-bold cursor-pointer"
           id="back"

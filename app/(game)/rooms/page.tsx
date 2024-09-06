@@ -15,7 +15,7 @@ const Page = async ({ searchParams }: RoomsPageProps) => {
   return (
     <>
       <Header />
-      <div className="max-w-[800px] mx-auto mt-4 px-2">
+      <div className="max-w-[800px] mx-auto py-4 px-2">
         <Suspense fallback={<RoomLoading />}>
           <RoomList currentPage={currentPage} />
         </Suspense>

@@ -188,7 +188,7 @@ const CreateRoomForm = () => {
           </span>
         )}
       </div>
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex flex-col-reverse md:flex-row gap-4">
         <button
           type="button"
           className="w-full bg-white border border-gray-400 flex justify-center items-center rounded-lg py-3 font-bold cursor-pointer"
