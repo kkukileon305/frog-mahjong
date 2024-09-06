@@ -4,11 +4,14 @@ import { useRouter } from "next/navigation";
 import { deleteCookie, getCookie } from "cookies-next";
 import axiosInstance from "@/utils/axios";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const SignOutBtn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const accessToken = getCookie("accessToken");
+
+  const m = useTranslations("Header");
 
   const signOut = async () => {
     setIsLoading(true);
@@ -37,7 +40,7 @@ const SignOutBtn = () => {
 
   return (
     <button disabled={isLoading} onClick={signOut}>
-      로그아웃
+      {m("signOut")}
     </button>
   );
 };

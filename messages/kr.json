@@ -5,5 +5,9 @@
   "Metadata": {
     "title": "개굴작",
     "description": "누구나 함께 즐길 수 있는 보드게임!"
+  },
+  "Header": {
+    "title": "메인",
+    "signOut": "로그아웃"
   }
 }
