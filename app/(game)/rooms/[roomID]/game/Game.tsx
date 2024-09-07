@@ -225,7 +225,7 @@ const Game = ({
 
   return (
     <>
-      <div className="w-full h-[calc(100%-40px)] bg-green-500 flex gap-4 p-8">
+      <div className="w-full h-[calc(100%-40px)] bg-game flex gap-4 p-8">
         <div className="w-[304px] h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
