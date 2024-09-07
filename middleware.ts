@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getCookie, hasCookie } from "cookies-next";
+import { hasCookie } from "cookies-next";
 import { cookies } from "next/headers";
 
-// This function can be marked `async` if using `await` inside
+// block auth page with token
 export function middleware(request: NextRequest) {
   const isSignIn = hasCookie("refreshToken", {
     cookies,
