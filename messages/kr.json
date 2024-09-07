@@ -66,6 +66,11 @@
     "successResetPassword": "비밀번호가 재설정되었습니다",
     "reSignIn": "다시 로그인"
   },
+  "Rooms": {
+    "roomState": "방상태",
+    "roomTitle": "방제목",
+    "playerCount":  "유저수"
+  },
   "RoomList": {
     "noRooms": "아직 개설된 방이 없습니다"
   },

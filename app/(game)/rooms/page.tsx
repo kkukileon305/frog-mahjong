@@ -4,24 +4,33 @@ import RoomLoading from "@/app/(game)/rooms/RoomLoading";
 import CreateRoomBtn from "@/app/(game)/rooms/CreateRoomBtn";
 import Refresh from "@/utils/components/Refresh";
 import Header from "@/app/Header";
+import { getTranslations } from "next-intl/server";
 
 type RoomsPageProps = {
   searchParams: { page: string };
 };
 
 const Page = async ({ searchParams }: RoomsPageProps) => {
+  const m = await getTranslations("Rooms");
   const currentPage = Number(searchParams.page) || 1;
 
   return (
     <>
       <Header />
-      <div className="max-w-[800px] mx-auto py-4 px-2">
-        <Suspense fallback={<RoomLoading />}>
-          <RoomList currentPage={currentPage} />
-        </Suspense>
-        <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
-          <CreateRoomBtn />
-          <Refresh className="w-full md:w-1/2 border py-2 rounded-xl" />
+      <div className="bg-rooms bg-cover bg-center">
+        <div className="max-w-[800px] mx-auto py-4 px-2">
+          <div className="h-11 flex items-center rounded-full bg-green-600 p-2 font-bold text-white text-center">
+            <p className="basis-1/4">{m("roomState")}</p>
+            <p className="basis-2/4">{m("roomTitle")}</p>
+            <p className="basis-1/4">{m("playerCount")}</p>
+          </div>
+          <Suspense fallback={<RoomLoading />}>
+            <RoomList currentPage={currentPage} />
+          </Suspense>
+          <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
+            <CreateRoomBtn />
+            <Refresh className="w-full md:w-1/2 border py-2 rounded-xl" />
+          </div>
         </div>
       </div>
     </>

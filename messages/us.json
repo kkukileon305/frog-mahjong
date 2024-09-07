@@ -66,6 +66,11 @@
     "successResetPassword": "Password has been reset",
     "reSignIn": "Sign In Again"
   },
+  "Rooms": {
+    "roomState": "State",
+    "roomTitle": "Title",
+    "playerCount":  "User Count"
+  },
   "RoomList": {
     "noRooms": "No rooms have been created yet"
   },

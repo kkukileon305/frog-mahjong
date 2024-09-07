@@ -2,7 +2,7 @@
 
 import { Room } from "@/utils/axios";
 import { FaLock } from "react-icons/fa";
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
 import ModalContainer from "@/utils/components/ModalContainer";
@@ -38,22 +38,21 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
       <button
         onClick={onClick}
         disabled={room.state === "play"}
-        className={`flex flex-col h-[66px] mb-4 font-bold text-white p-2 rounded-xl ${
-          room.state === "play" ? "bg-red-600 " : "bg-green-600 "
+        className={`flex h-11 mt-2 font-bold bg-white p-2 border-2 rounded-full ${
+          room.state === "play"
+            ? "border-red-600 text-red-600"
+            : "border-green-600 text-green-600"
         }`}
       >
-        <p className="flex gap-4 items-center justify-center">
-          {room.name}
-          {room.password && <FaLock />}
+        <p className="basis-1/4">
+          {room.state === "play" ? m("playing") : m("waiting")}
         </p>
 
-        <div className="flex justify-between w-full">
-          <p>
-            {room.currentCount}/{room.maxCount}
-          </p>
+        <p className="basis-1/2">{room.name}</p>
 
-          <p>{room.state === "play" ? m("playing") : m("waiting")}</p>
-        </div>
+        <p className="basis-1/4">
+          {room.currentCount}/{room.maxCount}
+        </p>
       </button>
     </>
   );

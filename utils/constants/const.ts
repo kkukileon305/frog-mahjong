@@ -1,4 +1,4 @@
-export const ROOM_BTN_SIZE = 6;
+export const ROOM_BTN_SIZE = 12;
 
 // event names
 export const JOIN = "JOIN";

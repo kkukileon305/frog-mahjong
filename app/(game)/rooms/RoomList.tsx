@@ -26,9 +26,9 @@ const RoomList = async ({ currentPage }: RoomComponentProps) => {
     <>
       <div
         style={{
-          height: `${82 * ROOM_BTN_SIZE}px`,
+          height: `${44 * ROOM_BTN_SIZE + 8 * ROOM_BTN_SIZE}px`,
         }}
-        className="flex flex-col"
+        className="flex flex-col mb-4"
       >
         {data.rooms.map((room) => (
           <EnterRoomBtn key={room.id} room={room} />
