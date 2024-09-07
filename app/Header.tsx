@@ -20,9 +20,10 @@ const Header = async () => {
           {m("title")}
         </Link>
 
-        <SwitchLocale />
-
-        {refreshToken && <SignOutBtn />}
+        <div className="flex items-center gap-2">
+          {refreshToken && <SignOutBtn />}
+          <SwitchLocale />
+        </div>
       </div>
     </header>
   );
