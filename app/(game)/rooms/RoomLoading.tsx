@@ -5,7 +5,7 @@ const RoomLoading = () => {
     <>
       <div
         style={{
-          height: `${82 * ROOM_BTN_SIZE - 16}px`,
+          height: `${44 * ROOM_BTN_SIZE + 8 * ROOM_BTN_SIZE}px`,
         }}
         className="bg-gray-200 mb-4 animate-pulse flex justify-center items-center rounded-xl"
       />

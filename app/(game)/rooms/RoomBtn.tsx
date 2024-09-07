@@ -30,7 +30,7 @@ const RoomBtn = ({ room }: EnterRoomLinkProps) => {
       <button
         onClick={() => setSelectedRoom(selectedRoom ? null : room)}
         disabled={room.state === "play"}
-        className={`flex h-11 mt-2 font-bold p-2 border-2 rounded-full ${
+        className={`flex h-11 mb-2 font-bold p-2 border-2 rounded-full ${
           room.state === "play"
             ? "border-red-600 text-red-600"
             : "border-green-600 text-green-600"
