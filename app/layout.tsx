@@ -10,7 +10,10 @@ export const generateMetadata = async () => {
   const m = await getTranslations("Metadata");
 
   return {
-    title: m("title"),
+    title: {
+      template: `%s - ${m("title")}`,
+      default: m("title"),
+    },
     description: m("description"),
   };
 };
