@@ -163,7 +163,7 @@
   "MyCardBoard": {
     "dora": "도라",
     "score": "점",
-    "noDora": "아직 도라가 <br></br>없습니다",
+    "noDora": "아직 도라가<br></br>없습니다",
     "noCards": "아직 버린 패가<br></br>없습니다",
     "loanVictory": "론 승리",
     "normalVictory": "쯔모",
