@@ -185,5 +185,9 @@
   },
   "ChatHistoryModal": {
     "close": "닫기"
+  },
+  "ChatForm": {
+    "placeholder": "채팅을 입력하세요",
+    "writeChat": "메세지를 입력해주세요"
   }
 }

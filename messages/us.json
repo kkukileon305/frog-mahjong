@@ -185,5 +185,9 @@
   },
   "ChatHistoryModal": {
     "close": "Close"
+  },
+  "ChatForm": {
+    "placeholder": "Please enter Chat message",
+    "writeChat": "Please enter Chat message"
   }
 }

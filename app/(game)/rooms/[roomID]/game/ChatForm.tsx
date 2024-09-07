@@ -7,6 +7,7 @@ import { BsList } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import ChatHistoryModal from "@/app/(game)/rooms/[roomID]/game/ChatHistoryModal";
 import ModalContainer from "@/utils/components/ModalContainer";
+import { useTranslations } from "next-intl";
 
 type ChatFormProps = {
   ws: WebSocket | null;
@@ -20,6 +21,8 @@ type Inputs = {
 };
 
 const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
+  const m = useTranslations("ChatForm");
+
   const { register, reset, handleSubmit } = useForm<Inputs>();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -59,9 +62,9 @@ const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
         <input
           className="w-full h-full placeholder:text-black/50 bg-transparent focus:outline-none"
           {...register("message", {
-            required: "메세지를 입력해주세요...",
+            required: m("writeChat"),
           })}
-          placeholder="채팅을 입력하세요"
+          placeholder={`${m("placeholder")}`}
         />
 
         <button type="submit">
