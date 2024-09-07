@@ -25,8 +25,8 @@ const JoinError = ({
   const noRoomMessage = m("noRoomMessage");
 
   return (
-    <div className="flex h-[calc(100dvh)] bg-gray-200 justify-center items-center">
-      <div className="p-4 w-full max-w-3xl bg-white rounded-xl flex justify-center items-center flex-col">
+    <div className="flex h-[calc(100dvh)] justify-center items-center">
+      <div className="p-4 w-full max-w-3xl rounded-xl flex justify-center items-center flex-col">
         <p className="font-bold text-3xl">
           {isPasswordFailed && pwErrorMessage}
           {isProgress && progressMessage}
