@@ -92,6 +92,9 @@
     "createRoom":"방 만들기"
   },
   "EnterRoomBtn": {
+    "enter": "들어가기"
+  },
+  "RoomBtn": {
     "playing": "진행중",
     "waiting": "대기중"
   },

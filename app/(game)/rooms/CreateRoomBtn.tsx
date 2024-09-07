@@ -20,7 +20,7 @@ const CreateRoomBtn = () => {
         </ModalContainer>
       )}
       <button
-        className="w-full md:w-1/2 bg-blue-400 py-2 font-bold text-white rounded-xl"
+        className="w-full md:basis-1/3 bg-blue-400 py-2 font-bold text-white rounded-xl"
         onClick={onOpen}
       >
         {m("title")}

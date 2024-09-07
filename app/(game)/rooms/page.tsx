@@ -5,6 +5,7 @@ import CreateRoomBtn from "@/app/(game)/rooms/CreateRoomBtn";
 import Refresh from "@/utils/components/Refresh";
 import Header from "@/app/Header";
 import { getTranslations } from "next-intl/server";
+import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 
 type RoomsPageProps = {
   searchParams: { page: string };
@@ -29,7 +30,8 @@ const Page = async ({ searchParams }: RoomsPageProps) => {
           </Suspense>
           <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
             <CreateRoomBtn />
-            <Refresh className="w-full md:w-1/2 border py-2 rounded-xl" />
+            <EnterRoomBtn />
+            <Refresh className="w-full md:basis-1/3 border py-2 rounded-xl" />
           </div>
         </div>
       </div>

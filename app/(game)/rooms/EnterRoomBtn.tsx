@@ -1,68 +1,47 @@
 "use client";
 
-import { Room } from "@/utils/axios";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
-import ModalContainer from "@/utils/components/ModalContainer";
+import useEnterRoomStore from "@/utils/stores/useEnterRoomStore";
 import { useTranslations } from "next-intl";
-import lockImage from "@/public/icons/lock.png";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ModalContainer from "@/utils/components/ModalContainer";
+import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
 
-type EnterRoomLinkProps = {
-  room: Room;
-};
-
-const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
+const EnterRoomBtn = () => {
   const m = useTranslations("EnterRoomBtn");
 
   const router = useRouter();
+  const { selectedRoom, setSelectedRoom } = useEnterRoomStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
-    if (room.password) {
-      // パスワードある場合
+    if (!selectedRoom) return;
+
+    if (selectedRoom.password) {
       setIsOpen(true);
     } else {
-      router.push(`/rooms/${room.id}`);
+      router.push(`/rooms/${selectedRoom.id}`);
     }
   };
 
+  useEffect(() => {
+    return () => setSelectedRoom(null);
+  }, []);
+
   return (
     <>
-      {isOpen && (
+      {selectedRoom && isOpen && (
         <ModalContainer setIsOpen={setIsOpen}>
-          <EnterRoomForm roomID={room.id} />
+          <EnterRoomForm roomID={Number(selectedRoom.id)} />
         </ModalContainer>
       )}
 
       <button
         onClick={onClick}
-        disabled={room.state === "play"}
-        className={`flex h-11 mt-2 font-bold bg-white p-2 border-2 rounded-full ${
-          room.state === "play"
-            ? "border-red-600 text-red-600"
-            : "border-green-600 text-green-600"
-        }`}
+        disabled={selectedRoom == null}
+        className="w-full md:basis-1/3 bg-blue-400 py-2 font-bold text-white rounded-xl disabled:text-gray-200 disabled:bg-gray-400"
       >
-        <p className="basis-1/4">
-          {room.state === "play" ? m("playing") : m("waiting")}
-        </p>
-
-        <p className="basis-1/2">{room.name}</p>
-
-        <div className="basis-1/4 flex justify-center">
-          <p className="relative">
-            <Image
-              className="absolute right-[calc(100%+8px)] top-[calc(50%-8px)]"
-              src={lockImage.src}
-              alt="locked"
-              width={16}
-              height={16}
-            />
-            {room.currentCount}/{room.maxCount}
-          </p>
-        </div>
+        {m("enter")}
       </button>
     </>
   );

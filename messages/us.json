@@ -91,9 +91,12 @@
     "close": "Close",
     "createRoom": "Create Room"
   },
-  "EnterRoomBtn": {
+  "RoomBtn": {
     "playing": "In Progress",
     "waiting": "Waiting"
+  },
+  "EnterRoomBtn": {
+    "enter": "Enter"
   },
   "EnterRoomForm": {
     "password": "Password",
