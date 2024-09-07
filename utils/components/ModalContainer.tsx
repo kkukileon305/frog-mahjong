@@ -36,12 +36,12 @@ const ModalContainer = ({
 
   return (
     <div
-      className="absolute left-0 top-0 w-full bg-black/50 z-30 flex justify-center items-center p-2 modal-container"
+      className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-black/50 z-20 flex justify-center items-center p-2"
       onClick={onClose}
     >
       <div
-        className={`relative max-w-3xl w-full important-height overflow-y-auto p-4 rounded shadow ${
-          isInGame ? "hanbun-white" : "bg-white"
+        className={`relative max-w-3xl w-full h-[calc(100dvh-16px)] overflow-y-auto p-4 rounded shadow ${
+          isInGame ? "bg-white/50" : "bg-white"
         }`}
       >
         {children}
