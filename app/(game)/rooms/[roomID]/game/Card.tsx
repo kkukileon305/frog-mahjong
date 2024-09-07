@@ -23,7 +23,7 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-[50px] h-[62.5px] rounded overflow-hidden border border-red-400 disabled:border-gray-200 ${
+      className={`w-full h-full rounded overflow-hidden border border-red-400 disabled:border-gray-200 ${
         isSelected ? "bg-red-400" : "bg-white"
       }`}
     >
