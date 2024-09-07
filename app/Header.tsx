@@ -1,10 +1,12 @@
+import SignOutBtn from "@/app/SignOutBtn";
+import SwitchLocale from "@/utils/components/SwitchLocale";
 import React from "react";
 import Link from "next/link";
-import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
-import SignOutBtn from "@/app/SignOutBtn";
+import { getCookie } from "cookies-next";
 import { getTranslations } from "next-intl/server";
-import SwitchLocale from "@/utils/components/SwitchLocale";
+import logo from "@/public/logos/logo.png";
+import Image from "next/image";
 
 const Header = async () => {
   const refreshToken = getCookie("refreshToken", {
@@ -17,7 +19,7 @@ const Header = async () => {
     <header className="h-16 border-b px-2">
       <div className="h-full max-w-[800px] mx-auto flex items-center justify-between">
         <Link href="/" className="font-bold text-2xl">
-          {m("title")}
+          <Image src={logo.src} alt="Logo" width={92.5} height={38} />
         </Link>
 
         <div className="flex items-center gap-2">
