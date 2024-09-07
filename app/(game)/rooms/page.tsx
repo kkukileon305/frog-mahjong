@@ -18,7 +18,7 @@ const Page = async ({ searchParams }: RoomsPageProps) => {
   return (
     <>
       <Header />
-      <div className="bg-rooms bg-cover bg-center">
+      <div className="bg-rooms bg-cover bg-center min-h-[calc(100dvh-64px)]">
         <div className="max-w-[800px] mx-auto py-4 px-2">
           <div className="h-11 flex items-center rounded-full bg-green-600 p-2 font-bold text-white text-center mb-4">
             <p className="basis-1/4">{m("roomState")}</p>
