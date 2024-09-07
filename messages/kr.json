@@ -186,5 +186,8 @@
   "ReadyBtn": {
     "ready": "준비",
     "cancelReady": "준비 취소"
+  },
+  "ChatHistoryModal": {
+    "close": "닫기"
   }
 }

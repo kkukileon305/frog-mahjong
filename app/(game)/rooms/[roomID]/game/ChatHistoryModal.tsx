@@ -11,8 +11,11 @@ import axiosInstance, { ChatHistory, ChatHistoryBody } from "@/utils/axios";
 import { useParams } from "next/navigation";
 import { getCookie } from "cookies-next";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useTranslations } from "next-intl";
 
 const ChatHistoryModal = () => {
+  const m = useTranslations("ChatHistoryModal");
+
   const { roomID } = useParams<{ roomID: string }>();
   const accessToken = getCookie("accessToken") as string;
 
@@ -119,7 +122,7 @@ const ChatHistoryModal = () => {
         id="back"
         className="w-full bg-sky-500/50 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
       >
-        닫기
+        {m("close")}
       </button>
     </div>
   );
