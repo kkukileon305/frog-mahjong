@@ -1,12 +1,13 @@
 "use client";
 
 import { Room } from "@/utils/axios";
-import { FaLock } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
 import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
+import lockImage from "@/public/icons/lock.png";
+import Image from "next/image";
 
 type EnterRoomLinkProps = {
   room: Room;
@@ -50,9 +51,18 @@ const EnterRoomBtn = ({ room }: EnterRoomLinkProps) => {
 
         <p className="basis-1/2">{room.name}</p>
 
-        <p className="basis-1/4">
-          {room.currentCount}/{room.maxCount}
-        </p>
+        <div className="basis-1/4 flex justify-center">
+          <p className="relative">
+            <Image
+              className="absolute right-[calc(100%+8px)] top-[calc(50%-8px)]"
+              src={lockImage.src}
+              alt="locked"
+              width={16}
+              height={16}
+            />
+            {room.currentCount}/{room.maxCount}
+          </p>
+        </div>
       </button>
     </>
   );
