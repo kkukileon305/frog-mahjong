@@ -16,6 +16,9 @@ export const generateMetadata = async () => {
     },
     description: m("description"),
     metadataBase: new URL(process.env.NEXT_PUBLIC_PRODUCTION_URL as string),
+    alternates: {
+      canonical: process.env.NEXT_PUBLIC_PRODUCTION_URL as string,
+    },
   };
 };
 
