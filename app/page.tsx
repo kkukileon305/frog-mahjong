@@ -6,6 +6,7 @@ import logo from "@/public/logos/logo.png";
 import Image from "next/image";
 import React from "react";
 import { redirect } from "next/navigation";
+import SwitchLocale from "@/utils/components/SwitchLocale";
 
 const Home = async () => {
   const refreshToken = getCookie("refreshToken", {
@@ -24,11 +25,22 @@ const Home = async () => {
         <div className="max-w-full px-2">
           <Image src={logo.src} alt="Logo" width={557} height={228} />
         </div>
-
-        <div className="flex justify-center items-center gap-4 font-bold text-3xl">
-          <Link href="/signin">{m("signIn")}</Link>
-          <Link href="/signup">{m("signUp")}</Link>
+        <div className="w-full px-2 max-w-xl text-center flex justify-center items-center gap-4 text-white font-bold text-3xl">
+          <Link
+            href="/signin"
+            className="basis-1/2 bg-green-400 px-4 py-2 rounded-xl"
+          >
+            {m("signIn")}
+          </Link>
+          <Link
+            href="/signup"
+            className="basis-1/2 bg-sky-400 px-4 py-2 rounded-xl"
+          >
+            {m("signUp")}
+          </Link>
         </div>
+
+        <SwitchLocale />
       </div>
     </>
   );

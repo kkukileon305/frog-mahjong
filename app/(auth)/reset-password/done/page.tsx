@@ -5,7 +5,7 @@ const Page = async () => {
   const m = await getTranslations("ResetPassword");
 
   return (
-    <div className="bg-slate-50">
+    <div className="min-h-dvh flex justify-center items-center px-2">
       <div className="max-w-xl mx-auto py-24">
         <h2 className="text-4xl text-center mb-6">
           {m("successResetPassword")}

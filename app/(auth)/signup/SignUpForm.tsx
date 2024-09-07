@@ -53,7 +53,7 @@ const SignUpForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-8 bg-gray-200 p-4 rounded-xl"
+      className="flex flex-col gap-8 py-4 rounded-xl"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
