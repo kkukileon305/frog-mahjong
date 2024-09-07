@@ -13,7 +13,7 @@ import {
   LoanFailedRequest,
   TimeoutDiscardRequest,
   UserSocket,
-} from "@/utils/socketTypes";
+} from "@/utils/constants/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import React, {
   Dispatch,
@@ -25,7 +25,7 @@ import React, {
 import { getCookie } from "cookies-next";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import { useParams } from "next/navigation";
-import getRandomElements from "@/utils/getRandomElements";
+import getRandomElements from "@/utils/functions/getRandomElements";
 import {
   DISCARD,
   DORA,
@@ -33,7 +33,7 @@ import {
   GAME_OVER,
   IMPORT_CARDS,
   TIME_OUT_DISCARD,
-} from "@/utils/const";
+} from "@/utils/constants/const";
 
 type TimerProps = {
   ws: WebSocket | null;

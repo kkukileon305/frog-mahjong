@@ -7,8 +7,8 @@ import axiosInstance, { ErrorType, TokenType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
-import { USER_NOT_FOUND } from "@/utils/errTypes";
-import { PASSWORD_NOT_MATCH } from "@/utils/const";
+import { USER_NOT_FOUND } from "@/utils/constants/errTypes";
+import { PASSWORD_NOT_MATCH } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 
 type SignInInputs = {

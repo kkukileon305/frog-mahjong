@@ -2,7 +2,7 @@
 
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { RoomsResponse } from "@/utils/axios";
-import { ROOM_BTN_SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/constants/const";
 import Link from "next/link";
 
 type RoomsNavigatorProps = {

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance, { ErrorType } from "@/utils/axios";
 import { AxiosError } from "axios";
-import { USER_ALREADY_EXISTED } from "@/utils/errTypes";
+import { USER_ALREADY_EXISTED } from "@/utils/constants/errTypes";
 import { useTranslations } from "next-intl";
 
 type SignUpInputs = {

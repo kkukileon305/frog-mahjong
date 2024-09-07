@@ -4,8 +4,8 @@ import {
   READYCANCELRequest,
   READYRequest,
   UserSocket,
-} from "@/utils/socketTypes";
-import { READY, READY_CANCEL } from "@/utils/const";
+} from "@/utils/constants/socketTypes";
+import { READY, READY_CANCEL } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 
 type ReadyBtnProps = {

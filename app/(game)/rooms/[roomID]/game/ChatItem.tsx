@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChatResponse } from "@/utils/socketTypes";
+import { ChatResponse } from "@/utils/constants/socketTypes";
 
 type ChatItemProps = {
   chat: ChatResponse;

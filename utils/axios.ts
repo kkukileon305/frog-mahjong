@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
-import { INTERNAL_DB, TOKEN_BAD } from "@/utils/errTypes";
+import { INTERNAL_DB, TOKEN_BAD } from "@/utils/constants/errTypes";
 
 export interface RoomsResponse {
   rooms: Room[];

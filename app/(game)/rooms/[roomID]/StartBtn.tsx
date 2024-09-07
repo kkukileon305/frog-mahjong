@@ -1,6 +1,6 @@
 "use client";
 
-import { GameInfo, STARTRequest } from "@/utils/socketTypes";
+import { GameInfo, STARTRequest } from "@/utils/constants/socketTypes";
 import { useTranslations } from "next-intl";
 
 type StartBtnProps = {

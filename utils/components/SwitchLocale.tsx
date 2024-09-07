@@ -2,7 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { setCookie } from "cookies-next";
-import { LOCALE_COOKIE_NAME } from "@/utils/const";
+import { LOCALE_COOKIE_NAME } from "@/utils/constants/const";
 import { useRouter } from "next/navigation";
 
 const SwitchLocale = () => {

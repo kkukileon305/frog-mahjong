@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
 import { getCookie } from "cookies-next";
-import { KR, LOCALE_COOKIE_NAME } from "@/utils/const";
+import { KR, LOCALE_COOKIE_NAME } from "@/utils/constants/const";
 import { cookies } from "next/headers";
 
 export default getRequestConfig(async () => {

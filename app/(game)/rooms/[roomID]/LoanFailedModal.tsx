@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Dispatch, SetStateAction } from "react";
-import { UserSocket } from "@/utils/socketTypes";
+import { UserSocket } from "@/utils/constants/socketTypes";
 import cards from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import { useTranslations } from "next-intl";

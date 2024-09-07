@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { GameInfo, UserSocket } from "@/utils/socketTypes";
+import { GameInfo, UserSocket } from "@/utils/constants/socketTypes";
 import { FaTelegramPlane } from "react-icons/fa";
 import { BsList } from "react-icons/bs";
 import { useEffect, useState } from "react";

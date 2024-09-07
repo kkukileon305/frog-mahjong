@@ -1,8 +1,8 @@
 "use client";
 
-import { QUITRequest } from "@/utils/socketTypes";
+import { QUITRequest } from "@/utils/constants/socketTypes";
 import { useRouter } from "next/navigation";
-import { QUIT_GAME } from "@/utils/const";
+import { QUIT_GAME } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 
 type CloseBtnProps = {

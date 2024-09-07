@@ -1,4 +1,4 @@
-import { ROOM_BTN_SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/constants/const";
 
 const RoomLoading = () => {
   return (

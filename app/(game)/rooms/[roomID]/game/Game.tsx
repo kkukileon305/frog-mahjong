@@ -11,7 +11,7 @@ import {
   ImportSingleCardBody,
   ImportSingleCardRequest,
   UserSocket,
-} from "@/utils/socketTypes";
+} from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import UserPanel from "@/app/(game)/rooms/[roomID]/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
@@ -34,7 +34,7 @@ import {
   GAME_OVER,
   IMPORT_CARDS,
   IMPORT_SINGLE_CARD,
-} from "@/utils/const";
+} from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 
 type GameProps = {

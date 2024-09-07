@@ -15,13 +15,13 @@ import {
   FAILED_LOAN,
   CHAT,
   LOAN,
-} from "@/utils/const";
+} from "@/utils/constants/const";
 import {
   ChatResponse,
   JOINRequest,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/socketTypes";
+} from "@/utils/constants/socketTypes";
 import commonAllReadySrc from "@/public/audios/all_ready.mp3";
 import commonLoanSrc from "@/public/audios/loan.mp3";
 import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";

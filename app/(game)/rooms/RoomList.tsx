@@ -1,7 +1,7 @@
 import { RoomsResponse } from "@/utils/axios";
 import React from "react";
 import RoomsNavigator from "@/app/(game)/rooms/RoomsNavigator";
-import { ROOM_BTN_SIZE } from "@/utils/const";
+import { ROOM_BTN_SIZE } from "@/utils/constants/const";
 import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 import { getTranslations } from "next-intl/server";
 

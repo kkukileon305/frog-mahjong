@@ -9,7 +9,7 @@ import {
   RoomOutBody,
   RoomOutRequest,
   UserSocket,
-} from "@/utils/socketTypes";
+} from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
 import Image from "next/image";
 import React, {
@@ -25,7 +25,7 @@ import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatItem from "@/app/(game)/rooms/[roomID]/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
-import { ROOM_OUT } from "@/utils/const";
+import { ROOM_OUT } from "@/utils/constants/const";
 
 type UserPanelProps = {
   user?: UserSocket;
