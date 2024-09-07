@@ -248,14 +248,16 @@ const MyCardBoard = ({
                 width={40}
                 height={58}
               />
-              <p className="font-bold text-white">
+              <p className="font-bold text-white text-center">
                 {m("dora")} <br />
                 +1{m("score")}
               </p>
             </div>
           ) : (
             <p className="text-center">
-              {m("noDora1")} <br /> {m("noDora2")}
+              {m.rich("noDora", {
+                br: () => <br />,
+              })}
             </p>
           )}
         </div>
@@ -282,7 +284,9 @@ const MyCardBoard = ({
                 />
               ) : (
                 <p className="text-center">
-                  {m("noCards1")} <br /> {m("noCards2")}
+                  {m.rich("noCards", {
+                    br: () => <br />,
+                  })}
                 </p>
               )}
             </div>

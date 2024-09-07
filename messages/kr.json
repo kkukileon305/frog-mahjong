@@ -41,9 +41,7 @@
     "writeName": "이름을 입력해주세요",
     "alreadySignUp": "이미 가입된 회원입니다",
     "signUp": "회원가입",
-    "agree1": "회원가입 시 ",
-    "agree2": "이용약관",
-    "agree3": "에 동의한 것으로 간주됩니다.",
+    "isAgree": "회원가입 시  <span>이용약관</span>에 동의한 것으로 간주됩니다",
     "successSignUp": "회원가입 완료",
     "signIn": "로그인"
   },
@@ -165,10 +163,8 @@
   "MyCardBoard": {
     "dora": "도라",
     "score": "점",
-    "noDora1": "아직 도라가",
-    "noDora2": "없습니다",
-    "noCards1": "아직 버린 패가",
-    "noCards2": "없습니다",
+    "noDora": "아직 도라가 <br></br>없습니다",
+    "noCards": "아직 버린 패가<br></br>없습니다",
     "loanVictory": "론 승리",
     "normalVictory": "쯔모",
     "suteru": "버리기",

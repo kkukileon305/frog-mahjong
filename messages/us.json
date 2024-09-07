@@ -41,9 +41,7 @@
     "writeName": "Please enter your name",
     "alreadySignUp": "You are already signed up",
     "signUp": "Sign Up",
-    "agree1": "By signing up, you agree to the ",
-    "agree2": "Terms of Service",
-    "agree3": ".",
+    "isAgree": "By signing up, you agree to the <span>Terms of Use</span>",
     "successSignUp": "Sign Up Successful",
     "signIn": "Sign In"
   },
@@ -165,10 +163,8 @@
   "MyCardBoard": {
     "dora": "Dora",
     "score": "Points",
-    "noDora1": "No Dora yet",
-    "noDora2": "",
-    "noCards1": "No discarded cards yet",
-    "noCards2": "",
+    "noDora": "No Dora yet",
+    "noCards": "No discarded cards yet",
     "loanVictory": "Ron Victory",
     "normalVictory": "Tsumo",
     "suteru": "Discard",

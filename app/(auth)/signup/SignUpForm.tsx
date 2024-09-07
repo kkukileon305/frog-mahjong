@@ -122,9 +122,11 @@ const SignUpForm = () => {
       )}
       <div>
         <p className="text-sm text-gray-800 mb-2">
-          {m("agree1")}
-          <span className="underline">{m("agree2")}</span>
-          {m("agree3")}
+          {m.rich("isAgree", {
+            span: (chunks) => (
+              <span className="underline font-bold">{chunks}</span>
+            ),
+          })}
         </p>
 
         <button
