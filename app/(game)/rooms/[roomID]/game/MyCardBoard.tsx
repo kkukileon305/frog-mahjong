@@ -325,7 +325,7 @@ const MyCardBoard = ({
                     getPrevTurn(gameInfo?.playTurn!!, totalUsers!!) &&
                   !isLoanEnd &&
                   selectedCards.length === 0 &&
-                  isGetCard
+                  !isGetCard
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
