@@ -197,5 +197,9 @@
   "ChatForm": {
     "placeholder": "Please enter Chat message",
     "writeChat": "Please enter Chat message"
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "back": "돌아가기"
   }
 }

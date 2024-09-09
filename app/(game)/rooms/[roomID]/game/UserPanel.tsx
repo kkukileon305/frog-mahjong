@@ -177,7 +177,7 @@ const UserPanel = ({
             )}
           </div>
 
-          <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
+          <div className="w-full h-1/2 flex gap-2 p-2 rounded flex-wrap">
             {isStarted &&
               userDiscardImages?.map((ci) => (
                 <div key={ci.id}>
@@ -288,7 +288,7 @@ const UserPanel = ({
             </button>
           )}
         </div>
-        <div className="w-[296px] h-1/2 flex gap-2 p-2 rounded flex-wrap">
+        <div className="w-full h-1/2 flex gap-2 p-2 rounded flex-wrap">
           {isStarted &&
             userDiscardImages?.map((ci) => (
               <div key={ci.id}>

@@ -197,5 +197,9 @@
   "ChatForm": {
     "placeholder": "채팅을 입력하세요",
     "writeChat": "메세지를 입력해주세요"
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "back": "돌아가기"
   }
 }

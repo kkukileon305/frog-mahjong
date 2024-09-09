@@ -29,7 +29,7 @@ const LoanFailedModal = ({
   };
 
   return (
-    <div className="absolute flex justify-center items-center w-full h-full left-0 top-0 bg-black/50 z-10">
+    <div className="absolute flex justify-center items-center w-full h-full left-0 top-0 bg-black/50 z-30">
       <div className="bg-white max-w-3xl w-full rounded-xl p-8">
         <h3 className="text-3xl font-bold mb-8 text-center">
           {failedUser.name}

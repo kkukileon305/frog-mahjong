@@ -225,8 +225,8 @@ const Game = ({
 
   return (
     <>
-      <div className="w-full h-[calc(100%-40px)] bg-game bg-cover bg-center flex gap-4 p-8">
-        <div className="w-[304px] h-full flex flex-col gap-4">
+      <div className="w-full h-[calc(100%-40px)] bg-game bg-cover bg-center flex p-8">
+        <div className="basis-1/5 h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
               user={userWithoutMe[0]}
@@ -261,7 +261,7 @@ const Game = ({
         </div>
 
         {isStarted ? (
-          <div className="w-[calc(100%-608px-32px)] py-4">
+          <div className="basis-3/5 py-4 relative z-20">
             <div className="w-full h-[calc(100%-300px)] flex justify-center">
               <ShuffleLeftCards
                 leftCards={leftCards}
@@ -328,7 +328,7 @@ const Game = ({
             />
           </div>
         ) : (
-          <div className="w-[calc(100%-608px-32px)] h-full flex justify-center items-center">
+          <div className="basis-3/5 h-full flex justify-center items-center relative z-20">
             <div className="w-[120px]">
               {currentUser.isOwner ? (
                 <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
@@ -339,7 +339,7 @@ const Game = ({
           </div>
         )}
 
-        <div className="w-[304px] h-full flex flex-col gap-4">
+        <div className="basis-1/5 h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
               user={userWithoutMe[2]}
@@ -374,9 +374,9 @@ const Game = ({
         </div>
       </div>
       <div className="flex h-10 justify-end bg-green-600">
-        <div className="w-[400px]" />
+        <div className="basis-1/4" />
 
-        <div className="w-[calc(100%-800px)] p-1">
+        <div className="basis-1/2 p-1">
           <ChatForm
             ws={ws}
             roomID={roomID}
@@ -385,20 +385,26 @@ const Game = ({
           />
         </div>
 
-        <button
-          onClick={() => setIsHelpModal(true)}
-          className="w-[200px] bg-green-400 font-bold text-white"
-        >
-          {m("help")}
-        </button>
-        <div className="w-[200px]">
-          {isStarted ? (
-            <div className="flex items-center justify-center w-full h-full bg-gray-400">
-              {m("playing")}
-            </div>
-          ) : (
-            <CloseBtn ws={ws} roomID={roomID} userID={Number(currentUser.id)} />
-          )}
+        <div className="flex basis-1/4">
+          <button
+            onClick={() => setIsHelpModal(true)}
+            className="basis-1/2 bg-green-400 font-bold text-white"
+          >
+            {m("help")}
+          </button>
+          <div className="basis-1/2">
+            {isStarted ? (
+              <div className="flex items-center justify-center w-full h-full bg-gray-400">
+                {m("playing")}
+              </div>
+            ) : (
+              <CloseBtn
+                ws={ws}
+                roomID={roomID}
+                userID={Number(currentUser.id)}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>
