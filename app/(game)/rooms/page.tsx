@@ -6,6 +6,7 @@ import Refresh from "@/utils/components/Refresh";
 import Header from "@/app/Header";
 import { getTranslations } from "next-intl/server";
 import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
+import { FormMetadata } from "@/utils/axios";
 
 type RoomsPageProps = {
   searchParams: { page: string };
@@ -14,6 +15,11 @@ type RoomsPageProps = {
 const Page = async ({ searchParams }: RoomsPageProps) => {
   const m = await getTranslations("Rooms");
   const currentPage = Number(searchParams.page) || 1;
+
+  const data = await fetch(
+    (process.env.NEXT_PUBLIC_BACKEND_URL as string) + "/v0.1/rooms/meta"
+  );
+  const formMetadata = (await data.json()) as FormMetadata;
 
   return (
     <>
@@ -29,7 +35,7 @@ const Page = async ({ searchParams }: RoomsPageProps) => {
           <RoomList currentPage={currentPage} />
         </Suspense>
         <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
-          <CreateRoomBtn />
+          <CreateRoomBtn formMetadata={formMetadata} />
           <EnterRoomBtn />
           <Refresh className="w-full md:basis-1/3 border py-2 rounded-xl" />
         </div>

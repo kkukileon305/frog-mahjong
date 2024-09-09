@@ -4,8 +4,9 @@ import { useState } from "react";
 import CreateRoomForm from "@/app/(game)/rooms/CreateRoomForm";
 import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
+import { FormMetadata } from "@/utils/axios";
 
-const CreateRoomBtn = () => {
+const CreateRoomBtn = ({ formMetadata }: { formMetadata: FormMetadata }) => {
   const m = useTranslations("CreateRoomBtn");
 
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,7 @@ const CreateRoomBtn = () => {
     <>
       {isOpen && (
         <ModalContainer setIsOpen={setIsOpen}>
-          <CreateRoomForm />
+          <CreateRoomForm formMetadata={formMetadata} />
         </ModalContainer>
       )}
       <button

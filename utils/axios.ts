@@ -58,6 +58,10 @@ export type ChatHistoryBody = {
   userID: number;
 };
 
+export type FormMetadata = {
+  timers: number[];
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

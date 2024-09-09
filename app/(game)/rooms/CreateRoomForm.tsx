@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import axiosInstance, { RoomCreatedResponse } from "@/utils/axios";
+import axiosInstance, {
+  FormMetadata,
+  RoomCreatedResponse,
+} from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import { useTranslations } from "next-intl";
 
@@ -23,7 +26,7 @@ type RequestType = {
   timer: number;
 };
 
-const CreateRoomForm = () => {
+const CreateRoomForm = ({ formMetadata }: { formMetadata: FormMetadata }) => {
   const m = useTranslations("CreateRoomForm");
 
   const router = useRouter();
@@ -38,7 +41,7 @@ const CreateRoomForm = () => {
       maxCount: "4",
       minCount: "2",
       password: "",
-      timer: "30",
+      timer: formMetadata.timers[0].toString(),
     },
   });
 
@@ -159,11 +162,11 @@ const CreateRoomForm = () => {
       <div className="flex flex-col">
         <label>{m("timeout")}</label>
         <div className="flex justify-between gap-2 mt-3">
-          {["30", "45", "60"].map((i) => (
+          {formMetadata.timers.map((i) => (
             <label
               key={i}
               className={`w-1/3 rounded border flex justify-center cursor-pointer py-2 ${
-                watch("timer") === i &&
+                watch("timer") === i.toString() &&
                 "border-blue-400 font-bold text-blue-400"
               }`}
             >
