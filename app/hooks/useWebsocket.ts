@@ -15,6 +15,7 @@ import {
   FAILED_LOAN,
   CHAT,
   LOAN,
+  IMPORT_SINGLE_CARD,
 } from "@/utils/constants/const";
 import {
   ChatResponse,
@@ -52,6 +53,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
     afterUsers: null,
   });
   const [isOpenResultModal, setIsOpenResultModal] = useState(false);
+  const [isGetCard, setIsGetCard] = useState(false);
 
   const [kicked, setKicked] = useState<boolean>(false);
   const [winner, setWinner] = useState<UserSocket | null>(null);
@@ -130,6 +132,10 @@ const useWebsocket = (roomID: string, password: string = "") => {
 
         if (eventName !== FAILED_LOAN) {
           setIsLoanFailed(0);
+        }
+
+        if (eventName !== IMPORT_SINGLE_CARD) {
+          setIsGetCard(false);
         }
 
         if (eventName === JOIN) {
@@ -222,6 +228,7 @@ const useWebsocket = (roomID: string, password: string = "") => {
       isNoRoom,
     },
     chatList,
+    isGetCard,
   };
 };
 

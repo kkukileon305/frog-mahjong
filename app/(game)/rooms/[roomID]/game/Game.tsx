@@ -47,6 +47,7 @@ type GameProps = {
   setWinner: Dispatch<SetStateAction<UserSocket | null>>;
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
   chatList: ChatResponse[];
+  isGetCard: boolean;
 };
 
 const Game = ({
@@ -59,6 +60,7 @@ const Game = ({
   setWinner,
   setIsHelpModal,
   chatList,
+  isGetCard,
 }: GameProps) => {
   const m = useTranslations("Game");
 
@@ -300,7 +302,7 @@ const Game = ({
             <div className="h-[100px] font-bold text-white text-2xl text-center justify-center items-center flex gap-2 flex-col">
               <p>{getSystemMessage()}</p>
 
-              {gameInfo?.timeOut && (
+              {gameInfo?.timer && (
                 <Timer
                   ws={ws}
                   gameInfo={gameInfo}
@@ -326,6 +328,7 @@ const Game = ({
               isLoanEnd={isLoanEnd}
               setWinner={setWinner}
               selectedCards={selectedCards}
+              isGetCard={isGetCard}
             />
           </div>
         ) : (

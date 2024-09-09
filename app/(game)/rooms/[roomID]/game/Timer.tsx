@@ -53,7 +53,7 @@ const Timer = ({
   const { roomID } = useParams<{ roomID: string }>();
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
-  const [time, setTime] = useState(gameInfo.timeOut);
+  const [time, setTime] = useState(gameInfo.timer);
 
   const userID = getCookie("userID") as string;
   const currentUser = users?.find((user) => user.id === Number(userID));
@@ -63,7 +63,7 @@ const Timer = ({
     gameInfo.loanInfo?.userID === currentUser?.id;
 
   useEffect(() => {
-    setTime(gameInfo.timeOut);
+    setTime(gameInfo.timer);
 
     if (isActive) {
       const interval = setInterval(() => {

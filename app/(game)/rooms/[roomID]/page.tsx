@@ -45,6 +45,7 @@ const Page = ({
       isLoanFailed,
       setIsLoanFailed,
     },
+    isGetCard,
   } = useWebsocket(roomID, password);
 
   const [isHelpModal, setIsHelpModal] = useState(false);
@@ -123,6 +124,7 @@ const Page = ({
           setWinner={setWinner}
           setIsHelpModal={setIsHelpModal}
           chatList={chatList}
+          isGetCard={isGetCard}
         />
       </div>
     </div>
