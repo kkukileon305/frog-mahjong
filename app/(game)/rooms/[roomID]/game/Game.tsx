@@ -325,6 +325,7 @@ const Game = ({
               isUserLoan={isUserLoan}
               isLoanEnd={isLoanEnd}
               setWinner={setWinner}
+              selectedCards={selectedCards}
             />
           </div>
         ) : (

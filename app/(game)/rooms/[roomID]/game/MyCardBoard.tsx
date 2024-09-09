@@ -48,6 +48,7 @@ type MyCardProps = {
   isUserLoan: boolean;
   isLoanEnd: boolean;
   setWinner: Dispatch<SetStateAction<UserSocket | null>>;
+  selectedCards: CardImage[];
 };
 
 const MyCardBoard = ({
@@ -62,6 +63,7 @@ const MyCardBoard = ({
   setIsLoanSelectMode,
   isUserLoan,
   isLoanEnd,
+  selectedCards,
 }: MyCardProps) => {
   const m = useTranslations("MyCardBoard");
 
@@ -319,7 +321,8 @@ const MyCardBoard = ({
                   gameInfo?.isLoanAllowed &&
                   currentUser?.turnNumber!! !==
                     getPrevTurn(gameInfo?.playTurn!!, totalUsers!!) &&
-                  !isLoanEnd
+                  !isLoanEnd &&
+                  selectedCards.length === 0
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
