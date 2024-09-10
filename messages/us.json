@@ -161,7 +161,8 @@
     "getSelectedCard": "Take the selected card",
     "help": "Help",
     "playing": "In Progress",
-    "quit": "Quit"
+    "quit": "Quit",
+    "ready": "Start soon"
   },
   "UserPanel": {
     "ready": "Ready",

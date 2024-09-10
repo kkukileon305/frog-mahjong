@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import cards from "@/app/(game)/rooms/[roomID]/game/cards";
+import cards from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
@@ -22,10 +22,10 @@ import { useTranslations } from "next-intl";
 
 type ResultProps = {
   result: GameResult;
-  setResult: Dispatch<SetStateAction<GameResult>>;
-  roomID: string;
+  setResult: (result: GameResult) => void;
+  roomID: number;
   winner: UserSocket | null;
-  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
+  setWinner: (winner: UserSocket | null) => void;
 };
 
 const ResultModal = ({

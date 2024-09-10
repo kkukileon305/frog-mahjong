@@ -1,20 +1,11 @@
-import React, { Suspense } from "react";
-import RoomList from "@/app/(game)/rooms/RoomList";
-import RoomLoading from "@/app/(game)/rooms/RoomLoading";
-import CreateRoomBtn from "@/app/(game)/rooms/CreateRoomBtn";
-import Refresh from "@/utils/components/Refresh";
+import React from "react";
 import Header from "@/app/Header";
 import { getTranslations } from "next-intl/server";
-import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 import { FormMetadata } from "@/utils/axios";
+import QuickMatchingBtn from "@/app/(game)/rooms/QuickMatchingBtn";
 
-type RoomsPageProps = {
-  searchParams: { page: string };
-};
-
-const Page = async ({ searchParams }: RoomsPageProps) => {
+const Page = async () => {
   const m = await getTranslations("Rooms");
-  const currentPage = Number(searchParams.page) || 1;
 
   const data = await fetch(
     (process.env.NEXT_PUBLIC_BACKEND_URL as string) + "/v0.1/rooms/meta"
@@ -26,18 +17,8 @@ const Page = async ({ searchParams }: RoomsPageProps) => {
       <Header />
 
       <div className="max-w-[800px] mx-auto py-4 px-2">
-        <div className="h-11 flex items-center rounded-full bg-green-600 p-2 font-bold text-white text-center mb-4">
-          <p className="basis-1/4">{m("roomState")}</p>
-          <p className="basis-2/4">{m("roomTitle")}</p>
-          <p className="basis-1/4">{m("playerCount")}</p>
-        </div>
-        <Suspense fallback={<RoomLoading />}>
-          <RoomList currentPage={currentPage} />
-        </Suspense>
         <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
-          <CreateRoomBtn formMetadata={formMetadata} />
-          <EnterRoomBtn />
-          <Refresh className="w-full md:basis-1/3 border py-2 rounded-xl" />
+          <QuickMatchingBtn />
         </div>
       </div>
     </>

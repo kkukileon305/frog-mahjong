@@ -2,13 +2,13 @@
 
 import React, { Dispatch, SetStateAction } from "react";
 import { UserSocket } from "@/utils/constants/socketTypes";
-import cards from "@/app/(game)/rooms/[roomID]/game/cards";
+import cards from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
 type LoanFailedModalProps = {
   isLoanFailed: number;
-  setIsLoanFailed: Dispatch<SetStateAction<number>>;
+  setIsLoanFailed: (isLoanFailed: number) => void;
   users: UserSocket[] | null;
 };
 

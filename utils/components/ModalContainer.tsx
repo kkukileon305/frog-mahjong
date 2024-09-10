@@ -9,7 +9,9 @@ import {
 } from "react";
 
 type ModalContainerProps = {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen:
+    | Dispatch<SetStateAction<boolean>>
+    | ((isOpenResultModal: boolean) => void);
   children: ReactNode;
   isInGame?: boolean;
 };

@@ -5,13 +5,13 @@ import { GameInfo, UserSocket } from "@/utils/constants/socketTypes";
 import { FaTelegramPlane } from "react-icons/fa";
 import { BsList } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import ChatHistoryModal from "@/app/(game)/rooms/[roomID]/game/ChatHistoryModal";
+import ChatHistoryModal from "@/app/(game)/rooms/quick-game/game/ChatHistoryModal";
 import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 
 type ChatFormProps = {
   ws: WebSocket | null;
-  roomID: string;
+  roomID: number;
   currentUser: UserSocket;
   gameInfo: GameInfo | null;
 };

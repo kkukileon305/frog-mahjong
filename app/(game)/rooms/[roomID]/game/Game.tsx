@@ -12,9 +12,9 @@ import {
   ImportSingleCardRequest,
   UserSocket,
 } from "@/utils/constants/socketTypes";
-import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
-import UserPanel from "@/app/(game)/rooms/[roomID]/game/UserPanel";
-import MyCardBoard from "@/app/(game)/rooms/[roomID]/game/MyCardBoard";
+import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
+import UserPanel from "@/app/(game)/rooms/quick-game/game/UserPanel";
+import MyCardBoard from "@/app/(game)/rooms/quick-game/game/MyCardBoard";
 import React, {
   Dispatch,
   SetStateAction,
@@ -22,13 +22,11 @@ import React, {
   useRef,
   useState,
 } from "react";
-import ShuffleLeftCards from "@/app/(game)/rooms/[roomID]/game/ShuffleLeftCards";
-import CloseBtn from "@/app/(game)/rooms/[roomID]/CloseBtn";
-import StartBtn from "@/app/(game)/rooms/[roomID]/StartBtn";
-import ReadyBtn from "@/app/(game)/rooms/[roomID]/ReadyBtn";
+import ShuffleLeftCards from "@/app/(game)/rooms/quick-game/game/ShuffleLeftCards";
+import CloseBtn from "@/app/(game)/rooms/quick-game/CloseBtn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
-import ChatForm from "@/app/(game)/rooms/[roomID]/game/ChatForm";
-import Timer from "@/app/(game)/rooms/[roomID]/game/Timer";
+import ChatForm from "@/app/(game)/rooms/quick-game/game/ChatForm";
+import Timer from "@/app/(game)/rooms/quick-game/game/Timer";
 import {
   DORA,
   GAME_OVER,
@@ -36,15 +34,16 @@ import {
   IMPORT_SINGLE_CARD,
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
+import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 
 type GameProps = {
   ws: WebSocket | null;
-  roomID: string;
+  roomID: number;
   users: UserSocket[] | null;
   gameInfo: GameInfo | null;
   currentUser: UserSocket;
   isStarted: boolean;
-  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
+  setWinner: (user: UserSocket | null) => void;
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
   chatList: ChatResponse[];
   isGetCard: boolean;
@@ -334,11 +333,7 @@ const Game = ({
         ) : (
           <div className="basis-3/5 h-full flex justify-center items-center relative z-20">
             <div className="w-[120px]">
-              {currentUser.isOwner ? (
-                <StartBtn gameInfo={gameInfo} ws={ws} roomID={roomID} />
-              ) : (
-                <ReadyBtn ws={ws} roomID={roomID} currentUser={currentUser} />
-              )}
+              <ReadyStartText />
             </div>
           </div>
         )}

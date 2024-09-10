@@ -14,7 +14,7 @@ import {
   TimeoutDiscardRequest,
   UserSocket,
 } from "@/utils/constants/socketTypes";
-import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import React, {
   Dispatch,
   SetStateAction,

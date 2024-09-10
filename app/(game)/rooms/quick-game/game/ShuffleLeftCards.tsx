@@ -1,7 +1,7 @@
 "use client";
 
-import Card from "@/app/(game)/rooms/[roomID]/game/Card";
-import { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import Card from "@/app/(game)/rooms/quick-game/game/Card";
+import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 

@@ -20,6 +20,17 @@ export interface JOINRequest {
   message: string;
 }
 
+export interface MatchRequest {
+  userID: number;
+  event: "MATCH";
+  message: string;
+}
+
+export interface MatchBodyRequest {
+  count: number;
+  timer: number;
+}
+
 export interface READYRequest {
   roomID: number;
   event: "READY";
@@ -70,6 +81,8 @@ export interface GameInfo {
   loanInfo: LoanInfo | null;
   failedLoanUserID: number;
   timer: number;
+  isFull: boolean;
+  roomID: number;
 }
 
 export interface LoanInfo {

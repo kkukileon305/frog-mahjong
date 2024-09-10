@@ -12,9 +12,9 @@ import {
   WinRequest,
   WinRequestBody,
 } from "@/utils/constants/socketTypes";
-import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
-import MyCardList from "@/app/(game)/rooms/[roomID]/game/MyCardList";
+import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
 import React, {
   Dispatch,
   SetStateAction,
@@ -38,7 +38,7 @@ type MyCardProps = {
   currentUser?: UserSocket;
   isUserTurn: boolean;
   gameInfo: GameInfo | null;
-  roomID: string;
+  roomID: number;
   ws: null | WebSocket;
   discardMode: boolean;
   setDiscardMode: Dispatch<SetStateAction<boolean>>;
@@ -47,7 +47,7 @@ type MyCardProps = {
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
   isUserLoan: boolean;
   isLoanEnd: boolean;
-  setWinner: Dispatch<SetStateAction<UserSocket | null>>;
+  setWinner: (winner: UserSocket | null) => void;
   selectedCards: CardImage[];
   isGetCard: boolean;
 };

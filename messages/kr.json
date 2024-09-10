@@ -161,7 +161,8 @@
     "getSelectedCard": "패 가져오기",
     "help": "설명서",
     "playing": "진행중",
-    "quit": "나가기"
+    "quit": "나가기",
+    "ready": "곧 시작됩니다"
   },
   "UserPanel": {
     "ready": "준비",

@@ -1,6 +1,6 @@
 "use client";
 
-import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import { MouseEventHandler } from "react";
 import Image from "next/image";
 import Sealed from "@/public/cards/sealed.jpg";

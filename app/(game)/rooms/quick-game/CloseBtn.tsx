@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 type CloseBtnProps = {
   ws: WebSocket | null;
-  roomID: string;
+  roomID: number;
   userID: number;
 };
 

@@ -10,7 +10,7 @@ import {
   RoomOutRequest,
   UserSocket,
 } from "@/utils/constants/socketTypes";
-import cards, { CardImage } from "@/app/(game)/rooms/[roomID]/game/cards";
+import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import React, {
   Dispatch,
@@ -22,7 +22,7 @@ import React, {
 import { FaChessQueen } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
-import ChatItem from "@/app/(game)/rooms/[roomID]/game/ChatItem";
+import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
 import { ROOM_OUT } from "@/utils/constants/const";
