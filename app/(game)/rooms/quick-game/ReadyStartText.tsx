@@ -9,10 +9,11 @@ import { STARTRequest } from "@/utils/constants/socketTypes";
 const ReadyStartText = () => {
   const userID = getCookie("userID") as string;
 
-  const { ws, users, gameInfo } = useGameStore((state) => ({
+  const { ws, users, gameInfo, isGameEnd } = useGameStore((state) => ({
     ws: state.ws,
     users: state.gameState?.users,
     gameInfo: state.gameState?.gameInfo,
+    isGameEnd: state.isGameEnd,
   }));
 
   const m = useTranslations("Game");
@@ -22,6 +23,7 @@ const ReadyStartText = () => {
   useEffect(() => {
     if (!currentUser) return;
     if (!currentUser.isOwner) return;
+    if (isGameEnd) return;
 
     const timeout = setTimeout(() => {
       const request: STARTRequest = {

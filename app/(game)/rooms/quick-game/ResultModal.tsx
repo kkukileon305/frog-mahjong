@@ -14,30 +14,22 @@ import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import mergeBonus from "@/utils/functions/mergeBonus";
-import { UserSocket } from "@/utils/constants/socketTypes";
+import { QUITRequest, UserSocket } from "@/utils/constants/socketTypes";
 import commonDrawSrc from "@/public/audios/draw.mp3";
 import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import useGameStore from "@/utils/stores/useGameStore";
+import { QUIT_GAME } from "@/utils/constants/const";
 
-type ResultProps = {
-  result: GameResult;
-  setResult: (result: GameResult) => void;
-  roomID: number;
-  winner: UserSocket | null;
-  setWinner: (winner: UserSocket | null) => void;
-};
-
-const ResultModal = ({
-  setResult,
-  result,
-  roomID,
-  winner,
-  setWinner,
-}: ResultProps) => {
+const ResultModal = () => {
   const m = useTranslations("ResultModal");
 
+  const { result, winner, clear, gameState, ws, setIsGameEnd } = useGameStore();
+
   const userID = getCookie("userID") as string;
+  const router = useRouter();
 
   // sounds
   const drawAudio = useRef<HTMLAudioElement>(new Audio(commonDrawSrc));
@@ -56,11 +48,16 @@ const ResultModal = ({
   const losers = result.afterUsers?.filter((au) => winner?.id !== au.id);
 
   const init = () => {
-    setResult({
-      afterUsers: null,
-      beforeUsers: null,
-    });
-    setWinner(null);
+    clear();
+    const quitReq: QUITRequest = {
+      roomID: Number(gameState?.gameInfo?.roomID),
+      event: QUIT_GAME,
+      message: "",
+      userID: Number(userID),
+    };
+
+    ws?.send(JSON.stringify(quitReq));
+    router.push("/rooms");
   };
 
   const getBonus = async () => {
@@ -70,7 +67,7 @@ const ResultModal = ({
         "/v0.1/game/result",
         {
           cards: winner?.cards?.map((ci) => ({ cardID: ci.cardID })),
-          roomID: Number(roomID),
+          roomID: Number(gameState?.gameInfo?.roomID),
         },
         {
           headers: {

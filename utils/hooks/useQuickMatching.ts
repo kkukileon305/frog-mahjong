@@ -47,12 +47,8 @@ const useQuickMatching = () => {
   const store = useGameStore();
 
   // sounds
-  const {
-    commonLoanAudio,
-    commonStartAudio,
-    commonLoanFailedAudio,
-    commonAllReadyAudio,
-  } = useSounds();
+  const { commonLoanAudio, commonStartAudio, commonLoanFailedAudio } =
+    useSounds();
 
   const connectQuickMatchingSocket = () => {
     store.setIsMatching(true);
@@ -91,7 +87,6 @@ const useQuickMatching = () => {
       if (eventName === CHAT) {
         const chatBody = parsedBody as ChatResponse;
 
-        // TODO
         store.addChat(chatBody);
 
         setTimeout(() => {
@@ -102,10 +97,6 @@ const useQuickMatching = () => {
 
       const data = JSON.parse(parsedBody.message) as SocketResponseBody;
       store.setGameState(data);
-
-      if (data.gameInfo?.allReady) {
-        commonAllReadyAudio.current.play();
-      }
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // 비정상 종료
@@ -125,6 +116,7 @@ const useQuickMatching = () => {
         if (data.gameInfo?.isFull) {
           router.push("/rooms/quick-game");
           store.setIsMatching(false);
+          store.setIsMatchingCompleted(true);
         }
       } else if (eventName === LOAN) {
         commonLoanAudio.current.play();
@@ -153,6 +145,7 @@ const useQuickMatching = () => {
         store.setIsOpenResultModal(true);
 
         store.setWinner(newWinner);
+        store.setIsGameEnd(true);
       } else if (eventName === ROOM_OUT) {
         const currentUser = data.users?.find(
           (user) => user.id === Number(userID)
@@ -198,6 +191,8 @@ const useQuickMatching = () => {
     chatList: store.chatList,
     isGetCard: store.isGetCard,
     isMatching: store.isMatching,
+    setIsGameEnd: store.setIsGameEnd,
+    isMatchingCompleted: store.isMatchingCompleted,
   };
 };
 

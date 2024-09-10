@@ -16,6 +16,9 @@ interface GameStore {
   isMatching: boolean;
   setIsMatching: (isMatching: boolean) => void;
 
+  isMatchingCompleted: boolean;
+  setIsMatchingCompleted: (isMatchingCompleted: boolean) => void;
+
   isAbnormalExit: boolean;
   setIsAbnormalExit: (isAbnormalExit: boolean) => void;
 
@@ -48,6 +51,11 @@ interface GameStore {
   setResult: (result: GameResult) => void;
   setBeforeResult: (users: UserSocket[] | null) => void;
   setAfterResult: (users: UserSocket[] | null) => void;
+
+  isGameEnd: boolean;
+  setIsGameEnd: (isGameEnd: boolean) => void;
+
+  clear: () => void;
 }
 
 const useGameStore = create<GameStore>((set) => ({
@@ -60,6 +68,10 @@ const useGameStore = create<GameStore>((set) => ({
   // match
   isMatching: false,
   setIsMatching: (isMatching: boolean) => set({ isMatching }),
+
+  isMatchingCompleted: false,
+  setIsMatchingCompleted: (isMatchingCompleted: boolean) =>
+    set({ isMatchingCompleted }),
 
   // errors
   isAbnormalExit: false,
@@ -116,6 +128,29 @@ const useGameStore = create<GameStore>((set) => ({
         (chat) => chat.chatID !== targetChat.chatID
       ),
     })),
+
+  isGameEnd: false,
+  setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
+
+  clear: () =>
+    set({
+      ws: null,
+      isConnected: false,
+      isMatching: false,
+      isAbnormalExit: false,
+      gameState: null,
+      isStarted: false,
+      isOpenResultModal: false,
+      isGetCard: false,
+      kicked: false,
+      winner: null,
+      result: {
+        beforeUsers: null,
+        afterUsers: null,
+      },
+      isMatchingCompleted: false,
+      setResult: (result: GameResult) => set({ result }),
+    }),
 }));
 
 export default useGameStore;

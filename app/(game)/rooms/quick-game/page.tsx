@@ -59,13 +59,7 @@ const Page = () => {
 
         {quickMatching.isOpenResultModal && (
           <ModalContainer setIsOpen={quickMatching.setIsOpenResultModal}>
-            <ResultModal
-              result={quickMatching.result}
-              setResult={quickMatching.setResult}
-              roomID={quickMatching.gameInfo.roomID}
-              winner={quickMatching.winner}
-              setWinner={quickMatching.setWinner}
-            />
+            <ResultModal />
           </ModalContainer>
         )}
 
