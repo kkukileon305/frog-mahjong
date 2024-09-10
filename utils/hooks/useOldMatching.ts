@@ -33,7 +33,7 @@ export type GameResult = {
   afterUsers: UserSocket[] | null;
 };
 
-const useWebsocket = (roomID: string, password: string = "") => {
+const useOldMatching = (roomID: string, password: string = "") => {
   // ws
   const [ws, setWs] = useState<WebSocket | null>(null);
 
@@ -232,4 +232,4 @@ const useWebsocket = (roomID: string, password: string = "") => {
   };
 };
 
-export default useWebsocket;
+export default useOldMatching;

@@ -1,6 +1,6 @@
 "use client";
 
-import { GameResult } from "@/app/hooks/useWebsocket";
+import { GameResult } from "@/utils/hooks/useOldMatching";
 import React, {
   Dispatch,
   SetStateAction,

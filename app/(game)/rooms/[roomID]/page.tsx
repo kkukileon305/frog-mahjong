@@ -1,6 +1,6 @@
 "use client";
 
-import useWebsocket from "@/app/hooks/useWebsocket";
+import useOldMatching from "@/utils/hooks/useOldMatching";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
 import Entering from "@/app/(game)/rooms/[roomID]/Entering";
 import AbnormalExit from "@/app/(game)/rooms/[roomID]/AbnormalExit";
@@ -9,7 +9,7 @@ import KickedGame from "@/app/(game)/rooms/[roomID]/Kicked";
 import JoinError from "@/app/(game)/rooms/[roomID]/JoinError";
 import LoanFailedModal from "@/app/(game)/rooms/[roomID]/LoanFailedModal";
 import { useEffect, useState } from "react";
-import useDetectNavigation from "@/app/hooks/useDetectNavigation";
+import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import HelpModal from "@/app/(game)/rooms/[roomID]/HelpModal";
 import ModalContainer from "@/utils/components/ModalContainer";
 
@@ -46,7 +46,7 @@ const Page = ({
       setIsLoanFailed,
     },
     isGetCard,
-  } = useWebsocket(roomID, password);
+  } = useOldMatching(roomID, password);
 
   const [isHelpModal, setIsHelpModal] = useState(false);
 
