@@ -158,12 +158,6 @@ const UserPanel = ({
               </div>
             </div>
 
-            {!user.isOwner && user.playerState !== "play" && (
-              <p className="font-bold text-xl">
-                {user.playerState === "ready" ? m("ready") : m("waiting")}
-              </p>
-            )}
-
             {isStarted && lastCardImage && (
               <Image
                 src={lastCardImage.imageSrc}
