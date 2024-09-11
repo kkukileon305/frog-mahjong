@@ -12,7 +12,7 @@ import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
 
 import { getCookie } from "cookies-next";
 import { useState } from "react";
-import Game from "@/app/(game)/rooms/[roomID]/game/Game";
+import Game from "@/app/(game)/rooms/quick-game/game/Game";
 import useGameStore from "@/utils/stores/useGameStore";
 
 const Page = () => {
