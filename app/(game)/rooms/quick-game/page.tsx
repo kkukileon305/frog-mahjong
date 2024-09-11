@@ -69,18 +69,7 @@ const Page = () => {
           </ModalContainer>
         )}
 
-        <Game
-          ws={gameStore.ws}
-          roomID={Number(gameStore.gameState?.gameInfo?.roomID)}
-          users={gameStore.gameState?.users!}
-          currentUser={currentUser}
-          gameInfo={gameStore.gameState?.gameInfo!}
-          isStarted={gameStore.isStarted}
-          setWinner={gameStore.setWinner}
-          setIsHelpModal={setIsHelpModal}
-          chatList={gameStore.chatList}
-          isGetCard={gameStore.isGetCard}
-        />
+        <Game setIsHelpModal={setIsHelpModal} />
       </div>
     </div>
   );

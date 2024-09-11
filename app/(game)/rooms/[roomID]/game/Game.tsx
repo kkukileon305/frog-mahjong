@@ -34,33 +34,23 @@ import {
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
+import { getCookie } from "cookies-next";
+import useGameStore from "@/utils/stores/useGameStore";
 
 type GameProps = {
-  ws: WebSocket | null;
-  roomID: number;
-  users: UserSocket[] | null;
-  gameInfo: GameInfo | null;
-  currentUser: UserSocket;
-  isStarted: boolean;
-  setWinner: (user: UserSocket | null) => void;
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
-  chatList: ChatResponse[];
-  isGetCard: boolean;
 };
 
-const Game = ({
-  currentUser,
-  gameInfo,
-  ws,
-  roomID,
-  isStarted,
-  users,
-  setWinner,
-  setIsHelpModal,
-  chatList,
-  isGetCard,
-}: GameProps) => {
+const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
+  const { isStarted, ws, gameState } = useGameStore();
+
+  const gameInfo = gameState?.gameInfo;
+  const roomID = gameInfo?.roomID;
+  const users = gameState?.users;
+
+  const userID = getCookie("userID") as string;
+  const currentUser = users?.find((user) => user.id === Number(userID))!;
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
