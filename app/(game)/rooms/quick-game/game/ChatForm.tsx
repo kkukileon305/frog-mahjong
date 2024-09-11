@@ -8,31 +8,36 @@ import { useEffect, useState } from "react";
 import ChatHistoryModal from "@/app/(game)/rooms/quick-game/game/ChatHistoryModal";
 import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
-
-type ChatFormProps = {
-  ws: WebSocket | null;
-  roomID: number;
-  currentUser: UserSocket;
-  gameInfo: GameInfo | null;
-};
+import { getCookie } from "cookies-next";
+import useGameStore from "@/utils/stores/useGameStore";
 
 type Inputs = {
   message: string;
 };
 
-const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
+const ChatForm = () => {
   const m = useTranslations("ChatForm");
+  const { gameState, roomID, ws } = useGameStore((s) => ({
+    gameState: s.gameState,
+    roomID: s.gameState?.gameInfo?.roomID,
+    ws: s.ws,
+  }));
+
+  const userID = getCookie("userID") as string;
+  const currentUser = gameState?.users?.find(
+    (user) => user.id === Number(userID)
+  );
 
   const { register, reset, handleSubmit } = useForm<Inputs>();
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = (inputs) => {
     const request = {
-      userID: currentUser.id,
+      userID: currentUser?.id!,
       roomID: Number(roomID),
       event: "CHAT",
       message: inputs.message,
-      name: currentUser.name,
+      name: currentUser?.name,
     };
 
     ws?.send(JSON.stringify(request));
@@ -41,7 +46,7 @@ const ChatForm = ({ roomID, ws, currentUser, gameInfo }: ChatFormProps) => {
 
   useEffect(() => {
     setIsOpen(false);
-  }, [gameInfo]);
+  }, [gameState?.gameInfo]);
 
   return (
     <>
