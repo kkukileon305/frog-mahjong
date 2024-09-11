@@ -34,7 +34,6 @@ type UserPanelProps = {
   isLoanSelectMode: boolean;
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
   setIsLoanEnd: Dispatch<SetStateAction<boolean>>;
-  isStarted: boolean;
   place?: "left" | "right";
 };
 
@@ -43,13 +42,12 @@ const UserPanel = ({
   isLoanSelectMode,
   setIsLoanSelectMode,
   setIsLoanEnd,
-  isStarted,
   place = "left",
 }: UserPanelProps) => {
   const m = useTranslations("UserPanel");
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
-  const { chatList, ws, gameState } = useGameStore();
+  const { chatList, ws, gameState, isStarted } = useGameStore();
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameState?.gameInfo?.roomID;

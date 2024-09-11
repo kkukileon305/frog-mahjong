@@ -231,32 +231,18 @@ const Game = ({
           {userWithoutMe && (
             <UserPanel
               user={userWithoutMe[0]}
-              playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
               setIsLoanSelectMode={setIsLoanSelectMode}
-              ws={ws}
-              gameInfo={gameInfo}
-              roomID={Number(roomID)}
               setIsLoanEnd={setIsLoanEnd}
-              currentUser={currentUser}
-              isStarted={isStarted}
-              chatList={chatList}
             />
           )}
 
           {userWithoutMe && (
             <UserPanel
               user={userWithoutMe[1]}
-              playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
               setIsLoanSelectMode={setIsLoanSelectMode}
-              ws={ws}
-              gameInfo={gameInfo}
-              roomID={Number(roomID)}
               setIsLoanEnd={setIsLoanEnd}
-              currentUser={currentUser}
-              isStarted={isStarted}
-              chatList={chatList}
             />
           )}
         </div>
@@ -342,33 +328,19 @@ const Game = ({
           {userWithoutMe && (
             <UserPanel
               user={userWithoutMe[2]}
-              playTurn={gameInfo?.playTurn}
               isLoanSelectMode={isLoanSelectMode}
               setIsLoanSelectMode={setIsLoanSelectMode}
-              ws={ws}
-              gameInfo={gameInfo}
-              roomID={Number(roomID)}
               setIsLoanEnd={setIsLoanEnd}
-              currentUser={currentUser}
-              isStarted={isStarted}
-              place={"right"}
-              chatList={chatList}
+              place="right"
             />
           )}
 
           <UserPanel
             user={currentUser}
-            playTurn={gameInfo?.playTurn}
             isLoanSelectMode={isLoanSelectMode}
             setIsLoanSelectMode={setIsLoanSelectMode}
-            ws={ws}
-            gameInfo={gameInfo}
-            roomID={Number(roomID)}
             setIsLoanEnd={setIsLoanEnd}
-            currentUser={currentUser}
-            isStarted={isStarted}
-            place={"right"}
-            chatList={chatList}
+            place="right"
           />
         </div>
       </div>

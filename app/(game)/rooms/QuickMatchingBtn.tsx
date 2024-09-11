@@ -1,14 +1,18 @@
 "use client";
 
 import useQuickMatching from "@/utils/hooks/useQuickMatching";
+import useGameStore from "@/utils/stores/useGameStore";
 
 const QuickMatchingBtn = () => {
-  const {
-    connectQuickMatchingSocket,
-    isMatching,
-    setIsGameEnd,
-    isMatchingCompleted,
-  } = useQuickMatching();
+  const connectQuickMatchingSocket = useQuickMatching();
+
+  const { setIsGameEnd, isMatchingCompleted, isMatching } = useGameStore(
+    (state) => ({
+      isMatching: state.isMatching,
+      setIsGameEnd: state.setIsGameEnd,
+      isMatchingCompleted: state.isMatchingCompleted,
+    })
+  );
 
   const onClick = () => {
     connectQuickMatchingSocket();

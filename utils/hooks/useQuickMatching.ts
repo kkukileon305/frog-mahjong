@@ -62,8 +62,6 @@ const useQuickMatching = () => {
   useEffect(() => {
     if (store.ws === null) return;
 
-    if (store.isConnected) return;
-
     store.ws.addEventListener("open", () => {
       const body: MatchBodyRequest = {
         count,
@@ -164,36 +162,9 @@ const useQuickMatching = () => {
     store.ws.addEventListener("error", (body) => {
       console.log(body, "error");
     });
+  }, [store.ws]);
 
-    store.setIsConnected(true);
-  }, [store.ws, store.isConnected]);
-
-  return {
-    connectQuickMatchingSocket,
-    ws: store.ws,
-    accessToken,
-    userID,
-    users: store.gameState?.users ?? null,
-    gameInfo: store.gameState?.gameInfo ?? null,
-    result: store.result,
-    setResult: store.setResult,
-    isStarted: store.isStarted,
-    winner: store.winner,
-    setWinner: store.setWinner,
-    isOpenResultModal: store.isOpenResultModal,
-    setIsOpenResultModal: store.setIsOpenResultModal,
-    errors: {
-      kicked: store.kicked,
-      isAbnormalExit: store.isAbnormalExit,
-      isLoanFailed: store.isLoanFailed,
-      setIsLoanFailed: store.setIsLoanFailed,
-    },
-    chatList: store.chatList,
-    isGetCard: store.isGetCard,
-    isMatching: store.isMatching,
-    setIsGameEnd: store.setIsGameEnd,
-    isMatchingCompleted: store.isMatchingCompleted,
-  };
+  return connectQuickMatchingSocket;
 };
 
 export default useQuickMatching;

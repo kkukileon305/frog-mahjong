@@ -10,9 +10,6 @@ interface GameStore {
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
 
-  isConnected: boolean;
-  setIsConnected: (isConnected: boolean) => void;
-
   isMatching: boolean;
   setIsMatching: (isMatching: boolean) => void;
 
@@ -61,9 +58,6 @@ interface GameStore {
 const useGameStore = create<GameStore>((set) => ({
   ws: null as WebSocket | null,
   setWs: (ws: WebSocket | null) => set({ ws }),
-
-  isConnected: false,
-  setIsConnected: (isConnected: boolean) => set({ isConnected }),
 
   // match
   isMatching: false,
@@ -135,7 +129,6 @@ const useGameStore = create<GameStore>((set) => ({
   clear: () =>
     set({
       ws: null,
-      isConnected: false,
       isMatching: false,
       isAbnormalExit: false,
       gameState: null,
