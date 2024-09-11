@@ -23,7 +23,6 @@ import React, {
   useState,
 } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/quick-game/game/ShuffleLeftCards";
-import CloseBtn from "@/app/(game)/rooms/quick-game/CloseBtn";
 import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatForm from "@/app/(game)/rooms/quick-game/game/ChatForm";
 import Timer from "@/app/(game)/rooms/quick-game/game/Timer";
@@ -348,12 +347,7 @@ const Game = ({
         <div className="basis-1/4" />
 
         <div className="basis-1/2 p-1">
-          <ChatForm
-            ws={ws}
-            roomID={roomID}
-            currentUser={currentUser}
-            gameInfo={gameInfo}
-          />
+          <ChatForm />
         </div>
 
         <div className="flex basis-1/4">
@@ -363,19 +357,6 @@ const Game = ({
           >
             {m("help")}
           </button>
-          <div className="basis-1/2">
-            {isStarted ? (
-              <div className="flex items-center justify-center w-full h-full bg-gray-400">
-                {m("playing")}
-              </div>
-            ) : (
-              <CloseBtn
-                ws={ws}
-                roomID={roomID}
-                userID={Number(currentUser.id)}
-              />
-            )}
-          </div>
         </div>
       </div>
     </>
