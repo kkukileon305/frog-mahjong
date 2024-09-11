@@ -288,9 +288,6 @@ const Game = ({
 
               {gameInfo?.timer && (
                 <Timer
-                  ws={ws}
-                  gameInfo={gameInfo}
-                  users={users}
                   leftCards={leftCards}
                   setSelectedCards={setSelectedCards}
                 />
@@ -298,21 +295,13 @@ const Game = ({
             </div>
 
             <MyCardBoard
-              currentUser={currentUser}
-              isUserTurn={isUserTurn}
-              gameInfo={gameInfo}
-              roomID={roomID}
-              ws={ws}
               discardMode={discardMode}
               setDiscardMode={setDiscardMode}
-              totalUsers={users?.length}
               isLoanSelectMode={isLoanSelectMode}
               setIsLoanSelectMode={setIsLoanSelectMode}
               isUserLoan={isUserLoan}
               isLoanEnd={isLoanEnd}
-              setWinner={setWinner}
               selectedCards={selectedCards}
-              isGetCard={isGetCard}
             />
           </div>
         ) : (

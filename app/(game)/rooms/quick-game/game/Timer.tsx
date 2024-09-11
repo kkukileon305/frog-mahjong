@@ -34,40 +34,38 @@ import {
   IMPORT_CARDS,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
+import useGameStore from "@/utils/stores/useGameStore";
 
 type TimerProps = {
-  ws: WebSocket | null;
-  gameInfo: GameInfo;
-  users: UserSocket[] | null;
   leftCards: CardImage[];
   setSelectedCards: Dispatch<SetStateAction<CardImage[]>>;
 };
 
-const Timer = ({
-  ws,
-  leftCards,
-  gameInfo,
-  users,
-  setSelectedCards,
-}: TimerProps) => {
+const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
   const { roomID } = useParams<{ roomID: string }>();
 
+  const { ws, gameInfo, users } = useGameStore((s) => ({
+    gameInfo: s.gameState?.gameInfo,
+    users: s.gameState?.users,
+    ws: s.ws,
+  }));
+
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
-  const [time, setTime] = useState(gameInfo.timer);
+  const [time, setTime] = useState(gameInfo?.timer);
 
   const userID = getCookie("userID") as string;
   const currentUser = users?.find((user) => user.id === Number(userID));
 
   const isActive =
-    gameInfo.playTurn === currentUser?.turnNumber ||
-    gameInfo.loanInfo?.userID === currentUser?.id;
+    gameInfo?.playTurn === currentUser?.turnNumber ||
+    gameInfo?.loanInfo?.userID === currentUser?.id;
 
   useEffect(() => {
-    setTime(gameInfo.timer);
+    setTime(gameInfo?.timer);
 
     if (isActive) {
       const interval = setInterval(() => {
-        setTime((p) => p - 1);
+        setTime((p) => p! - 1);
       }, 1000);
 
       return () => {
@@ -80,7 +78,7 @@ const Timer = ({
     if (!isActive || time !== 0) return;
 
     if (currentUser?.cards?.length === 6) {
-      if (gameInfo.loanInfo?.userID === currentUser?.id) {
+      if (gameInfo?.loanInfo?.userID === currentUser?.id) {
         // 론 버리기
         const body: LoanFailedBody = {
           cardID: gameInfo?.loanInfo?.cardID,
@@ -122,7 +120,7 @@ const Timer = ({
       }
     }
 
-    if (gameInfo.dora === null) {
+    if (gameInfo?.dora === null) {
       // dora 랜덤 선택
       const [randomCard] = getRandomElements(leftCards, 1);
 
@@ -151,7 +149,7 @@ const Timer = ({
         cards: randomCards.map((ic) => ({
           cardID: ic.id,
         })),
-        playTurn: gameInfo.playTurn as number,
+        playTurn: gameInfo?.playTurn as number,
       };
 
       const request: ImportRequest = {

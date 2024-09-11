@@ -33,41 +33,38 @@ import {
   SUCCESS_LOAN,
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
+import useGameStore from "@/utils/stores/useGameStore";
 
 type MyCardProps = {
-  currentUser?: UserSocket;
-  isUserTurn: boolean;
-  gameInfo: GameInfo | null;
-  roomID: number;
-  ws: null | WebSocket;
   discardMode: boolean;
   setDiscardMode: Dispatch<SetStateAction<boolean>>;
-  totalUsers?: number;
   isLoanSelectMode: boolean;
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
   isUserLoan: boolean;
   isLoanEnd: boolean;
-  setWinner: (winner: UserSocket | null) => void;
   selectedCards: CardImage[];
-  isGetCard: boolean;
 };
 
 const MyCardBoard = ({
-  currentUser,
-  gameInfo,
-  roomID,
-  ws,
   discardMode,
   setDiscardMode,
-  totalUsers,
   isLoanSelectMode,
   setIsLoanSelectMode,
   isUserLoan,
   isLoanEnd,
   selectedCards,
-  isGetCard,
 }: MyCardProps) => {
   const m = useTranslations("MyCardBoard");
+  const { gameInfo, users, ws, isGetCard } = useGameStore((s) => ({
+    gameInfo: s.gameState?.gameInfo,
+    ws: s.ws,
+    users: s.gameState?.users,
+    isGetCard: s.isGetCard,
+  }));
+
+  const userID = getCookie("userID") as string;
+  const roomID = gameInfo?.roomID;
+  const currentUser = users?.find((user) => user.id === Number(userID));
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
 
@@ -283,7 +280,7 @@ const MyCardBoard = ({
                   setItems={setItems}
                   discardMode={discardMode}
                   handleDiscard={handleDiscard}
-                  roomID={roomID}
+                  roomID={roomID!}
                   calScore={calScore}
                 />
               ) : (
@@ -322,7 +319,7 @@ const MyCardBoard = ({
                 !(
                   gameInfo?.isLoanAllowed &&
                   currentUser?.turnNumber!! !==
-                    getPrevTurn(gameInfo?.playTurn!!, totalUsers!!) &&
+                    getPrevTurn(gameInfo?.playTurn!!, users?.length!!) &&
                   !isLoanEnd &&
                   selectedCards.length === 0 &&
                   !isGetCard
