@@ -26,11 +26,6 @@ import {
   START,
   SUCCESS_LOAN,
 } from "@/utils/constants/const";
-import commonAllReadySrc from "@/public/audios/all_ready.mp3";
-import commonLoanSrc from "@/public/audios/loan.mp3";
-import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";
-import commonStartSrc from "@/public/audios/start.mp3";
-import { GameResult } from "@/utils/hooks/useOldMatching";
 import { useRouter } from "next/navigation";
 import useSounds from "@/utils/hooks/useSounds";
 import useGameStore from "@/utils/stores/useGameStore";
@@ -121,14 +116,14 @@ const useQuickMatching = () => {
           store.setIsMatchingCompleted(true);
         }
       } else if (eventName === LOAN) {
-        commonLoanAudio.current.play();
+        commonLoanAudio?.play();
       } else if (eventName === FAILED_LOAN) {
         store.setIsLoanFailed(data.gameInfo?.failedLoanUserID || 0);
-        commonLoanFailedAudio.current.play();
+        commonLoanFailedAudio?.play();
       } else if (eventName === START) {
         if (data.errorInfo === null) {
           store.setIsStarted(true);
-          commonStartAudio.current.play();
+          commonStartAudio?.play();
 
           store.setBeforeResult(data.users);
           store.setIsOpenResultModal(false);
