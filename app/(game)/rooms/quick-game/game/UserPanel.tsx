@@ -26,38 +26,38 @@ import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
 import { ROOM_OUT } from "@/utils/constants/const";
+import useGameStore from "@/utils/stores/useGameStore";
+import { getCookie } from "cookies-next";
 
 type UserPanelProps = {
   user?: UserSocket;
-  playTurn?: number;
   isLoanSelectMode: boolean;
   setIsLoanSelectMode: Dispatch<SetStateAction<boolean>>;
-  ws: null | WebSocket;
-  gameInfo: GameInfo | null;
-  roomID: number;
   setIsLoanEnd: Dispatch<SetStateAction<boolean>>;
-  currentUser: UserSocket;
   isStarted: boolean;
   place?: "left" | "right";
-  chatList: ChatResponse[];
 };
 
 const UserPanel = ({
   user,
-  ws,
-  gameInfo,
   isLoanSelectMode,
   setIsLoanSelectMode,
-  roomID,
   setIsLoanEnd,
-  currentUser,
   isStarted,
   place = "left",
-  chatList,
 }: UserPanelProps) => {
   const m = useTranslations("UserPanel");
-
   const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
+
+  const { chatList, ws, gameState } = useGameStore();
+
+  const gameInfo = gameState?.gameInfo;
+  const roomID = gameState?.gameInfo?.roomID;
+
+  const userID = getCookie("userID") as string;
+  const currentUser = gameState?.users?.find(
+    (user) => user.id === Number(userID)
+  );
 
   const targetUserChatList = chatList
     .filter((chat) => chat.userID === user?.id)
@@ -88,7 +88,7 @@ const UserPanel = ({
       };
 
       const request: LoanRequest = {
-        roomID,
+        roomID: Number(roomID),
         message: JSON.stringify(requestBody),
         event: "LOAN",
       };
@@ -122,7 +122,7 @@ const UserPanel = ({
     };
 
     const request: RoomOutRequest = {
-      userID: currentUser.id,
+      userID: currentUser?.id!,
       roomID: Number(roomID),
       event: ROOM_OUT,
       message: JSON.stringify(body),
@@ -131,7 +131,7 @@ const UserPanel = ({
     ws?.send(JSON.stringify(request));
   };
 
-  if (user.id === currentUser.id) {
+  if (user.id === currentUser?.id) {
     return (
       <div className="relative w-full h-1/2">
         <ul className="absolute right-full text-black top-0 p-2 w-40 h-full overflow-hidden z-10">
@@ -249,7 +249,7 @@ const UserPanel = ({
                     <span className="">{user.email}</span>
                   </div>
                   {!isStarted &&
-                    currentUser.isOwner &&
+                    currentUser?.isOwner &&
                     user.id !== currentUser.id && (
                       <div
                         onClick={onClick}

@@ -1,6 +1,5 @@
 "use client";
 
-import useQuickMatching from "@/utils/hooks/useQuickMatching";
 import { useRouter } from "next/navigation";
 import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
@@ -14,6 +13,7 @@ import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
 import { getCookie } from "cookies-next";
 import { useState } from "react";
 import Game from "@/app/(game)/rooms/[roomID]/game/Game";
+import useGameStore from "@/utils/stores/useGameStore";
 
 const Page = () => {
   useDetectNavigation();
@@ -21,23 +21,23 @@ const Page = () => {
 
   const router = useRouter();
   const [isHelpModal, setIsHelpModal] = useState(false);
-  const quickMatching = useQuickMatching();
+  const gameStore = useGameStore();
 
-  const currentUser = quickMatching.users?.find(
+  const currentUser = gameStore.gameState?.users?.find(
     (user) => user.id === Number(userID)
   );
 
-  if (quickMatching.gameInfo === null) {
+  if (gameStore.gameState?.gameInfo === null) {
     return router.push("/rooms");
   }
 
   // abnormal
-  if (quickMatching.errors.isAbnormalExit) {
+  if (gameStore.isAbnormalExit) {
     return <AbnormalExit />;
   }
 
   // kick
-  if (quickMatching.errors.kicked) {
+  if (gameStore.kicked) {
     return <KickedGame />;
   }
 
@@ -49,16 +49,16 @@ const Page = () => {
   return (
     <div className="flex h-dvh">
       <div className="w-full flex flex-col justify-between">
-        {quickMatching.errors.isLoanFailed !== 0 && (
+        {gameStore.isLoanFailed !== 0 && (
           <LoanFailedModal
-            isLoanFailed={quickMatching.errors.isLoanFailed}
-            setIsLoanFailed={quickMatching.errors.setIsLoanFailed}
-            users={quickMatching.users}
+            isLoanFailed={gameStore.isLoanFailed}
+            setIsLoanFailed={gameStore.setIsLoanFailed}
+            users={gameStore.gameState?.users!}
           />
         )}
 
-        {quickMatching.isOpenResultModal && (
-          <ModalContainer setIsOpen={quickMatching.setIsOpenResultModal}>
+        {gameStore.isOpenResultModal && (
+          <ModalContainer setIsOpen={gameStore.setIsOpenResultModal}>
             <ResultModal />
           </ModalContainer>
         )}
@@ -70,16 +70,16 @@ const Page = () => {
         )}
 
         <Game
-          ws={quickMatching.ws}
-          roomID={Number(quickMatching.gameInfo.roomID)}
-          users={quickMatching.users}
+          ws={gameStore.ws}
+          roomID={Number(gameStore.gameState?.gameInfo?.roomID)}
+          users={gameStore.gameState?.users!}
           currentUser={currentUser}
-          gameInfo={quickMatching.gameInfo}
-          isStarted={quickMatching.isStarted}
-          setWinner={quickMatching.setWinner}
+          gameInfo={gameStore.gameState?.gameInfo!}
+          isStarted={gameStore.isStarted}
+          setWinner={gameStore.setWinner}
           setIsHelpModal={setIsHelpModal}
-          chatList={quickMatching.chatList}
-          isGetCard={quickMatching.isGetCard}
+          chatList={gameStore.chatList}
+          isGetCard={gameStore.isGetCard}
         />
       </div>
     </div>
