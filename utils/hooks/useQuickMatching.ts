@@ -34,10 +34,14 @@ import { GameResult } from "@/utils/hooks/useOldMatching";
 import { useRouter } from "next/navigation";
 import useSounds from "@/utils/hooks/useSounds";
 import useGameStore from "@/utils/stores/useGameStore";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 const useQuickMatching = () => {
-  const timer = 15;
-  const count = 2;
+  const { timer, count } = useMatchSettingStore((s) => ({
+    timer: s.timer,
+    count: s.count,
+  }));
+
   const router = useRouter();
 
   // user token info

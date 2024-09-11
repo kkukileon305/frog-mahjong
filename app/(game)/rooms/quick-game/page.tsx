@@ -11,7 +11,7 @@ import ResultModal from "@/app/(game)/rooms/quick-game/ResultModal";
 import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
 
 import { getCookie } from "cookies-next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Game from "@/app/(game)/rooms/quick-game/game/Game";
 import useGameStore from "@/utils/stores/useGameStore";
 
@@ -27,8 +27,14 @@ const Page = () => {
     (user) => user.id === Number(userID)
   );
 
-  if (gameStore.gameState?.gameInfo === null) {
-    return router.push("/rooms");
+  useEffect(() => {
+    if (!gameStore.gameState?.gameInfo) {
+      router.push("/rooms");
+    }
+  }, []);
+
+  if (!gameStore.gameState?.gameInfo) {
+    return <></>;
   }
 
   // abnormal
