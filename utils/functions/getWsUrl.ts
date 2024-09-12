@@ -1,7 +1,7 @@
 type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
 type Props = {
-  mode?: MatchingMode;
+  mode: MatchingMode;
   password?: string;
   accessToken: string;
   timer: number;
