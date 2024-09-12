@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect } from "react";
 import * as timers from "node:timers";
+import useGameStore from "@/utils/stores/useGameStore";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -31,6 +32,10 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
   });
 
   const { count, setCount, timer, setTimer } = useMatchSettingStore();
+  const { isMatching, isMatchingCompleted } = useGameStore((s) => ({
+    isMatching: s.isMatching,
+    isMatchingCompleted: s.isMatchingCompleted,
+  }));
 
   useEffect(() => {
     setCount(2);
@@ -41,6 +46,14 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
     setCount(Number(value.count));
     setTimer(Number(value.timer));
   });
+
+  if (isMatching || isMatchingCompleted) {
+    return (
+      <div className="h-[188px] flex justify-center items-center">
+        {m("matching")}
+      </div>
+    );
+  }
 
   return (
     <form
