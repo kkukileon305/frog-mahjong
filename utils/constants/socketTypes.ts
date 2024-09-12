@@ -1,3 +1,5 @@
+import { CANCEL_MATCH } from "@/utils/constants/const";
+
 export interface ChatResponse {
   event: "CHAT";
   message: string;
@@ -29,6 +31,27 @@ export interface MatchRequest {
 export interface MatchBodyRequest {
   count: number;
   timer: number;
+}
+
+export interface PlayTogetherRequest {
+  userID: number;
+  event: "PLAY_TOGETHER";
+  message: string;
+}
+
+export interface PlayTogetherBody {
+  count: number;
+  timer: number;
+}
+
+export interface JoinPlayRequest {
+  userID: number;
+  event: "JOIN_PLAY";
+  message: string;
+}
+
+export interface JoinPlayBody {
+  password: string;
 }
 
 export interface READYRequest {
@@ -83,6 +106,7 @@ export interface GameInfo {
   timer: number;
   isFull: boolean;
   roomID: number;
+  password: string;
 }
 
 export interface LoanInfo {
@@ -233,3 +257,10 @@ export type UserCard = {
   cardID: number;
   userID: number;
 };
+
+export interface CancelMatch {
+  userID: number;
+  roomID: number;
+  event: "CANCEL_MATCH";
+  message: "";
+}

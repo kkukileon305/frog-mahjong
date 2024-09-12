@@ -1,9 +1,14 @@
 import { useEffect } from "react";
 import { getCookie } from "cookies-next";
 import {
+  CancelMatch,
   ChatResponse,
+  JoinPlayBody,
+  JoinPlayRequest,
   MatchBodyRequest,
   MatchRequest,
+  PlayTogetherBody,
+  PlayTogetherRequest,
   SocketResponseBody,
 } from "@/utils/constants/socketTypes";
 import {
@@ -13,8 +18,10 @@ import {
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_SINGLE_CARD,
+  JOIN_PLAY,
   LOAN,
   MATCH,
+  PLAY_TOGETHER,
   REQUEST_WIN,
   ROOM_OUT,
   START,
@@ -62,7 +69,7 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
   };
 
   const cancelQuickMatchingSocket = () => {
-    const request = {
+    const request: CancelMatch = {
       userID: Number(userID),
       roomID: Number(store.gameState?.gameInfo?.roomID),
       event: CANCEL_MATCH,
@@ -77,18 +84,47 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
     if (store.ws === null) return;
 
     store.ws.addEventListener("open", () => {
-      const body: MatchBodyRequest = {
-        count,
-        timer,
-      };
+      if (mode === "NORMAL") {
+        const body: MatchBodyRequest = {
+          count,
+          timer,
+        };
 
-      const req: MatchRequest = {
-        event: MATCH,
-        userID: Number(userID),
-        message: JSON.stringify(body),
-      };
+        const req: MatchRequest = {
+          event: MATCH,
+          userID: Number(userID),
+          message: JSON.stringify(body),
+        };
 
-      store.ws?.send(JSON.stringify(req));
+        store.ws?.send(JSON.stringify(req));
+      } else if (mode === "CREATE") {
+        const body: PlayTogetherBody = {
+          timer,
+          count,
+        };
+
+        const req: PlayTogetherRequest = {
+          event: PLAY_TOGETHER,
+          userID: Number(userID),
+          message: JSON.stringify(body),
+        };
+
+        store.ws?.send(JSON.stringify(req));
+      } else if (mode === "ENTER") {
+        if (!password) throw new Error("비번없음");
+
+        const body: JoinPlayBody = {
+          password,
+        };
+
+        const req: JoinPlayRequest = {
+          event: JOIN_PLAY,
+          userID: Number(userID),
+          message: JSON.stringify(body),
+        };
+
+        store.ws?.send(JSON.stringify(req));
+      }
     });
 
     store.ws.addEventListener("message", (event) => {
@@ -124,7 +160,11 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
         store.setIsGetCard(false);
       }
 
-      if (eventName === MATCH) {
+      if (
+        eventName === MATCH ||
+        eventName === PLAY_TOGETHER ||
+        eventName === JOIN_PLAY
+      ) {
         if (data.gameInfo?.isFull) {
           router.push("/rooms/quick-game");
           store.setIsMatching(false);

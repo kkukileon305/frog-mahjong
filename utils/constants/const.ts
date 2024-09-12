@@ -21,6 +21,8 @@ export const IMPORT_CARDS = "IMPORT_CARDS";
 export const TIME_OUT_DISCARD = "TIME_OUT_DISCARD";
 export const MATCH = "MATCH";
 export const CANCEL_MATCH = "CANCEL_MATCH";
+export const PLAY_TOGETHER = "PLAY_TOGETHER";
+export const JOIN_PLAY = "JOIN_PLAY";
 
 // errors
 export const ERR_WRONG_PASSWORD = "ERR_WRONG_PASSWORD";
