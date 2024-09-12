@@ -20,6 +20,7 @@ export const IMPORT_SINGLE_CARD = "IMPORT_SINGLE_CARD";
 export const IMPORT_CARDS = "IMPORT_CARDS";
 export const TIME_OUT_DISCARD = "TIME_OUT_DISCARD";
 export const MATCH = "MATCH";
+export const CANCEL_MATCH = "CANCEL_MATCH";
 
 // errors
 export const ERR_WRONG_PASSWORD = "ERR_WRONG_PASSWORD";

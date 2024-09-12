@@ -2,9 +2,12 @@
 
 import useQuickMatching from "@/utils/hooks/useQuickMatching";
 import useGameStore from "@/utils/stores/useGameStore";
+import { useTranslations } from "next-intl";
 
 const QuickMatchingBtn = () => {
-  const connectQuickMatchingSocket = useQuickMatching();
+  const m = useTranslations("QuickMatchingBtn");
+  const { connectQuickMatchingSocket, cancelQuickMatchingSocket } =
+    useQuickMatching();
 
   const { setIsGameEnd, isMatchingCompleted, isMatching } = useGameStore(
     (state) => ({
@@ -15,24 +18,31 @@ const QuickMatchingBtn = () => {
   );
 
   const onClick = () => {
-    connectQuickMatchingSocket();
     setIsGameEnd(false);
+
+    if (isMatchingCompleted) return;
+
+    if (isMatching) {
+      cancelQuickMatchingSocket();
+    } else {
+      connectQuickMatchingSocket();
+    }
   };
 
   const getMessage = () => {
     if (isMatchingCompleted) {
-      return "매칭완료!";
+      return m("matchComplete");
     } else {
       if (isMatching) {
-        return "매칭중";
+        return m("cancelMatch");
       }
-      return "매칭하기";
+      return m("match");
     }
   };
 
   return (
     <button
-      disabled={isMatching || isMatchingCompleted}
+      disabled={isMatchingCompleted}
       onClick={onClick}
       className="w-full border py-2 rounded-xl"
     >

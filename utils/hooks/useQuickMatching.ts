@@ -1,24 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { getCookie } from "cookies-next";
 import {
   ChatResponse,
-  JOINRequest,
   MatchBodyRequest,
   MatchRequest,
   SocketResponseBody,
-  UserSocket,
 } from "@/utils/constants/socketTypes";
 import {
+  CANCEL_MATCH,
   CHAT,
   ERR_ABNORMAL_EXIT,
-  ERR_GAME_IN_PROGRESS,
-  ERR_INTERNAL_SERVER,
-  ERR_ROOM_FULL,
-  ERR_WRONG_PASSWORD,
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_SINGLE_CARD,
-  JOIN,
   LOAN,
   MATCH,
   REQUEST_WIN,
@@ -31,7 +25,9 @@ import useSounds from "@/utils/hooks/useSounds";
 import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
-const useQuickMatching = () => {
+type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
+
+const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
   const { timer, count } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -51,11 +47,40 @@ const useQuickMatching = () => {
 
   const connectQuickMatchingSocket = () => {
     store.setIsMatching(true);
-    const newWs = new WebSocket(
-      `wss://dev-frog-api.jokertrickster.com/v0.1/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`
-    );
 
+    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_WS_URL;
+
+    const normalUrl = `/v0.1/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`;
+    const createUrl = `/v0.1/rooms/play/together/ws?tkn=${accessToken}`;
+    const enterUrl = `/v0.1/rooms/join/play/ws?tkn=${accessToken}&password=${password}`;
+
+    let url = "";
+
+    switch (mode) {
+      case "NORMAL":
+        url = baseUrl + normalUrl;
+        break;
+      case "CREATE":
+        url = baseUrl + createUrl;
+        break;
+      case "ENTER":
+        url = baseUrl + enterUrl;
+    }
+
+    const newWs = new WebSocket(url);
     store.setWs(newWs);
+  };
+
+  const cancelQuickMatchingSocket = () => {
+    const request = {
+      userID: Number(userID),
+      roomID: Number(store.gameState?.gameInfo?.roomID),
+      event: CANCEL_MATCH,
+      message: "",
+    };
+
+    store.ws?.send(JSON.stringify(request));
+    store.clear();
   };
 
   useEffect(() => {
@@ -163,7 +188,7 @@ const useQuickMatching = () => {
     });
   }, [store.ws]);
 
-  return connectQuickMatchingSocket;
+  return { connectQuickMatchingSocket, cancelQuickMatchingSocket };
 };
 
 export default useQuickMatching;
