@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import useSounds from "@/utils/hooks/useSounds";
 import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import getWsUrl from "@/utils/functions/getWsUrl";
 
 type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
@@ -48,24 +49,13 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
   const connectQuickMatchingSocket = () => {
     store.setIsMatching(true);
 
-    const baseUrl = process.env.NEXT_PUBLIC_BACKEND_WS_URL;
-
-    const normalUrl = `/v0.1/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`;
-    const createUrl = `/v0.1/rooms/play/together/ws?tkn=${accessToken}`;
-    const enterUrl = `/v0.1/rooms/join/play/ws?tkn=${accessToken}&password=${password}`;
-
-    let url = "";
-
-    switch (mode) {
-      case "NORMAL":
-        url = baseUrl + normalUrl;
-        break;
-      case "CREATE":
-        url = baseUrl + createUrl;
-        break;
-      case "ENTER":
-        url = baseUrl + enterUrl;
-    }
+    const url = getWsUrl({
+      mode,
+      password,
+      timer,
+      count,
+      accessToken,
+    });
 
     const newWs = new WebSocket(url);
     store.setWs(newWs);
