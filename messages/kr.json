@@ -89,7 +89,8 @@
     "timeout": "턴 제한 시간",
     "roomPassword": "비밀번호(선택)",
     "close": "닫기",
-    "createRoom":"방 만들기"
+    "createRoom":"방 만들기",
+    "matching": "매칭중"
   },
   "EnterRoomBtn": {
     "enter": "들어가기"
@@ -202,5 +203,12 @@
   "NotFound": {
     "title": "페이지를 찾을 수 없습니다",
     "back": "돌아가기"
+  },
+  "QuickMatchingBtn": {
+    "match": "매칭하기",
+    "matchComplete": "매칭완료!",
+    "cancelMatch": "매칭취소",
+    "createRoom": "방생성",
+    "enterRoom": "방 입장"
   }
 }
