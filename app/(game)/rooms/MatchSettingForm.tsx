@@ -7,7 +7,7 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import useGameStore from "@/utils/stores/useGameStore";
 import MatchModalContainer from "@/app/(game)/rooms/MatchModalContainer";
-import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
+import EnterRoomModal from "@/app/(game)/rooms/EnterRoomModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 
 type GameSettingFormProps = {
@@ -59,7 +59,7 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
     <>
       {(isMatching || isMatchingCompleted) && <MatchModalContainer />}
       {openMatchModal && (
-        <EnterRoomForm
+        <EnterRoomModal
           mode={openMatchModal}
           setOpenMatchModal={setOpenMatchModal}
         />

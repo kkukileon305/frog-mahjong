@@ -19,6 +19,8 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
   const m = useTranslations("QuickMatchingBtn");
 
   const cancelQuickMatchingSocket = () => {
+    console.log(store.ws);
+
     const request: CancelMatch = {
       userID: Number(userID),
       roomID: Number(store.gameState?.gameInfo?.roomID),
