@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import useGameStore from "@/utils/stores/useGameStore";
-import MatchModalContainer from "@/app/(game)/rooms/MatchModalContainer";
 import EnterRoomModal from "@/app/(game)/rooms/EnterRoomModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 
@@ -57,7 +56,6 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
 
   return (
     <>
-      {(isMatching || isMatchingCompleted) && <MatchModalContainer />}
       {openMatchModal && (
         <EnterRoomModal
           mode={openMatchModal}
