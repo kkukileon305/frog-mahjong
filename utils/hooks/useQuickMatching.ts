@@ -36,7 +36,15 @@ import axiosInstance from "@/utils/axios";
 
 type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
-const useQuickMatching = (mode: MatchingMode = "NORMAL") => {
+type useQuickMatchingProps = {
+  mode?: MatchingMode;
+  addListener: boolean;
+};
+
+const useQuickMatching = ({
+  mode = "NORMAL",
+  addListener = false,
+}: useQuickMatchingProps) => {
   const { timer, count, password, setIsError } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -60,22 +68,24 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL") => {
     setIsError(false);
     store.setIsMatching(true);
 
-    try {
-      const { data } = await axiosInstance.get(
-        `/v0.1/rooms/join/play?password=${password}`,
-        {
-          headers: {
-            tkn: accessToken,
-          },
-        }
-      );
+    if (mode === "ENTER") {
+      try {
+        const { data } = await axiosInstance.get(
+          `/v0.1/rooms/join/play?password=${password}`,
+          {
+            headers: {
+              tkn: accessToken,
+            },
+          }
+        );
 
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-      setIsError(true);
-      store.setIsMatching(false);
-      return;
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+        setIsError(true);
+        store.setIsMatching(false);
+        return;
+      }
     }
 
     const url = getWsUrl({
@@ -103,8 +113,11 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL") => {
   };
 
   useEffect(() => {
+    if (!addListener) return;
     if (store.ws === null) return;
+    if (store.isAddedHandler) return;
 
+    console.log(store.ws, store.isAddedHandler);
     store.ws.addEventListener("open", () => {
       if (mode === "NORMAL") {
         const body: MatchBodyRequest = {
@@ -240,7 +253,9 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL") => {
     store.ws.addEventListener("error", (body) => {
       console.log(body, "error");
     });
-  }, [store.ws]);
+
+    store.setIsAddedHandler(true);
+  }, [store.ws, store.isAddedHandler]);
 
   return { connectQuickMatchingSocket, cancelQuickMatchingSocket };
 };

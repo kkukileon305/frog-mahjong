@@ -90,12 +90,17 @@
     "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
     "close": "닫기",
     "createRoom":"방 만들기",
-    "matching": "매칭중",
+    "matching": "상대를 찾는 중..",
     "with": "함께하기",
     "random": "랜덤",
     "password": "초대코드",
     "writePassword": "초대코드를 입력하세요",
-    "or": "또는"
+    "or": "또는",
+    "enterRoom": "입장하기",
+    "enterCode": "참여코드",
+    "normal": "빠른매칭",
+    "create": "방생성",
+    "enter": "입장하기"
   },
   "EnterRoomBtn": {
     "enter": "들어가기"
@@ -213,7 +218,7 @@
     "match": "매칭하기",
     "matchComplete": "매칭완료!",
     "cancelMatch": "매칭취소",
-    "createRoom": "방생성",
-    "enterRoom": "방 입장"
+    "createRoom": "함께하기",
+    "enterRoom": "입장하기"
   }
 }

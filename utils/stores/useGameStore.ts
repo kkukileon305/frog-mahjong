@@ -5,6 +5,7 @@ import {
   UserSocket,
 } from "@/utils/constants/socketTypes";
 import { GameResult } from "@/utils/hooks/useOldMatching";
+import { devtools } from "zustand/middleware";
 
 interface GameStore {
   ws: WebSocket | null;
@@ -52,98 +53,106 @@ interface GameStore {
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
 
+  isAddedHandler: boolean;
+  setIsAddedHandler: (isAddedHandler: boolean) => void;
+
   clear: () => void;
 }
 
-const useGameStore = create<GameStore>((set) => ({
-  ws: null as WebSocket | null,
-  setWs: (ws: WebSocket | null) => set({ ws }),
+const useGameStore = create(
+  devtools<GameStore>((set) => ({
+    ws: null as WebSocket | null,
+    setWs: (ws: WebSocket | null) => set({ ws }),
 
-  // match
-  isMatching: false,
-  setIsMatching: (isMatching: boolean) => set({ isMatching }),
+    // match
+    isMatching: false,
+    setIsMatching: (isMatching: boolean) => set({ isMatching }),
 
-  isMatchingCompleted: false,
-  setIsMatchingCompleted: (isMatchingCompleted: boolean) =>
-    set({ isMatchingCompleted }),
+    isMatchingCompleted: false,
+    setIsMatchingCompleted: (isMatchingCompleted: boolean) =>
+      set({ isMatchingCompleted }),
 
-  // errors
-  isAbnormalExit: false,
-  setIsAbnormalExit: (isAbnormalExit: boolean) => set({ isAbnormalExit }),
-  isLoanFailed: 0,
-  setIsLoanFailed: (isLoanFailed: number) => set({ isLoanFailed }),
+    // errors
+    isAbnormalExit: false,
+    setIsAbnormalExit: (isAbnormalExit: boolean) => set({ isAbnormalExit }),
+    isLoanFailed: 0,
+    setIsLoanFailed: (isLoanFailed: number) => set({ isLoanFailed }),
 
-  // room state
-  gameState: null as SocketResponseBody | null,
-  setGameState: (gameState: SocketResponseBody | null) => set({ gameState }),
+    // room state
+    gameState: null as SocketResponseBody | null,
+    setGameState: (gameState: SocketResponseBody | null) => set({ gameState }),
 
-  isStarted: false,
-  setIsStarted: (isStarted: boolean) => set({ isStarted }),
+    isStarted: false,
+    setIsStarted: (isStarted: boolean) => set({ isStarted }),
 
-  isOpenResultModal: false,
-  setIsOpenResultModal: (isOpenResultModal: boolean) =>
-    set({ isOpenResultModal }),
+    isOpenResultModal: false,
+    setIsOpenResultModal: (isOpenResultModal: boolean) =>
+      set({ isOpenResultModal }),
 
-  isGetCard: false,
-  setIsGetCard: (isGetCard: boolean) => set({ isGetCard }),
+    isGetCard: false,
+    setIsGetCard: (isGetCard: boolean) => set({ isGetCard }),
 
-  kicked: false,
-  setKicked: (kicked: boolean) => set({ kicked }),
+    kicked: false,
+    setKicked: (kicked: boolean) => set({ kicked }),
 
-  winner: null as UserSocket | null,
-  setWinner: (winner: UserSocket | null) => set({ winner }),
+    winner: null as UserSocket | null,
+    setWinner: (winner: UserSocket | null) => set({ winner }),
 
-  // prev
-  // results
-  result: { beforeUsers: null, afterUsers: null } as GameResult,
-  setResult: (result: GameResult) => set({ result }),
-  setBeforeResult: (users) =>
-    set({
-      result: {
-        beforeUsers: users,
-        afterUsers: null,
-      },
-    }),
-  setAfterResult: (users) =>
-    set((prevState) => ({
-      result: {
-        beforeUsers: prevState.result.beforeUsers,
-        afterUsers: users,
-      },
-    })),
+    // prev
+    // results
+    result: { beforeUsers: null, afterUsers: null } as GameResult,
+    setResult: (result: GameResult) => set({ result }),
+    setBeforeResult: (users) =>
+      set({
+        result: {
+          beforeUsers: users,
+          afterUsers: null,
+        },
+      }),
+    setAfterResult: (users) =>
+      set((prevState) => ({
+        result: {
+          beforeUsers: prevState.result.beforeUsers,
+          afterUsers: users,
+        },
+      })),
 
-  // chats
-  chatList: [] as ChatResponse[],
-  addChat: (newChat: ChatResponse) =>
-    set((prev) => ({ chatList: [...prev.chatList, newChat] })),
-  filterChat: (targetChat: ChatResponse) =>
-    set((prev) => ({
-      chatList: prev.chatList.filter(
-        (chat) => chat.chatID !== targetChat.chatID
-      ),
-    })),
+    // chats
+    chatList: [] as ChatResponse[],
+    addChat: (newChat: ChatResponse) =>
+      set((prev) => ({ chatList: [...prev.chatList, newChat] })),
+    filterChat: (targetChat: ChatResponse) =>
+      set((prev) => ({
+        chatList: prev.chatList.filter(
+          (chat) => chat.chatID !== targetChat.chatID
+        ),
+      })),
 
-  isGameEnd: false,
-  setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
+    isGameEnd: false,
+    setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
 
-  clear: () =>
-    set({
-      ws: null,
-      isMatching: false,
-      isAbnormalExit: false,
-      gameState: null,
-      isStarted: false,
-      isOpenResultModal: false,
-      isGetCard: false,
-      kicked: false,
-      winner: null,
-      result: {
-        beforeUsers: null,
-        afterUsers: null,
-      },
-      isMatchingCompleted: false,
-      setResult: (result: GameResult) => set({ result }),
-    }),
-}));
+    isAddedHandler: false,
+    setIsAddedHandler: (isAddedHandler) => set({ isAddedHandler }),
+
+    clear: () =>
+      set({
+        ws: null,
+        isMatching: false,
+        isAbnormalExit: false,
+        gameState: null,
+        isStarted: false,
+        isOpenResultModal: false,
+        isGetCard: false,
+        kicked: false,
+        winner: null,
+        result: {
+          beforeUsers: null,
+          afterUsers: null,
+        },
+        isMatchingCompleted: false,
+        isAddedHandler: false,
+      }),
+  }))
+);
 
 export default useGameStore;

@@ -59,7 +59,14 @@ const UserPanel = ({
 
   const targetUserChatList = chatList
     .filter((chat) => chat.userID === user?.id)
-    .reverse();
+    .reverse()
+    .reduce<(typeof chatList)[number][]>((uniqueChats, currentChat) => {
+      // 현재 채팅의 chatID가 이미 추가된 적이 있는지 확인
+      if (!uniqueChats.some((chat) => chat.chatID === currentChat.chatID)) {
+        uniqueChats.push(currentChat); // 중복되지 않으면 추가
+      }
+      return uniqueChats;
+    }, []);
 
   const lastCard =
     user?.discardedCards &&

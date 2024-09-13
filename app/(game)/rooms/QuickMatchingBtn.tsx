@@ -11,7 +11,10 @@ type QuickMatchingBtnProps = {
 const QuickMatchingBtn = ({ mode = "NORMAL" }: QuickMatchingBtnProps) => {
   const m = useTranslations("QuickMatchingBtn");
   const { connectQuickMatchingSocket, cancelQuickMatchingSocket } =
-    useQuickMatching(mode);
+    useQuickMatching({
+      mode,
+      addListener: true,
+    });
 
   const { setIsGameEnd, isMatchingCompleted, isMatching } = useGameStore(
     (state) => ({
@@ -55,7 +58,7 @@ const QuickMatchingBtn = ({ mode = "NORMAL" }: QuickMatchingBtnProps) => {
     <button
       disabled={isMatchingCompleted}
       onClick={onClick}
-      className="w-full border py-2 rounded-xl"
+      className="w-full bg-amber-500 font-bold text-white py-2 rounded"
     >
       {getMessage()}
     </button>
