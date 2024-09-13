@@ -232,6 +232,7 @@
     "write": "코드를 전달받고 입력해주세요",
     "writePassword": "코드를 입력해주세요",
     "enter": "참가하기",
-    "notFound": "해당 방이 없습니다"
+    "notFound": "해당 방이 없습니다",
+    "complete": "매칭 완료"
   }
 }

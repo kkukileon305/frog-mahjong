@@ -23,6 +23,7 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   const m = useTranslations("MatchingModal");
 
   const accessToken = getCookie("accessToken") as string;
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const {
@@ -37,7 +38,11 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   });
 
   const connect = useQuickMatching(mode);
-  const password = useGameStore((s) => s.gameState?.gameInfo?.password);
+  const { password, isMatching, isMatchingCompleted } = useGameStore((s) => ({
+    password: s.gameState?.gameInfo?.password,
+    isMatching: s.isMatching,
+    isMatchingCompleted: s.isMatchingCompleted,
+  }));
   const setPassword = useMatchSettingStore((s) => s.setPassword);
 
   useEffect(() => {
@@ -48,8 +53,9 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     if (mode === "ENTER") {
+      setIsLoading(true);
       try {
-        const { data } = await axiosInstance.get(
+        await axiosInstance.get(
           `/v0.1/rooms/join/play?password=${inputs.inputPassword}`,
           {
             headers: {
@@ -62,6 +68,8 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
       } catch (e) {
         setIsError(true);
         return;
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -78,12 +86,16 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
         </h3>
         <div className="bg-white flex flex-col items-center gap-8 rounded-xl py-8">
           {mode === "NORMAL" && (
-            <p className="text-center text-3xl font-bold">{m("search")}</p>
+            <p className="text-center text-3xl font-bold">
+              {m(isMatchingCompleted ? "complete" : "search")}
+            </p>
           )}
 
           {mode === "CREATE" && (
             <>
-              <p className="text-center text-3xl font-bold">{m("send")}</p>
+              <p className="text-center text-3xl font-bold">
+                {m(isMatchingCompleted ? "complete" : "send")}
+              </p>
               <div className="w-full flex items-center justify-center gap-4">
                 <p className="font-bold text-xl text-white bg-green-500 p-2 rounded-xl w-full max-w-64 text-center">
                   {password ? password : m("loading")}
@@ -97,7 +109,9 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
           {mode === "ENTER" && (
             <>
-              <p className="text-center text-3xl font-bold">{m("write")}</p>
+              <p className="text-center text-3xl font-bold">
+                {m(isMatchingCompleted ? "complete" : "write")}
+              </p>
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -125,7 +139,10 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                     </span>
                   )}
                 </div>
-                <button className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl">
+                <button
+                  disabled={isMatchingCompleted || isMatching || isLoading}
+                  className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl disabled:bg-gray-400"
+                >
                   {m("enter")}
                 </button>
               </form>
