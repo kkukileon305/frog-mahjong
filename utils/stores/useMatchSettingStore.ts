@@ -6,6 +6,12 @@ type GameSettingStore = {
 
   count: number;
   setCount: (count: number) => void;
+
+  password: string;
+  setPassword: (password: string) => void;
+
+  isError: boolean;
+  setIsError: (isError: boolean) => void;
 };
 
 const useMatchSettingStore = create<GameSettingStore>((set) => ({
@@ -14,6 +20,12 @@ const useMatchSettingStore = create<GameSettingStore>((set) => ({
 
   count: 2,
   setCount: (count: number) => set({ count }),
+
+  password: "",
+  setPassword: (password: string) => set({ password }),
+
+  isError: false,
+  setIsError: (isError: boolean) => set({ isError }),
 }));
 
 export default useMatchSettingStore;

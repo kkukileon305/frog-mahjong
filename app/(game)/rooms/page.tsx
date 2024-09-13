@@ -2,10 +2,7 @@ import React from "react";
 import Header from "@/app/Header";
 import { getTranslations } from "next-intl/server";
 import { FormMetadata } from "@/utils/axios";
-import QuickMatchingBtn from "@/app/(game)/rooms/QuickMatchingBtn";
 import MatchSettingForm from "@/app/(game)/rooms/MatchSettingForm";
-import CreateRoomBtn from "@/app/(game)/rooms/CreateRoomBtn";
-import EnterRoomBtn from "@/app/(game)/rooms/EnterRoomBtn";
 
 const Page = async () => {
   const m = await getTranslations("Rooms");
@@ -21,14 +18,6 @@ const Page = async () => {
 
       <div className="max-w-[800px] mx-auto py-4 px-2">
         <MatchSettingForm formMetadata={formMetadata} />
-
-        <div className="flex flex-col items-center justify-between gap-4 mt-4 md:flex-row">
-          <QuickMatchingBtn />
-        </div>
-        <div className="flex gap-4 mt-4">
-          <CreateRoomBtn />
-          <EnterRoomBtn />
-        </div>
       </div>
     </>
   );

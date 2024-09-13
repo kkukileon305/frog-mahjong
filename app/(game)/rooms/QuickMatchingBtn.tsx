@@ -4,10 +4,14 @@ import useQuickMatching from "@/utils/hooks/useQuickMatching";
 import useGameStore from "@/utils/stores/useGameStore";
 import { useTranslations } from "next-intl";
 
-const QuickMatchingBtn = () => {
+type QuickMatchingBtnProps = {
+  mode?: "NORMAL" | "CREATE" | "ENTER";
+};
+
+const QuickMatchingBtn = ({ mode = "NORMAL" }: QuickMatchingBtnProps) => {
   const m = useTranslations("QuickMatchingBtn");
   const { connectQuickMatchingSocket, cancelQuickMatchingSocket } =
-    useQuickMatching();
+    useQuickMatching(mode);
 
   const { setIsGameEnd, isMatchingCompleted, isMatching } = useGameStore(
     (state) => ({
@@ -36,7 +40,14 @@ const QuickMatchingBtn = () => {
       if (isMatching) {
         return m("cancelMatch");
       }
-      return m("match");
+
+      if (mode === "CREATE") {
+        return m("createRoom");
+      } else if (mode === "ENTER") {
+        return m("enterRoom");
+      } else {
+        return m("match");
+      }
     }
   };
 

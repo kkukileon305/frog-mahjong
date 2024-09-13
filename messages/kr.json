@@ -85,12 +85,17 @@
     "writeRoomName": "방 이름을 입력해주세요",
     "minPlayerNumber": "최소 플레이어 수",
     "maxPlayerNumber": "최대 플레이어 수",
-    "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
     "timeout": "턴 제한 시간",
     "roomPassword": "비밀번호(선택)",
+    "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
     "close": "닫기",
     "createRoom":"방 만들기",
-    "matching": "매칭중"
+    "matching": "매칭중",
+    "with": "함께하기",
+    "random": "랜덤",
+    "password": "초대코드",
+    "writePassword": "초대코드를 입력하세요",
+    "or": "또는"
   },
   "EnterRoomBtn": {
     "enter": "들어가기"

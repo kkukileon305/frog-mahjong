@@ -32,13 +32,16 @@ import useSounds from "@/utils/hooks/useSounds";
 import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
+import axiosInstance from "@/utils/axios";
 
 type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
-const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
-  const { timer, count } = useMatchSettingStore((s) => ({
+const useQuickMatching = (mode: MatchingMode = "NORMAL") => {
+  const { timer, count, password, setIsError } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
+    password: s.password,
+    setIsError: s.setIsError,
   }));
 
   const router = useRouter();
@@ -53,8 +56,27 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
   const { commonLoanAudio, commonStartAudio, commonLoanFailedAudio } =
     useSounds();
 
-  const connectQuickMatchingSocket = () => {
+  const connectQuickMatchingSocket = async () => {
+    setIsError(false);
     store.setIsMatching(true);
+
+    try {
+      const { data } = await axiosInstance.get(
+        `/v0.1/rooms/join/play?password=${password}`,
+        {
+          headers: {
+            tkn: accessToken,
+          },
+        }
+      );
+
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+      setIsError(true);
+      store.setIsMatching(false);
+      return;
+    }
 
     const url = getWsUrl({
       mode,
@@ -111,6 +133,8 @@ const useQuickMatching = (mode: MatchingMode = "NORMAL", password?: string) => {
 
         store.ws?.send(JSON.stringify(req));
       } else if (mode === "ENTER") {
+        return;
+
         if (!password) throw new Error("비번없음");
 
         const body: JoinPlayBody = {
