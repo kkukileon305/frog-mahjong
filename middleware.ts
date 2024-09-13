@@ -13,15 +13,21 @@ export function middleware(request: NextRequest) {
 
   // if isSignIn is true and access authentic page, redirect to main
   if (isSignIn && !pathname.includes("rooms")) {
-    return NextResponse.redirect(new URL("/", request.url));
+    if (pathname.includes("settings")) {
+      return;
+    }
+
+    return NextResponse.redirect(new URL("/rooms", request.url));
   }
 
-  if (!isSignIn && pathname.includes("rooms")) {
+  if (
+    !isSignIn &&
+    (pathname.includes("rooms") || pathname.includes("settings"))
+  ) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
     "/signin",
@@ -30,5 +36,6 @@ export const config = {
     "/reset-password/:path*",
     "/rooms/:path*",
     "/callback/:path*",
+    "/settings",
   ],
 };
