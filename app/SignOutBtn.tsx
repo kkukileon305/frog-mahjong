@@ -39,7 +39,11 @@ const SignOutBtn = () => {
   };
 
   return (
-    <button disabled={isLoading} onClick={signOut}>
+    <button
+      disabled={isLoading}
+      onClick={signOut}
+      className="p-2 hover:bg-gray-200 rounded-xl"
+    >
       {m("signOut")}
     </button>
   );

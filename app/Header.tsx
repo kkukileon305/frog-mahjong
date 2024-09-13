@@ -23,7 +23,7 @@ const Header = async () => {
         <div className="flex items-center gap-2">
           {refreshToken && <SignOutBtn />}
           <SwitchLocale />
-          <Link href="/settings">
+          <Link href="/settings" className="hover:bg-gray-200 p-2 rounded-xl">
             <IoMdSettings size={24} />
           </Link>
         </div>

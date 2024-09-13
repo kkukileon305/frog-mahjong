@@ -38,10 +38,6 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
 
   const { count, setCount, timer, setTimer, setPassword } =
     useMatchSettingStore();
-  const { isMatching, isMatchingCompleted } = useGameStore((s) => ({
-    isMatching: s.isMatching,
-    isMatchingCompleted: s.isMatchingCompleted,
-  }));
 
   useEffect(() => {
     setCount(2);
