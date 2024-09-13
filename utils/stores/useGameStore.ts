@@ -53,9 +53,6 @@ interface GameStore {
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
 
-  isAddedHandler: boolean;
-  setIsAddedHandler: (isAddedHandler: boolean) => void;
-
   clear: () => void;
 }
 
@@ -131,9 +128,6 @@ const useGameStore = create(
     isGameEnd: false,
     setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
 
-    isAddedHandler: false,
-    setIsAddedHandler: (isAddedHandler) => set({ isAddedHandler }),
-
     clear: () =>
       set({
         ws: null,
@@ -150,7 +144,7 @@ const useGameStore = create(
           afterUsers: null,
         },
         isMatchingCompleted: false,
-        isAddedHandler: false,
+        isGameEnd: false,
       }),
   }))
 );

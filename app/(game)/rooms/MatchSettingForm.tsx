@@ -6,8 +6,9 @@ import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import useGameStore from "@/utils/stores/useGameStore";
-import QuickMatchingBtn from "@/app/(game)/rooms/QuickMatchingBtn";
 import MatchModalContainer from "@/app/(game)/rooms/MatchModalContainer";
+import EnterRoomForm from "@/app/(game)/rooms/EnterRoomForm";
+import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -21,6 +22,9 @@ type GameSettingInputs = {
 
 const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
   const m = useTranslations("CreateRoomForm");
+  const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
+    null
+  );
 
   const {
     register, //
@@ -54,6 +58,12 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
   return (
     <>
       {(isMatching || isMatchingCompleted) && <MatchModalContainer />}
+      {openMatchModal && (
+        <EnterRoomForm
+          mode={openMatchModal}
+          setOpenMatchModal={setOpenMatchModal}
+        />
+      )}
 
       <form
         onSubmit={(e) => e.preventDefault()}
@@ -95,10 +105,24 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
             </div>
           </div>
 
-          <QuickMatchingBtn />
+          <button
+            onClick={() => setOpenMatchModal("NORMAL")}
+            className="w-full bg-amber-500 font-bold text-white py-2 rounded"
+          >
+            {m("normal")}
+          </button>
           <div className="flex gap-4">
-            <QuickMatchingBtn mode="CREATE" />
-            <button className="w-full bg-amber-500 font-bold text-white py-2 rounded">
+            <button
+              onClick={() => setOpenMatchModal("CREATE")}
+              className="w-full bg-amber-500 font-bold text-white py-2 rounded"
+            >
+              {m("createRoom")}
+            </button>
+
+            <button
+              onClick={() => setOpenMatchModal("ENTER")}
+              className="w-full bg-amber-500 font-bold text-white py-2 rounded"
+            >
               {m("enterRoom")}
             </button>
           </div>

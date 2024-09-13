@@ -34,17 +34,9 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import axiosInstance from "@/utils/axios";
 
-type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
+export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
-type useQuickMatchingProps = {
-  mode?: MatchingMode;
-  addListener: boolean;
-};
-
-const useQuickMatching = ({
-  mode = "NORMAL",
-  addListener = false,
-}: useQuickMatchingProps) => {
+const useQuickMatching = (mode: MatchingMode) => {
   const { timer, count, password, setIsError } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -100,24 +92,9 @@ const useQuickMatching = ({
     store.setWs(newWs);
   };
 
-  const cancelQuickMatchingSocket = () => {
-    const request: CancelMatch = {
-      userID: Number(userID),
-      roomID: Number(store.gameState?.gameInfo?.roomID),
-      event: CANCEL_MATCH,
-      message: "",
-    };
-
-    store.ws?.send(JSON.stringify(request));
-    store.clear();
-  };
-
   useEffect(() => {
-    if (!addListener) return;
     if (store.ws === null) return;
-    if (store.isAddedHandler) return;
 
-    console.log(store.ws, store.isAddedHandler);
     store.ws.addEventListener("open", () => {
       if (mode === "NORMAL") {
         const body: MatchBodyRequest = {
@@ -253,11 +230,9 @@ const useQuickMatching = ({
     store.ws.addEventListener("error", (body) => {
       console.log(body, "error");
     });
+  }, [store.ws]);
 
-    store.setIsAddedHandler(true);
-  }, [store.ws, store.isAddedHandler]);
-
-  return { connectQuickMatchingSocket, cancelQuickMatchingSocket };
+  return connectQuickMatchingSocket;
 };
 
 export default useQuickMatching;

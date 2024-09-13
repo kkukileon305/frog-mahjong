@@ -30,9 +30,6 @@ const ChatItem = ({ chat, place }: ChatItemProps) => {
       <div className="w-[calc(100%-20px)] rounded bg-white mb-2 p-2">
         <p className="w-full break-words whitespace-pre-line font-bold">
           {chat.message}
-          {process.env.NODE_ENV === "development" && (
-            <p className="absolute">{chat.chatID}</p>
-          )}
         </p>
       </div>
     </motion.li>

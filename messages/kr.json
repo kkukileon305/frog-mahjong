@@ -220,5 +220,11 @@
     "cancelMatch": "매칭취소",
     "createRoom": "함께하기",
     "enterRoom": "입장하기"
+  },
+  "MatchingModal": {
+    "NORMAL": "빠른매칭",
+    "ENTER": "입장하기",
+    "CREATE": "함께하기",
+    "search": "상대를 찾는 중.."
   }
 }
