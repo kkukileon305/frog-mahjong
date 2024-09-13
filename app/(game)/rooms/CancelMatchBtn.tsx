@@ -34,8 +34,9 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
 
   return (
     <button
+      disabled={store.isMatchingCompleted}
       onClick={cancelQuickMatchingSocket}
-      className="w-full max-w-44 bg-green-500 py-2 rounded-xl font-bold text-white"
+      className="w-full max-w-44 bg-green-500 py-2 rounded-xl font-bold text-white disabled:bg-gray-400"
     >
       {m("cancelMatch")}
     </button>
