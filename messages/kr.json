@@ -233,6 +233,7 @@
     "writePassword": "코드를 입력해주세요",
     "enter": "참가하기",
     "notFound": "해당 방이 없습니다",
-    "complete": "매칭 완료"
+    "complete": "매칭 완료",
+    "copySuccess": "복사성공"
   }
 }

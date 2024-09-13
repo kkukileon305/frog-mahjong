@@ -24,7 +24,8 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
   const accessToken = getCookie("accessToken") as string;
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isCopySuccess, setIsCopySuccess] = useState(false);
 
   const {
     handleSubmit,
@@ -66,7 +67,7 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
         connect();
       } catch (e) {
-        setIsError(true);
+        setIsPasswordError(true);
         return;
       } finally {
         setIsLoading(false);
@@ -77,6 +78,19 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   watch((inputs) => {
     inputs.inputPassword && setPassword(inputs.inputPassword);
   });
+
+  const onClick = async () => {
+    if (password) {
+      try {
+        await navigator.clipboard.writeText(password);
+
+        setIsCopySuccess(true);
+      } catch (e) {
+        console.log(e);
+        setIsCopySuccess(false);
+      }
+    }
+  };
 
   return (
     <div className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-black/50 z-30 flex justify-center items-center p-2">
@@ -100,8 +114,11 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                 <p className="font-bold text-xl text-white bg-green-500 p-2 rounded-xl w-full max-w-64 text-center">
                   {password ? password : m("loading")}
                 </p>
-                <button className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl">
-                  {m("copy")}
+                <button
+                  onClick={onClick}
+                  className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl"
+                >
+                  {m(isCopySuccess ? "copySuccess" : "copy")}
                 </button>
               </div>
             </>
@@ -133,12 +150,13 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                     </span>
                   )}
 
-                  {isError && (
+                  {isPasswordError && (
                     <span className="text-sm text-red-400 mt-2">
                       {m("notFound")}
                     </span>
                   )}
                 </div>
+
                 <button
                   disabled={isMatchingCompleted || isMatching || isLoading}
                   className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl disabled:bg-gray-400"
