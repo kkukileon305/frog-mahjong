@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       backgroundImage: {
         game: `url('../public/bg/game_background.jpg')`,
-        rooms: "url('../public/bg/rooms_background.jpg')",
+        rooms: "url('../public/bg/room_background.jpg')",
+        main: "url('../public/bg/main_background.jpg')",
       },
     },
   },

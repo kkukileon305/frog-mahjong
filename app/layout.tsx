@@ -34,7 +34,7 @@ const RootLayout = async ({
     <html lang={locale}>
       <body className={font.className}>
         <NextIntlClientProvider messages={messages}>
-          <div className="min-h-[calc(100dvh)] bg-rooms bg-center bg-cover">
+          <div className="min-h-[calc(100dvh)] bg-main bg-center bg-cover">
             {children}
           </div>
         </NextIntlClientProvider>
