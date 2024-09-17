@@ -1,5 +1,7 @@
 const FormMetadataLoading = () => {
-  return <div className="h-[316px] bg-gray-200 animate-pulse rounded-xl" />;
+  return (
+    <div className="h-[384px] bg-gray-200 animate-pulse rounded-xl mt-8" />
+  );
 };
 
 export default FormMetadataLoading;
