@@ -136,7 +136,7 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
               >
                 <div className="flex flex-col">
                   <input
-                    type="password"
+                    type="text"
                     className={`border border-gray-400 rounded p-2 ${
                       errors.inputPassword && "border-red-400"
                     }`}
