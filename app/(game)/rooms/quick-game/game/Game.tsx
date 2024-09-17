@@ -322,7 +322,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
           />
         </div>
       </div>
-      <div className="flex h-10 justify-end bg-green-600">
+      <div className="flex h-10 justify-end bg-game-bar">
         <div className="basis-1/5" />
 
         <div className="basis-3/5 p-1">
@@ -332,7 +332,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         <div className="flex basis-1/5">
           <button
             onClick={() => setIsHelpModal(true)}
-            className="w-full bg-green-400 font-bold text-white"
+            className="w-full bg-game-button font-bold"
           >
             {m("help")}
           </button>

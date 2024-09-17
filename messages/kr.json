@@ -100,7 +100,8 @@
     "enterCode": "참여코드",
     "normal": "빠른매칭",
     "create": "방생성",
-    "enter": "입장하기"
+    "enter": "입장하기",
+    "personCount": "명"
   },
   "EnterRoomBtn": {
     "enter": "들어가기"

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -14,6 +15,14 @@ const config: Config = {
         rooms: "url('../public/bg/room_background.jpg')",
         main: "url('../public/bg/main_background.jpg')",
       },
+    },
+    colors: {
+      ...colors,
+      "button-selected": "#95C1A7",
+      "match-button": "#FFB380",
+      "game-bar": "#8AC186",
+      "game-icon": "#62A38C",
+      "game-button": "#D5F5FF",
     },
   },
   plugins: [],

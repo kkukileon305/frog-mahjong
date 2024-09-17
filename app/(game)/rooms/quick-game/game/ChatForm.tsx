@@ -61,7 +61,7 @@ const ChatForm = () => {
         className="flex gap-2 w-full h-full bg-white/70 font-bold px-2 rounded-full overflow-hidden"
       >
         <button onClick={() => setIsOpen(true)} type="button">
-          <BsList size={24} className="text-green-700" />
+          <BsList size={24} className="text-game-icon" />
         </button>
 
         <input
@@ -73,7 +73,7 @@ const ChatForm = () => {
         />
 
         <button type="submit">
-          <FaTelegramPlane size={24} className="text-green-700" />
+          <FaTelegramPlane size={24} className="text-game-icon" />
         </button>
       </form>
     </>
