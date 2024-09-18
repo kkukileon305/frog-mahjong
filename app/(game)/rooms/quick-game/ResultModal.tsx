@@ -1,27 +1,18 @@
 "use client";
 
-import { GameResult } from "@/utils/hooks/useOldMatching";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import cards from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import mergeBonus from "@/utils/functions/mergeBonus";
-import { QUITRequest, UserSocket } from "@/utils/constants/socketTypes";
-import commonDrawSrc from "@/public/audios/draw.mp3";
-import winAudioSrc from "@/public/audios/win.mp3";
-import failAudioSrc from "@/public/audios/fail.mp3";
+import { QUITRequest } from "@/utils/constants/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";
 import { QUIT_GAME } from "@/utils/constants/const";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 const ResultModal = () => {
   const m = useTranslations("ResultModal");
@@ -32,9 +23,7 @@ const ResultModal = () => {
   const router = useRouter();
 
   // sounds
-  const drawAudio = useRef<HTMLAudioElement>(new Audio(commonDrawSrc));
-  const winAudio = useRef<HTMLAudioElement>(new Audio(winAudioSrc));
-  const failAudio = useRef<HTMLAudioElement>(new Audio(failAudioSrc));
+  const audios = useSoundStore((s) => s.audios);
 
   const [bonuses, setBonuses] = useState<ScoreEndResult>();
   const [isLoading, setIsLoading] = useState(true);
@@ -79,11 +68,14 @@ const ResultModal = () => {
       setBonuses(data);
 
       if (winner) {
-        winner.id === Number(userID)
-          ? await winAudio.current.play()
-          : await failAudio.current.play();
+        console.log(audios);
+        if (winner.id === Number(userID)) {
+          audios?.winAudio.play();
+        } else {
+          audios?.failAudio.play();
+        }
       } else {
-        await drawAudio.current.play();
+        audios?.commonDrawAudio.play();
       }
     } catch (e) {
       console.log(e);

@@ -2,8 +2,6 @@
 
 import { motion } from "framer-motion";
 import {
-  ChatResponse,
-  GameInfo,
   LoanBody,
   LoanRequest,
   RoomOutBody,
@@ -21,13 +19,13 @@ import React, {
 } from "react";
 import { FaChessQueen } from "react-icons/fa6";
 import { IoMdExit } from "react-icons/io";
-import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
 import { ROOM_OUT } from "@/utils/constants/const";
 import useGameStore from "@/utils/stores/useGameStore";
 import { getCookie } from "cookies-next";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -45,7 +43,7 @@ const UserPanel = ({
   place = "left",
 }: UserPanelProps) => {
   const m = useTranslations("UserPanel");
-  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
+  const audios = useSoundStore((s) => s.audios);
 
   const { chatList, ws, gameState, isStarted } = useGameStore();
 
@@ -96,7 +94,7 @@ const UserPanel = ({
       setIsLoanEnd(true);
       setIsLoanSelectMode(false);
 
-      audioRef.current?.play();
+      audios?.cardChapAudio.play();
     }
   };
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import { IoRemoveCircle } from "react-icons/io5";
-import cardMoveSrc from "@/public/audios/card_move.wav";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 type MyCardListProps = {
   items: CardImage[];
@@ -23,11 +23,11 @@ const MyCardList = ({
   calScore,
   setItems,
 }: MyCardListProps) => {
-  const audioRef = useRef<HTMLAudioElement>(new Audio(cardMoveSrc));
+  const audios = useSoundStore((s) => s.audios);
 
   const onDragEnd = async () => {
     calScore(items);
-    audioRef.current?.play();
+    await audios?.cardMovieAudio.play();
   };
 
   if (discardMode) {

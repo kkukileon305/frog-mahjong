@@ -5,14 +5,12 @@ import {
   DiscardRequest,
   DORABody,
   DORARequest,
-  GameInfo,
   GameOverRequest,
   ImportCardBody,
   ImportRequest,
   LoanFailedBody,
   LoanFailedRequest,
   TimeoutDiscardRequest,
-  UserSocket,
 } from "@/utils/constants/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import React, {
@@ -23,7 +21,6 @@ import React, {
   useState,
 } from "react";
 import { getCookie } from "cookies-next";
-import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import { useParams } from "next/navigation";
 import getRandomElements from "@/utils/functions/getRandomElements";
 import {
@@ -35,6 +32,7 @@ import {
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
 import useGameStore from "@/utils/stores/useGameStore";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 type TimerProps = {
   leftCards: CardImage[];
@@ -50,7 +48,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
     ws: s.ws,
   }));
 
-  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
+  const audios = useSoundStore((s) => s.audios);
   const [time, setTime] = useState(gameInfo?.timer);
 
   const userID = getCookie("userID") as string;
@@ -94,7 +92,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
         ws?.send(JSON.stringify(req));
 
-        audioRef.current?.play();
+        audios?.cardChapAudio.play();
         return;
       } else {
         // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
@@ -115,7 +113,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
         ws?.send(JSON.stringify(request));
 
-        audioRef.current?.play();
+        audios?.cardChapAudio.play();
         return;
       }
     }
@@ -137,7 +135,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
       };
 
       ws?.send(JSON.stringify(request));
-      audioRef.current?.play();
+      audios?.cardChapAudio.play();
       return;
     }
 
@@ -161,7 +159,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      audioRef.current?.play();
+      audios?.cardChapAudio.play();
       return;
     } else {
       // 카드를 고르지않고 타임아웃
@@ -195,7 +193,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      audioRef.current?.play();
+      audios?.cardChapAudio.play();
       return;
     }
   }, [time]);

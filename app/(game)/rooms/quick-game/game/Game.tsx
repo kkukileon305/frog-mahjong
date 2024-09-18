@@ -1,16 +1,13 @@
 "use client";
 
 import {
-  ChatResponse,
   DORABody,
   DORARequest,
-  GameInfo,
   GameOverRequest,
   ImportCardBody,
   ImportRequest,
   ImportSingleCardBody,
   ImportSingleCardRequest,
-  UserSocket,
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/quick-game/game/UserPanel";
@@ -23,7 +20,6 @@ import React, {
   useState,
 } from "react";
 import ShuffleLeftCards from "@/app/(game)/rooms/quick-game/game/ShuffleLeftCards";
-import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import ChatForm from "@/app/(game)/rooms/quick-game/game/ChatForm";
 import Timer from "@/app/(game)/rooms/quick-game/game/Timer";
 import {
@@ -36,6 +32,7 @@ import { useTranslations } from "next-intl";
 import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -52,7 +49,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
   const userID = getCookie("userID") as string;
   const currentUser = users?.find((user) => user.id === Number(userID))!;
 
-  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
+  const audios = useSoundStore((s) => s.audios);
 
   const dora = gameInfo?.dora;
   const isUserTurn = gameInfo?.playTurn === currentUser.turnNumber;
@@ -107,7 +104,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
       setSelectedCards([]);
     }
 
-    audioRef.current?.play();
+    audios?.cardChapAudio.play();
   };
 
   const onSelectCard = (card: CardImage) => {
@@ -143,7 +140,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         };
 
         ws?.send(JSON.stringify(request));
-        audioRef.current?.play();
+        audios?.cardChapAudio.play();
       }
     }
   };

@@ -33,6 +33,7 @@ import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import axiosInstance from "@/utils/axios";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
@@ -52,8 +53,7 @@ const useQuickMatching = (mode: MatchingMode) => {
   const store = useGameStore();
 
   // sounds
-  const { commonLoanAudio, commonStartAudio, commonLoanFailedAudio } =
-    useSounds();
+  const audios = useSoundStore((s) => s.audios);
 
   const connectQuickMatchingSocket = () => {
     store.setIsMatching(true);
@@ -161,14 +161,14 @@ const useQuickMatching = (mode: MatchingMode) => {
           store.setIsMatchingCompleted(true);
         }
       } else if (eventName === LOAN) {
-        commonLoanAudio?.play();
+        audios?.commonLoanAudio.play();
       } else if (eventName === FAILED_LOAN) {
         store.setIsLoanFailed(data.gameInfo?.failedLoanUserID || 0);
-        commonLoanFailedAudio?.play();
+        audios?.commonLoanFailedAudio.play();
       } else if (eventName === START) {
         if (data.errorInfo === null) {
           store.setIsStarted(true);
-          commonStartAudio?.play();
+          audios?.commonStartAudio.play();
 
           store.setBeforeResult(data.users);
           store.setIsOpenResultModal(false);

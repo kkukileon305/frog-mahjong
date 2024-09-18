@@ -3,29 +3,20 @@
 import {
   DiscardBody,
   DiscardRequest,
-  GameInfo,
   LoanFailedBody,
   LoanFailedRequest,
   LoanSuccessBody,
   LoanSuccessRequest,
-  UserSocket,
   WinRequest,
   WinRequestBody,
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axiosInstance, { ScoreResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/functions/getPrevTurn";
-import cardChapWavSrc from "@/public/audios/card_chap.wav";
 import {
   DISCARD,
   FAILED_LOAN,
@@ -34,6 +25,7 @@ import {
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
+import useSoundStore from "@/utils/hooks/useSoundStore";
 
 type MyCardProps = {
   discardMode: boolean;
@@ -66,7 +58,7 @@ const MyCardBoard = ({
   const roomID = gameInfo?.roomID;
   const currentUser = users?.find((user) => user.id === Number(userID));
 
-  const audioRef = useRef<HTMLAudioElement>(new Audio(cardChapWavSrc));
+  const audios = useSoundStore((s) => s.audios);
 
   // 패 조합 점수
   const [scoreResult, setScoreResult] = useState<ScoreResult>({
@@ -163,7 +155,7 @@ const MyCardBoard = ({
         bonuses: [],
       });
 
-      audioRef.current?.play();
+      audios?.cardChapAudio.play();
     }
   };
 
@@ -224,7 +216,7 @@ const MyCardBoard = ({
 
         ws?.send(JSON.stringify(req));
 
-        audioRef.current?.play();
+        audios?.cardChapAudio.play();
       }
     } else {
       setDiscardMode(!discardMode);

@@ -4,8 +4,12 @@ import {
   SocketResponseBody,
   UserSocket,
 } from "@/utils/constants/socketTypes";
-import { GameResult } from "@/utils/hooks/useOldMatching";
 import { devtools } from "zustand/middleware";
+
+type GameResult = {
+  beforeUsers: UserSocket[] | null;
+  afterUsers: UserSocket[] | null;
+};
 
 interface GameStore {
   ws: WebSocket | null;
