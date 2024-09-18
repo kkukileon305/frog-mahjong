@@ -4,10 +4,21 @@ import useSoundStore from "@/utils/hooks/useSoundStore";
 import { useEffect } from "react";
 
 const LoadAudio = () => {
-  const init = useSoundStore((s) => s.init);
+  const { init, audios, setVolume } = useSoundStore((s) => ({
+    init: s.init,
+    audios: s.audios,
+    setVolume: s.setVolume,
+  }));
 
   useEffect(() => {
+    if (audios !== null) return;
+
     init();
+    setVolume(parseFloat(localStorage.getItem("volume") || "0.5"));
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("sound init!");
+    }
   }, []);
 
   return <></>;

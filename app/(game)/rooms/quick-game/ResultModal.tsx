@@ -68,7 +68,6 @@ const ResultModal = () => {
       setBonuses(data);
 
       if (winner) {
-        console.log(audios);
         if (winner.id === Number(userID)) {
           audios?.winAudio.play();
         } else {

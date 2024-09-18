@@ -24,15 +24,17 @@ type GameAudios = {
 type SoundStore = {
   audios: GameAudios | null;
   setAudios: (audios: GameAudios) => void;
+
+  volume: number;
   setVolume: (volume: number) => void;
   init: () => void;
 };
 
 const useSoundStore = create<SoundStore>((set) => ({
   audios: null,
-
   setAudios: (audios: GameAudios) => set({ audios }),
 
+  volume: 0.5,
   setVolume: (volume: number) =>
     set((prev) => {
       if (prev.audios) {
@@ -40,7 +42,9 @@ const useSoundStore = create<SoundStore>((set) => ({
           audio.volume = volume;
         });
       }
-      return { audios: prev.audios };
+
+      localStorage.setItem("volume", volume.toString());
+      return { audios: prev.audios, volume };
     }),
 
   init: () =>
