@@ -8,7 +8,7 @@ const Page = async () => {
     <>
       <Header />
 
-      <div className="max-w-[800px] mx-auto py-4 px-2">
+      <div className="max-w-[800px] min-h-[calc(100dvh-64px)] flex items-center w-full mx-auto py-4 px-2">
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>

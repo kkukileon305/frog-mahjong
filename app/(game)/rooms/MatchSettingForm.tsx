@@ -61,7 +61,7 @@ const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
 
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="flex flex-col gap-8 my-8"
+        className="w-full flex flex-col gap-8 my-8"
       >
         <>
           <div className="flex flex-col">
