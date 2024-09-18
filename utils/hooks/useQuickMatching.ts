@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { getCookie } from "cookies-next";
 import {
-  CancelMatch,
   ChatResponse,
   JoinPlayBody,
   JoinPlayRequest,
@@ -12,7 +11,6 @@ import {
   SocketResponseBody,
 } from "@/utils/constants/socketTypes";
 import {
-  CANCEL_MATCH,
   CHAT,
   ERR_ABNORMAL_EXIT,
   FAILED_LOAN,
@@ -31,7 +29,6 @@ import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
-import axiosInstance from "@/utils/axios";
 import useSoundStore from "@/utils/hooks/useSoundStore";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
