@@ -98,7 +98,7 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
         <h3 className="font-bold text-white text-center text-4xl mb-8">
           {m(mode)}
         </h3>
-        <div className="bg-white flex flex-col items-center gap-8 rounded-xl py-8">
+        <div className="bg-white flex flex-col items-center gap-8 rounded-xl py-8 px-2">
           {mode === "NORMAL" && (
             <p className="text-center text-3xl font-bold">
               {m(isMatchingCompleted ? "complete" : "search")}
