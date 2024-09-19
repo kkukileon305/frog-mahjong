@@ -2,8 +2,11 @@
 
 import useSoundStore from "@/utils/hooks/useSoundStore";
 import { ChangeEventHandler, useState } from "react";
+import { useTranslations } from "next-intl";
+import { FaPlay } from "react-icons/fa";
 
 const VolumeSlider = () => {
+  const m = useTranslations("settings");
   const { setVolume, volume, audios } = useSoundStore((s) => ({
     volume: s.volume,
     setVolume: s.setVolume,
@@ -27,9 +30,11 @@ const VolumeSlider = () => {
     setDebounceTimeout(newTimeout);
   };
 
+  const onPlay = async () => {};
+
   return (
     <div>
-      <label htmlFor="volume">Volume: </label>
+      <label htmlFor="volume">{m("volume")} </label>
       <input
         id="volume"
         type="range"
@@ -39,7 +44,12 @@ const VolumeSlider = () => {
         defaultValue={volume}
         onChange={handleVolumeChange}
       />
-      <button onClick={() => audios?.cardChapAudio.play()}>재생</button>
+      <button
+        className="ml-4 text-white bg-match-button py-2 px-4 rounded"
+        onClick={() => audios?.cardChapAudio.play()}
+      >
+        <FaPlay />
+      </button>
     </div>
   );
 };

@@ -236,5 +236,9 @@
     "notFound": "해당 방이 없습니다",
     "complete": "매칭 완료",
     "copySuccess": "복사성공"
+  },
+  "settings": {
+    "volume": "볼륨",
+    "play": "재생"
   }
 }

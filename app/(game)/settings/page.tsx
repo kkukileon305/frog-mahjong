@@ -7,7 +7,9 @@ const Page = () => {
   return (
     <>
       <Header />
-      <VolumeSlider />
+      <div className="max-w-[800px] min-h-[calc(100dvh-64px)] mx-auto flex justify-center items-center">
+        <VolumeSlider />
+      </div>
       <LoadAudio />
     </>
   );
