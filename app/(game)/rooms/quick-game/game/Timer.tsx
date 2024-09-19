@@ -13,13 +13,7 @@ import {
   TimeoutDiscardRequest,
 } from "@/utils/constants/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
 import { useParams } from "next/navigation";
 import getRandomElements from "@/utils/functions/getRandomElements";
@@ -92,7 +86,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
         ws?.send(JSON.stringify(req));
 
-        audios?.cardChapAudio.play();
+        audios?.timeoutAudio.play();
         return;
       } else {
         // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
@@ -113,7 +107,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
         ws?.send(JSON.stringify(request));
 
-        audios?.cardChapAudio.play();
+        audios?.timeoutAudio.play();
         return;
       }
     }
@@ -135,7 +129,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
       };
 
       ws?.send(JSON.stringify(request));
-      audios?.cardChapAudio.play();
+      audios?.timeoutAudio.play();
       return;
     }
 
@@ -159,7 +153,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      audios?.cardChapAudio.play();
+      audios?.timeoutAudio.play();
       return;
     } else {
       // 카드를 고르지않고 타임아웃
@@ -193,7 +187,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
       ws?.send(JSON.stringify(request));
       setSelectedCards([]);
-      audios?.cardChapAudio.play();
+      audios?.timeoutAudio.play();
       return;
     }
   }, [time]);

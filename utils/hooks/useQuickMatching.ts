@@ -12,9 +12,11 @@ import {
 } from "@/utils/constants/socketTypes";
 import {
   CHAT,
+  DISCARD,
   ERR_ABNORMAL_EXIT,
   FAILED_LOAN,
   GAME_OVER,
+  IMPORT_CARDS,
   IMPORT_SINGLE_CARD,
   JOIN_PLAY,
   LOAN,
@@ -24,6 +26,7 @@ import {
   ROOM_OUT,
   START,
   SUCCESS_LOAN,
+  TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
 import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";
@@ -144,6 +147,19 @@ const useQuickMatching = (mode: MatchingMode) => {
 
       if (eventName !== IMPORT_SINGLE_CARD) {
         store.setIsGetCard(false);
+      }
+
+      if (
+        eventName === IMPORT_CARDS ||
+        eventName === DISCARD ||
+        eventName === TIME_OUT_DISCARD
+      ) {
+        if (
+          data.users?.find((u) => u.id === Number(userID))?.turnNumber ===
+          data.gameInfo?.playTurn
+        ) {
+          audios?.myTurnAudio.play();
+        }
       }
 
       if (

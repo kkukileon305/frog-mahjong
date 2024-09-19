@@ -8,6 +8,8 @@ import cardMoveSrc from "@/public/audios/card_move.wav";
 import commonDrawSrc from "@/public/audios/draw.mp3";
 import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
+import myTurnSrc from "@/public/audios/myturn.mp3";
+import timeoutSrc from "@/public/audios/timeout.mp3";
 
 type GameAudios = {
   commonAllReadyAudio: HTMLAudioElement;
@@ -19,6 +21,8 @@ type GameAudios = {
   commonDrawAudio: HTMLAudioElement;
   winAudio: HTMLAudioElement;
   failAudio: HTMLAudioElement;
+  myTurnAudio: HTMLAudioElement;
+  timeoutAudio: HTMLAudioElement;
 };
 
 type SoundStore = {
@@ -59,6 +63,8 @@ const useSoundStore = create<SoundStore>((set) => ({
         commonDrawAudio: new Audio(commonDrawSrc),
         winAudio: new Audio(winAudioSrc),
         failAudio: new Audio(failAudioSrc),
+        myTurnAudio: new Audio(myTurnSrc),
+        timeoutAudio: new Audio(timeoutSrc),
       },
     }),
 }));
