@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import useBlockScroll from "@/utils/hooks/useBlockScroll";
 
 type CancelMatchBtnProps = {
   mode: MatchingMode;
@@ -51,6 +52,8 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
     connect();
   }, []);
+
+  useBlockScroll();
 
   const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     if (mode === "ENTER") {

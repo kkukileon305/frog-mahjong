@@ -7,6 +7,7 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
+import useBlockScroll from "@/utils/hooks/useBlockScroll";
 
 type ModalContainerProps = {
   setIsOpen:
@@ -27,14 +28,7 @@ const ModalContainer = ({
     }
   };
 
-  useEffect(() => {
-    document.body.style.overflowY = "hidden";
-    window.scrollTo(0, 0);
-
-    return () => {
-      document.body.style.overflowY = "visible";
-    };
-  }, []);
+  useBlockScroll();
 
   return (
     <div
