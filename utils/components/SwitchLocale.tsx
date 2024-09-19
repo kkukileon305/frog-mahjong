@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { IoLanguage } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 
-const locales = [KR, US];
+const locales = [KR];
 
 const SwitchLocale = () => {
   const locale = useLocale();
