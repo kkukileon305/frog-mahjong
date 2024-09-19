@@ -1,7 +1,7 @@
 import Header from "@/app/Header";
 import React from "react";
 import VolumeSlider from "@/app/(game)/settings/VolumeSlider";
-import LoadAudio from "@/app/(game)/rooms/LoadAudio";
+import LoadAudio from "@/utils/components/LoadAudio";
 
 const Page = () => {
   return (

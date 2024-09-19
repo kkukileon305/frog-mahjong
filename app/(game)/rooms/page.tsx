@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import Header from "@/app/Header";
 import Match from "@/app/(game)/rooms/Match";
 import FormMetadataLoading from "@/app/(game)/rooms/FormMetadataLoading";
-import LoadAudio from "@/app/(game)/rooms/LoadAudio";
+import LoadAudio from "@/utils/components/LoadAudio";
 
 const Page = async () => {
   return (
