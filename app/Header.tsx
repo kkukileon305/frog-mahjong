@@ -1,4 +1,4 @@
-import SignOutBtn from "@/app/SignOutBtn";
+import SignOutBtn from "@/utils/components/SignOutBtn";
 import SwitchLocale from "@/utils/components/SwitchLocale";
 import React from "react";
 import Link from "next/link";
