@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
+import LoadImages from "@/utils/components/LoadImages";
 
 const font = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ const RootLayout = async ({
         </NextIntlClientProvider>
 
         <SpeedInsights />
+        <LoadImages />
       </body>
     </html>
   );
