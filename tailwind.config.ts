@@ -23,6 +23,7 @@ const config: Config = {
       "game-bar": "#8AC186",
       "game-icon": "#62A38C",
       "game-button": "#D5F5FF",
+      "yellow-button": "#FFA800",
     },
   },
   plugins: [],

@@ -10,6 +10,9 @@ import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
+import frogPink from "@/public/icons/frog_pink.png";
+import frogYellow from "@/public/icons/frog_yellow.png";
+import Image from "next/image";
 
 type CancelMatchBtnProps = {
   mode: MatchingMode;
@@ -97,11 +100,27 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
   return (
     <div className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-black/50 z-30 flex justify-center items-center p-2">
-      <div className="relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto py-8 px-4 shadow bg-green-500 rounded-xl">
-        <h3 className="font-bold text-white text-center text-4xl mb-8">
-          {m(mode)}
-        </h3>
-        <div className="bg-white flex flex-col items-center gap-8 rounded-xl py-8 px-2">
+      <div className="relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto py-8 px-4 shadow bg-game-icon rounded-xl">
+        <div className="flex items-center justify-center gap-4">
+          <Image
+            src={frogPink}
+            alt="icon"
+            width={66}
+            height={74}
+            className="translate-y-2"
+          />
+          <h3 className="font-bold text-white text-center text-4xl">
+            {m(mode)}
+          </h3>
+          <Image
+            src={frogYellow}
+            alt="icon"
+            width={66}
+            height={74}
+            className="translate-y-2"
+          />
+        </div>
+        <div className="relative min-h-[236px] bg-white flex flex-col justify-center items-center gap-8 rounded-xl py-8 px-2">
           {mode === "NORMAL" && (
             <p className="text-center text-3xl font-bold">
               {m(isMatchingCompleted ? "complete" : "search")}
@@ -114,12 +133,12 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                 {m(isMatchingCompleted ? "complete" : "send")}
               </p>
               <div className="w-full flex items-center justify-center gap-4">
-                <p className="font-bold text-xl text-white bg-green-500 p-2 rounded-xl w-full max-w-64 text-center">
+                <p className="font-bold text-xl text-white bg-game-icon p-2 rounded-xl w-full max-w-64 text-center">
                   {password ? password : m("loading")}
                 </p>
                 <button
                   onClick={onClick}
-                  className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl"
+                  className="bg-yellow-button font-bold text-white py-2 px-4 text-xl rounded-xl"
                 >
                   {m(isCopySuccess ? "copySuccess" : "copy")}
                 </button>
@@ -147,17 +166,6 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                       required: m("writePassword"),
                     })}
                   />
-                  {errors.inputPassword && (
-                    <span className="text-sm text-red-400 mt-2">
-                      {errors.inputPassword.message}
-                    </span>
-                  )}
-
-                  {isPasswordError && (
-                    <span className="text-sm text-red-400 mt-2">
-                      {m("notFound")}
-                    </span>
-                  )}
                 </div>
 
                 <button
@@ -167,11 +175,22 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                   {m("enter")}
                 </button>
               </form>
+
+              {errors.inputPassword && (
+                <span className="text-sm text-red-400 mt-2">
+                  {errors.inputPassword.message}
+                </span>
+              )}
+
+              {isPasswordError && (
+                <span className="text-sm text-red-400 mt-2">
+                  {m("notFound")}
+                </span>
+              )}
             </>
           )}
-
-          <CancelMatchBtn setOpenMatchModal={setOpenMatchModal} />
         </div>
+        <CancelMatchBtn setOpenMatchModal={setOpenMatchModal} />
       </div>
     </div>
   );

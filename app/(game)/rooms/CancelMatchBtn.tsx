@@ -1,12 +1,13 @@
 "use client";
 
-import useQuickMatching, { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 import { useTranslations } from "next-intl";
 import { CancelMatch } from "@/utils/constants/socketTypes";
 import { CANCEL_MATCH } from "@/utils/constants/const";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
 import { Dispatch, SetStateAction } from "react";
+import { IoClose } from "react-icons/io5";
 
 type CancelMatchBtnProps = {
   setOpenMatchModal: Dispatch<SetStateAction<MatchingMode | null>>;
@@ -36,9 +37,9 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
     <button
       disabled={store.isMatchingCompleted}
       onClick={cancelQuickMatchingSocket}
-      className="w-full max-w-44 bg-green-500 py-2 rounded-xl font-bold text-white disabled:bg-gray-400"
+      className="absolute top-2 right-2 bg-yellow-button rounded-xl font-bold text-white disabled:bg-gray-400"
     >
-      {m("cancelMatch")}
+      <IoClose className="text-3xl" />
     </button>
   );
 };
