@@ -107,29 +107,43 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 pt-4 md:px-8">
-            <button
-              onClick={() => setOpenMatchModal("NORMAL")}
-              className="w-full bg-match-button font-bold text-white text-xl py-2 rounded"
-            >
-              {m("normal")}
-            </button>
-            <div className="flex gap-4">
-              <button
-                onClick={() => setOpenMatchModal("CREATE")}
-                className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
-              >
-                {m("createRoom")}
-              </button>
+          <p className="text-center font-bold">
+            {m("nokori", {
+              coin: userData.coin,
+            })}
+          </p>
 
+          {userData.coin > 0 && (
+            <div className="flex flex-col gap-4 pt-4 md:px-8">
               <button
-                onClick={() => setOpenMatchModal("ENTER")}
-                className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
+                onClick={() => setOpenMatchModal("NORMAL")}
+                className="w-full bg-match-button font-bold text-white text-xl py-2 rounded"
               >
-                {m("enterRoom")}
+                {m("normal")}
               </button>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setOpenMatchModal("CREATE")}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
+                >
+                  {m("createRoom")}
+                </button>
+
+                <button
+                  onClick={() => setOpenMatchModal("ENTER")}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
+                >
+                  {m("enterRoom")}
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+
+          {userData.coin <= 0 && (
+            <div className="flex justify-center bg-gray-200 items-center gap-4 py-4 ">
+              <p>{m("noCoin")}</p>
+            </div>
+          )}
         </>
       </form>
     </>
