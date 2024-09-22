@@ -23,6 +23,13 @@ export interface RoomCreatedResponse {
   roomID: number;
 }
 
+export interface UserData {
+  email: string;
+  name: string;
+  userID: number;
+  coin: number;
+}
+
 export type TokenType = {
   accessToken: string;
   refreshToken: string;

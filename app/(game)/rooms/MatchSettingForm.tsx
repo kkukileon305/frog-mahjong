@@ -1,16 +1,16 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FormMetadata } from "@/utils/axios";
+import { useForm } from "react-hook-form";
+import { FormMetadata, UserData } from "@/utils/axios";
 import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
-import useGameStore from "@/utils/stores/useGameStore";
 import EnterRoomModal from "@/app/(game)/rooms/EnterRoomModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
+  userData: UserData;
 };
 
 type GameSettingInputs = {
@@ -19,7 +19,7 @@ type GameSettingInputs = {
   password: string;
 };
 
-const MatchSettingForm = ({ formMetadata }: GameSettingFormProps) => {
+const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const m = useTranslations("CreateRoomForm");
   const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
     null
