@@ -5,7 +5,7 @@ import { FormMetadata, UserData } from "@/utils/axios";
 import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
-import EnterRoomModal from "@/app/(game)/rooms/EnterRoomModal";
+import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 
 type GameSettingFormProps = {
@@ -20,7 +20,7 @@ type GameSettingInputs = {
 };
 
 const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
-  const m = useTranslations("CreateRoomForm");
+  const m = useTranslations("MatchSettingForm");
   const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
     null
   );
@@ -53,7 +53,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   return (
     <>
       {openMatchModal && (
-        <EnterRoomModal
+        <MatchingModal
           mode={openMatchModal}
           setOpenMatchModal={setOpenMatchModal}
         />

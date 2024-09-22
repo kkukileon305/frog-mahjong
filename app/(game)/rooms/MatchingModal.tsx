@@ -23,7 +23,7 @@ type Inputs = {
   inputPassword: string;
 };
 
-const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
+const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   const m = useTranslations("MatchingModal");
 
   const accessToken = getCookie("accessToken") as string;
@@ -196,4 +196,4 @@ const EnterRoomModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   );
 };
 
-export default EnterRoomModal;
+export default MatchingModal;

@@ -1,69 +1,69 @@
 {
   "Metadata": {
-    "title": "개굴작",
-    "description": "누구나 함께 즐길 수 있는 보드게임!"
+    "title": "カエル雀",
+    "description": "誰でも一緒に楽しめるボードゲーム"
   },
   "Header": {
-    "title": "개굴작",
-    "signOut": "로그아웃"
+    "title": "カエル雀",
+    "signOut": "ログアウト"
   },
   "MainPage": {
-    "signIn": "로그인",
-    "signUp": "회원가입"
+    "signIn": "ログイン",
+    "signUp": "アカウント生成"
   },
   "SignIn": {
-    "title": "로그인",
-    "or": "또는",
-    "noAccount": "계정이 없으신가요?",
-    "back": "돌아가기",
-    "email": "이메일",
-    "writeEmail": "이메일을 입력해주세요",
-    "checkEmail": "올바른 이메일 주소를 입력해주세요",
-    "password": "비밀번호",
-    "writePassword": "비밀번호를 입력해주세요",
-    "forgotPassword": "비밀번호를 잊으셨나요?",
-    "failSignIn": "비밀번호가 틀렸거나 없는 회원입니다",
-    "signIn": "로그인"
+    "title": "ログイン",
+    "or": "または",
+    "noAccount": "アカウントをお持ちでない場合",
+    "back": "戻る",
+    "email": "メール",
+    "writeEmail": "メールを入力してください",
+    "checkEmail": "正しいメールを入力してください",
+    "password": "パスワード",
+    "writePassword": "パスワードを入力してください",
+    "forgotPassword": "パスワードを忘れた場合",
+    "failSignIn": "パスワードが違います",
+    "signIn": "ログイン"
   },
   "SignUp": {
-    "title": "회원가입",
-    "or": "또는",
-    "haveAccountAlready": "계정이 이미 있으신가요?",
-    "back": "돌아가기",
-    "email": "이메일",
-    "writeEmail": "이메일을 입력해주세요",
-    "checkEmail": "올바른 이메일 주소를 입력해주세요",
-    "password": "비밀번호 (영문, 숫자 조합 6자리 이상)",
-    "writePassword": "비밀번호를 입력해주세요",
-    "checkPassword" : "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
-    "name": "이름",
-    "writeName": "이름을 입력해주세요",
-    "alreadySignUp": "이미 가입된 회원입니다",
-    "signUp": "회원가입",
-    "isAgree": "회원가입 시  <span>이용약관</span>에 동의한 것으로 간주됩니다",
-    "successSignUp": "회원가입 완료",
-    "signIn": "로그인"
+    "title": "アカウント生成",
+    "or": "または",
+    "haveAccountAlready": "すでにアカウントをお持ちの場合",
+    "back": "戻る",
+    "email": "メール",
+    "writeEmail": "メールを入力してください",
+    "checkEmail": "正しいメールを入力してください",
+    "password": "パスワード(英数字6桁以上)",
+    "writePassword": "パスワードを入力してください",
+    "checkPassword" : "パスワードを英数字6桁以上で入力してください",
+    "name": "名前",
+    "writeName": "名前を入力してください",
+    "alreadySignUp": "すでに生成されたアカウントです",
+    "signUp": "アカウント生成",
+    "isAgree": "アカウント生成する時に <span>利用契約</span>に同意したものとします",
+    "successSignUp": "アカウント生成完了",
+    "signIn": "ログイン"
   },
   "Callback": {
-    "title": "로그인 중"
+    "title": "ログイン中"
   },
   "ForgotPassword" : {
-    "title": "비밀번호를 잊으셨나요?",
-    "email": "계정 이메일",
-    "writeEmail": "이메일을 입력해주세요",
-    "checkEmail": "올바른 이메일 주소를 입력해주세요",
-    "requestResetPasswordEmail": "비밀번호 재설정 이메일 받기"
+    "title": "パスワードを忘れた場合",
+    "email": "アカウントメール",
+    "writeEmail": "メールを入力してください",
+    "checkEmail": "正しいメールを入力してください",
+    "requestResetPasswordEmail": "パスワード再設定メールを受け取る"
   },
   "ResetPassword" : {
-    "title": "받은 이메일을 확인해주세요",
-    "verifyCode": "인증번호",
-    "writeCode": "인증번호를 입력해주세요",
-    "newPassword": "새 비밀번호 (영문, 숫자 조합 6자리 이상)",
-    "writePassword": "새 비밀번호를 입력해주세요",
-    "checkPassword": "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
-    "resetPassword": "비밀번호 재설정",
-    "successResetPassword": "비밀번호가 재설정되었습니다",
-    "reSignIn": "다시 로그인"
+    "title": "受け取ったメールを確認してください",
+    "verifyCode": "認証番号",
+    "writeCode": "認証番号を入力してください",
+    "newPassword": "新しいパスワード(英数字6桁以上)",
+    "writePassword": "新しいパスワードを入力してください",
+    "checkPassword": "パスワードを英数字6桁以上で入力してください",
+    "resetPassword": "パスワードを再設定",
+    "successResetPassword": "パスワードが再設定されました",
+    "reSignIn": "再ログイン"
   },
   "MatchSettingForm": {
     "roomName": "방 이름",
