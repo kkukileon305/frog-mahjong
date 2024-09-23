@@ -32,7 +32,7 @@ import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
