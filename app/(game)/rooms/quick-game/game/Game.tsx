@@ -32,7 +32,7 @@ import { useTranslations } from "next-intl";
 import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
