@@ -1,4 +1,8 @@
 {
+  "Locale": {
+    "kr": "한국어",
+    "jp": "일본어"
+  },
   "Metadata": {
     "title": "개굴작",
     "description": "누구나 함께 즐길 수 있는 보드게임!"
@@ -83,7 +87,7 @@
     "title": "접속 중"
   },
   "LoanFailedModal": {
-    "title": "님이 론을 실패하여 패가 한번 공개됩니다",
+    "title": "{name}님이 론을 실패하여 패가 한번 공개됩니다",
     "back": "돌아가기"
   },
   "ResultModal": {

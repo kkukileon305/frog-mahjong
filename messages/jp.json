@@ -1,4 +1,8 @@
 {
+  "Locale": {
+    "kr": "韓国語",
+    "jp": "日本語"
+  },
   "Metadata": {
     "title": "カエル雀",
     "description": "誰でも一緒に楽しめるボードゲーム"
@@ -83,38 +87,38 @@
     "title": "接続中"
   },
   "LoanFailedModal": {
-    "title": "님이 론을 실패하여 패가 한번 공개됩니다",
-    "back": "돌아가기"
+    "title": "{name}がロンを失敗して牌が公開されました",
+    "back": "戻る"
   },
   "ResultModal": {
-    "title": "결과",
-    "same": "같은 패 (2점)",
-    "continuous": "연속 패 (1점)",
-    "allGreen":  "올 그린 (10점)",
-    "dora": "도라 (하나당 1점)",
-    "red":  "적패 (하나당 1점)",
-    "superRed": "슈퍼 레드 (20점)",
-    "tangYao":  "탕야오 (1점)",
-    "chanTa": "찬타 (2점)",
-    "chinYao":  "칭야오 (15점)",
-    "win": "승리",
-    "lose": "패배",
-    "draw": "무승부",
-    "score" : "점",
-    "loading": "결과 불러오는 중",
-    "close": "닫기"
+    "title": "結果",
+    "same": "同じ牌(2点)",
+    "continuous": "3つ連番(1点)",
+    "allGreen":  "オールグリーン(10点)",
+    "dora": "ドラ(一枚1点)",
+    "red":  "赤牌(一枚1点)",
+    "superRed": "スーパーレッド(20点)",
+    "tangYao":  "タンヤオ(1点)",
+    "chanTa": "チャンタ(2点)",
+    "chinYao":  "チンヤオ(15点)",
+    "win": "あがり",
+    "lose": "負け",
+    "draw": "勝負無し",
+    "score" : "点",
+    "loading": "結果を読み込み中",
+    "close": "閉じる"
   },
   "HelpModal": {
-    "calRule": "점수계산 규칙",
-    "cardsInfo": "패의 구성",
-    "close": "닫기"
+    "calRule": "点数計算ルール",
+    "cardsInfo": "牌",
+    "close": "閉じる"
   },
   "Game": {
-    "getDora": "도라를 선택해주세요",
-    "getFiveCards": "가져올 패 5개를 선택해주세요",
-    "noLeftCards": "패가 없으므로 론을 클릭하여 상대 패를 가져오거나 종료를 클릭하여 종료해주세요",
-    "getCard" : "가져올 패 1개를 선택하거나 론을 클릭하여 원하는 상대의 패를 선택해주세요",
-    "goVictory": "쯔모를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요",
+    "getDora": "ドラを選んでください",
+    "getFiveCards": "牌5枚を選んでください",
+    "noLeftCards": "牌がないのでロンボタンをクリックして相手の牌をとるか、終了をクリックして終了してください",
+    "getCard" : "牌1枚を選ぶか、ロンボタンをクリックして相手の牌を選択してください",
+    "goVictory": "ツモ를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요",
     "waitYourTurn": "차례를 기다려주세요",
     "goLoanVictory":"론 승리를 선언하시거나 버리기(포기)해주세요",
     "someoneLoan": "님이 론을 선언했습니다",
@@ -135,7 +139,7 @@
     "noDora": "아직 도라가<br></br>없습니다",
     "noCards": "아직 버린 패가<br></br>없습니다",
     "loanVictory": "론 승리",
-    "normalVictory": "쯔모",
+    "normalVictory": "ツモ",
     "suteru": "버리기",
     "cancelSuteru": "버리기 취소",
     "loan": "론!",

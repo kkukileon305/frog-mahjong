@@ -1,15 +1,16 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { setCookie } from "cookies-next";
 import { JP, KR, LOCALE_COOKIE_NAME, US } from "@/utils/constants/const";
 import { useRouter } from "next/navigation";
 import { IoLanguage } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 
-const locales = [KR];
+const locales = [KR, JP];
 
 const SwitchLocale = () => {
+  const m = useTranslations("Locale");
   const locale = useLocale();
   const router = useRouter();
 
@@ -35,7 +36,7 @@ const SwitchLocale = () => {
                 locale === localeName && "text-blue-400"
               }`}
             >
-              {localeName.toUpperCase()}
+              {m(localeName)}({localeName.toUpperCase()})
               {locale === localeName && <FaCheck />}
             </p>
           </div>
