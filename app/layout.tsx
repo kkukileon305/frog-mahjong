@@ -4,10 +4,11 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import LoadImages from "@/utils/components/LoadImages";
+import { Metadata } from "next";
 
 const font = Noto_Sans_KR({ subsets: ["latin"] });
 
-export const generateMetadata = async () => {
+export const generateMetadata = async (): Promise<Metadata> => {
   const m = await getTranslations("Metadata");
 
   return {
