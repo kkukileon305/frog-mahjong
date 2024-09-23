@@ -10,7 +10,7 @@ import {
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 
 type ModalContainerProps = {
-  setIsOpen:
+  setIsOpen?:
     | Dispatch<SetStateAction<boolean>>
     | ((isOpenResultModal: boolean) => void);
   children: ReactNode;
@@ -24,7 +24,7 @@ const ModalContainer = ({
 }: ModalContainerProps) => {
   const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
     if ((e.target as HTMLElement).id === "back") {
-      setIsOpen(false);
+      setIsOpen && setIsOpen(false);
     }
   };
 

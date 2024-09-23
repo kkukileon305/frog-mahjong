@@ -12,9 +12,14 @@ import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Game from "@/app/(game)/rooms/quick-game/game/Game";
 import useGameStore from "@/utils/stores/useGameStore";
+import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
+import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 
 const Page = () => {
+  const orientation = useScreenOrientation();
+
   useDetectNavigation();
+
   const userID = getCookie("userID") as string;
 
   const router = useRouter();
@@ -46,7 +51,7 @@ const Page = () => {
   }
 
   return (
-    <div className="flex h-dvh">
+    <div className="flex h-dvh overflow-hidden">
       <div className="w-full flex flex-col justify-between">
         {gameStore.isLoanFailed !== 0 && (
           <LoanFailedModal
@@ -65,6 +70,12 @@ const Page = () => {
         {isHelpModal && (
           <ModalContainer setIsOpen={setIsHelpModal} isInGame={true}>
             <HelpModal />
+          </ModalContainer>
+        )}
+
+        {orientation === "portrait-primary" && (
+          <ModalContainer>
+            <WarningModal />
           </ModalContainer>
         )}
 
