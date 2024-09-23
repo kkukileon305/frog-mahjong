@@ -34,9 +34,9 @@
     "or": "または",
     "haveAccountAlready": "すでにアカウントをお持ちの場合",
     "back": "戻る",
-    "email": "メール",
-    "writeEmail": "メールを入力してください",
-    "checkEmail": "正しいメールを入力してください",
+    "email": "メールアドレス",
+    "writeEmail": "メールアドレスを入力してください",
+    "checkEmail": "正しいメールアドレスを入力してください",
     "password": "パスワード(英数字6桁以上)",
     "writePassword": "パスワードを入力してください",
     "checkPassword" : "パスワードを英数字6桁以上で入力してください",
@@ -53,9 +53,9 @@
   },
   "ForgotPassword" : {
     "title": "パスワードを忘れた場合",
-    "email": "アカウントメール",
-    "writeEmail": "メールを入力してください",
-    "checkEmail": "正しいメールを入力してください",
+    "email": "アカウントメールアドレス",
+    "writeEmail": "メールアドレスを入力してください",
+    "checkEmail": "正しいメールアドレスを入力してください",
     "requestResetPasswordEmail": "パスワード再設定メールを受け取る"
   },
   "ResetPassword" : {
@@ -103,7 +103,7 @@
     "chinYao":  "チンヤオ(15点)",
     "win": "あがり",
     "lose": "負け",
-    "draw": "勝負無し",
+    "draw": "引き分け",
     "score" : "点",
     "loading": "結果を読み込み中",
     "close": "閉じる"
@@ -117,58 +117,49 @@
     "getDora": "ドラを選んでください",
     "getFiveCards": "牌5枚を選んでください",
     "noLeftCards": "牌がないのでロンボタンをクリックして相手の牌をとるか、終了をクリックして終了してください",
-    "getCard" : "牌1枚を選ぶか、ロンボタンをクリックして相手の牌を選択してください",
-    "goVictory": "ツモ를 외치거나 버리기를 클릭해 원하는 카드를 버려주세요",
-    "waitYourTurn": "차례를 기다려주세요",
-    "goLoanVictory":"론 승리를 선언하시거나 버리기(포기)해주세요",
-    "someoneLoan": "님이 론을 선언했습니다",
-    "getSelectedCard": "패 가져오기",
-    "help": "설명서",
-    "playing": "진행중",
-    "quit": "나가기",
-    "ready": "곧 시작됩니다"
-  },
-  "UserPanel": {
-    "ready": "준비",
-    "waiting": "대기",
-    "kick": "강퇴"
+    "getCard" : "牌1枚を選ぶか、ロンボタンをクリックして相手の牌を選んでください",
+    "goVictory": "ツモを宣言したり捨てるボタンをクリックして牌を捨ててください",
+    "waitYourTurn": "相手のターン",
+    "goLoanVictory":"ロンあがりか捨てるをクリックしてください",
+    "someoneLoan": "がロンを宣言しました",
+    "getSelectedCard": "牌を取る",
+    "help": "説明",
+    "playing": "進行中",
+    "quit": "出る",
+    "ready": "まもなく始まります"
   },
   "MyCardBoard": {
-    "dora": "도라",
-    "score": "점",
-    "noDora": "아직 도라가<br></br>없습니다",
-    "noCards": "아직 버린 패가<br></br>없습니다",
-    "loanVictory": "론 승리",
+    "dora": "ドラ",
+    "score": "点",
+    "noDora": "まだドラが<br></br>ないです",
+    "noCards": "まだ捨てた牌が<br></br>ないです",
+    "loanVictory": "ロンあがり",
     "normalVictory": "ツモ",
-    "suteru": "버리기",
-    "cancelSuteru": "버리기 취소",
-    "loan": "론!",
-    "cancelLoan": "론 취소"
+    "suteru": "捨てる",
+    "cancelSuteru": "キャンセル",
+    "loan": "ロン!",
+    "cancelLoan": "キャンセル"
   },
   "ShuffleLeftCards": {
-    "end": "종료"
-  },
-  "StartBtn": {
-    "start": "시작하기",
-    "canNotStart": "시작불가"
+    "end": "終了"
   },
   "ChatHistoryModal": {
-    "close": "닫기"
+    "close": "閉じる"
   },
   "ChatForm": {
-    "placeholder": "채팅을 입력하세요",
-    "writeChat": "메세지를 입력해주세요"
+    "placeholder": "チャットを入力",
+    "writeChat": "チャットを入力"
   },
   "NotFound": {
-    "title": "페이지를 찾을 수 없습니다",
-    "back": "돌아가기"
+    "title": "ページが見つかりません",
+    "back": "戻る"
   },
   "QuickMatchingBtn": {
-    "match": "매칭하기",
-    "matchComplete": "매칭완료!",
-    "cancelMatch": "매칭취소",
-    "createRoom": "함께하기",
-    "enterRoom": "입장하기"
+    "match": "マッチング",
+    "matchComplete": "マッチング完了!",
+    "cancelMatch": "マッチングキャンセル",
+    "createRoom": "ルーム生成",
+    "enterRoom": "ルームに入る"
   },
   "MatchingModal": {
     "NORMAL": "クイックマッチング",
@@ -190,6 +181,6 @@
     "play": "プレイ"
   },
   "Warning": {
-    "title": "화면을 가로로 <br></br> 돌려주세요"
+    "title": "画面を横に<br></br>してください"
   }
 }

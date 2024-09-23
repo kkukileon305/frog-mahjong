@@ -128,11 +128,6 @@
     "quit": "나가기",
     "ready": "곧 시작됩니다"
   },
-  "UserPanel": {
-    "ready": "준비",
-    "waiting": "대기",
-    "kick": "강퇴"
-  },
   "MyCardBoard": {
     "dora": "도라",
     "score": "점",
@@ -147,10 +142,6 @@
   },
   "ShuffleLeftCards": {
     "end": "종료"
-  },
-  "StartBtn": {
-    "start": "시작하기",
-    "canNotStart": "시작불가"
   },
   "ChatHistoryModal": {
     "close": "닫기"

@@ -34,7 +34,6 @@ const UserPanel = ({
   setIsLoanEnd,
   place = "left",
 }: UserPanelProps) => {
-  const m = useTranslations("UserPanel");
   const audios = useSoundStore((s) => s.audios);
 
   const { chatList, ws, gameState, isStarted } = useGameStore();
