@@ -112,21 +112,6 @@ const UserPanel = ({
     return <div className="h-1/2" />;
   }
 
-  const onClick: MouseEventHandler<HTMLElement> = (e) => {
-    const body: RoomOutBody = {
-      targetUserID: user.id,
-    };
-
-    const request: RoomOutRequest = {
-      userID: currentUser?.id!,
-      roomID: Number(roomID),
-      event: ROOM_OUT,
-      message: JSON.stringify(body),
-    };
-
-    ws?.send(JSON.stringify(request));
-  };
-
   if (user.id === currentUser?.id) {
     return (
       <div className="relative w-full h-1/2">
@@ -238,16 +223,6 @@ const UserPanel = ({
                     <p className="font-bold">{user.name}</p>
                     <span className="">{user.email}</span>
                   </div>
-                  {!isStarted &&
-                    currentUser?.isOwner &&
-                    user.id !== currentUser.id && (
-                      <div
-                        onClick={onClick}
-                        className="cursor-pointer p-2 w-full text-red-400 hover:bg-gray-400 flex items-center gap-2 font-bold"
-                      >
-                        {m("kick")} <IoMdExit />
-                      </div>
-                    )}
                 </div>
               </div>
             </div>
