@@ -3,13 +3,11 @@
 import { useRouter } from "next/navigation";
 import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
-import KickedGame from "@/app/(game)/rooms/quick-game/Kicked";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import LoanFailedModal from "@/app/(game)/rooms/quick-game/LoanFailedModal";
 import ModalContainer from "@/utils/components/ModalContainer";
 import ResultModal from "@/app/(game)/rooms/quick-game/ResultModal";
 import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
-
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Game from "@/app/(game)/rooms/quick-game/game/Game";
@@ -40,11 +38,6 @@ const Page = () => {
   // abnormal
   if (gameStore.isAbnormalExit) {
     return <AbnormalExit />;
-  }
-
-  // kick
-  if (gameStore.kicked) {
-    return <KickedGame />;
   }
 
   // loading

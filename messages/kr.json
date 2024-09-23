@@ -66,49 +66,17 @@
     "reSignIn": "다시 로그인"
   },
   "MatchSettingForm": {
-    "roomName": "방 이름",
-    "writeRoomName": "방 이름을 입력해주세요",
-    "minPlayerNumber": "최소 플레이어 수",
     "maxPlayerNumber": "최대 플레이어 수",
     "timeout": "턴 제한 시간",
-    "roomPassword": "비밀번호(선택)",
-    "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
-    "close": "닫기",
     "createRoom":"방 만들기",
-    "matching": "상대를 찾는 중..",
-    "with": "함께하기",
-    "random": "랜덤",
-    "password": "초대코드",
-    "writePassword": "초대코드를 입력하세요",
-    "or": "또는",
     "enterRoom": "입장하기",
-    "enterCode": "참여코드",
     "normal": "빠른매칭",
-    "create": "방생성",
-    "enter": "입장하기",
     "personCount": "명",
     "nokori": "남은 코인 {coin}개",
     "noCoin": "코인이 부족하여 진행 할 수 없습니다"
   },
-  "EnterRoomForm": {
-    "password": "비밀번호",
-    "writePassword": "비밀번호를 입력해주세요",
-    "close": "닫기",
-    "enterRoom":"입장"
-  },
-  "JoinError": {
-    "pwErrorMessage": "비밀번호가 잘못되었습니다",
-    "progressMessage": "이미 진행중입니다",
-    "fullPlayerMessage": "플레이어가 가득 찼습니다",
-    "noRoomMessage": "이미 사라진 방입니다",
-    "back": "돌아가기"
-  },
   "AbnormalExit": {
     "title": "다른 유저가 이탈하여 게임을 종료합니다",
-    "back": "돌아가기"
-  },
-  "KickedGame": {
-    "title": "강제퇴장 되었습니다",
     "back": "돌아가기"
   },
   "Entering": {
@@ -179,10 +147,6 @@
   "StartBtn": {
     "start": "시작하기",
     "canNotStart": "시작불가"
-  },
-  "ReadyBtn": {
-    "ready": "준비",
-    "cancelReady": "준비 취소"
   },
   "ChatHistoryModal": {
     "close": "닫기"

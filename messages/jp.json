@@ -40,7 +40,7 @@
     "writeName": "名前を入力してください",
     "alreadySignUp": "すでに生成されたアカウントです",
     "signUp": "アカウント生成",
-    "isAgree": "アカウント生成する時に <span>利用契約</span>に同意したものとします",
+    "isAgree": "アカウント生成する時に<span>利用契約</span>に同意したものとします",
     "successSignUp": "アカウント生成完了",
     "signIn": "ログイン"
   },
@@ -66,53 +66,21 @@
     "reSignIn": "再ログイン"
   },
   "MatchSettingForm": {
-    "roomName": "방 이름",
-    "writeRoomName": "방 이름을 입력해주세요",
-    "minPlayerNumber": "최소 플레이어 수",
-    "maxPlayerNumber": "최대 플레이어 수",
-    "timeout": "턴 제한 시간",
-    "roomPassword": "비밀번호(선택)",
-    "stablePlayer": "최대 플레이어 수는 최소 플레이어 수보다 커야합니다",
-    "close": "닫기",
-    "createRoom":"방 만들기",
-    "matching": "상대를 찾는 중..",
-    "with": "함께하기",
-    "random": "랜덤",
-    "password": "초대코드",
-    "writePassword": "초대코드를 입력하세요",
-    "or": "또는",
-    "enterRoom": "입장하기",
-    "enterCode": "참여코드",
-    "normal": "빠른매칭",
-    "create": "방생성",
-    "enter": "입장하기",
-    "personCount": "명",
-    "nokori": "남은 코인 {coin}개",
-    "noCoin": "코인이 부족하여 진행 할 수 없습니다"
-  },
-  "EnterRoomForm": {
-    "password": "비밀번호",
-    "writePassword": "비밀번호를 입력해주세요",
-    "close": "닫기",
-    "enterRoom":"입장"
-  },
-  "JoinError": {
-    "pwErrorMessage": "비밀번호가 잘못되었습니다",
-    "progressMessage": "이미 진행중입니다",
-    "fullPlayerMessage": "플레이어가 가득 찼습니다",
-    "noRoomMessage": "이미 사라진 방입니다",
-    "back": "돌아가기"
+    "maxPlayerNumber": "最大プレイヤー数",
+    "timeout": "ターン制限時間",
+    "createRoom": "ルーム生成",
+    "enterRoom": "ルームに入る",
+    "normal": "クイックマッチング",
+    "personCount": "人",
+    "nokori": "残りのコイン{coin}枚",
+    "noCoin": "コインが足りないので進行できません"
   },
   "AbnormalExit": {
-    "title": "다른 유저가 이탈하여 게임을 종료합니다",
-    "back": "돌아가기"
-  },
-  "KickedGame": {
-    "title": "강제퇴장 되었습니다",
-    "back": "돌아가기"
+    "title": "他のプレイヤーが離脱してゲームが強制終了されました",
+    "back": "戻る"
   },
   "Entering": {
-    "title": "접속 중"
+    "title": "接続中"
   },
   "LoanFailedModal": {
     "title": "님이 론을 실패하여 패가 한번 공개됩니다",
@@ -180,10 +148,6 @@
     "start": "시작하기",
     "canNotStart": "시작불가"
   },
-  "ReadyBtn": {
-    "ready": "준비",
-    "cancelReady": "준비 취소"
-  },
   "ChatHistoryModal": {
     "close": "닫기"
   },
@@ -203,22 +167,22 @@
     "enterRoom": "입장하기"
   },
   "MatchingModal": {
-    "NORMAL": "빠른매칭",
-    "ENTER": "입장하기",
-    "CREATE": "함께하기",
-    "search": "상대를 찾는 중..",
-    "send": "초대코드를 전달해주세요",
-    "copy": "복사하기",
-    "loading": "불러오는 중",
-    "write": "코드를 전달받고 입력해주세요",
-    "writePassword": "코드를 입력해주세요",
-    "enter": "참가하기",
-    "notFound": "해당 방이 없습니다",
-    "complete": "매칭 완료",
-    "copySuccess": "복사성공"
+    "NORMAL": "クイックマッチング",
+    "ENTER": "ルームに入る",
+    "CREATE": "ルーム生成",
+    "search": "マッチング中",
+    "send": "招待コードを送ってください",
+    "copy": "コピー",
+    "loading": "読み込み中",
+    "write": "受け取ったコードを入力してください",
+    "writePassword": "コードを入力してください",
+    "enter": "参加する",
+    "notFound": "存在しないコードです",
+    "complete": "マッチング完了",
+    "copySuccess": "コピーされました"
   },
   "settings": {
-    "volume": "볼륨",
-    "play": "재생"
+    "volume": "音量",
+    "play": "プレイ"
   }
 }
