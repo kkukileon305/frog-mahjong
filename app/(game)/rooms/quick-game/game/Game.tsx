@@ -212,7 +212,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   return (
     <>
-      <div className="w-full h-[calc(100%-40px)] bg-game bg-cover bg-center flex p-8">
+      <div className="w-full h-[calc(100%-32px)] md:h-[calc(100%-40px)] bg-game bg-cover bg-center flex gap-2 p-2 md:p-8">
         <div className="basis-1/5 h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
@@ -234,8 +234,8 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         </div>
 
         {isStarted ? (
-          <div className="basis-3/5 py-4 relative z-20">
-            <div className="w-full h-[calc(100%-300px)] flex justify-center">
+          <div className="basis-3/5 md:py-4 py-2 relative z-20">
+            <div className="w-full h-[calc(100%-128px)] md:h-[calc(100%-300px)] flex justify-center mb-2">
               <ShuffleLeftCards
                 leftCards={leftCards}
                 isUserTurn={isUserTurn}
@@ -248,7 +248,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
               />
             </div>
 
-            <div className="h-[80px] flex justify-center items-center text-white font-bold">
+            <div className="h-[28px] md:h-[80px] text-xs md:text-base flex justify-center items-center text-white font-bold">
               {isFullSelectedCards && (
                 <button
                   onClick={getCards}
@@ -270,7 +270,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
               )}
             </div>
 
-            <div className="h-[100px] font-bold text-white text-2xl text-center justify-center items-center flex gap-2 flex-col">
+            <div className="h-[40px] md:h-[100px] overflow-hidden font-bold text-white text-xs md:text-2xl text-center justify-center items-center flex md:gap-2 flex-col">
               <p>{getSystemMessage()}</p>
 
               {gameInfo?.timer && (
@@ -319,7 +319,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
           />
         </div>
       </div>
-      <div className="flex h-10 justify-end bg-game-bar">
+      <div className="flex h-8 md:h-10 justify-end bg-game-bar">
         <div className="basis-1/5" />
 
         <div className="basis-3/5 p-1">

@@ -10,19 +10,11 @@ import {
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
-import React, {
-  Dispatch,
-  MouseEventHandler,
-  SetStateAction,
-  useEffect,
-  useRef,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { FaChessQueen } from "react-icons/fa6";
-import { IoMdExit } from "react-icons/io";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
-import { ROOM_OUT } from "@/utils/constants/const";
 import useGameStore from "@/utils/stores/useGameStore";
 import { getCookie } from "cookies-next";
 import useSoundStore from "@/utils/stores/useSoundStore";
@@ -123,21 +115,17 @@ const UserPanel = ({
           </AnimatePresence>
         </ul>
 
-        <div className="overflow-hidden border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-full">
+        <div className="overflow-hidden border-2 md:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-full">
           <div
-            className={`flex items-center justify-between w-full p-2 ${
+            className={`flex items-center justify-between w-full px-2 py-1 md:py-2 ${
               isActive && "bg-red-500"
             }`}
           >
             <div className="flex items-center gap-2">
-              <div className="w-12 h-12 relative border-white border rounded-full">
-                {user.isOwner && (
-                  <FaChessQueen className="absolute right-0 top-0" />
-                )}
-              </div>
+              <div className="w-4 md:w-12 aspect-square relative border-white border rounded-full"></div>
               <div>
-                <p className="font-bold text-xl">{user.name}</p>
-                <p>{user.coin} Point</p>
+                <p className="font-bold text-xs md:text-xl">{user.name}</p>
+                <p className="text-xs md:text-xl">{user.coin} Point</p>
               </div>
             </div>
 
@@ -147,20 +135,26 @@ const UserPanel = ({
                 alt={lastCardImage.color + lastCardImage.name}
                 width={40}
                 height={58}
-                className={`${isLoanSelectMode && "hover:bg-white/50"}`}
+                className={`w-6 md:w-auto ${
+                  isLoanSelectMode && "hover:bg-white/50"
+                }`}
               />
             )}
           </div>
 
-          <div className="w-full h-1/2 flex gap-2 p-2 rounded flex-wrap">
+          <div className="w-full overflow-y-auto flex justify-start gap-1 p-2 rounded flex-wrap">
             {isStarted &&
               userDiscardImages?.map((ci) => (
-                <div key={ci.id}>
+                <div
+                  key={ci.id}
+                  className="w-[calc((100%-16px)/5)] md:w-[calc((100%-28px)/7)] h-fit"
+                >
                   <Image
                     src={ci.imageSrc}
                     alt={ci.color + ci.name}
                     width={40}
                     height={58}
+                    className="w-full"
                   />
                 </div>
               ))}
@@ -197,22 +191,18 @@ const UserPanel = ({
           opacity: 0,
           y: 30,
         }}
-        className="overflow-hidden border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
+        className="overflow-hidden border-2 md:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
       >
         <div
-          className={`flex items-center justify-between w-full p-2 ${
+          className={`flex items-center justify-between w-full px-2 py-1 md:py-2 ${
             isActive && "bg-red-500"
           }`}
         >
           <div className="flex items-center gap-2">
             <div
               tabIndex={0}
-              className="w-12 h-12 relative border-white border rounded-full group cursor-pointer"
+              className="w-4 md:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
             >
-              {user.isOwner && (
-                <FaChessQueen className="absolute right-0 top-0" />
-              )}
-
               <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
                 <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
                 <div
@@ -227,20 +217,14 @@ const UserPanel = ({
               </div>
             </div>
             <div>
-              <p className="font-bold text-xl">{user.name}</p>
-              <p>{user.coin} Point</p>
+              <p className="font-bold text-xs md:text-xl">{user.name}</p>
+              <p className="text-xs md:text-xl">{user.coin} Point</p>
             </div>
           </div>
 
-          {!user.isOwner && !isStarted && (
-            <p className="font-bold text-xl">
-              {user.playerState === "ready" ? m("ready") : m("waiting")}
-            </p>
-          )}
-
           {isStarted && lastCardImage && (
             <button
-              className="border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+              className="w-6 md:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
               disabled={!isLoanSelectMode}
               onClick={onLoanCard}
             >
@@ -253,16 +237,21 @@ const UserPanel = ({
             </button>
           )}
         </div>
-        <div className="w-full h-1/2 flex gap-2 p-2 rounded flex-wrap">
+        <div className="w-full overflow-y-auto flex gap-1 p-2 rounded flex-wrap">
           {isStarted &&
             userDiscardImages?.map((ci) => (
-              <div key={ci.id}>
+              <div
+                key={ci.id}
+                className="w-[calc((100%-16px)/5)] md:w-[calc((100%-28px)/7)] h-fit"
+              >
                 <Image
                   src={ci.imageSrc}
                   alt={ci.color + ci.name}
                   width={40}
                   height={58}
-                  className={` ${isLoanSelectMode && "hover:bg-white/50"}`}
+                  className={`w-full ${
+                    isLoanSelectMode && "hover:bg-white/50"
+                  }`}
                 />
               </div>
             ))}

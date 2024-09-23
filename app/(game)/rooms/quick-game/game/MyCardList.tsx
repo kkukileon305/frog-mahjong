@@ -32,12 +32,12 @@ const MyCardList = ({
 
   if (discardMode) {
     return (
-      <div className="flex gap-2">
+      <div className="h-full flex gap-2">
         {items.map((item, i) => (
           <button
             key={item.id}
             onClick={() => handleDiscard(item)}
-            className={`group relative ${i === 2 && "mr-4"}`}
+            className={`h-full group relative ${i === 2 && "mr-4"}`}
             disabled={!discardMode}
           >
             <Image
@@ -46,6 +46,7 @@ const MyCardList = ({
               width={40}
               height={58}
               draggable={false}
+              className="h-full"
             />
 
             <IoRemoveCircle
@@ -60,14 +61,14 @@ const MyCardList = ({
 
   return (
     <Reorder.Group
-      className="flex gap-2"
+      className="w-full h-full flex gap-2"
       axis="x"
       values={items}
       onReorder={setItems}
     >
       {items.map((item, i) => (
         <Reorder.Item
-          className={`cursor-pointer ${i === 2 && "mr-4"}`}
+          className={`cursor-pointer h-full ${i === 2 && "mr-4"}`}
           key={item.id}
           value={item}
           onDragEnd={onDragEnd}
@@ -78,6 +79,7 @@ const MyCardList = ({
             width={40}
             height={58}
             draggable={false}
+            className="h-full"
           />
         </Reorder.Item>
       ))}
