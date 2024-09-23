@@ -1,6 +1,6 @@
 "use client";
 
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 import { ChangeEventHandler, useState } from "react";
 import { useTranslations } from "next-intl";
 import { FaPlay } from "react-icons/fa";

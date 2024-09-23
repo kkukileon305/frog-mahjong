@@ -1,6 +1,6 @@
 "use client";
 
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 import { useEffect } from "react";
 
 const LoadAudio = () => {

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Dispatch, SetStateAction, useRef } from "react";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import { IoRemoveCircle } from "react-icons/io5";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 type MyCardListProps = {
   items: CardImage[];

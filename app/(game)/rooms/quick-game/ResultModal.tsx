@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";
 import { QUIT_GAME } from "@/utils/constants/const";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 const ResultModal = () => {
   const m = useTranslations("ResultModal");

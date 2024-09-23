@@ -25,7 +25,7 @@ import {
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 type MyCardProps = {
   discardMode: boolean;

@@ -25,7 +25,7 @@ import { useTranslations } from "next-intl";
 import { ROOM_OUT } from "@/utils/constants/const";
 import useGameStore from "@/utils/stores/useGameStore";
 import { getCookie } from "cookies-next";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 type UserPanelProps = {
   user?: UserSocket;

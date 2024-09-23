@@ -26,7 +26,7 @@ import {
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
 import useGameStore from "@/utils/stores/useGameStore";
-import useSoundStore from "@/utils/hooks/useSoundStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 type TimerProps = {
   leftCards: CardImage[];
