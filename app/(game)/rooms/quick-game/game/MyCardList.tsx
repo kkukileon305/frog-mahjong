@@ -40,14 +40,16 @@ const MyCardList = ({
             className={`h-full group relative ${i === 2 && "mr-4"}`}
             disabled={!discardMode}
           >
-            <Image
-              src={item.imageSrc}
-              alt={item.color + item.name}
-              width={40}
-              height={58}
-              draggable={false}
-              className="h-full"
-            />
+            <div className="h-full aspect-[40/58]">
+              <Image
+                src={item.imageSrc}
+                alt={item.color + item.name}
+                width={40}
+                height={58}
+                draggable={false}
+                className="w-full h-full"
+              />
+            </div>
 
             <IoRemoveCircle
               color="red"
@@ -73,14 +75,16 @@ const MyCardList = ({
           value={item}
           onDragEnd={onDragEnd}
         >
-          <Image
-            src={item.imageSrc}
-            alt={item.color + item.name}
-            width={40}
-            height={58}
-            draggable={false}
-            className="h-full"
-          />
+          <div className="h-full aspect-[40/58]">
+            <Image
+              src={item.imageSrc}
+              alt={item.color + item.name}
+              width={40}
+              height={58}
+              draggable={false}
+              className="w-full h-full"
+            />
+          </div>
         </Reorder.Item>
       ))}
     </Reorder.Group>

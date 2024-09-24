@@ -114,17 +114,17 @@ const UserPanel = ({
           </AnimatePresence>
         </ul>
 
-        <div className="overflow-hidden border-2 md:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-full">
+        <div className="overflow-hidden border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white w-full h-full">
           <div
-            className={`flex items-center justify-between w-full px-2 py-1 md:py-2 ${
+            className={`flex items-center justify-between w-full px-2 py-1 lg:py-2 ${
               isActive && "bg-red-500"
             }`}
           >
             <div className="flex items-center gap-2">
-              <div className="w-4 md:w-12 aspect-square relative border-white border rounded-full"></div>
+              <div className="w-4 lg:w-12 aspect-square relative border-white border rounded-full"></div>
               <div>
-                <p className="font-bold text-xs md:text-xl">{user.name}</p>
-                <p className="text-xs md:text-xl">{user.coin} Point</p>
+                <p className="font-bold text-xs lg:text-xl">{user.name}</p>
+                <p className="text-xs lg:text-xl">{user.coin} Point</p>
               </div>
             </div>
 
@@ -134,7 +134,7 @@ const UserPanel = ({
                 alt={lastCardImage.color + lastCardImage.name}
                 width={40}
                 height={58}
-                className={`w-6 md:w-auto ${
+                className={`w-6 lg:w-auto ${
                   isLoanSelectMode && "hover:bg-white/50"
                 }`}
               />
@@ -146,7 +146,7 @@ const UserPanel = ({
               userDiscardImages?.map((ci) => (
                 <div
                   key={ci.id}
-                  className="w-[calc((100%-16px)/5)] md:w-[calc((100%-28px)/7)] h-fit"
+                  className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
                 >
                   <Image
                     src={ci.imageSrc}
@@ -190,17 +190,17 @@ const UserPanel = ({
           opacity: 0,
           y: 30,
         }}
-        className="overflow-hidden border-2 md:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
+        className="overflow-hidden border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
       >
         <div
-          className={`flex items-center justify-between w-full px-2 py-1 md:py-2 ${
+          className={`flex items-center justify-between w-full px-2 py-1 lg:py-2 ${
             isActive && "bg-red-500"
           }`}
         >
           <div className="flex items-center gap-2">
             <div
               tabIndex={0}
-              className="w-4 md:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
+              className="w-4 lg:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
             >
               <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
                 <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
@@ -216,14 +216,14 @@ const UserPanel = ({
               </div>
             </div>
             <div>
-              <p className="font-bold text-xs md:text-xl">{user.name}</p>
-              <p className="text-xs md:text-xl">{user.coin} Point</p>
+              <p className="font-bold text-xs lg:text-xl">{user.name}</p>
+              <p className="text-xs lg:text-xl">{user.coin} Point</p>
             </div>
           </div>
 
           {isStarted && lastCardImage && (
             <button
-              className="w-6 md:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+              className="w-6 lg:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
               disabled={!isLoanSelectMode}
               onClick={onLoanCard}
             >
@@ -241,7 +241,7 @@ const UserPanel = ({
             userDiscardImages?.map((ci) => (
               <div
                 key={ci.id}
-                className="w-[calc((100%-16px)/5)] md:w-[calc((100%-28px)/7)] h-fit"
+                className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
               >
                 <Image
                   src={ci.imageSrc}

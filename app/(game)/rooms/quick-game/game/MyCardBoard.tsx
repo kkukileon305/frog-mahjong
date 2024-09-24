@@ -230,11 +230,11 @@ const MyCardBoard = ({
     : currentUser?.turnNumber === gameInfo?.playTurn;
 
   return (
-    <div className="h-[60px] md:h-[120px] flex items-center justify-center relative">
-      <div className="flex justify-center items-center gap-2 md:gap-4">
-        <div className="flex justify-center items-center border-white border-2 p-2 md:py-4 md:px-8 rounded-xl bg-white/20">
+    <div className="h-[60px] lg:h-[120px] flex items-center justify-center relative">
+      <div className="flex justify-center items-center gap-2 lg:gap-4">
+        <div className="flex justify-center items-center border-white border-2 p-2 lg:py-4 lg:px-8 rounded-xl bg-white/20">
           {doraImage ? (
-            <div className="flex gap-4 md:gap-8 items-center">
+            <div className="flex gap-4 lg:gap-8 items-center">
               <Image
                 src={doraImage.imageSrc}
                 alt={doraImage.color + doraImage.name}
@@ -242,13 +242,13 @@ const MyCardBoard = ({
                 height={58}
                 className="w-6"
               />
-              <p className="hidden md:block text-xs md:text-base font-bold text-white text-center">
+              <p className="hidden lg:block text-xs lg:text-base font-bold text-white text-center">
                 {m("dora")} <br />
                 +1{m("score")}
               </p>
             </div>
           ) : (
-            <p className="text-center text-xs md:text-base">
+            <p className="text-center text-xs lg:text-base">
               {m.rich("noDora", {
                 br: () => <br />,
               })}
@@ -257,16 +257,16 @@ const MyCardBoard = ({
         </div>
 
         <div
-          className={`flex justify-center items-center border-2 px-4 md:py-2 gap-4 rounded-xl bg-white/20 ${
+          className={`flex justify-center items-center border-2 px-4 lg:py-2 gap-4 rounded-xl bg-white/20 ${
             isActive ? "border-red-500" : "border-white"
           }`}
         >
-          <p className="w-8 font-bold text-xs md:text-xl text-white">
+          <p className="w-8 font-bold text-xs lg:text-xl text-white">
             {scoreResult.score}
             <span className="">{m("score")}</span>
           </p>
           <div className="flex flex-col items-center gap-2">
-            <div className="md:min-w-[60px] flex items-center h-14 md:h-[80px] p-2 rounded">
+            <div className="lg:min-w-[60px] flex items-center h-14 lg:h-[80px] p-2 rounded">
               {userCardImages && items ? (
                 <MyCardList
                   items={items}
@@ -277,7 +277,7 @@ const MyCardBoard = ({
                   calScore={calScore}
                 />
               ) : (
-                <p className="text-center">
+                <p className="text-center text-xs lg:text-base">
                   {m.rich("noCards", {
                     br: () => <br />,
                   })}
@@ -288,25 +288,25 @@ const MyCardBoard = ({
         </div>
 
         <div className="flex">
-          <div className="w-12 md:w-24 flex flex-col gap-1">
+          <div className="w-12 lg:w-24 flex flex-col gap-1">
             <button
               disabled={!isFullSixCard || scoreResult.score < 5}
               onClick={handleWin}
-              className="text-xs md:text-base text-white p-1 md:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {isUserLoan ? m("loanVictory") : m("normalVictory")}
             </button>
             <button
               disabled={!isFullSixCard}
               onClick={onSuteru}
-              className={`text-xs truncate md:text-base text-white p-1 md:p-2 rounded-xl font-bold ${
+              className={`text-xs truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold ${
                 discardMode ? "bg-gray-400" : "bg-gray-600"
               } disabled:bg-gray-500 disabled:text-gray-400`}
             >
               {discardMode ? m("cancelSuteru") : m("suteru")}
             </button>
           </div>
-          <div className="w-12 md:w-24 ml-1 flex justify-center flex-col gap-2">
+          <div className="w-12 lg:w-24 ml-1 flex justify-center flex-col gap-2">
             <button
               disabled={
                 !(
@@ -319,7 +319,7 @@ const MyCardBoard = ({
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
-              className={`text-xs md:text-base h-full text-white p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
+              className={`text-xs lg:text-base h-full text-white p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
                 isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
