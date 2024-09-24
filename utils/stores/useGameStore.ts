@@ -11,6 +11,10 @@ type GameResult = {
   afterUsers: UserSocket[] | null;
 };
 
+type ChatWithValid = ChatResponse & {
+  valid: boolean;
+};
+
 interface GameStore {
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
@@ -45,7 +49,7 @@ interface GameStore {
   winner: UserSocket | null;
   setWinner: (winner: UserSocket | null) => void;
 
-  chatList: ChatResponse[];
+  chatList: ChatWithValid[];
   addChat: (chat: ChatResponse) => void;
   filterChat: (chat: ChatResponse) => void;
 
@@ -119,13 +123,15 @@ const useGameStore = create(
       })),
 
     // chats
-    chatList: [] as ChatResponse[],
+    chatList: [],
     addChat: (newChat: ChatResponse) =>
-      set((prev) => ({ chatList: [...prev.chatList, newChat] })),
+      set((prev) => ({
+        chatList: [...prev.chatList, { ...newChat, valid: true }],
+      })),
     filterChat: (targetChat: ChatResponse) =>
       set((prev) => ({
-        chatList: prev.chatList.filter(
-          (chat) => chat.chatID !== targetChat.chatID
+        chatList: prev.chatList.map((chat) =>
+          chat.chatID === targetChat.chatID ? { ...chat, valid: false } : chat
         ),
       })),
 

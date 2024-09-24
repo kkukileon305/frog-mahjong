@@ -52,8 +52,8 @@ const UserPanel = ({
   );
 
   const targetUserChatList = chatList
-    .filter((chat) => chat.userID === user?.id)
-    .reverse();
+    .filter((chat) => chat.userID === user?.id && chat.valid)
+    .toReversed();
 
   const lastCard =
     user?.discardedCards &&
