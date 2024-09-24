@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import axiosInstance from "@/utils/axios";
 
 type SignInInputs = {
   email: string;
@@ -20,15 +21,19 @@ const ForgotPasswordForm = () => {
   } = useForm<SignInInputs>();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit: SubmitHandler<SignInInputs> = async (inputs) => {
     setIsLoading(true);
 
     try {
-      // TODO: ログインコード作成
+      await axiosInstance.post("/v0.1/auth/password/request", {
+        email: inputs.email,
+      });
+
       router.push("reset-password");
     } catch (e) {
-      // TODO: 失敗したときのコード
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
@@ -58,6 +63,10 @@ const ForgotPasswordForm = () => {
           <span className="text-sm text-red-400 mt-2">
             {errors.email.message}
           </span>
+        )}
+
+        {isError && (
+          <span className="text-sm text-red-400 mt-2">{m("noEmail")}</span>
         )}
       </div>
 

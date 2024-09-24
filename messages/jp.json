@@ -56,7 +56,8 @@
     "email": "アカウントメールアドレス",
     "writeEmail": "メールアドレスを入力してください",
     "checkEmail": "正しいメールアドレスを入力してください",
-    "requestResetPasswordEmail": "パスワード再設定メールを受け取る"
+    "requestResetPasswordEmail": "パスワード再設定メールを受け取る",
+    "noEmail": "存在しないメールアドレス"
   },
   "ResetPassword" : {
     "title": "受け取ったメールを確認してください",

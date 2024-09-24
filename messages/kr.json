@@ -56,7 +56,8 @@
     "email": "계정 이메일",
     "writeEmail": "이메일을 입력해주세요",
     "checkEmail": "올바른 이메일 주소를 입력해주세요",
-    "requestResetPasswordEmail": "비밀번호 재설정 이메일 받기"
+    "requestResetPasswordEmail": "비밀번호 재설정 이메일 받기",
+    "noEmail": "존재하지 않는 이메일입니다"
   },
   "ResetPassword" : {
     "title": "받은 이메일을 확인해주세요",
