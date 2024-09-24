@@ -53,7 +53,19 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   useEffect(() => {
     if (mode === "ENTER") return;
 
-    connect();
+    (async () => {
+      try {
+        await axiosInstance.get("/v0.1/user", {
+          headers: {
+            tkn: accessToken,
+          },
+        });
+
+        connect();
+      } catch (e) {
+        console.log(e);
+      }
+    })();
   }, []);
 
   useBlockScroll();
