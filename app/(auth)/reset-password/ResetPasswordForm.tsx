@@ -4,10 +4,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import axiosInstance from "@/utils/axios";
 
 type ResetPasswordInputs = {
   password: string;
-  resetToken: string;
+  code: string;
+  email: string;
 };
 
 const ResetPasswordForm = () => {
@@ -21,16 +23,21 @@ const ResetPasswordForm = () => {
   } = useForm<ResetPasswordInputs>();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit: SubmitHandler<ResetPasswordInputs> = async (inputs) => {
     setIsLoading(true);
 
     try {
-      // TODO: リセットコード作成
+      await axiosInstance.post("/v0.1/auth/password/validate", {
+        email: inputs.email,
+        password: inputs.password,
+        code: inputs.code,
+      });
 
       router.push("reset-password/done");
     } catch (e) {
-      // TODO: 失敗したときのコード
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
@@ -42,19 +49,42 @@ const ResetPasswordForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
+        <label>{m("email")}</label>
+        <input
+          type="email"
+          className={`border border-gray-400 rounded p-2 mt-3 ${
+            errors.email && "border-red-400"
+          }`}
+          {...register("email", {
+            required: m("writeEmail"),
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: m("checkEmail"),
+            },
+          })}
+        />
+
+        {errors.email && (
+          <span className="text-sm text-red-400 mt-2">
+            {errors.email.message}
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-col">
         <label>{m("verifyCode")}</label>
         <input
           type="password"
           className={`border border-gray-400 rounded p-2 mt-3 ${
-            errors.resetToken && "border-red-400"
+            errors.code && "border-red-400"
           }`}
-          {...register("resetToken", {
+          {...register("code", {
             required: m("writeCode"),
           })}
         />
-        {errors.resetToken && (
+        {errors.code && (
           <span className="text-sm text-red-400 mt-2">
-            {errors.resetToken.message}
+            {errors.code.message}
           </span>
         )}
       </div>
@@ -80,6 +110,12 @@ const ResetPasswordForm = () => {
           </span>
         )}
       </div>
+
+      {isError && (
+        <span className="text-sm text-red-400 mt-2 text-center">
+          {m("error")}
+        </span>
+      )}
 
       <div>
         <button

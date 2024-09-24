@@ -60,6 +60,7 @@
     "noEmail": "존재하지 않는 이메일입니다"
   },
   "ResetPassword" : {
+    "email": "계정 이메일",
     "title": "받은 이메일을 확인해주세요",
     "verifyCode": "인증번호",
     "writeCode": "인증번호를 입력해주세요",
@@ -68,7 +69,8 @@
     "checkPassword": "비밀번호를 영문, 숫자 조합 6자리 이상으로 적어주세요",
     "resetPassword": "비밀번호 재설정",
     "successResetPassword": "비밀번호가 재설정되었습니다",
-    "reSignIn": "다시 로그인"
+    "reSignIn": "다시 로그인",
+    "error": "이메일 또는 인증번호가 잘못 되었습니다"
   },
   "MatchSettingForm": {
     "maxPlayerNumber": "최대 플레이어 수",
