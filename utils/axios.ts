@@ -101,7 +101,7 @@ axiosInstance.interceptors.response.use(
         const today = new Date();
 
         setCookie("accessToken", data.accessToken, {
-          expires: new Date(today.getTime() + 3600000 * 24 * 1),
+          expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
 
         setCookie("refreshToken", data.refreshToken, {
