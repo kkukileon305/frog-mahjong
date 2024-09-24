@@ -28,6 +28,7 @@ export interface UserData {
   name: string;
   userID: number;
   coin: number;
+  errType?: string;
 }
 
 export type TokenType = {
@@ -106,8 +107,6 @@ axiosInstance.interceptors.response.use(
         setCookie("refreshToken", data.refreshToken, {
           expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
-
-        // 以前リクエスト中でデータ(body)だけを変更して再リクエストする
         const newConfig = error.config as InternalAxiosRequestConfig;
 
         newConfig.headers.tkn = data.accessToken;
@@ -119,9 +118,9 @@ axiosInstance.interceptors.response.use(
 
         return axios.request(newConfig);
       } catch (e) {
-        // refresh 消滅　=> logout
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
+        deleteCookie("userID");
 
         window.location.href = "/signin";
       }

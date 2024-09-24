@@ -3,13 +3,11 @@ import MatchSettingForm from "@/app/(game)/rooms/MatchSettingForm";
 import React from "react";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
+import { TOKEN_BAD } from "@/utils/constants/errTypes";
+import { redirect } from "next/navigation";
 
 const Match = async () => {
   const accessToken = getCookie("accessToken", {
-    cookies,
-  });
-
-  const userID = getCookie("userID", {
     cookies,
   });
 
@@ -31,6 +29,10 @@ const Match = async () => {
     FormMetadata,
     UserData
   ];
+
+  if (userData.errType === TOKEN_BAD) {
+    redirect("/refresh");
+  }
 
   return <MatchSettingForm formMetadata={formMetadata} userData={userData} />;
 };
