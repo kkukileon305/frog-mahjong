@@ -10,7 +10,7 @@ import {
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FaChessQueen } from "react-icons/fa6";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
@@ -18,6 +18,8 @@ import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
 import { getCookie } from "cookies-next";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import ModalContainer from "@/utils/components/ModalContainer";
+import ReportModal from "@/app/(game)/rooms/quick-game/ReportModal";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -34,7 +36,10 @@ const UserPanel = ({
   setIsLoanEnd,
   place = "left",
 }: UserPanelProps) => {
+  const m = useTranslations("UserPanel");
   const audios = useSoundStore((s) => s.audios);
+
+  const [reportModalOpen, setReportModalOpen] = useState(false);
 
   const { chatList, ws, gameState, isStarted } = useGameStore();
 
@@ -164,99 +169,115 @@ const UserPanel = ({
   }
 
   return (
-    <div className="relative w-full h-1/2">
-      <ul
-        className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
-          place === "left" ? "left-full" : "right-full"
-        }`}
-      >
-        <AnimatePresence>
-          {targetUserChatList.map((chat) => (
-            <ChatItem key={chat.chatID} chat={chat} place={place} />
-          ))}
-        </AnimatePresence>
-      </ul>
-
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 30,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        exit={{
-          opacity: 0,
-          y: 30,
-        }}
-        className="overflow-hidden border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
-      >
-        <div
-          className={`flex items-center justify-between w-full px-2 py-1 lg:py-2 ${
-            isActive && "bg-red-500"
+    <>
+      {reportModalOpen && (
+        <ModalContainer setIsOpen={setReportModalOpen}>
+          <ReportModal
+            targetUserID={user.id}
+            setReportModalOpen={setReportModalOpen}
+          />
+        </ModalContainer>
+      )}
+      <div className="relative w-full h-1/2">
+        <ul
+          className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
+            place === "left" ? "left-full" : "right-full"
           }`}
         >
-          <div className="flex items-center gap-2">
-            <div
-              tabIndex={0}
-              className="w-4 lg:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
-            >
-              <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
-                <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
-                <div
-                  className="bg-white w-[240px] rounded -translate-x-2 text-black"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <div className="p-2 border-b">
-                    <p className="font-bold">{user.name}</p>
-                    <span className="">{user.email}</span>
+          <AnimatePresence>
+            {targetUserChatList.map((chat) => (
+              <ChatItem key={chat.chatID} chat={chat} place={place} />
+            ))}
+          </AnimatePresence>
+        </ul>
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 30,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          exit={{
+            opacity: 0,
+            y: 30,
+          }}
+          className="overflow-hidden border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
+        >
+          <div
+            className={`flex items-center justify-between w-full px-2 py-1 lg:py-2 ${
+              isActive && "bg-red-500"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <div
+                tabIndex={0}
+                className="w-4 lg:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
+              >
+                <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
+                  <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
+                  <div
+                    className="bg-white w-[240px] rounded -translate-x-2 text-black"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <div className="p-2 border-b">
+                      <p className="font-bold">{user.name}</p>
+                      <span className="">{user.email}</span>
+                    </div>
+                    <div
+                      onClick={() => setReportModalOpen(true)}
+                      className="cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"
+                    >
+                      <p>{m("report")}</p>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div>
+                <p className="font-bold text-xs lg:text-xl">{user.name}</p>
+                <p className="text-xs lg:text-xl">{user.coin} Point</p>
+              </div>
             </div>
-            <div>
-              <p className="font-bold text-xs lg:text-xl">{user.name}</p>
-              <p className="text-xs lg:text-xl">{user.coin} Point</p>
-            </div>
-          </div>
 
-          {isStarted && lastCardImage && (
-            <button
-              className="w-6 lg:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
-              disabled={!isLoanSelectMode}
-              onClick={onLoanCard}
-            >
-              <Image
-                src={lastCardImage.imageSrc}
-                alt={lastCardImage.color + lastCardImage.name}
-                width={40}
-                height={58}
-              />
-            </button>
-          )}
-        </div>
-        <div className="w-full overflow-y-auto flex gap-1 p-2 rounded flex-wrap">
-          {isStarted &&
-            userDiscardImages?.map((ci) => (
-              <div
-                key={ci.id}
-                className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
+            {isStarted && lastCardImage && (
+              <button
+                className="w-6 lg:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+                disabled={!isLoanSelectMode}
+                onClick={onLoanCard}
               >
                 <Image
-                  src={ci.imageSrc}
-                  alt={ci.color + ci.name}
+                  src={lastCardImage.imageSrc}
+                  alt={lastCardImage.color + lastCardImage.name}
                   width={40}
                   height={58}
-                  className={`w-full ${
-                    isLoanSelectMode && "hover:bg-white/50"
-                  }`}
                 />
-              </div>
-            ))}
-        </div>
-      </motion.div>
-    </div>
+              </button>
+            )}
+          </div>
+          <div className="w-full overflow-y-auto flex gap-1 p-2 rounded flex-wrap">
+            {isStarted &&
+              userDiscardImages?.map((ci) => (
+                <div
+                  key={ci.id}
+                  className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
+                >
+                  <Image
+                    src={ci.imageSrc}
+                    alt={ci.color + ci.name}
+                    width={40}
+                    height={58}
+                    className={`w-full ${
+                      isLoanSelectMode && "hover:bg-white/50"
+                    }`}
+                  />
+                </div>
+              ))}
+          </div>
+        </motion.div>
+      </div>
+    </>
   );
 };
 

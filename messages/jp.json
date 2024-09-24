@@ -184,5 +184,17 @@
   },
   "Warning": {
     "title": "画面を横に<br></br>してください"
+  },
+  "UserPanel": {
+    "report": "報告"
+  },
+  "Report": {
+    "title": "報告",
+    "close": "閉じる",
+    "loading": "読み込み中",
+    "selectMeta": "報告カテゴリーを選んでください",
+    "send": "送る",
+    "writeReason": "報告内容を記入してください",
+    "reason": "内容"
   }
 }

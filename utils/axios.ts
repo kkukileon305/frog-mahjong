@@ -70,6 +70,12 @@ export type FormMetadata = {
   timers: number[];
 };
 
+export type ReportMetadata = {
+  categories: {
+    id: number;
+    reason: "string";
+  }[];
+};
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

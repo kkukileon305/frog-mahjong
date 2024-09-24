@@ -185,5 +185,17 @@
   },
   "Warning": {
     "title": "화면을 가로로 <br></br> 돌려주세요"
+  },
+  "UserPanel": {
+    "report": "신고하기"
+  },
+  "Report": {
+    "title": "신고하기",
+    "close": "닫기",
+    "loading": "불러오는중",
+    "selectMeta": "사유를 선택해주세요",
+    "send": "보내기",
+    "writeReason": "사유를 작성해주세요",
+    "reason": "사유"
   }
 }
