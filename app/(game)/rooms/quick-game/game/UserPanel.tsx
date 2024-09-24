@@ -149,10 +149,7 @@ const UserPanel = ({
           <div className="w-full overflow-y-auto flex justify-start gap-1 p-2 rounded flex-wrap">
             {isStarted &&
               userDiscardImages?.map((ci) => (
-                <div
-                  key={ci.id}
-                  className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
-                >
+                <div key={ci.id} className="w-[calc((100%-28px)/8)] h-fit">
                   <Image
                     src={ci.imageSrc}
                     alt={ci.color + ci.name}
@@ -204,10 +201,10 @@ const UserPanel = ({
             opacity: 0,
             y: 30,
           }}
-          className="overflow-hidden border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
+          className="border-2 lg:border-4 flex flex-col bg-white/20 border-white rounded-xl text-white h-full"
         >
           <div
-            className={`flex items-center justify-between w-full px-2 py-1 lg:py-2 ${
+            className={`flex items-center justify-between w-full rounded-t-lg px-2 py-1 lg:py-2 ${
               isActive && "bg-red-500"
             }`}
           >
@@ -219,16 +216,16 @@ const UserPanel = ({
                 <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
                   <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
                   <div
-                    className="bg-white w-[240px] rounded -translate-x-2 text-black"
+                    className="bg-white w-[120px] lg:w-[240px] rounded -translate-x-2 text-black"
                     onClick={(e) => e.preventDefault()}
                   >
-                    <div className="p-2 border-b">
+                    <div className="text-xs lg:text-base p-2 border-b">
                       <p className="font-bold">{user.name}</p>
                       <span className="">{user.email}</span>
                     </div>
                     <div
                       onClick={() => setReportModalOpen(true)}
-                      className="cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"
+                      className="text-xs lg:text-base cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"
                     >
                       <p>{m("report")}</p>
                     </div>
@@ -259,10 +256,7 @@ const UserPanel = ({
           <div className="w-full overflow-y-auto flex gap-1 p-2 rounded flex-wrap">
             {isStarted &&
               userDiscardImages?.map((ci) => (
-                <div
-                  key={ci.id}
-                  className="w-[calc((100%-16px)/5)] lg:w-[calc((100%-28px)/7)] h-fit"
-                >
+                <div key={ci.id} className="w-[calc((100%-28px)/8)] h-fit">
                   <Image
                     src={ci.imageSrc}
                     alt={ci.color + ci.name}
