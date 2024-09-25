@@ -13,7 +13,6 @@ const Page = async () => {
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>
-        <LoadAudio />
       </div>
     </div>
   );

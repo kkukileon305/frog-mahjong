@@ -5,6 +5,8 @@ import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import LoadImages from "@/utils/components/LoadImages";
 import { Metadata } from "next";
+import LoadAudio from "@/utils/components/LoadAudio";
+import React from "react";
 
 const font = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -42,7 +44,9 @@ const RootLayout = async ({
         </NextIntlClientProvider>
 
         <SpeedInsights />
+
         <LoadImages />
+        <LoadAudio />
       </body>
     </html>
   );

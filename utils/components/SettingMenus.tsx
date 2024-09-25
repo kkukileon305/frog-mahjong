@@ -3,7 +3,6 @@
 import useSoundStore from "@/utils/stores/useSoundStore";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { FaPlay } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 
@@ -76,7 +75,7 @@ const SettingMenus = () => {
           </div>
 
           <div className="bg-white">
-            <Link className="p-2 block hover:bg-gray-200" href="/terms">
+            <Link className="p-2 block hover:bg-gray-200" href="/terms-of-use">
               {m("term")}
             </Link>
           </div>

@@ -7,6 +7,7 @@ import axiosInstance, { ErrorType } from "@/utils/axios";
 import { AxiosError } from "axios";
 import { USER_ALREADY_EXISTED } from "@/utils/constants/errTypes";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 type SignUpInputs = {
   email: string;
@@ -124,7 +125,9 @@ const SignUpForm = () => {
         <p className="text-sm text-gray-800 mb-2">
           {m.rich("isAgree", {
             span: (chunks) => (
-              <span className="underline font-bold">{chunks}</span>
+              <Link href={"/terms-of-use"} className="underline font-bold">
+                {chunks}
+              </Link>
             ),
           })}
         </p>
