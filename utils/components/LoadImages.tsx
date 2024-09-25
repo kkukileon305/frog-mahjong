@@ -19,6 +19,8 @@ import RedSeven from "@/public/cards/red_seven.png";
 import RedSix from "@/public/cards/red_six.png";
 import RedThree from "@/public/cards/red_three.png";
 import RedTwo from "@/public/cards/red_two.png";
+import roomBg from "@/public/bg/room_background.jpg";
+import gameBg from "@/public/bg/game_background.jpg";
 import Image from "next/image";
 
 const LoadImages = () => {
@@ -44,16 +46,18 @@ const LoadImages = () => {
     RedSix,
     RedThree,
     RedTwo,
+    roomBg,
+    gameBg,
   ];
 
   return (
     <>
       {images.map((image) => (
         <Image
-          hidden
           src={image}
           alt="load"
           key={image.src}
+          className="w-0 h-0"
           width={0}
           height={0}
         />
