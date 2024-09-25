@@ -214,16 +214,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   return (
     <>
-      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] bg-cover bg-center flex gap-2 p-2 lg:p-8">
-        <Image
-          src={bg}
-          alt="bg"
-          fill
-          style={{
-            objectFit: "cover",
-          }}
-        />
-
+      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] bg-game bg-cover bg-center flex gap-2 p-2 lg:p-8">
         <div className="basis-1/5 h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
