@@ -56,6 +56,7 @@ const LoadImages = () => {
           alt="load"
           key={image.src}
           className="w-0 h-0 invisible"
+          fill
         />
       ))}
     </>
