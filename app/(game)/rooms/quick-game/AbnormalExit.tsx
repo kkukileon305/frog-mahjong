@@ -26,7 +26,7 @@ const AbnormalExit = () => {
         <p className="font-bold text-3xl">{m("title")}</p>
         <Link
           onClick={clear}
-          className="py-2 px-4 mt-4 border border-blue-400 rounded-xl text-blue-400 font-bold"
+          className="bg-white py-2 px-4 mt-4 border border-blue-400 rounded-xl text-blue-400 font-bold"
           href={"/rooms"}
         >
           {m("back")}

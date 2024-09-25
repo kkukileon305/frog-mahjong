@@ -13,17 +13,10 @@ export function middleware(request: NextRequest) {
 
   // if isSignIn is true and access authentic page, redirect to main
   if (isSignIn && !pathname.includes("rooms")) {
-    if (pathname.includes("settings")) {
-      return;
-    }
-
     return NextResponse.redirect(new URL("/rooms", request.url));
   }
 
-  if (
-    !isSignIn &&
-    (pathname.includes("rooms") || pathname.includes("settings"))
-  ) {
+  if (!isSignIn && pathname.includes("rooms")) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 }
@@ -34,8 +27,7 @@ export const config = {
     "/signup/:path*",
     "/forgot-password",
     "/reset-password/:path*",
-    "/rooms/:path*",
     "/callback/:path*",
-    "/settings",
+    "/rooms/:path*",
   ],
 };
