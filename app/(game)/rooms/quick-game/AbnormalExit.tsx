@@ -10,7 +10,7 @@ const AbnormalExit = () => {
   const clear = useGameStore((s) => s.clear);
 
   return (
-    <div className="flex h-[calc(100dvh)] justify-center items-center">
+    <div className="relative flex h-[calc(100dvh)] justify-center items-center">
       <div className="p-4 w-full max-w-3xl rounded-xl flex justify-center items-center flex-col">
         <p className="font-bold text-3xl">{m("title")}</p>
         <Link

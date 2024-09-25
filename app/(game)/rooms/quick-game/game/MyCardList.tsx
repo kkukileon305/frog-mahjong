@@ -44,8 +44,7 @@ const MyCardList = ({
               <Image
                 src={item.imageSrc}
                 alt={item.color + item.name}
-                width={40}
-                height={58}
+                fill
                 draggable={false}
                 className="w-full h-full"
               />

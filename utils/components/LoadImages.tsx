@@ -46,8 +46,6 @@ const LoadImages = () => {
     RedSix,
     RedThree,
     RedTwo,
-    roomBg,
-    gameBg,
   ];
 
   return (
@@ -57,9 +55,7 @@ const LoadImages = () => {
           src={image}
           alt="load"
           key={image.src}
-          className="w-0 h-0"
-          width={0}
-          height={0}
+          className="w-0 h-0 invisible"
         />
       ))}
     </>
