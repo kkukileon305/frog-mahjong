@@ -1,13 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
+import { useRouter } from "next/navigation";
 
 const AbnormalExit = () => {
   const m = useTranslations("AbnormalExit");
   const clear = useGameStore((s) => s.clear);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.push("/rooms");
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="relative flex h-[calc(100dvh)] justify-center items-center">
