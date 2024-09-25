@@ -1,18 +1,22 @@
 "use client";
 
 import useSoundStore from "@/utils/stores/useSoundStore";
-import React, { ChangeEventHandler, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { FaPlay } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
+import Link from "next/link";
 
 const SettingMenus = () => {
   const m = useTranslations("settings");
+
+  const [isOpen, setIsOpen] = useState(false);
   const { setVolume, volume, audios } = useSoundStore((s) => ({
     volume: s.volume,
     setVolume: s.setVolume,
     audios: s.audios,
   }));
+
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
@@ -26,41 +30,58 @@ const SettingMenus = () => {
 
     const newTimeout = setTimeout(() => {
       setVolume(newVolume);
+      audios?.cardChapAudio.play();
     }, 200);
 
     setDebounceTimeout(newTimeout);
   };
 
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const target = e.target as Element;
+
+      setIsOpen(!!target.closest("#setting"));
+    };
+
+    window.addEventListener("mousedown", handler);
+
+    return () => window.removeEventListener("mousedown", handler);
+  }, []);
+
   return (
-    <div className="relative group" tabIndex={0}>
-      <div className="cursor-pointer hover:bg-gray-200 group-focus:bg-gray-200 p-2 rounded-xl">
+    <div id="setting" className="relative" tabIndex={0}>
+      <div
+        className={`cursor-pointer p-2 rounded-xl hover:bg-gray-200 ${
+          isOpen && "bg-gray-200"
+        }`}
+      >
         <IoMdSettings size={24} />
       </div>
 
-      <div className="absolute top-[calc(100%+4px)] right-0 invisible group-focus:visible flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
-        <div className="bg-white p-2 border-b">
-          <label htmlFor="volume">{m("volume")} </label>
-          <input
-            tabIndex={0}
-            id="volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            defaultValue={volume}
-            onChange={handleVolumeChange}
-          />
+      {isOpen && (
+        <div className="absolute top-[calc(100%+4px)] right-0 flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
+          <div className="bg-white hover:bg-gray-200 p-2 border-b">
+            <label htmlFor="volume">{m("volume")} </label>
+            <input
+              tabIndex={0}
+              id="volume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              defaultValue={volume}
+              onChange={handleVolumeChange}
+              className="focus:outline-none"
+            />
+          </div>
 
-          <div
-            className="w-fit cursor-pointer text-white bg-match-button py-2 px-4 rounded"
-            onClick={() => audios?.cardChapAudio.play()}
-          >
-            <FaPlay />
+          <div className="bg-white">
+            <Link className="p-2 block hover:bg-gray-200" href="/terms">
+              {m("term")}
+            </Link>
           </div>
         </div>
-
-        <div className="p-2 bg-white"></div>
-      </div>
+      )}
     </div>
   );
 };
