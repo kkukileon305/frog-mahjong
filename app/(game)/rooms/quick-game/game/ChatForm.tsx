@@ -58,14 +58,14 @@ const ChatForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex gap-2 w-full h-full bg-white/70 font-bold px-2 rounded-full overflow-hidden"
+        className="flex gap-2 w-full h-full bg-white/70 font-bold px-2 rounded-full overflow-hidden items-center"
       >
         <button onClick={() => setIsOpen(true)} type="button">
           <BsList size={24} className="text-game-icon" />
         </button>
 
         <input
-          className="w-full h-full placeholder:text-black/50 bg-transparent focus:outline-none"
+          className="w-full h-fit text-xs lg:text-base placeholder:text-xs placeholder:lg:text-base placeholder:text-black/50 bg-transparent focus:outline-none"
           {...register("message", {
             required: m("writeChat"),
           })}

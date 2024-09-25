@@ -52,7 +52,7 @@ const Page = () => {
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <div className="w-full flex flex-col justify-between">
+      <div className="relative w-full flex flex-col justify-between">
         {gameStore.isLoanFailed !== 0 && (
           <LoanFailedModal
             isLoanFailed={gameStore.isLoanFailed}

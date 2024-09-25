@@ -6,7 +6,7 @@ import LoadAudio from "@/utils/components/LoadAudio";
 
 const Page = async () => {
   return (
-    <>
+    <div className="relative">
       <Header />
 
       <div className="max-w-[800px] min-h-[calc(100dvh-64px)] flex items-center w-full mx-auto py-4 px-2">
@@ -15,7 +15,7 @@ const Page = async () => {
         </Suspense>
         <LoadAudio />
       </div>
-    </>
+    </div>
   );
 };
 

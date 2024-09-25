@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { getCookie } from "cookies-next";
 import logo from "@/public/logos/logo.png";
 import Image from "next/image";
-import { IoMdSettings } from "react-icons/io";
+import SettingMenus from "@/utils/components/SettingMenus";
 
 const Header = async () => {
   const refreshToken = getCookie("refreshToken", {
@@ -23,9 +23,7 @@ const Header = async () => {
         <div className="flex items-center gap-2">
           {refreshToken && <SignOutBtn />}
           <SwitchLocale />
-          <Link href="/settings" className="hover:bg-gray-200 p-2 rounded-xl">
-            <IoMdSettings size={24} />
-          </Link>
+          <SettingMenus />
         </div>
       </div>
     </header>

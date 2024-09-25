@@ -33,6 +33,8 @@ import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import Image from "next/image";
+import bg from "@/public/bg/game_background.jpg";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -212,7 +214,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   return (
     <>
-      <div className="w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] bg-game bg-cover bg-center flex gap-2 p-2 lg:p-8">
+      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] bg-cover bg-center flex gap-2 p-2 lg:p-8">
+        <Image
+          src={bg}
+          alt="bg"
+          fill
+          style={{
+            objectFit: "cover",
+          }}
+        />
+
         <div className="basis-1/5 h-full flex flex-col gap-4">
           {userWithoutMe && (
             <UserPanel
@@ -329,7 +340,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         <div className="flex basis-1/5">
           <button
             onClick={() => setIsHelpModal(true)}
-            className="w-full bg-game-button font-bold"
+            className="text-xs lg:text-base w-full bg-game-button font-bold"
           >
             {m("help")}
           </button>
