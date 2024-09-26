@@ -20,6 +20,8 @@ import RedSeven from "@/public/cards/red_seven.png";
 import RedSix from "@/public/cards/red_six.png";
 import RedThree from "@/public/cards/red_three.png";
 import RedTwo from "@/public/cards/red_two.png";
+import HelpImage1 from "@/public/helps/setsumei1.jpg";
+import HelpImage2 from "@/public/helps/setsumei2.jpg";
 
 const usePreloadImage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,6 +49,8 @@ const usePreloadImage = () => {
     RedSix,
     RedThree,
     RedTwo,
+    HelpImage1,
+    HelpImage2,
   ];
 
   const preloadImages = (imageUrls: string[]) =>

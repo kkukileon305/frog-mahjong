@@ -12,30 +12,18 @@ const HelpModal = () => {
   const [isRotated, setIsRotated] = useState<boolean>(false);
 
   return (
-    <div className="relative w-full h-[800px] flex flex-col gap-8">
+    <div className="relative w-full flex flex-col gap-8">
       <div
-        className={`overflow-hidden drop-shadow-xl flip-card w-full h-full ${
+        className={`overflow-hidden flip-card w-full h-full ${
           isRotated && "flip-card-rotate"
         }`}
       >
-        <div className="flip-card-inner w-full h-full">
+        <div className="flip-card-inner h-full aspect-[1.4/1]">
           <div className="flip-card-front absolute top-0">
-            <Image
-              className="rounded-xl"
-              src={HelpImage1.src}
-              alt="HelpImage1"
-              width={1576}
-              height={1282}
-            />
+            <img className="rounded-xl" src={HelpImage1.src} alt="HelpImage1" />
           </div>
           <div className="flip-card-back absolute top-0">
-            <Image
-              className="rounded-xl"
-              src={HelpImage2.src}
-              alt="HelpImage2"
-              width={1576}
-              height={1282}
-            />
+            <img className="rounded-xl" src={HelpImage2.src} alt="HelpImage2" />
           </div>
         </div>
       </div>
