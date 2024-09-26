@@ -107,14 +107,14 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             </div>
           </div>
 
-          <p className="text-center font-bold">
+          <p className="text-center font-bold mb-4">
             {m("nokori", {
               coin: userData.coin,
             })}
           </p>
 
           {userData.coin > 0 && (
-            <div className="flex flex-col gap-4 pt-4 md:px-8">
+            <div className="flex flex-col gap-4 md:px-8">
               <button
                 onClick={() => setOpenMatchModal("NORMAL")}
                 className="w-full bg-match-button font-bold text-white text-xl py-2 rounded"
@@ -140,7 +140,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           )}
 
           {userData.coin <= 0 && (
-            <div className="flex justify-center bg-gray-200 items-center gap-4 py-4 ">
+            <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">
               <p>{m("noCoin")}</p>
             </div>
           )}
