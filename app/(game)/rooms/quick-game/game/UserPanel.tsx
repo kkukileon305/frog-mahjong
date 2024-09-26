@@ -137,9 +137,7 @@ const UserPanel = ({
               <img
                 src={lastCardImage.imageSrc}
                 alt={lastCardImage.color + lastCardImage.name}
-                width={40}
-                height={58}
-                className={`w-6 lg:w-auto ${
+                className={`w-6 lg:w-10 aspect-[4/7] ${
                   isLoanSelectMode && "hover:bg-white/50"
                 }`}
               />
@@ -240,7 +238,7 @@ const UserPanel = ({
 
             {isStarted && lastCardImage && (
               <button
-                className="w-6 lg:w-auto border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
+                className="w-6 lg:w-10 border border-red-400 disabled:border-gray-400 rounded overflow-hidden"
                 disabled={!isLoanSelectMode}
                 onClick={onLoanCard}
               >
