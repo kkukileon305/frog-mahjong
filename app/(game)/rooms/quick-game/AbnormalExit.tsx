@@ -15,6 +15,7 @@ const AbnormalExit = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       router.push("/rooms");
+      clear();
     }, 3000);
 
     return () => clearTimeout(timeout);
