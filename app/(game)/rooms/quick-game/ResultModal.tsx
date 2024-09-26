@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import cards from "@/app/(game)/rooms/quick-game/game/cards";
-import Image from "next/image";
 import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
@@ -114,7 +113,7 @@ const ResultModal = () => {
                       ?.slice(0, 3)
                       ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                       .map((card, index) => (
-                        <Image
+                        <img
                           src={card?.imageSrc!}
                           alt={card?.color! + card?.name!}
                           width={40}
@@ -130,7 +129,7 @@ const ResultModal = () => {
                       ?.slice(3, 6)
                       ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                       .map((card, index) => (
-                        <Image
+                        <img
                           src={card?.imageSrc!}
                           alt={card?.color! + card?.name!}
                           width={40}
@@ -170,7 +169,7 @@ const ResultModal = () => {
                           ?.slice(0, 3)
                           ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                           .map((card, index) => (
-                            <Image
+                            <img
                               src={card?.imageSrc!}
                               alt={card?.color! + card?.name!}
                               width={40}
@@ -185,7 +184,7 @@ const ResultModal = () => {
                           ?.slice(3, 6)
                           ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                           .map((card, index) => (
-                            <Image
+                            <img
                               src={card?.imageSrc!}
                               alt={card?.color! + card?.name!}
                               width={40}
@@ -224,7 +223,7 @@ const ResultModal = () => {
                           ?.slice(0, 3)
                           ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                           .map((card, index) => (
-                            <Image
+                            <img
                               src={card?.imageSrc!}
                               alt={card?.color! + card?.name!}
                               width={40}
@@ -239,7 +238,7 @@ const ResultModal = () => {
                           ?.slice(3, 6)
                           ?.map((wc) => cards.find((ac) => ac.id === wc.cardID))
                           .map((card, index) => (
-                            <Image
+                            <img
                               src={card?.imageSrc!}
                               alt={card?.color! + card?.name!}
                               width={40}

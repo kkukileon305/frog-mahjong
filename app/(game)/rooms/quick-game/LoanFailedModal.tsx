@@ -39,7 +39,7 @@ const LoanFailedModal = ({
 
         <div className="flex gap-2 justify-center">
           {cardImages.map((card, index) => (
-            <Image
+            <img
               src={card?.imageSrc!}
               alt={card?.color! + card?.name!}
               width={40}

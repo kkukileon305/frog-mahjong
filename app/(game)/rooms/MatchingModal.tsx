@@ -114,8 +114,8 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
     <div className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-black/50 z-30 flex justify-center items-center p-2">
       <div className="relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto py-8 px-4 shadow bg-game-icon rounded-xl">
         <div className="flex items-center justify-center gap-4">
-          <Image
-            src={frogPink}
+          <img
+            src={frogPink.src}
             alt="icon"
             width={66}
             height={74}
@@ -124,8 +124,8 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
           <h3 className="font-bold text-white text-center text-4xl">
             {m(mode)}
           </h3>
-          <Image
-            src={frogYellow}
+          <img
+            src={frogYellow.src}
             alt="icon"
             width={66}
             height={74}

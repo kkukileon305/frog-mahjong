@@ -22,6 +22,8 @@ import RedThree from "@/public/cards/red_three.png";
 import RedTwo from "@/public/cards/red_two.png";
 import HelpImage1 from "@/public/helps/setsumei1.jpg";
 import HelpImage2 from "@/public/helps/setsumei2.jpg";
+import frogPink from "@/public/icons/frog_pink.png";
+import frogYellow from "@/public/icons/frog_yellow.png";
 
 const usePreloadImage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -51,6 +53,8 @@ const usePreloadImage = () => {
     RedTwo,
     HelpImage1,
     HelpImage2,
+    frogPink,
+    frogYellow,
   ];
 
   const preloadImages = (imageUrls: string[]) =>
