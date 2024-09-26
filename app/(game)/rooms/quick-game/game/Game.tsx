@@ -158,8 +158,8 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     ws?.send(JSON.stringify(req));
   };
 
-  const cardWithoutDora = cards.filter(
-    (card) => gameInfo?.dora?.cardID !== card.id
+  const cardWithoutDora = cards.map((card) =>
+    gameInfo?.dora?.cardID === card.id ? { ...card, isValid: false } : card
   );
 
   const allUserCardIds = users
@@ -172,13 +172,15 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     )
     .flat();
 
-  const leftCards = cardWithoutDora.filter(
-    (card) =>
-      !(
-        allUserCardIds?.includes(card.id) ||
-        allUserDiscardedIds?.includes(card.id)
-      )
+  // 전체 cards에서 valid 값만 반영
+  const leftCards = cardWithoutDora.map((card) =>
+    allUserCardIds?.includes(card.id) || allUserDiscardedIds?.includes(card.id)
+      ? { ...card, isValid: false }
+      : card
   );
+
+  // valid filter
+  const filteredCards = leftCards.filter((card) => card.isValid);
 
   useEffect(() => {
     setIsLoanEnd(false);
@@ -192,7 +194,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         if (currentUser.cards === null) {
           return gameInfo.dora === null ? m("getDora") : m("getFiveCards");
         } else {
-          return leftCards.length === 0 ? m("noLeftCards") : m("getCard");
+          return filteredCards.length === 0 ? m("noLeftCards") : m("getCard");
         }
       }
 
@@ -277,7 +279,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
               {gameInfo?.timer && (
                 <Timer
-                  leftCards={leftCards}
+                  filteredCards={filteredCards}
                   setSelectedCards={setSelectedCards}
                 />
               )}

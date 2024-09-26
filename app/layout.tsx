@@ -45,7 +45,6 @@ const RootLayout = async ({
 
         <SpeedInsights />
 
-        <LoadImages />
         <LoadAudio />
       </body>
     </html>

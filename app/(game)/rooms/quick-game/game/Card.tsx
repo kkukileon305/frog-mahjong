@@ -38,7 +38,9 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
       )}
 
       {process.env.NODE_ENV === "development" && (
-        <p className="absolute">{card.id}</p>
+        <p className="absolute">
+          {card.id} {card.isValid ? "true" : "false"}
+        </p>
       )}
     </button>
   );

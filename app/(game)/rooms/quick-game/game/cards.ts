@@ -19,7 +19,7 @@ import RedSix from "@/public/cards/red_six.png";
 import RedThree from "@/public/cards/red_three.png";
 import RedTwo from "@/public/cards/red_two.png";
 
-export type CardImage = {
+export type CardImageWithoutValid = {
   id: number;
   name:
     | "one"
@@ -37,7 +37,11 @@ export type CardImage = {
   imageSrc: string;
 };
 
-const cards: CardImage[] = [
+export type CardImage = CardImageWithoutValid & {
+  isValid: boolean;
+};
+
+const cardImages: CardImageWithoutValid[] = [
   { id: 1, name: "one", color: "red", imageSrc: RedOne.src },
   { id: 2, name: "two", color: "red", imageSrc: RedTwo.src },
   { id: 3, name: "three", color: "red", imageSrc: RedThree.src },
@@ -87,5 +91,10 @@ const cards: CardImage[] = [
   { id: 44, name: "bal", color: "green", imageSrc: GreenBal.src },
   //
 ];
+
+const cards: CardImage[] = cardImages.map((ci) => ({
+  ...ci,
+  isValid: true,
+}));
 
 export default cards;

@@ -29,11 +29,11 @@ import useGameStore from "@/utils/stores/useGameStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 
 type TimerProps = {
-  leftCards: CardImage[];
+  filteredCards: CardImage[];
   setSelectedCards: Dispatch<SetStateAction<CardImage[]>>;
 };
 
-const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
+const Timer = ({ filteredCards, setSelectedCards }: TimerProps) => {
   const { roomID } = useParams<{ roomID: string }>();
 
   const { ws, gameInfo, users } = useGameStore((s) => ({
@@ -114,7 +114,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
     if (gameInfo?.dora === null) {
       // dora 랜덤 선택
-      const [randomCard] = getRandomElements(leftCards, 1);
+      const [randomCard] = getRandomElements(filteredCards, 1);
 
       const requestBody: DORABody = {
         cardID: randomCard.id,
@@ -135,7 +135,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
 
     if (currentUser?.cards === null) {
       // 카드 5개 선택
-      const randomCards = getRandomElements(leftCards, 5);
+      const randomCards = getRandomElements(filteredCards, 5);
 
       const body: ImportCardBody = {
         cards: randomCards.map((ic) => ({
@@ -158,7 +158,7 @@ const Timer = ({ leftCards, setSelectedCards }: TimerProps) => {
     } else {
       // 카드를 고르지않고 타임아웃
       // 카드 1개 선택해서 바로 버리기
-      const [randomCard] = getRandomElements(leftCards, 1);
+      const [randomCard] = getRandomElements(filteredCards, 1);
 
       if (!randomCard) {
         // 남은 카드 없는경우 (무승부)
