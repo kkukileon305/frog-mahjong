@@ -13,7 +13,6 @@ const Page = async () => {
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>
-        <LoadImages />
       </div>
     </div>
   );

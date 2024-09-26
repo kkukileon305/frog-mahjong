@@ -7,6 +7,8 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import usePreloadImage from "@/utils/hooks/usePreloadImage";
+import { ImSpinner8 } from "react-icons/im";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -24,6 +26,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
     null
   );
+
+  const { isLoaded, isError } = usePreloadImage();
 
   const {
     register, //
@@ -113,31 +117,39 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             })}
           </p>
 
-          {userData.coin > 0 && (
-            <div className="flex flex-col gap-4 md:px-8">
-              <button
-                onClick={() => setOpenMatchModal("NORMAL")}
-                className="w-full bg-match-button font-bold text-white text-xl py-2 rounded"
-              >
-                {m("normal")}
-              </button>
-              <div className="flex gap-4">
+          {userData.coin > 0 &&
+            (isLoaded ? (
+              <div className="flex flex-col gap-4 md:px-8">
                 <button
-                  onClick={() => setOpenMatchModal("CREATE")}
-                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
+                  disabled={!isLoaded}
+                  onClick={() => setOpenMatchModal("NORMAL")}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
                 >
-                  {m("createRoom")}
+                  {m("normal")}
                 </button>
+                <div className="flex gap-4">
+                  <button
+                    disabled={!isLoaded}
+                    onClick={() => setOpenMatchModal("CREATE")}
+                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                  >
+                    {m("createRoom")}
+                  </button>
 
-                <button
-                  onClick={() => setOpenMatchModal("ENTER")}
-                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl"
-                >
-                  {m("enterRoom")}
-                </button>
+                  <button
+                    disabled={!isLoaded}
+                    onClick={() => setOpenMatchModal("ENTER")}
+                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                  >
+                    {m("enterRoom")}
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="h-[104px] flex justify-center items-center">
+                <ImSpinner8 className="animate-spin text-white" />
+              </div>
+            ))}
 
           {userData.coin <= 0 && (
             <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">

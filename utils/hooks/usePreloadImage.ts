@@ -24,10 +24,11 @@ import HelpImage1 from "@/public/helps/setsumei1.jpg";
 import HelpImage2 from "@/public/helps/setsumei2.jpg";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
+import gameBackground from "@/public/bg/game_background.jpg";
+import useImageStore from "@/utils/stores/useImageStore";
 
 const usePreloadImage = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const { isLoaded, setIsLoaded, isError, setIsError } = useImageStore();
 
   const images = [
     Sealed,
@@ -55,6 +56,7 @@ const usePreloadImage = () => {
     HelpImage2,
     frogPink,
     frogYellow,
+    gameBackground,
   ];
 
   const preloadImages = (imageUrls: string[]) =>
@@ -71,6 +73,8 @@ const usePreloadImage = () => {
     );
 
   useEffect(() => {
+    if (isLoaded) return;
+
     const loadImages = async () => {
       try {
         await preloadImages(images.map((img) => img.src));
