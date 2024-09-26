@@ -41,10 +41,9 @@ const MyCardList = ({
             disabled={!discardMode}
           >
             <div className="h-full aspect-[40/58]">
-              <Image
+              <img
                 src={item.imageSrc}
                 alt={item.color + item.name}
-                fill
                 draggable={false}
                 className="w-full h-full"
               />
@@ -75,10 +74,9 @@ const MyCardList = ({
           onDragEnd={onDragEnd}
         >
           <div className="relative h-full aspect-[40/58]">
-            <Image
+            <img
               src={item.imageSrc}
               alt={item.color + item.name}
-              fill
               draggable={false}
               className="w-full h-full"
             />

@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import Header from "@/app/Header";
 import Match from "@/app/(game)/rooms/Match";
 import FormMetadataLoading from "@/app/(game)/rooms/FormMetadataLoading";
-import LoadAudio from "@/utils/components/LoadAudio";
+import LoadImages from "@/utils/components/LoadImages";
 
 const Page = async () => {
   return (
@@ -13,6 +13,7 @@ const Page = async () => {
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>
+        <LoadImages />
       </div>
     </div>
   );

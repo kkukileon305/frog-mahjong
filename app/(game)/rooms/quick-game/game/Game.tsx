@@ -33,8 +33,6 @@ import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
-import Image from "next/image";
-import bg from "@/public/bg/game_background.jpg";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;

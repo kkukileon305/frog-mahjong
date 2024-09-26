@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
-import LoadImages from "@/utils/components/LoadImages";
 import { Metadata } from "next";
 import LoadAudio from "@/utils/components/LoadAudio";
 import React from "react";
