@@ -134,7 +134,7 @@ const UserPanel = ({
             </div>
 
             {isStarted && lastCardImage && (
-              <Image
+              <img
                 src={lastCardImage.imageSrc}
                 alt={lastCardImage.color + lastCardImage.name}
                 width={40}
@@ -150,7 +150,7 @@ const UserPanel = ({
             {isStarted &&
               userDiscardImages?.map((ci) => (
                 <div key={ci.id} className="w-[calc((100%-28px)/8)] h-fit">
-                  <Image
+                  <img
                     src={ci.imageSrc}
                     alt={ci.color + ci.name}
                     width={40}
@@ -244,7 +244,7 @@ const UserPanel = ({
                 disabled={!isLoanSelectMode}
                 onClick={onLoanCard}
               >
-                <Image
+                <img
                   src={lastCardImage.imageSrc}
                   alt={lastCardImage.color + lastCardImage.name}
                   width={40}
@@ -257,7 +257,7 @@ const UserPanel = ({
             {isStarted &&
               userDiscardImages?.map((ci) => (
                 <div key={ci.id} className="w-[calc((100%-28px)/8)] h-fit">
-                  <Image
+                  <img
                     src={ci.imageSrc}
                     alt={ci.color + ci.name}
                     width={40}

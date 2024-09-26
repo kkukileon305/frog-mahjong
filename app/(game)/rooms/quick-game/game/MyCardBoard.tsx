@@ -235,12 +235,10 @@ const MyCardBoard = ({
         <div className="flex justify-center items-center border-white border-2 p-2 lg:py-4 lg:px-8 rounded-xl bg-white/20">
           {doraImage ? (
             <div className="flex gap-4 lg:gap-8 items-center">
-              <Image
+              <img
                 src={doraImage.imageSrc}
                 alt={doraImage.color + doraImage.name}
-                width={40}
-                height={58}
-                className="w-6"
+                className="w-6 aspect-[40/58]"
               />
               <p className="hidden lg:block text-xs lg:text-base font-bold text-white text-center">
                 {m("dora")} <br />

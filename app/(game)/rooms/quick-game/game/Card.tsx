@@ -2,7 +2,6 @@
 
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import { MouseEventHandler } from "react";
-import Image from "next/image";
 import Sealed from "@/public/cards/sealed.jpg";
 
 type CardProps = {
@@ -28,7 +27,7 @@ const Card = ({ card, onClick, disabled, isSelected }: CardProps) => {
       }`}
     >
       {!isSelected && (
-        <Image
+        <img
           className="w-full h-full object-fill"
           width={50}
           height={62.5}
