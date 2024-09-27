@@ -1,4 +1,4 @@
-import { Noto_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, Noto_Sans_JP } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,7 +7,8 @@ import { Metadata } from "next";
 import LoadAudio from "@/utils/components/LoadAudio";
 import React from "react";
 
-const font = Noto_Sans_KR({ subsets: ["latin"] });
+const fontKR = Noto_Sans_KR({ subsets: ["latin"] });
+const fontJP = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const m = await getTranslations("Metadata");
@@ -35,7 +36,7 @@ const RootLayout = async ({
 
   return (
     <html lang={locale}>
-      <body className={font.className}>
+      <body className={locale === "kr" ? fontKR.className : fontJP.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="min-h-[calc(100dvh)] bg-main bg-center bg-cover">
             {children}
