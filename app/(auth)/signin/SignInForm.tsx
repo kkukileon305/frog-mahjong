@@ -10,6 +10,7 @@ import { setCookie } from "cookies-next";
 import { USER_NOT_FOUND } from "@/utils/constants/errTypes";
 import { PASSWORD_NOT_MATCH } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
+import usePreloadImage from "@/utils/hooks/usePreloadImage";
 
 type SignInInputs = {
   email: string;
@@ -25,6 +26,13 @@ const SignInForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInInputs>();
+
+  const {
+    loadImages,
+    isLoading: isImageLoading,
+    loadedImagesCount,
+    imagesLength,
+  } = usePreloadImage();
 
   const [isSignInFailed, setIsSignInFailed] = useState(false);
 
@@ -54,6 +62,8 @@ const SignInForm = () => {
       setCookie("userID", userID, {
         expires: new Date(today.getTime() + 3600000 * 24 * 7),
       });
+
+      await loadImages();
 
       router.refresh();
       router.push("/rooms");
@@ -130,7 +140,12 @@ const SignInForm = () => {
         className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
-        {m("signIn")}
+        {isImageLoading
+          ? m("loadingImages", {
+              loadedImages: loadedImagesCount,
+              imagesLength,
+            })
+          : m("signIn")}
       </button>
     </form>
   );

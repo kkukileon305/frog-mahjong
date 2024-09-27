@@ -27,7 +27,8 @@
     "writePassword": "비밀번호를 입력해주세요",
     "forgotPassword": "비밀번호를 잊으셨나요?",
     "failSignIn": "비밀번호가 틀렸거나 없는 회원입니다",
-    "signIn": "로그인"
+    "signIn": "로그인",
+    "loadingImages": "이미지 불러오는 중 {loadedImages}/{imagesLength}"
   },
   "SignUp": {
     "title": "회원가입",
@@ -49,7 +50,8 @@
     "signIn": "로그인"
   },
   "Callback": {
-    "title": "로그인 중"
+    "title": "로그인 중",
+    "loadingImages": "이미지 불러오는 중 {loadedImages}/{imagesLength}"
   },
   "ForgotPassword" : {
     "title": "비밀번호를 잊으셨나요?",

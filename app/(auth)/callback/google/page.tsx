@@ -5,9 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axiosInstance, { TokenType } from "@/utils/axios";
 import { setCookie } from "cookies-next";
 import { useTranslations } from "next-intl";
+import usePreloadImage from "@/utils/hooks/usePreloadImage";
 
 const InnerPage = () => {
   const m = useTranslations("Callback");
+
+  const { loadedImagesCount, imagesLength, isLoading, loadImages } =
+    usePreloadImage();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,6 +40,8 @@ const InnerPage = () => {
           expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
 
+        await loadImages();
+
         router.refresh();
         router.push("/rooms");
       } catch (e) {
@@ -54,7 +60,14 @@ const InnerPage = () => {
   return (
     <div>
       <div className="mx-auto max-w-3xl min-h-[calc(100dvh-64px)] flex justify-center items-center">
-        <p className="text-3xl font-bold">{m("title")}</p>
+        <p className="text-3xl font-bold">
+          {isLoading
+            ? m("loadingImages", {
+                loadedImages: loadedImagesCount,
+                imagesLength,
+              })
+            : m("title")}
+        </p>
       </div>
     </div>
   );

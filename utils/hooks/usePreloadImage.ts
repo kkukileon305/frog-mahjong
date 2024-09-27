@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Sealed from "@/public/cards/sealed.jpg";
 import GreenBal from "@/public/cards/green_bal.png";
 import GreenEight from "@/public/cards/green_eight.png";
@@ -25,10 +25,20 @@ import HelpImage2 from "@/public/helps/setsumei2.jpg";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import gameBackground from "@/public/bg/game_background.jpg";
+import roomBackground from "@/public/bg/room_background.jpg";
 import useImageStore from "@/utils/stores/useImageStore";
 
 const usePreloadImage = () => {
-  const { isLoaded, setIsLoaded, isError, setIsError } = useImageStore();
+  const {
+    isLoaded,
+    setIsLoaded,
+    isError,
+    isLoading,
+    setIsLoading,
+    setIsError,
+    loadedImagesCount,
+    setLoadedImages,
+  } = useImageStore();
 
   const images = [
     Sealed,
@@ -57,40 +67,70 @@ const usePreloadImage = () => {
     frogPink,
     frogYellow,
     gameBackground,
+    roomBackground,
   ];
 
-  const preloadImages = (imageUrls: string[]) =>
-    Promise.all(
-      imageUrls.map((url) => {
-        return new Promise<void>((res, rej) => {
-          const img = new Image();
+  const preloadImages = (
+    imageUrls: string[],
+    onProgress: (progress: number) => void
+  ) =>
+    new Promise<void>((resolve, reject) => {
+      let loadedImages = 0;
 
-          img.src = url;
-          img.onload = () => res();
-          img.onerror = () => rej(new Error(`Failed to load image ${url}`));
-        });
-      })
-    );
+      const updateProgress = () => {
+        loadedImages += 1;
+        onProgress && onProgress(loadedImages);
+      };
 
-  useEffect(() => {
-    if (isLoaded) return;
+      Promise.all(
+        imageUrls.map((url) => {
+          return new Promise<void>((res, rej) => {
+            const img = new Image();
 
-    const loadImages = async () => {
-      try {
-        await preloadImages(images.map((img) => img.src));
-        setIsLoaded(true);
-      } catch (e) {
-        setIsError(true);
-        console.log(e);
+            img.src = url;
+            img.onload = () => {
+              updateProgress();
+              res();
+            };
+            img.onerror = () => rej(new Error(`Failed to load image ${url}`));
+          });
+        })
+      )
+        .then(() => resolve())
+        .catch((err) => reject(err));
+    });
+
+  const loadImages = async () => {
+    if (isLoaded || isLoading) {
+      if (process.env.NODE_ENV === "development") {
+        console.log("already loaded images!");
       }
-    };
+      return;
+    }
 
-    loadImages();
-  }, []);
+    try {
+      setIsLoading(true);
+
+      await preloadImages(
+        images.map((img) => img.src),
+        (progress) => setLoadedImages(progress)
+      );
+      setIsLoaded(true);
+    } catch (e) {
+      setIsError(true);
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return {
     isLoaded,
     isError,
+    loadImages,
+    isLoading,
+    loadedImagesCount,
+    imagesLength: images.length,
   };
 };
 
