@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { INTERNAL_DB, TOKEN_BAD } from "@/utils/constants/errTypes";
+import { PARAM_BAD } from "@/utils/constants/const";
 
 export interface RoomsResponse {
   rooms: Room[];
@@ -96,7 +97,11 @@ axiosInstance.interceptors.response.use(
     }
 
     // token error
-    if (error.response && error.response.data.errType === TOKEN_BAD) {
+    if (
+      error.response &&
+      (error.response.data.errType === TOKEN_BAD ||
+        error.response.data.errType === PARAM_BAD)
+    ) {
       const beforeAccessToken = getCookie("accessToken");
       const beforeRefreshToken = getCookie("refreshToken");
 

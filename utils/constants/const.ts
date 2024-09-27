@@ -31,6 +31,7 @@ export const ERR_GAME_IN_PROGRESS = "ERR_GAME_IN_PROGRESS";
 export const ERR_ROOM_FULL = "ERR_ROOM_FULL";
 export const ERR_INTERNAL_SERVER = "ERR_INTERNAL_SERVER";
 export const PASSWORD_NOT_MATCH = "PASSWORD_NOT_MATCH";
+export const PARAM_BAD = "PARAM_BAD";
 
 // languages
 export const LOCALE_COOKIE_NAME = "LOCALE_NAME";

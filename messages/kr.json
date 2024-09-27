@@ -180,7 +180,8 @@
     "enter": "참가하기",
     "notFound": "해당 방이 없습니다",
     "complete": "매칭 완료",
-    "copySuccess": "복사성공"
+    "copySuccess": "복사성공",
+    "error": "유저 검증 실패, 재로그인하세요"
   },
   "settings": {
     "volume": "볼륨",

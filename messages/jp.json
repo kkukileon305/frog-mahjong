@@ -179,7 +179,8 @@
     "enter": "参加する",
     "notFound": "存在しないコードです",
     "complete": "マッチング完了",
-    "copySuccess": "コピーされました"
+    "copySuccess": "コピーされました",
+    "error": "ユーザー検証失敗"
   },
   "settings": {
     "volume": "音量",
