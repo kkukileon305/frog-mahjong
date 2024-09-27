@@ -28,7 +28,7 @@
     "forgotPassword": "パスワードを忘れた場合",
     "failSignIn": "パスワードが違います",
     "signIn": "ログイン",
-    "loadingImages": "画像を読み込み中 {loadedImages}/{imagesLength}"
+    "loadingImages": "画像を読み込み中 {loadedImagesCount}/{imagesLength}"
   },
   "SignUp": {
     "title": "アカウント生成",
@@ -51,7 +51,7 @@
   },
   "Callback": {
     "title": "ログイン中",
-    "loadingImages": "画像を読み込み中 {loadedImages}/{imagesLength}"
+    "loadingImages": "画像を読み込み中 {loadedImagesCount}/{imagesLength}"
   },
   "ForgotPassword" : {
     "title": "パスワードを忘れた場合",
@@ -81,7 +81,8 @@
     "normal": "クイックマッチング",
     "personCount": "人",
     "nokori": "残りのコイン{coin}枚",
-    "noCoin": "コインが足りないので進行できません"
+    "noCoin": "コインが足りないので進行できません",
+    "loadingImages": "画像を読み込み中 {loadedImagesCount}/{imagesLength}"
   },
   "AbnormalExit": {
     "title": "他のプレイヤーが離脱してゲームが強制終了されました",

@@ -63,7 +63,7 @@ const InnerPage = () => {
         <p className="text-3xl font-bold">
           {isLoading
             ? m("loadingImages", {
-                loadedImages: loadedImagesCount,
+                loadedImagesCount,
                 imagesLength,
               })
             : m("title")}

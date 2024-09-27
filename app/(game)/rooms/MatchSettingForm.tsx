@@ -7,6 +7,7 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import usePreloadImage from "@/utils/hooks/usePreloadImage";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -26,6 +27,16 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   );
 
   const {
+    //
+    loadImages,
+    imagesLength,
+    isLoading,
+    loadedImagesCount,
+    isError,
+    isLoaded,
+  } = usePreloadImage();
+
+  const {
     register, //
     watch,
   } = useForm<GameSettingInputs>({
@@ -42,6 +53,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   useEffect(() => {
     setCount(2);
     setTimer(formMetadata.timers[0]);
+    loadImages();
   }, []);
 
   watch((value) => {
@@ -113,31 +125,41 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             })}
           </p>
 
-          {userData.coin > 0 && (
-            <div className="flex flex-col gap-4 md:px-8">
-              <button
-                onClick={() => setOpenMatchModal("NORMAL")}
-                className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
-              >
-                {m("normal")}
-              </button>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => setOpenMatchModal("CREATE")}
-                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
-                >
-                  {m("createRoom")}
-                </button>
-
-                <button
-                  onClick={() => setOpenMatchModal("ENTER")}
-                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
-                >
-                  {m("enterRoom")}
-                </button>
+          {userData.coin > 0 &&
+            (isLoading || !isLoaded ? (
+              <div className="flex h-[104px] justify-center items-center gap-4">
+                <p>
+                  {m("loadingImages", {
+                    loadedImagesCount,
+                    imagesLength,
+                  })}
+                </p>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex flex-col gap-4 md:px-8">
+                <button
+                  onClick={() => setOpenMatchModal("NORMAL")}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                >
+                  {m("normal")}
+                </button>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setOpenMatchModal("CREATE")}
+                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                  >
+                    {m("createRoom")}
+                  </button>
+
+                  <button
+                    onClick={() => setOpenMatchModal("ENTER")}
+                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                  >
+                    {m("enterRoom")}
+                  </button>
+                </div>
+              </div>
+            ))}
 
           {userData.coin <= 0 && (
             <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">

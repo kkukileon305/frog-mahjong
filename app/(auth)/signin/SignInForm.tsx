@@ -142,7 +142,7 @@ const SignInForm = () => {
       >
         {isImageLoading
           ? m("loadingImages", {
-              loadedImages: loadedImagesCount,
+              loadedImagesCount,
               imagesLength,
             })
           : m("signIn")}
