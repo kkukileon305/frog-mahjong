@@ -208,7 +208,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
               )}
             </>
           ) : (
-            <p className="text-center text-3xl font-bold">
+            <p className="text-center text-xs font-bold">
               {m("error")}
               {JSON.stringify(error)}
             </p>
