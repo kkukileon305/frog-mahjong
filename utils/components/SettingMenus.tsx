@@ -75,7 +75,25 @@ const SettingMenus = () => {
           </div>
 
           <div className="bg-white">
-            <Link className="p-2 block hover:bg-gray-200" href="/terms-of-use">
+            <Link
+              className="p-2 block hover:bg-gray-200"
+              href="https://parallel-jodhpur-935.notion.site/10d2c71ec7c580359d04cd5af3006252"
+              target="_blank"
+            >
+              {m("term")}
+            </Link>
+          </div>
+          <div className="bg-white">
+            <Link
+              className="p-2 block hover:bg-gray-200"
+              href="https://parallel-jodhpur-935.notion.site/10d2c71ec7c580f3a788e47b22a57dd3"
+              target="_blank"
+            >
+              {m("privacy")}
+            </Link>
+          </div>
+          <div className="bg-white">
+            <Link className="p-2 block hover:bg-gray-200" href="/license">
               {m("term")}
             </Link>
           </div>

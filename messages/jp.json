@@ -182,7 +182,8 @@
   },
   "settings": {
     "volume": "音量",
-    "term": "利用契約"
+    "term": "利用契約",
+    "privacy": "個人情報について"
   },
   "Warning": {
     "title": "画面を横に<br></br>してください"
