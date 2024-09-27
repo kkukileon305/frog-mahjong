@@ -35,6 +35,8 @@ type MyCardProps = {
   isUserLoan: boolean;
   isLoanEnd: boolean;
   selectedCards: CardImage[];
+  getCards: () => void;
+  isGetActive: boolean;
 };
 
 const MyCardBoard = ({
@@ -45,6 +47,8 @@ const MyCardBoard = ({
   isUserLoan,
   isLoanEnd,
   selectedCards,
+  isGetActive,
+  getCards,
 }: MyCardProps) => {
   const m = useTranslations("MyCardBoard");
   const { gameInfo, users, ws, isGetCard } = useGameStore((s) => ({
@@ -255,7 +259,7 @@ const MyCardBoard = ({
         </div>
 
         <div
-          className={`flex justify-center items-center border-2 px-4 lg:py-2 gap-4 rounded-xl bg-white/20 ${
+          className={`flex justify-center items-center border-2 px-4 lg:py-2 rounded-xl bg-white/20 ${
             isActive ? "border-red-500" : "border-white"
           }`}
         >
@@ -288,12 +292,13 @@ const MyCardBoard = ({
         <div className="flex">
           <div className="w-12 lg:w-24 flex flex-col gap-1">
             <button
-              disabled={!isFullSixCard || scoreResult.score < 5}
-              onClick={handleWin}
-              className="text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              disabled={!isGetActive}
+              onClick={getCards}
+              className={`text-xs truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400`}
             >
-              {isUserLoan ? m("loanVictory") : m("normalVictory")}
+              {m("getSelectedCard")}
             </button>
+
             <button
               disabled={!isFullSixCard}
               onClick={onSuteru}
@@ -304,7 +309,7 @@ const MyCardBoard = ({
               {discardMode ? m("cancelSuteru") : m("suteru")}
             </button>
           </div>
-          <div className="w-12 lg:w-24 ml-1 flex justify-center flex-col gap-2">
+          <div className="w-12 lg:w-24 ml-1 flex justify-center flex-col gap-1">
             <button
               disabled={
                 !(
@@ -317,11 +322,19 @@ const MyCardBoard = ({
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
-              className={`text-xs lg:text-base h-full text-white p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
+              className={`text-xs lg:text-base h-full text-white p-1 lg:p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
                 isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
               {isLoanSelectMode ? m("cancelLoan") : m("loan")}
+            </button>
+
+            <button
+              disabled={!isFullSixCard || scoreResult.score < 5}
+              onClick={handleWin}
+              className="text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+            >
+              {isUserLoan ? m("loanVictory") : m("normalVictory")}
             </button>
           </div>
         </div>

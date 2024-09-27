@@ -126,7 +126,7 @@ const UserPanel = ({
             }`}
           >
             <div className="flex items-center gap-2">
-              <div className="w-4 lg:w-12 aspect-square relative border-white border rounded-full"></div>
+              <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-full"></div>
               <div>
                 <p className="font-bold text-xs lg:text-xl">{user.name}</p>
                 <p className="text-xs lg:text-xl">{user.coin} Point</p>
@@ -209,7 +209,7 @@ const UserPanel = ({
             <div className="flex items-center gap-2">
               <div
                 tabIndex={0}
-                className="w-4 lg:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
+                className="w-8 lg:w-12 aspect-square relative border-white border rounded-full group cursor-pointer"
               >
                 <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
                   <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />

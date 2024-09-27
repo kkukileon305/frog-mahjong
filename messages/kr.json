@@ -125,7 +125,6 @@
     "waitYourTurn": "차례를 기다려주세요",
     "goLoanVictory":"론 승리를 선언하시거나 버리기(포기)해주세요",
     "someoneLoan": "님이 론을 선언했습니다",
-    "getSelectedCard": "패 가져오기",
     "help": "설명서",
     "playing": "진행중",
     "quit": "나가기",
@@ -141,7 +140,8 @@
     "suteru": "버리기",
     "cancelSuteru": "버리기 취소",
     "loan": "론!",
-    "cancelLoan": "론 취소"
+    "cancelLoan": "론 취소",
+    "getSelectedCard": "가져오기"
   },
   "ShuffleLeftCards": {
     "end": "종료"

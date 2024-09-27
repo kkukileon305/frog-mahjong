@@ -63,6 +63,8 @@ const Game = ({ setIsHelpModal }: GameProps) => {
   const isFullSelectedCards = selectedCards.length === 5;
   const isOneSelectedCard =
     selectedCards.length === 1 && currentUser.cards !== null;
+  const isGetActive = isFullSelectedCards || isOneSelectedCard;
+
   const isFullSixCard = currentUser?.cards?.length === 6;
 
   const getCards = () => {
@@ -237,7 +239,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
         {isStarted ? (
           <div className="basis-3/5 lg:py-4 py-2 relative z-20">
-            <div className="w-full h-[calc(100%-128px)] lg:h-[calc(100%-300px)] flex justify-center mb-2">
+            <div className="w-full h-[calc(100%-100px)] lg:h-[calc(100%-220px)] flex justify-center mb-2">
               <ShuffleLeftCards
                 leftCards={leftCards}
                 isUserTurn={isUserTurn}
@@ -248,28 +250,6 @@ const Game = ({ setIsHelpModal }: GameProps) => {
                 onGameOver={onGameOver}
                 isLoanSelectMode={isLoanSelectMode}
               />
-            </div>
-
-            <div className="h-[28px] lg:h-[80px] text-xs lg:text-base flex justify-center items-center text-white font-bold">
-              {isFullSelectedCards && (
-                <button
-                  onClick={getCards}
-                  disabled={!isFullSelectedCards}
-                  className="py-1 px-4 border-2 border-white rounded-full"
-                >
-                  {m("getSelectedCard")}
-                </button>
-              )}
-
-              {isOneSelectedCard && (
-                <button
-                  onClick={getCards}
-                  disabled={!isOneSelectedCard}
-                  className="py-1 px-4 border-2 border-white rounded-full"
-                >
-                  {m("getSelectedCard")}
-                </button>
-              )}
             </div>
 
             <div className="h-[40px] lg:h-[100px] overflow-hidden font-bold text-white text-xs lg:text-2xl text-center justify-center items-center flex lg:gap-2 flex-col">
@@ -291,6 +271,8 @@ const Game = ({ setIsHelpModal }: GameProps) => {
               isUserLoan={isUserLoan}
               isLoanEnd={isLoanEnd}
               selectedCards={selectedCards}
+              getCards={getCards}
+              isGetActive={isGetActive}
             />
           </div>
         ) : (

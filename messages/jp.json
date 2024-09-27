@@ -124,7 +124,6 @@
     "waitYourTurn": "相手のターン",
     "goLoanVictory":"ロンあがりか捨てるをクリックしてください",
     "someoneLoan": "がロンを宣言しました",
-    "getSelectedCard": "牌を取る",
     "help": "説明",
     "playing": "進行中",
     "quit": "出る",
@@ -140,7 +139,8 @@
     "suteru": "捨てる",
     "cancelSuteru": "キャンセル",
     "loan": "ロン!",
-    "cancelLoan": "キャンセル"
+    "cancelLoan": "キャンセル",
+    "getSelectedCard": "牌を取る"
   },
   "ShuffleLeftCards": {
     "end": "終了"
