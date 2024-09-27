@@ -9,9 +9,7 @@ import {
   UserSocket,
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
-import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FaChessQueen } from "react-icons/fa6";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";

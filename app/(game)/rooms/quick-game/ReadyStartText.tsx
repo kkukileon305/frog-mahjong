@@ -26,7 +26,6 @@ const ReadyStartText = () => {
     if (isGameEnd) return;
 
     const timeout = setTimeout(() => {
-      // TODO: 카드 정보 불러오고 시작 요청으로 수정, 방장도
       const request: STARTRequest = {
         roomID: Number(gameInfo?.roomID),
         event: "START",

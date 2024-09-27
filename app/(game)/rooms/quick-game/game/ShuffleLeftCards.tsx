@@ -28,38 +28,8 @@ const ShuffleLeftCards = ({
 }: ShuffleLeftCardsProps) => {
   const m = useTranslations("ShuffleLeftCards");
 
-  const randomValues = useRef(
-    Array.from({ length: 44 }).map(() => Math.random())
-  );
-  const [shuffledCards, setShuffledCards] = useState<CardImage[]>(
-    leftCards
-      .map((card, index) => ({
-        card,
-        randomValue: randomValues.current[index],
-      }))
-      .sort((a, b) => a.randomValue - b.randomValue)
-      .map(({ card }) => card)
-  );
-
-  useEffect(() => {
-    if (
-      leftCards.filter((card) => card.isValid).length !==
-      shuffledCards.filter((card) => card.isValid).length
-    ) {
-      setShuffledCards(
-        leftCards
-          .map((card, index) => ({
-            card,
-            randomValue: randomValues.current[index],
-          }))
-          .sort((a, b) => a.randomValue - b.randomValue)
-          .map(({ card }) => card)
-      );
-    }
-  }, [leftCards]);
-
   if (
-    shuffledCards.filter((card) => card.isValid).length === 0 &&
+    leftCards.filter((card) => card.isValid).length === 0 &&
     isUserTurn &&
     !isLoan &&
     !isFullSixCard
@@ -78,7 +48,7 @@ const ShuffleLeftCards = ({
 
   return (
     <div className="max-w-[400px] lg:max-w-[700px] w-full h-full grid grid-cols-11 grid-rows-4 gap-1 lg:gap-2 lg:py-8">
-      {shuffledCards.map((card) =>
+      {leftCards.map((card) =>
         card.isValid ? (
           <div key={card.id} className="flex justify-center items-center">
             <Card

@@ -9,7 +9,7 @@ import {
   ImportSingleCardBody,
   ImportSingleCardRequest,
 } from "@/utils/constants/socketTypes";
-import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
+import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/quick-game/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/quick-game/game/MyCardBoard";
 import React, {
@@ -33,6 +33,8 @@ import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import axiosInstance, { CardListResponse } from "@/utils/axios";
+import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -41,6 +43,9 @@ type GameProps = {
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
   const { isStarted, ws, gameState } = useGameStore();
+  const [cards, setCards] = useState<CardImage[]>([]);
+
+  const accessToken = getCookie("accessToken") as string;
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameInfo?.roomID;
@@ -67,7 +72,31 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   const isFullSixCard = currentUser?.cards?.length === 6;
 
-  const getCards = () => {
+  useEffect(() => {
+    const getCards = async () => {
+      const roomID = gameInfo?.roomID!;
+
+      const {
+        data: { cardIDList },
+      } = await axiosInstance.get<CardListResponse>(
+        `/v0.1/game/${roomID}/deck`,
+        {
+          headers: {
+            tkn: accessToken,
+          },
+        }
+      );
+
+      const newCards = cardIDList.map(
+        (cardID) => cardDataList.find((ci) => ci.id === cardID)!
+      );
+      setCards(newCards);
+    };
+
+    getCards();
+  }, []);
+
+  const getSelectedCards = () => {
     if (isFullSelectedCards && gameInfo?.playTurn) {
       const body: ImportCardBody = {
         cards: selectedCards.map((ic) => ({
@@ -271,14 +300,14 @@ const Game = ({ setIsHelpModal }: GameProps) => {
               isUserLoan={isUserLoan}
               isLoanEnd={isLoanEnd}
               selectedCards={selectedCards}
-              getCards={getCards}
+              getSelectedCards={getSelectedCards}
               isGetActive={isGetActive}
             />
           </div>
         ) : (
           <div className="basis-3/5 h-full flex justify-center items-center relative z-20">
             <div className="w-[120px]">
-              <ReadyStartText />
+              {cards.length === 0 ? <p>cards Loading</p> : <ReadyStartText />}
             </div>
           </div>
         )}

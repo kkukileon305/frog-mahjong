@@ -76,6 +76,11 @@ export type ReportMetadata = {
     reason: "string";
   }[];
 };
+
+export type CardListResponse = {
+  cardIDList: number[];
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

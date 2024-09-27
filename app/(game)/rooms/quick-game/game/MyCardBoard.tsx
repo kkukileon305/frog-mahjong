@@ -35,7 +35,7 @@ type MyCardProps = {
   isUserLoan: boolean;
   isLoanEnd: boolean;
   selectedCards: CardImage[];
-  getCards: () => void;
+  getSelectedCards: () => void;
   isGetActive: boolean;
 };
 
@@ -48,7 +48,7 @@ const MyCardBoard = ({
   isLoanEnd,
   selectedCards,
   isGetActive,
-  getCards,
+  getSelectedCards,
 }: MyCardProps) => {
   const m = useTranslations("MyCardBoard");
   const { gameInfo, users, ws, isGetCard } = useGameStore((s) => ({
@@ -293,7 +293,7 @@ const MyCardBoard = ({
           <div className="w-12 lg:w-24 flex flex-col gap-1">
             <button
               disabled={!isGetActive}
-              onClick={getCards}
+              onClick={getSelectedCards}
               className={`text-xs truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400`}
             >
               {m("getSelectedCard")}
