@@ -54,7 +54,8 @@
     "writeAuthCode": "メールで受け取った認証コードを入力してください",
     "sendAuthCode": "認証コードを受け取る",
     "alreadyRequestAuthCode": "発送完了",
-    "wrongAuthCode": "認証コードが違います"
+    "wrongAuthCode": "認証コードが違います",
+    "maxLength": "最大文字数(6文字)を超えています"
   },
   "Callback": {
     "title": "ログイン中",
