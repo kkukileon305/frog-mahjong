@@ -38,9 +38,7 @@ const RootLayout = async ({
     <html lang={locale}>
       <body className={locale === "kr" ? fontKR.className : fontJP.className}>
         <NextIntlClientProvider messages={messages}>
-          <div className="min-h-[calc(100dvh)] bg-main bg-center bg-cover">
-            {children}
-          </div>
+          <div className="min-h-[calc(100dvh)] bg-main bg-top">{children}</div>
         </NextIntlClientProvider>
 
         <SpeedInsights />

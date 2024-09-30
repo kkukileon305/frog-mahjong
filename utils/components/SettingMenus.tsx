@@ -7,7 +7,7 @@ import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 
 const SettingMenus = () => {
-  const m = useTranslations("settings");
+  const m = useTranslations("Settings");
 
   const [isOpen, setIsOpen] = useState(false);
   const { setVolume, volume, audios } = useSoundStore((s) => ({
@@ -94,7 +94,7 @@ const SettingMenus = () => {
           </div>
           <div className="bg-white">
             <Link className="p-2 block hover:bg-gray-200" href="/license">
-              {m("term")}
+              {m("license")}
             </Link>
           </div>
         </div>
