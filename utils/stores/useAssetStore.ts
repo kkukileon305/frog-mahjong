@@ -10,11 +10,11 @@ type ImageStore = {
   isError: boolean;
   setIsError: (error: boolean) => void;
 
-  loadedImagesCount: number;
-  setLoadedImages: (loadedImagesCount: number) => void;
+  loadedAssetCount: number;
+  setLoadedAssetCount: (loadedAssetCount: number) => void;
 };
 
-const useImageStore = create<ImageStore>((set) => ({
+const useAssetStore = create<ImageStore>((set) => ({
   isLoaded: false,
   setIsLoaded: (isLoaded: boolean) => set({ isLoaded }),
 
@@ -24,8 +24,8 @@ const useImageStore = create<ImageStore>((set) => ({
   isError: false,
   setIsError: (error: boolean) => set({ isError: error }),
 
-  loadedImagesCount: 0,
-  setLoadedImages: (loadedImagesCount: number) => set({ loadedImagesCount }),
+  loadedAssetCount: 0,
+  setLoadedAssetCount: (loadedAssetCount: number) => set({ loadedAssetCount }),
 }));
 
-export default useImageStore;
+export default useAssetStore;

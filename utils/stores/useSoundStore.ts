@@ -11,7 +11,7 @@ import failAudioSrc from "@/public/audios/fail.mp3";
 import myTurnSrc from "@/public/audios/myturn.mp3";
 import timeoutSrc from "@/public/audios/timeout.mp3";
 
-type GameAudios = {
+export type GameAudios = {
   commonAllReadyAudio: HTMLAudioElement;
   commonLoanAudio: HTMLAudioElement;
   commonLoanFailedAudio: HTMLAudioElement;
@@ -31,7 +31,6 @@ type SoundStore = {
 
   volume: number;
   setVolume: (volume: number) => void;
-  init: () => void;
 };
 
 const useSoundStore = create<SoundStore>((set) => ({
@@ -49,23 +48,6 @@ const useSoundStore = create<SoundStore>((set) => ({
 
       localStorage.setItem("volume", volume.toString());
       return { audios: prev.audios, volume };
-    }),
-
-  init: () =>
-    set({
-      audios: {
-        commonAllReadyAudio: new Audio(commonAllReadySrc),
-        commonLoanAudio: new Audio(commonLoanSrc),
-        commonLoanFailedAudio: new Audio(commonLoanFailedSrc),
-        commonStartAudio: new Audio(commonStartSrc),
-        cardChapAudio: new Audio(cardChapWavSrc),
-        cardMovieAudio: new Audio(cardMoveSrc),
-        commonDrawAudio: new Audio(commonDrawSrc),
-        winAudio: new Audio(winAudioSrc),
-        failAudio: new Audio(failAudioSrc),
-        myTurnAudio: new Audio(myTurnSrc),
-        timeoutAudio: new Audio(timeoutSrc),
-      },
     }),
 }));
 
