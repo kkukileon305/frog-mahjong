@@ -290,11 +290,11 @@ const MyCardBoard = ({
         </div>
 
         <div className="flex">
-          <div className="w-12 lg:w-24 flex flex-col gap-1">
+          <div className="w-12 lg:w-24 flex flex-col justify-center gap-1">
             <button
               disabled={!isGetActive}
               onClick={getSelectedCards}
-              className={`text-xs truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400`}
+              className={`text-[8px] h-full truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-red-800 disabled:bg-gray-500 disabled:text-gray-400`}
             >
               {m("getSelectedCard")}
             </button>
@@ -302,7 +302,7 @@ const MyCardBoard = ({
             <button
               disabled={!isFullSixCard}
               onClick={onSuteru}
-              className={`text-xs truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold ${
+              className={`text-[8px] h-full truncate lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold ${
                 discardMode ? "bg-gray-400" : "bg-gray-600"
               } disabled:bg-gray-500 disabled:text-gray-400`}
             >
@@ -322,7 +322,7 @@ const MyCardBoard = ({
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
-              className={`text-xs lg:text-base h-full text-white p-1 lg:p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
+              className={`text-[8px] text-xs lg:text-base h-full text-white p-1 lg:p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
                 isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
@@ -332,7 +332,7 @@ const MyCardBoard = ({
             <button
               disabled={!isFullSixCard || scoreResult.score < 5}
               onClick={handleWin}
-              className="text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="text-[8px] text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {isUserLoan ? m("loanVictory") : m("normalVictory")}
             </button>
