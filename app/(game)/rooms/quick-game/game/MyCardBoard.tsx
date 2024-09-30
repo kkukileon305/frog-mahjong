@@ -263,7 +263,7 @@ const MyCardBoard = ({
             isActive ? "border-red-500" : "border-white"
           }`}
         >
-          <p className="w-8 font-bold text-xs lg:text-xl text-white">
+          <p className="w-fit font-bold text-xs lg:text-xl text-white">
             {scoreResult.score}
             <span className="">{m("score")}</span>
           </p>
@@ -322,7 +322,7 @@ const MyCardBoard = ({
                 )
               }
               onClick={() => setIsLoanSelectMode(!isLoanSelectMode)}
-              className={`text-[8px] text-xs lg:text-base h-full text-white p-1 lg:p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
+              className={`text-[8px] lg:text-base h-full text-white p-1 lg:p-2 rounded-xl font-bold disabled:bg-gray-500 disabled:text-gray-400 ${
                 isLoanSelectMode ? "bg-blue-800" : "bg-red-800"
               }`}
             >
@@ -332,7 +332,7 @@ const MyCardBoard = ({
             <button
               disabled={!isFullSixCard || scoreResult.score < 5}
               onClick={handleWin}
-              className="text-[8px] text-xs lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="text-[8px] lg:text-base text-white p-1 lg:p-2 rounded-xl font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {isUserLoan ? m("loanVictory") : m("normalVictory")}
             </button>
