@@ -202,6 +202,10 @@ const SignUpForm = () => {
           }`}
           {...register("name", {
             required: m("writeName"),
+            maxLength: {
+              value: 6,
+              message: m("maxLength"),
+            },
           })}
         />
         {errors.name && (

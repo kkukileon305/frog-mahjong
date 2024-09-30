@@ -54,7 +54,8 @@
     "writeAuthCode": "이메일로 받은 인증번호를 입력해주세요",
     "sendAuthCode": "인증 번호 발송",
     "alreadyRequestAuthCode": "발송완료",
-    "wrongAuthCode": "잘못된 인증코드입니다"
+    "wrongAuthCode": "잘못된 인증코드입니다",
+    "maxLength": "6글자 이하만 가능합니다"
   },
   "Callback": {
     "title": "로그인 중",
