@@ -47,7 +47,9 @@
     "signUp": "회원가입",
     "isAgree": "회원가입 시  <span>이용약관</span>에 동의한 것으로 간주됩니다",
     "successSignUp": "회원가입 완료",
-    "signIn": "로그인"
+    "signIn": "로그인",
+    "isOverAge": "14세 이상입니다",
+    "needAgree": "동의가 필요합니다"
   },
   "Callback": {
     "title": "로그인 중",

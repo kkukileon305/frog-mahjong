@@ -47,7 +47,9 @@
     "signUp": "アカウント生成",
     "isAgree": "アカウント生成する時に<span>利用契約</span>に同意したものとします",
     "successSignUp": "アカウント生成完了",
-    "signIn": "ログイン"
+    "signIn": "ログイン",
+    "isOverAge": "私は14歳以上です",
+    "needAgree": "同意が必要です"
   },
   "Callback": {
     "title": "ログイン中",

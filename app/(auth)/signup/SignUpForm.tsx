@@ -13,6 +13,7 @@ type SignUpInputs = {
   email: string;
   name: string;
   password: string;
+  isOverAge: boolean;
 };
 
 const SignUpForm = () => {
@@ -58,7 +59,7 @@ const SignUpForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
-        <label>{m("email")}</label>
+        <label htmlFor="email">{m("email")}</label>
         <input
           type="email"
           className={`border border-gray-400 rounded p-2 mt-3 ${
@@ -114,6 +115,25 @@ const SignUpForm = () => {
         {errors.name && (
           <span className="text-sm text-red-400 mt-2">
             {errors.name.message}
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        <div className="flex gap-2">
+          <input
+            type="checkbox"
+            id="over_age"
+            className="focus:outline-none"
+            {...register("isOverAge", {
+              required: m("needAgree"),
+            })}
+          />
+          <label htmlFor="over_age">{m("isOverAge")}</label>
+        </div>
+        {errors.isOverAge && (
+          <span className="text-sm text-red-400 mt-2">
+            {errors.isOverAge.message}
           </span>
         )}
       </div>
