@@ -125,7 +125,13 @@ const SignUpForm = () => {
         <p className="text-sm text-gray-800 mb-2">
           {m.rich("isAgree", {
             span: (chunks) => (
-              <Link href={"/terms-of-use"} className="underline font-bold">
+              <Link
+                href={
+                  "https://parallel-jodhpur-935.notion.site/10d2c71ec7c580359d04cd5af3006252"
+                }
+                className="underline font-bold"
+                target="_blank"
+              >
                 {chunks}
               </Link>
             ),

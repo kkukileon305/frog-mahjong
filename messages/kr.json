@@ -183,10 +183,11 @@
     "copySuccess": "복사성공",
     "error": "유저 검증 실패, 재로그인하세요"
   },
-  "settings": {
+  "Settings": {
     "volume": "볼륨",
     "term": "이용약관",
-    "privacy": "개인정보 처리방침"
+    "privacy": "개인정보 처리방침",
+    "license": "라이센스"
   },
   "Warning": {
     "title": "화면을 가로로 <br></br> 돌려주세요"

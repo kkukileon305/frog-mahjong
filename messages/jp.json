@@ -182,10 +182,11 @@
     "copySuccess": "コピーされました",
     "error": "ユーザー検証失敗"
   },
-  "settings": {
+  "Settings": {
     "volume": "音量",
     "term": "利用契約",
-    "privacy": "個人情報について"
+    "privacy": "個人情報について",
+    "license": "ライセンス契約"
   },
   "Warning": {
     "title": "画面を横に<br></br>してください"
