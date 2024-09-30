@@ -49,7 +49,12 @@
     "successSignUp": "アカウント生成完了",
     "signIn": "ログイン",
     "isOverAge": "私は14歳以上です",
-    "needAgree": "同意が必要です"
+    "needAgree": "同意が必要です",
+    "authCode": "認証コード",
+    "writeAuthCode": "メールで受け取った認証コードを入力してください",
+    "sendAuthCode": "認証コードを受け取る",
+    "alreadyRequestAuthCode": "発送完了",
+    "wrongAuthCode": "認証コードが違います"
   },
   "Callback": {
     "title": "ログイン中",
@@ -65,15 +70,15 @@
   },
   "ResetPassword" : {
     "title": "受け取ったメールを確認してください",
-    "verifyCode": "認証番号",
-    "writeCode": "認証番号を入力してください",
+    "verifyCode": "認証コード",
+    "writeCode": "認証コードを入力してください",
     "newPassword": "新しいパスワード(英数字6桁以上)",
     "writePassword": "新しいパスワードを入力してください",
     "checkPassword": "パスワードを英数字6桁以上で入力してください",
     "resetPassword": "パスワードを再設定",
     "successResetPassword": "パスワードが再設定されました",
     "reSignIn": "再ログイン",
-    "error": "メールアドレスまたは認証番号が違います"
+    "error": "メールアドレスまたは認証コードが違います"
   },
   "MatchSettingForm": {
     "maxPlayerNumber": "最大プレイヤー数",
