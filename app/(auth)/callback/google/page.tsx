@@ -5,13 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axiosInstance, { TokenType } from "@/utils/axios";
 import { setCookie } from "cookies-next";
 import { useTranslations } from "next-intl";
-import usePreloadImage from "@/utils/hooks/usePreloadImage";
+import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 
 const InnerPage = () => {
   const m = useTranslations("Callback");
 
-  const { loadedImagesCount, imagesLength, isLoading, loadImages } =
-    usePreloadImage();
+  const { loadedAssetCount, assetLength, isLoading, loadImages } =
+    usePreloadAssets();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -63,8 +63,8 @@ const InnerPage = () => {
         <p className="text-3xl font-bold">
           {isLoading
             ? m("loadingImages", {
-                loadedImagesCount,
-                imagesLength,
+                loadedAssetCount,
+                assetLength,
               })
             : m("title")}
         </p>

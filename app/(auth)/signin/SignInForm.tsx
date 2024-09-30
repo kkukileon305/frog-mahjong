@@ -10,7 +10,7 @@ import { setCookie } from "cookies-next";
 import { USER_NOT_FOUND } from "@/utils/constants/errTypes";
 import { PASSWORD_NOT_MATCH } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
-import usePreloadImage from "@/utils/hooks/usePreloadImage";
+import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 
 type SignInInputs = {
   email: string;
@@ -30,9 +30,9 @@ const SignInForm = () => {
   const {
     loadImages,
     isLoading: isImageLoading,
-    loadedImagesCount,
-    imagesLength,
-  } = usePreloadImage();
+    loadedAssetCount,
+    assetLength,
+  } = usePreloadAssets();
 
   const [isSignInFailed, setIsSignInFailed] = useState(false);
 
@@ -142,8 +142,8 @@ const SignInForm = () => {
       >
         {isImageLoading
           ? m("loadingImages", {
-              loadedImagesCount,
-              imagesLength,
+              loadedAssetCount,
+              assetLength,
             })
           : m("signIn")}
       </button>

@@ -7,7 +7,7 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
-import usePreloadImage from "@/utils/hooks/usePreloadImage";
+import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -29,12 +29,12 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const {
     //
     loadImages,
-    imagesLength,
+    assetLength,
     isLoading,
-    loadedImagesCount,
+    loadedAssetCount,
     isError,
     isLoaded,
-  } = usePreloadImage();
+  } = usePreloadAssets();
 
   const {
     register, //
@@ -130,8 +130,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
               <div className="flex h-[104px] justify-center items-center gap-4">
                 <p>
                   {m("loadingImages", {
-                    loadedImagesCount,
-                    imagesLength,
+                    loadedAssetCount,
+                    assetLength,
                   })}
                 </p>
               </div>
