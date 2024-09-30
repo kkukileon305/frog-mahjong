@@ -259,7 +259,7 @@ const MyCardBoard = ({
         </div>
 
         <div
-          className={`flex justify-center items-center border-2 px-4 lg:py-2 rounded-xl bg-white/20 ${
+          className={`flex justify-center items-center border-2 px-1 lg:px-4 lg:py-2 rounded-xl bg-white/20 ${
             isActive ? "border-red-500" : "border-white"
           }`}
         >
