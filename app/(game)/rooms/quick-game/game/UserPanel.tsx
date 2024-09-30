@@ -126,8 +126,10 @@ const UserPanel = ({
             <div className="flex items-center gap-2">
               <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-xl"></div>
               <div>
-                <p className="font-bold text-xs lg:text-xl">{user.name}</p>
-                <p className="text-xs lg:text-xl">{user.coin} Point</p>
+                <p className="font-bold text-[10px] lg:text-xl">{user.name}</p>
+                <p className="font-bold text-[10px] lg:text-xl">
+                  {user.coin} Point
+                </p>
               </div>
             </div>
 
@@ -229,8 +231,10 @@ const UserPanel = ({
                 </div>
               </div>
               <div>
-                <p className="font-bold text-xs lg:text-xl">{user.name}</p>
-                <p className="text-xs lg:text-xl">{user.coin} Point</p>
+                <p className="font-bold text-[10px] lg:text-xl">{user.name}</p>
+                <p className="font-bold text-[10px] lg:text-xl">
+                  {user.coin} Point
+                </p>
               </div>
             </div>
 
