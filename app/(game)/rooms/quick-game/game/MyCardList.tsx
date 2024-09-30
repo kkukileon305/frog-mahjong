@@ -37,7 +37,7 @@ const MyCardList = ({
           <button
             key={item.id}
             onClick={() => handleDiscard(item)}
-            className={`h-full group relative ${i === 2 && "mr-4"}`}
+            className={`h-full group relative ${i === 2 && "mr-2 lg:mr-4"}`}
             disabled={!discardMode}
           >
             <div className="h-full aspect-[40/58]">
@@ -68,7 +68,7 @@ const MyCardList = ({
     >
       {items.map((item, i) => (
         <Reorder.Item
-          className={`cursor-pointer h-full ${i === 2 && "mr-4"}`}
+          className={`cursor-pointer h-full ${i === 2 && "mr-2 lg:mr-4"}`}
           key={item.id}
           value={item}
           onDragEnd={onDragEnd}
