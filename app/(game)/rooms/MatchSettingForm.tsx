@@ -9,6 +9,7 @@ import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
+import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -68,13 +69,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     <div className="w-full">
       {isProfileModalOpen && (
         <ModalContainer setIsOpen={setIsProfileModalOpen}>
-          <p className="text-center py-2 mb-8">coming soon...</p>
-          <button
-            id="back"
-            className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
-          >
-            {m("close")}
-          </button>
+          <EditProfileImage />
         </ModalContainer>
       )}
 
