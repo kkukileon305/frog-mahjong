@@ -84,10 +84,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         />
       )}
 
-      <div className="flex justify-center gap-2">
+      <div className="flex justify-center items-center gap-2">
         <button
           onClick={() => setIsProfileModalOpen(true)}
-          className="w-12 aspect-square rounded-xl border-2 border-white"
+          className="w-20 aspect-square rounded-xl border-2 border-white"
         >
           <img src={frogPink.src} alt="icon" className="w-full h-full" />
         </button>
