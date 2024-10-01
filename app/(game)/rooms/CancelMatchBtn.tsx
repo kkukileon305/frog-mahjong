@@ -17,8 +17,6 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
   const userID = getCookie("userID") as string;
   const store = useGameStore();
 
-  const m = useTranslations("QuickMatchingBtn");
-
   const cancelQuickMatchingSocket = () => {
     const request: CancelMatch = {
       userID: Number(userID),

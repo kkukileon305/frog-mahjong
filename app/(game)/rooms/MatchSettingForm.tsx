@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
+import ModalContainer from "@/utils/components/ModalContainer";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -27,7 +28,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   );
 
   const {
-    //
     loadImages,
     assetLength,
     isLoading,
@@ -50,6 +50,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const { count, setCount, timer, setTimer, setPassword } =
     useMatchSettingStore();
 
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
   useEffect(() => {
     setCount(2);
     setTimer(formMetadata.timers[0]);
@@ -64,6 +66,18 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
   return (
     <div className="w-full">
+      {isProfileModalOpen && (
+        <ModalContainer setIsOpen={setIsProfileModalOpen}>
+          <p className="text-center py-2 mb-8">coming soon...</p>
+          <button
+            id="back"
+            className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+          >
+            {m("close")}
+          </button>
+        </ModalContainer>
+      )}
+
       {openMatchModal && (
         <MatchingModal
           mode={openMatchModal}
@@ -72,7 +86,12 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
       )}
 
       <div className="flex justify-center gap-2">
-        <div className="w-12 aspect-square rounded-xl border-2 border-white"></div>
+        <button
+          onClick={() => setIsProfileModalOpen(true)}
+          className="w-12 aspect-square rounded-xl border-2 border-white"
+        >
+          icon
+        </button>
 
         <div className="font-bold">
           <p className="text-xl">{userData.name}</p>
