@@ -6,12 +6,15 @@ import axiosInstance, { TokenType } from "@/utils/axios";
 import { setCookie } from "cookies-next";
 import { useTranslations } from "next-intl";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
+import ProgressBar from "@/utils/components/ProgressBar";
 
 const InnerPage = () => {
   const m = useTranslations("Callback");
 
   const { loadedAssetCount, assetLength, isLoading, loadImages } =
     usePreloadAssets();
+
+  const progress = Math.floor((loadedAssetCount * 100) / assetLength);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -60,14 +63,11 @@ const InnerPage = () => {
   return (
     <div>
       <div className="mx-auto max-w-3xl min-h-[calc(100dvh-64px)] flex justify-center items-center">
-        <p className="text-3xl font-bold">
-          {isLoading
-            ? m("loadingImages", {
-                loadedAssetCount,
-                assetLength,
-              })
-            : m("title")}
-        </p>
+        {isLoading ? (
+          <ProgressBar progress={progress} />
+        ) : (
+          <p className="text-3xl font-bold">{m("title")}</p>
+        )}
       </div>
     </div>
   );

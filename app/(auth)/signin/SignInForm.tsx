@@ -11,6 +11,7 @@ import { USER_NOT_FOUND } from "@/utils/constants/errTypes";
 import { PASSWORD_NOT_MATCH } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
+import ProgressBar from "@/utils/components/ProgressBar";
 
 type SignInInputs = {
   email: string;
@@ -81,6 +82,8 @@ const SignInForm = () => {
     }
   };
 
+  const progress = Math.floor((loadedAssetCount * 100) / assetLength);
+
   return (
     <form
       className="flex flex-col gap-8 py-4 rounded-xl"
@@ -137,15 +140,10 @@ const SignInForm = () => {
 
       <button
         type="submit"
-        className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
+        className="w-full bg-sky-500 rounded-lg py-3 px-2 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
-        {isImageLoading
-          ? m("loadingImages", {
-              loadedAssetCount,
-              assetLength,
-            })
-          : m("signIn")}
+        {isImageLoading ? <ProgressBar progress={progress} /> : m("signIn")}
       </button>
     </form>
   );

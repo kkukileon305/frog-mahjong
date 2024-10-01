@@ -10,6 +10,7 @@ import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
+import ProgressBar from "@/utils/components/ProgressBar";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -36,6 +37,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     isError,
     isLoaded,
   } = usePreloadAssets();
+
+  const progress = Math.floor((loadedAssetCount * 100) / assetLength);
 
   const {
     register, //
@@ -152,12 +155,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           {userData.coin > 0 &&
             (isLoading || !isLoaded ? (
               <div className="flex h-[104px] justify-center items-center gap-4">
-                <p>
-                  {m("loadingImages", {
-                    loadedAssetCount,
-                    assetLength,
-                  })}
-                </p>
+                <ProgressBar progress={progress} />
               </div>
             ) : (
               <div className="flex flex-col gap-4 lg:px-8">
