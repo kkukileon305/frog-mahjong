@@ -11,6 +11,7 @@ import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
+import frogPink from "@/public/icons/frog_pink.png";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -88,7 +89,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           onClick={() => setIsProfileModalOpen(true)}
           className="w-12 aspect-square rounded-xl border-2 border-white"
         >
-          icon
+          <img src={frogPink.src} alt="icon" className="w-full h-full" />
         </button>
 
         <div className="font-bold">
