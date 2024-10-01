@@ -63,7 +63,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   });
 
   return (
-    <>
+    <div className="w-full">
       {openMatchModal && (
         <MatchingModal
           mode={openMatchModal}
@@ -71,9 +71,25 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         />
       )}
 
+      <div className="flex justify-center gap-2">
+        <div className="w-12 aspect-square rounded-xl border-2 border-white"></div>
+
+        <div className="font-bold">
+          <p className="text-xl">{userData.name}</p>
+          <div className="flex gap-1">
+            (icon)
+            <p className="">
+              {m("nokori", {
+                coin: userData.coin,
+              })}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full flex flex-col gap-8 my-8"
+        className="w-full flex flex-col gap-8 mt-8"
       >
         <>
           <div className="flex flex-col">
@@ -119,12 +135,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             </div>
           </div>
 
-          <p className="text-center font-bold mb-4">
-            {m("nokori", {
-              coin: userData.coin,
-            })}
-          </p>
-
           {userData.coin > 0 &&
             (isLoading || !isLoaded ? (
               <div className="flex h-[104px] justify-center items-center gap-4">
@@ -136,7 +146,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col gap-4 md:px-8">
+              <div className="flex flex-col gap-4 lg:px-8">
                 <button
                   onClick={() => setOpenMatchModal("NORMAL")}
                   className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
@@ -168,7 +178,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           )}
         </>
       </form>
-    </>
+    </div>
   );
 };
 
