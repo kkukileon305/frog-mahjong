@@ -28,7 +28,7 @@ const ChatItem = ({ chat, place }: ChatItemProps) => {
       `}
       />
       <div className="w-[calc(100%-20px)] rounded bg-white mb-2 p-2">
-        <p className="w-full break-words whitespace-pre-line font-bold">
+        <p className="w-full break-words whitespace-pre-line font-bold text-xs lg:text-base">
           {chat.message}
         </p>
       </div>
