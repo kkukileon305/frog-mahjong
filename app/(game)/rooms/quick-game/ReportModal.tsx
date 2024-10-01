@@ -104,7 +104,7 @@ const ReportModal = ({
           {reportData?.categories.map((d) => (
             <label
               key={d.id}
-              className={`w-full text-xl flex font-bold justify-center cursor-pointer py-2 ${
+              className={`w-full text-xs lg:text-xl flex font-bold cursor-pointer py-1 lg:py-2 ${
                 watch("categoryID") === d.id.toString()
                   ? "bg-button-selected text-white"
                   : "bg-white text-green-600"
