@@ -267,7 +267,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         </div>
 
         {isStarted ? (
-          <div className="basis-3/5 lg:py-4 py-2 relative z-20">
+          <div className="basis-3/5 lg:py-4 py-2 relative z-10">
             <div className="w-full h-[calc(100%-100px)] lg:h-[calc(100%-220px)] flex justify-center mb-2">
               <ShuffleLeftCards
                 leftCards={leftCards}
@@ -305,7 +305,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
             />
           </div>
         ) : (
-          <div className="basis-3/5 h-full flex justify-center items-center relative z-20">
+          <div className="basis-3/5 h-full flex justify-center items-center relative z-10">
             <div className="w-[120px]">
               {cards.length === 0 ? <p>cards Loading</p> : <ReadyStartText />}
             </div>

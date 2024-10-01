@@ -109,7 +109,7 @@ const UserPanel = ({
   if (user.id === currentUser?.id) {
     return (
       <div className="relative w-full h-1/2">
-        <ul className="absolute right-full text-black top-0 p-2 w-40 h-full overflow-hidden z-10">
+        <ul className="absolute right-full text-black top-0 w-40 h-fit overflow-hidden z-20">
           <AnimatePresence>
             {targetUserChatList.map((chat) => (
               <ChatItem key={chat.chatID} chat={chat} place={place} />
@@ -175,7 +175,7 @@ const UserPanel = ({
       )}
       <div className="relative w-full h-1/2">
         <ul
-          className={`absolute top-0 text-black p-2 w-40 z-10 h-full overflow-hidden ${
+          className={`absolute top-0 text-black w-40 z-20 h-fit overflow-hidden ${
             place === "left" ? "left-full" : "right-full"
           }`}
         >
