@@ -44,11 +44,6 @@ export type ErrorType = {
   msg: string;
 };
 
-export type ScoreResult = {
-  bonuses: string[];
-  score: number;
-};
-
 export type ScoreEndResult = {
   bonuses: string[];
   score: number;

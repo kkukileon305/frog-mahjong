@@ -14,7 +14,7 @@ import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axiosInstance, { ScoreResult } from "@/utils/axios";
+import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/functions/getPrevTurn";
 import {
@@ -26,6 +26,7 @@ import {
 import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import calculateScore, { ScoreResult } from "@/utils/functions/calculateScore";
 
 type MyCardProps = {
   discardMode: boolean;
@@ -83,22 +84,28 @@ const MyCardBoard = ({
   const calScore = async (values: CardImage[]) => {
     if (values.length === 6) {
       try {
-        const { data } = await axiosInstance.post<ScoreResult>(
-          "/v0.1/game/score/calculate",
+        const doraId = gameInfo?.dora?.cardID!;
+        const doraName = cards.find((ci) => ci.id === doraId)!.name;
+
+        const score = calculateScore(
           {
-            cards: values.map((ci) => ({ cardID: ci.id })),
-            roomID: Number(roomID),
+            Cards: values.map((value) => ({
+              Color: value.color,
+              Name: value.name,
+            })),
           },
           {
-            headers: {
-              tkn: getCookie("accessToken"),
-            },
+            Name: doraName,
           }
         );
 
+        const data: ScoreResult = {
+          score: score[0],
+          bonuses: score[1],
+        };
+
         setScoreResult(data);
       } catch (e) {
-        console.log(e);
         setScoreResult({
           score: 0,
           bonuses: [],
