@@ -30,6 +30,7 @@ export interface UserData {
   userID: number;
   coin: number;
   errType?: string;
+  profileID: number;
 }
 
 export type TokenType = {
