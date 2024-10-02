@@ -97,6 +97,12 @@ const SettingMenus = () => {
               {m("license")}
             </Link>
           </div>
+
+          <div className="bg-white">
+            <Link className="p-2 block hover:bg-gray-200" href="/license">
+              {m("license")}
+            </Link>
+          </div>
         </div>
       )}
     </div>

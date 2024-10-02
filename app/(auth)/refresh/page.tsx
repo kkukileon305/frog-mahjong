@@ -9,13 +9,15 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const m = useTranslations("Callback");
 
+  const userID = getCookie("userID") as string;
+
   const accessToken = getCookie("accessToken");
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
       try {
-        await axiosInstance.get("/v0.1/user", {
+        await axiosInstance.get(`/v0.1/users/${userID}`, {
           headers: {
             tkn: accessToken,
           },
