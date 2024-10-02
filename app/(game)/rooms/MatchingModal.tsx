@@ -33,6 +33,8 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isCopySuccess, setIsCopySuccess] = useState(false);
 
+  const userID = getCookie("userID") as string;
+
   const {
     handleSubmit,
     formState: { errors },
@@ -57,7 +59,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
 
     (async () => {
       try {
-        await axiosInstance.get("/v0.1/user", {
+        await axiosInstance.get(`/v0.1/users/${userID}`, {
           headers: {
             tkn: accessToken,
           },

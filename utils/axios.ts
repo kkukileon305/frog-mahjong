@@ -30,6 +30,7 @@ export interface UserData {
   userID: number;
   coin: number;
   errType?: string;
+  profileID: number;
 }
 
 export type TokenType = {
@@ -41,11 +42,6 @@ export type TokenType = {
 export type ErrorType = {
   errType: string;
   msg: string;
-};
-
-export type ScoreResult = {
-  bonuses: string[];
-  score: number;
 };
 
 export type ScoreEndResult = {

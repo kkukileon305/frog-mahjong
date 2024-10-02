@@ -1,5 +1,3 @@
-import { CANCEL_MATCH } from "@/utils/constants/const";
-
 export interface ChatResponse {
   event: "CHAT";
   message: string;

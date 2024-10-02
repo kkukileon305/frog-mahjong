@@ -11,7 +11,11 @@ const Match = async () => {
     cookies,
   });
 
-  const paths = ["/v0.1/rooms/meta", `/v0.1/user`];
+  const userID = getCookie("userID", {
+    cookies,
+  });
+
+  const paths = ["/v0.1/rooms/meta", `/v0.1/users/${userID}`];
   const urls = paths.map(
     (path) => (process.env.NEXT_PUBLIC_BACKEND_URL as string) + path
   );

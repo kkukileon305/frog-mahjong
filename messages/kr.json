@@ -196,7 +196,8 @@
     "volume": "볼륨",
     "term": "이용약관",
     "privacy": "개인정보 처리방침",
-    "license": "라이센스"
+    "license": "라이센스",
+    "quit": "회원탈퇴"
   },
   "Warning": {
     "title": "화면을 가로로 <br></br> 돌려주세요"
@@ -212,5 +213,11 @@
     "send": "보내기",
     "writeReason": "사유를 작성해주세요",
     "reason": "사유"
+  },
+  "Quit": {
+    "title": "회원탈퇴",
+    "back": "닫기",
+    "warning": "정말로 탈퇴하시겠습니까?",
+    "fail": "계정 삭제 실패"
   }
 }
