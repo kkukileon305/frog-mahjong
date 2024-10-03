@@ -1,17 +1,16 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axiosInstance, {
   AvailableProfileIcon,
   AvailableProfileIconResponse,
 } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import { IoClose } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const EditProfileImage = () => {
-  const m = useTranslations("MatchSettingForm");
-
   const [isLoading, setIsLoading] = useState(true);
   const [availableProfileList, setAvailableProfileList] = useState<
     AvailableProfileIcon[]
@@ -46,7 +45,11 @@ const EditProfileImage = () => {
 
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="flex justify-center py-4">
+          <AiOutlineLoading3Quarters className="animate-spin" />
+        </div>
+      )}
       {!isLoading && <div>{availableProfileList.length}</div>}
       <button
         id="back"
