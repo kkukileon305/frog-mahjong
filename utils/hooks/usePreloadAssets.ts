@@ -36,11 +36,12 @@ import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
 import myTurnSrc from "@/public/audios/myturn.mp3";
 import timeoutSrc from "@/public/audios/timeout.mp3";
-import useAssetStore from "@/utils/stores/useAssetStore";
 import firstIcon from "@/public/profiles/1.png";
 import secondIcon from "@/public/profiles/2.png";
 import thirdIcon from "@/public/profiles/3.png";
 import fourthIcon from "@/public/profiles/4.png";
+import coinIcon from "@/public/icons/coin.png";
+import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 
 type AssetType = {
@@ -68,6 +69,7 @@ const usePreloadAssets = () => {
     secondIcon,
     thirdIcon,
     fourthIcon,
+    coinIcon,
     Sealed,
     GreenBal,
     GreenEight,
