@@ -74,7 +74,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   return (
     <div className="w-full">
       {isProfileModalOpen && (
-        <ModalContainer setIsOpen={setIsProfileModalOpen}>
+        <ModalContainer
+          setIsOpen={setIsProfileModalOpen}
+          customColor="bg-game-icon"
+        >
           <EditProfileImage />
         </ModalContainer>
       )}

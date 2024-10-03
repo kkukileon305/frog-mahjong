@@ -14,16 +14,16 @@ type ModalContainerProps = {
     | Dispatch<SetStateAction<boolean>>
     | ((isOpenResultModal: boolean) => void);
   children: ReactNode;
-  isInGame?: boolean;
+  customColor?: string;
 };
 
 const ModalContainer = ({
   setIsOpen,
   children,
-  isInGame = false,
+  customColor,
 }: ModalContainerProps) => {
   const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
-    if ((e.target as HTMLElement).id === "back") {
+    if ((e.target as HTMLElement).closest("#back")) {
       setIsOpen && setIsOpen(false);
     }
   };
@@ -37,7 +37,7 @@ const ModalContainer = ({
     >
       <div
         className={`relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto p-4 rounded shadow ${
-          isInGame ? "bg-white/50" : "bg-white"
+          customColor ? customColor : "bg-white"
         }`}
       >
         {children}
