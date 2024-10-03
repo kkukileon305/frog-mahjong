@@ -37,6 +37,10 @@ import failAudioSrc from "@/public/audios/fail.mp3";
 import myTurnSrc from "@/public/audios/myturn.mp3";
 import timeoutSrc from "@/public/audios/timeout.mp3";
 import useAssetStore from "@/utils/stores/useAssetStore";
+import firstIcon from "@/public/profiles/1.png";
+import secondIcon from "@/public/profiles/2.png";
+import thirdIcon from "@/public/profiles/3.png";
+import fourthIcon from "@/public/profiles/4.png";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 
 type AssetType = {
@@ -60,6 +64,10 @@ const usePreloadAssets = () => {
   const { setAudios, setVolume } = useSoundStore();
 
   const imageAssets: AssetType[] = [
+    firstIcon,
+    secondIcon,
+    thirdIcon,
+    fourthIcon,
     Sealed,
     GreenBal,
     GreenEight,
