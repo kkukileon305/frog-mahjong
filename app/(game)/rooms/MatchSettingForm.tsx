@@ -12,6 +12,8 @@ import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
 import frogPink from "@/public/icons/frog_pink.png";
+import profiles from "@/utils/constants/profiles";
+import coinIcon from "@/public/icons/coin.png";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -72,7 +74,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   return (
     <div className="w-full">
       {isProfileModalOpen && (
-        <ModalContainer setIsOpen={setIsProfileModalOpen}>
+        <ModalContainer
+          setIsOpen={setIsProfileModalOpen}
+          customColor="bg-game-icon"
+        >
           <EditProfileImage />
         </ModalContainer>
       )}
@@ -87,15 +92,23 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
       <div className="flex justify-center items-center gap-2">
         <button
           onClick={() => setIsProfileModalOpen(true)}
-          className="w-20 aspect-square rounded-xl border-2 border-white"
+          className="w-20 aspect-square rounded-xl border-2 border-white overflow-hidden"
         >
-          <img src={frogPink.src} alt="icon" className="w-full h-full" />
+          <img
+            src={
+              profiles.find(
+                (profileIcon) => profileIcon.profileID === userData.profileID
+              )?.src!
+            }
+            alt="icon"
+            className="w-full h-full"
+          />
         </button>
 
         <div className="font-bold">
           <p className="text-xl">{userData.name}</p>
-          <div className="flex gap-1">
-            (icon)
+          <div className="flex gap-1 items-center">
+            <img src={coinIcon.src} alt="coin" className="w-5 aspect-square" />
             <p className="">
               {m("nokori", {
                 coin: userData.coin,

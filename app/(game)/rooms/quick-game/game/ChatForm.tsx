@@ -51,7 +51,7 @@ const ChatForm = () => {
   return (
     <>
       {isOpen && (
-        <ModalContainer setIsOpen={setIsOpen} isInGame>
+        <ModalContainer setIsOpen={setIsOpen} customColor="bg-white/50">
           <ChatHistoryModal />
         </ModalContainer>
       )}

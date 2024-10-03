@@ -78,6 +78,16 @@ export type CardListResponse = {
   cardIDList: number[];
 };
 
+export type AvailableProfileIcon = {
+  currentCount: number;
+  isAchieved: boolean;
+  profileID: number;
+};
+
+export type AvailableProfileIconResponse = {
+  profiles: AvailableProfileIcon[] | null;
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
