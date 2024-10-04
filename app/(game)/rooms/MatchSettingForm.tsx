@@ -79,7 +79,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           setIsOpen={setIsProfileModalOpen}
           customColor="bg-game-icon"
         >
-          <EditProfileImage />
+          <EditProfileImage userData={userData} />
         </ModalContainer>
       )}
 
