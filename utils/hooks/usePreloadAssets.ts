@@ -36,17 +36,18 @@ import winAudioSrc from "@/public/audios/win.mp3";
 import failAudioSrc from "@/public/audios/fail.mp3";
 import myTurnSrc from "@/public/audios/myturn.mp3";
 import timeoutSrc from "@/public/audios/timeout.mp3";
-import firstIcon from "@/public/profiles/1.png";
-import secondIcon from "@/public/profiles/2.png";
-import thirdIcon from "@/public/profiles/3.png";
-import fourthIcon from "@/public/profiles/4.png";
 import coinIcon from "@/public/icons/coin.png";
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
+import axiosInstance from "@/utils/axios";
+import useProfileIconStore, {
+  ProfileIcon,
+} from "@/utils/stores/useProfileIconStore";
+import { useEffect, useState } from "react";
 
 type AssetType = {
   url: string;
-  type: "image" | "audio";
+  type: "image" | "audio" | "profile";
   assetName?: string;
 };
 
@@ -60,15 +61,14 @@ const usePreloadAssets = () => {
     setIsError,
     loadedAssetCount,
     setLoadedAssetCount,
+    setAssetLength,
+    assetLength,
   } = useAssetStore();
 
   const { setAudios, setVolume } = useSoundStore();
+  const { setProfileIcon } = useProfileIconStore();
 
   const imageAssets: AssetType[] = [
-    firstIcon,
-    secondIcon,
-    thirdIcon,
-    fourthIcon,
     coinIcon,
     Sealed,
     GreenBal,
@@ -120,7 +120,29 @@ const usePreloadAssets = () => {
     type: "audio",
   }));
 
-  const allAssets = [...imageAssets, ...audioAssets];
+  const getAssets = async () => {
+    try {
+      const { data } = await axiosInstance.get<{ profiles: ProfileIcon[] }>(
+        "/v0.1/profiles"
+      );
+
+      setProfileIcon(data.profiles);
+
+      const iconAsset: AssetType[] = data.profiles.map((pf) => ({
+        url: pf.image,
+        type: "profile",
+      }));
+
+      const allAssets = [...imageAssets, ...iconAsset, ...audioAssets];
+
+      setAssetLength(allAssets.length);
+      return allAssets;
+    } catch (e) {
+      console.log(e);
+
+      return [];
+    }
+  };
 
   const preloadAssets = (
     assets: AssetType[],
@@ -137,7 +159,7 @@ const usePreloadAssets = () => {
       Promise.all(
         assets.map((asset) => {
           return new Promise<AssetType>((res, rej) => {
-            if (asset.type === "image") {
+            if (asset.type === "image" || asset.type === "profile") {
               const img = new Image();
 
               img.src = asset.url;
@@ -147,7 +169,7 @@ const usePreloadAssets = () => {
               };
               img.onerror = () =>
                 rej(new Error(`Failed to load image ${asset.url}`));
-            } else {
+            } else if (asset.type === "audio") {
               const audio = new Audio();
 
               audio.src = asset.url;
@@ -193,6 +215,7 @@ const usePreloadAssets = () => {
 
     try {
       setIsLoading(true);
+      const allAssets = await getAssets();
 
       await preloadAssets(allAssets, (progress) =>
         setLoadedAssetCount(progress)
@@ -213,7 +236,7 @@ const usePreloadAssets = () => {
     loadImages,
     isLoading,
     loadedAssetCount,
-    assetLength: allAssets.length,
+    assetLength,
   };
 };
 

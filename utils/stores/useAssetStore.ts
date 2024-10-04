@@ -12,6 +12,9 @@ type ImageStore = {
 
   loadedAssetCount: number;
   setLoadedAssetCount: (loadedAssetCount: number) => void;
+
+  assetLength: number;
+  setAssetLength: (assetLength: number) => void;
 };
 
 const useAssetStore = create<ImageStore>((set) => ({
@@ -26,6 +29,9 @@ const useAssetStore = create<ImageStore>((set) => ({
 
   loadedAssetCount: 0,
   setLoadedAssetCount: (loadedAssetCount: number) => set({ loadedAssetCount }),
+
+  assetLength: 0,
+  setAssetLength: (assetLength: number) => set({ assetLength }),
 }));
 
 export default useAssetStore;

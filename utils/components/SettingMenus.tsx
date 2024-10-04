@@ -7,9 +7,14 @@ import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 import ModalContainer from "@/utils/components/ModalContainer";
 import QuitModal from "@/app/(game)/rooms/QuitModal";
+import SignOutBtn from "@/utils/components/SignOutBtn";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 const SettingMenus = () => {
   const m = useTranslations("Settings");
+
+  const refreshToken = getCookie("refreshToken");
 
   const [isOpen, setIsOpen] = useState(false);
   const [isQuitModalOpen, setIsQuitModalOpen] = useState<boolean>(false);
@@ -109,19 +114,27 @@ const SettingMenus = () => {
               </Link>
             </div>
 
-            <div className="bg-gray-200 h-[1px]" />
+            {refreshToken && (
+              <>
+                <div className="bg-gray-200 h-[1px]" />
 
-            <div className="bg-white">
-              <button
-                onClick={() => {
-                  setIsQuitModalOpen(true);
-                  setIsOpen(false);
-                }}
-                className="w-full text-red-500 text-left p-2 block hover:bg-gray-200"
-              >
-                {m("quit")}
-              </button>
-            </div>
+                <div className="bg-white">
+                  <button
+                    onClick={() => {
+                      setIsQuitModalOpen(true);
+                      setIsOpen(false);
+                    }}
+                    className="w-full text-red-500 text-left p-2 block hover:bg-gray-200"
+                  >
+                    {m("quit")}
+                  </button>
+                </div>
+
+                <div className="bg-white">
+                  <SignOutBtn />
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>

@@ -249,6 +249,7 @@ export interface UserSocket {
   discardedCards: null | UserCard[];
   coin: number;
   turnNumber: number;
+  profileID: number;
 }
 
 export type UserCard = {

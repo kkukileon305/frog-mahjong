@@ -11,9 +11,8 @@ import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
-import frogPink from "@/public/icons/frog_pink.png";
-import profiles from "@/utils/constants/profiles";
 import coinIcon from "@/public/icons/coin.png";
+import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -31,6 +30,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
     null
   );
+
+  const { profileIcons } = useProfileIconStore();
 
   const {
     loadImages,
@@ -78,7 +79,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           setIsOpen={setIsProfileModalOpen}
           customColor="bg-game-icon"
         >
-          <EditProfileImage />
+          <EditProfileImage userData={userData} />
         </ModalContainer>
       )}
 
@@ -91,20 +92,24 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
       <div className="flex justify-center items-center gap-2">
         <button
+          disabled={!isLoaded}
           onClick={() => setIsProfileModalOpen(true)}
           className="w-20 aspect-square rounded-xl border-2 border-white overflow-hidden"
         >
-          <img
-            src={
-              profiles.find(
-                (profileIcon) => profileIcon.profileID === userData.profileID
-              )?.src!
-            }
-            alt="icon"
-            className="w-full h-full"
-          />
+          {isLoaded ? (
+            <img
+              src={
+                profileIcons.find(
+                  (profileIcon) => profileIcon.profileID === userData.profileID
+                )?.image!
+              }
+              alt="icon"
+              className="w-full h-full"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-200 animate-pulse" />
+          )}
         </button>
-
         <div className="font-bold">
           <p className="text-xl">{userData.name}</p>
           <div className="flex gap-1 items-center">
@@ -169,7 +174,11 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           {userData.coin > 0 &&
             (isLoading || !isLoaded ? (
               <div className="flex h-[104px] justify-center items-center gap-4">
-                <ProgressBar progress={progress} />
+                {assetLength === 0 ? (
+                  <p className="text-white">{m("getAsset")}</p>
+                ) : (
+                  <ProgressBar progress={progress} />
+                )}
               </div>
             ) : (
               <div className="flex flex-col gap-4 lg:px-8">
