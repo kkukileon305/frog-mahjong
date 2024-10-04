@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import {
   LoanBody,
   LoanRequest,
-  RoomOutBody,
-  RoomOutRequest,
   UserSocket,
 } from "@/utils/constants/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
@@ -18,6 +16,7 @@ import { getCookie } from "cookies-next";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import ModalContainer from "@/utils/components/ModalContainer";
 import ReportModal from "@/app/(game)/rooms/quick-game/ReportModal";
+import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -36,6 +35,11 @@ const UserPanel = ({
 }: UserPanelProps) => {
   const m = useTranslations("UserPanel");
   const audios = useSoundStore((s) => s.audios);
+  const profileIcons = useProfileIconStore((s) => s.profileIcons);
+
+  const userIcon = profileIcons.find(
+    (icon) => icon.profileID === user?.profileID
+  )!;
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
@@ -124,7 +128,13 @@ const UserPanel = ({
             }`}
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-xl"></div>
+              <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-xl overflow-hidden">
+                {userIcon ? (
+                  <img src={userIcon.image} alt={user.name} />
+                ) : (
+                  <div>x</div>
+                )}
+              </div>
               <div>
                 <p className="font-bold text-[10px] lg:text-xl">{user.name}</p>
                 <p className="font-bold text-[10px] lg:text-xl">
@@ -209,8 +219,18 @@ const UserPanel = ({
             <div className="flex items-center gap-2">
               <div
                 tabIndex={0}
-                className="w-8 lg:w-12 aspect-square relative border-white border rounded-xl group cursor-pointer"
+                className="w-8 lg:w-12 aspect-square relative group cursor-pointer"
               >
+                {userIcon ? (
+                  <img
+                    className=" border-white border rounded-xl"
+                    src={userIcon.image}
+                    alt={user.name}
+                  />
+                ) : (
+                  <div>x</div>
+                )}
+
                 <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
                   <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
                   <div
