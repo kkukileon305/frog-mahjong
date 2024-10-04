@@ -1,17 +1,13 @@
-import SignOutBtn from "@/utils/components/SignOutBtn";
 import SwitchLocale from "@/utils/components/SwitchLocale";
 import React from "react";
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { getCookie } from "cookies-next";
 import logo from "@/public/logos/logo.png";
 import Image from "next/image";
 import SettingMenus from "@/utils/components/SettingMenus";
+import { getTranslations } from "next-intl/server";
 
 const Header = async () => {
-  const refreshToken = getCookie("refreshToken", {
-    cookies,
-  });
+  const m = await getTranslations("Header");
 
   return (
     <header className="bg-white h-16 border-b px-2">
@@ -21,7 +17,9 @@ const Header = async () => {
         </Link>
 
         <div className="flex items-center gap-2">
-          {refreshToken && <SignOutBtn />}
+          <Link href="/tutorial" className="hover:bg-gray-200 p-2 rounded-xl">
+            {m("tutorial")}
+          </Link>
           <SwitchLocale />
           <SettingMenus />
         </div>

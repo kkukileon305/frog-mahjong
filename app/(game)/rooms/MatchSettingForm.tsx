@@ -11,7 +11,6 @@ import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
-import frogPink from "@/public/icons/frog_pink.png";
 import profiles from "@/utils/constants/profiles";
 import coinIcon from "@/public/icons/coin.png";
 
@@ -169,7 +168,11 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           {userData.coin > 0 &&
             (isLoading || !isLoaded ? (
               <div className="flex h-[104px] justify-center items-center gap-4">
-                <ProgressBar progress={progress} />
+                {assetLength === 0 ? (
+                  <p className="text-white">{m("getAsset")}</p>
+                ) : (
+                  <ProgressBar progress={progress} />
+                )}
               </div>
             ) : (
               <div className="flex flex-col gap-4 lg:px-8">

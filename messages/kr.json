@@ -9,7 +9,8 @@
   },
   "Header": {
     "title": "개굴작",
-    "signOut": "로그아웃"
+    "signOut": "로그아웃",
+    "tutorial": "튜토리얼"
   },
   "MainPage": {
     "signIn": "로그인",
@@ -28,7 +29,8 @@
     "forgotPassword": "비밀번호를 잊으셨나요?",
     "failSignIn": "비밀번호가 틀렸거나 없는 회원입니다",
     "signIn": "로그인",
-    "loadingImages": "에셋을 불러오는 중 {loadedAssetCount}/{assetLength}"
+    "loadingImages": "에셋을 불러오는 중 {loadedAssetCount}/{assetLength}",
+    "getAsset": "에셋 정보를 불러오는중"
   },
   "SignUp": {
     "title": "회원가입",
@@ -59,7 +61,8 @@
   },
   "Callback": {
     "title": "로그인 중",
-    "loadingImages": "이미지 불러오는 중 {loadedAssetCount}/{assetLength}"
+    "loadingImages": "이미지 불러오는 중 {loadedAssetCount}/{assetLength}",
+    "getAsset": "에셋 정보를 불러오는중"
   },
   "ForgotPassword" : {
     "title": "비밀번호를 잊으셨나요?",
@@ -92,7 +95,8 @@
     "nokori": "남은 코인 {coin}개",
     "noCoin": "코인이 부족하여 진행 할 수 없습니다",
     "loadingImages": "이미지 불러오는 중 {loadedAssetCount}/{assetLength}",
-    "close": "닫기"
+    "close": "닫기",
+    "getAsset": "에셋 정보를 불러오는중"
   },
   "AbnormalExit": {
     "title": "다른 유저가 이탈하여 게임을 종료합니다",

@@ -143,7 +143,13 @@ const SignInForm = () => {
         className="w-full bg-sky-500 rounded-lg py-3 px-2 text-white font-bold disabled:bg-gray-400"
         disabled={isLoading}
       >
-        {isImageLoading ? <ProgressBar progress={progress} /> : m("signIn")}
+        {isImageLoading &&
+          (assetLength === 0 ? (
+            m("getAsset")
+          ) : (
+            <ProgressBar progress={progress} />
+          ))}
+        {!isImageLoading && m("signIn")}
       </button>
     </form>
   );
