@@ -63,11 +63,14 @@ const InnerPage = () => {
   return (
     <div>
       <div className="mx-auto max-w-3xl min-h-[calc(100dvh-64px)] flex justify-center items-center">
-        {isLoading ? (
-          <ProgressBar progress={progress} />
-        ) : (
-          <p className="text-3xl font-bold">{m("title")}</p>
-        )}
+        {isLoading &&
+          (assetLength === 0 ? (
+            <p>{m("getAsset")}</p>
+          ) : (
+            <ProgressBar progress={progress} />
+          ))}
+
+        {!isLoading && <p className="text-3xl font-bold">{m("title")}</p>}
       </div>
     </div>
   );

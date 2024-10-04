@@ -66,8 +66,7 @@ const usePreloadAssets = () => {
   } = useAssetStore();
 
   const { setAudios, setVolume } = useSoundStore();
-  const { setProfileIcon, setIsProfileIconLoading, isProfileIconLoading } =
-    useProfileIconStore();
+  const { setProfileIcon } = useProfileIconStore();
 
   const imageAssets: AssetType[] = [
     coinIcon,
@@ -123,7 +122,6 @@ const usePreloadAssets = () => {
 
   const getAssets = async () => {
     try {
-      setIsProfileIconLoading(true);
       const { data } = await axiosInstance.get<{ profiles: ProfileIcon[] }>(
         "/v0.1/profiles"
       );
@@ -143,8 +141,6 @@ const usePreloadAssets = () => {
       console.log(e);
 
       return [];
-    } finally {
-      setIsProfileIconLoading(false);
     }
   };
 
@@ -210,7 +206,7 @@ const usePreloadAssets = () => {
     });
 
   const loadImages = async () => {
-    if (isProfileIconLoading || isLoaded || isLoading) {
+    if (isLoaded || isLoading) {
       if (process.env.NODE_ENV === "development") {
         console.log("already loaded assets!");
       }
