@@ -92,6 +92,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
       <div className="flex justify-center items-center gap-2">
         <button
+          disabled={!isLoaded}
           onClick={() => setIsProfileModalOpen(true)}
           className="w-20 aspect-square rounded-xl border-2 border-white overflow-hidden"
         >
