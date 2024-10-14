@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: 'SB';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("./fonts/sb_m.ttf") format('truetype');
+    }
+}
+
+@layer utilities {
+    .custom-shadow {
+        box-shadow: 0 4px 3px 0 rgba(0, 0, 0, 0.25); /* 스프레드 0 설정 */
+    }
+}
+
 body {
     min-height: 100dvh;
 }

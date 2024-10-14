@@ -18,6 +18,8 @@ type EditProfileImageProps = {
 };
 
 const EditProfileImage = ({ userData }: EditProfileImageProps) => {
+  const m = useTranslations("EditProfileImage");
+
   const router = useRouter();
 
   const allProfileIcons = useProfileIconStore((s) => s.profileIcons);
@@ -85,6 +87,9 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
 
   return (
     <div>
+      <p className="text-center font-sb text-xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">
+        {m("title")}
+      </p>
       {isLoading && (
         <div className="flex justify-center py-4">
           <AiOutlineLoading3Quarters className="animate-spin" />
@@ -92,13 +97,11 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
       )}
       {!isLoading && (
         <div>
-          <div className="w-20 mx-auto aspect-square border-2 border-white rounded-xl overflow-hidden">
+          <div className="w-20 mx-auto overflow-hidden py-4">
             <img src={currentIcons.image} alt="icon" />
           </div>
 
-          <div className="w-full h-[1px] bg-gray-200 my-8" />
-
-          <div className="w-fit mx-auto bg-match-button p-2 rounded-xl grid grid-cols-3 gap-2">
+          <div className="w-fit mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2">
             {allProfileIcons.map((icon) => (
               <div key={icon.profileID} className="">
                 {availableProfileList
@@ -109,9 +112,13 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
                       <button
                         disabled
                         onClick={() => changeProfileID(icon.profileID)}
-                        className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-red-500"
+                        className="w-full aspect-square"
                       >
-                        <img src={icon.image} alt="icon" />
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
                       </button>
                     )}
 
@@ -119,9 +126,13 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
                       <button
                         disabled={isChanging}
                         onClick={() => changeProfileID(icon.profileID)}
-                        className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-white"
+                        className="w-full aspect-square"
                       >
-                        <img src={icon.image} alt="icon" />
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
                       </button>
                     )}
                   </>
@@ -134,7 +145,9 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
                   </button>
                 )}
 
-                <p className="text-xs">{icon.name}</p>
+                <p className="font-sb text-xs text-center text-white">
+                  {icon.name}
+                </p>
               </div>
             ))}
           </div>

@@ -128,7 +128,7 @@ const UserPanel = ({
             }`}
           >
             <div className="flex items-center gap-2">
-              <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-xl overflow-hidden">
+              <div className="w-8 lg:w-12 aspect-square relative border-white border rounded-lg overflow-hidden">
                 {userIcon ? (
                   <img src={userIcon.image} alt={user.name} />
                 ) : (
@@ -223,7 +223,7 @@ const UserPanel = ({
               >
                 {userIcon ? (
                   <img
-                    className=" border-white border rounded-xl"
+                    className=" border-white border rounded-lg"
                     src={userIcon.image}
                     alt={user.name}
                   />
