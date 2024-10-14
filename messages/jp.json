@@ -222,5 +222,8 @@
     "back": "閉じる",
     "warning": "本当に削除しますか？",
     "fail": "削除失敗"
+  },
+  "EditProfileImage": {
+    "title": "アイコン変更"
   }
 }

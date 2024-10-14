@@ -15,6 +15,9 @@ const config: Config = {
         rooms: "url('../public/bg/room_background.jpg')",
         main: "url('../public/bg/main_background.jpg')",
       },
+      fontFamily: {
+        sb: ["SB"],
+      },
     },
     colors: {
       ...colors,
