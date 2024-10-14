@@ -94,7 +94,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         <button
           disabled={!isLoaded}
           onClick={() => setIsProfileModalOpen(true)}
-          className="w-20 aspect-square rounded-xl border-2 border-white overflow-hidden"
+          className="w-20 aspect-square"
         >
           {isLoaded ? (
             <img
