@@ -66,7 +66,7 @@ const SettingMenus = () => {
 
       <div id="setting" className="relative" tabIndex={0}>
         <div
-          className={`cursor-pointer p-2 rounded-xl hover:bg-gray-200 ${
+          className={`cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200 ${
             isOpen && "bg-gray-200"
           }`}
         >

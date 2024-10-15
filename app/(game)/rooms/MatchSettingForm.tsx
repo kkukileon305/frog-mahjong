@@ -125,18 +125,18 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full flex flex-col gap-8 mt-8"
+        className="w-full flex flex-col gap-8 landscape:gap-2 mt-8 landscape:mt-4"
       >
         <>
           <div className="flex flex-col">
-            <label className="text-center text-3xl font-bold">
+            <label className="text-center text-responsive font-bold">
               {m("timeout")}
             </label>
-            <div className="flex justify-between gap-2 mt-3">
+            <div className="flex justify-between gap-2 mt-3 landscape:mt-1">
               {formMetadata.timers.map((i) => (
                 <label
                   key={i}
-                  className={`w-1/3 text-xl flex font-bold justify-center cursor-pointer py-2 ${
+                  className={`w-1/3 text-responsive-small flex font-bold justify-center cursor-pointer py-1 ${
                     timer === i
                       ? "bg-button-selected text-white"
                       : "bg-white text-green-600"
@@ -149,15 +149,15 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col mb-4">
-            <label className="text-center text-3xl font-bold">
+          <div className="flex flex-col mb-4 landscape:mb-2">
+            <label className="text-center text-responsive font-bold">
               {m("maxPlayerNumber")}
             </label>
-            <div className="flex justify-between gap-2 mt-3">
+            <div className="flex justify-between gap-2 mt-3 landscape:mt-1">
               {["2", "3", "4"].map((i) => (
                 <label
                   key={i}
-                  className={`w-1/3 text-xl flex font-bold justify-center cursor-pointer py-2 ${
+                  className={`w-1/3 text-responsive-small flex font-bold justify-center cursor-pointer py-1 ${
                     count.toString() === i
                       ? "bg-button-selected text-white"
                       : "bg-white text-green-600"
@@ -181,24 +181,24 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 )}
               </div>
             ) : (
-              <div className="flex flex-col gap-4 lg:px-8">
+              <div className="flex flex-col gap-4 landscape:gap-2 lg:px-8">
                 <button
                   onClick={() => setOpenMatchModal("NORMAL")}
-                  className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                  className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
                 >
                   {m("normal")}
                 </button>
                 <div className="flex gap-4">
                   <button
                     onClick={() => setOpenMatchModal("CREATE")}
-                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                    className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
                   >
                     {m("createRoom")}
                   </button>
 
                   <button
                     onClick={() => setOpenMatchModal("ENTER")}
-                    className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
+                    className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
                   >
                     {m("enterRoom")}
                   </button>

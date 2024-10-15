@@ -18,6 +18,10 @@ const config: Config = {
       fontFamily: {
         sb: ["SB"],
       },
+      fontSize: {
+        responsive: "clamp(1rem, 2dvh + 1rem, 36px)",
+        "responsive-small": "clamp(1rem, 2dvh, 36px)",
+      },
     },
     colors: {
       ...colors,

@@ -21,7 +21,7 @@ const SwitchLocale = () => {
 
   return (
     <div className="relative group" tabIndex={0}>
-      <div className="cursor-pointer hover:bg-gray-200 group-focus:bg-gray-200 p-2 rounded-xl">
+      <div className="cursor-pointer hover:bg-gray-200 group-focus:bg-gray-200 p-2 landscape:p-1 rounded-xl">
         <IoLanguage size={24} />
       </div>
       <div className="absolute top-[calc(100%+4px)] right-0 invisible group-focus:visible flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
