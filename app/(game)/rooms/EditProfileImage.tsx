@@ -96,12 +96,16 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
         </div>
       )}
       {!isLoading && (
-        <div>
-          <div className="w-20 mx-auto overflow-hidden py-4">
-            <img src={currentIcons.image} alt="icon" />
+        <>
+          <div className="overflow-hidden py-4">
+            <img
+              src={currentIcons.image}
+              alt="icon"
+              className="w-1/6 mx-auto"
+            />
           </div>
 
-          <div className="w-fit mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2">
+          <div className="w-fit max-h-[30dvh] mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2 overflow-y-auto">
             {allProfileIcons.map((icon) => (
               <div key={icon.profileID} className="">
                 {availableProfileList
@@ -151,7 +155,7 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
               </div>
             ))}
           </div>
-        </div>
+        </>
       )}
       <button
         id="back"
