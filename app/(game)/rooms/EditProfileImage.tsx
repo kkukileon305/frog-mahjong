@@ -96,12 +96,160 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
         </div>
       )}
       {!isLoading && (
-        <div>
-          <div className="w-20 mx-auto overflow-hidden py-4">
-            <img src={currentIcons.image} alt="icon" />
+        <>
+          <div className="overflow-hidden py-4">
+            <img
+              src={currentIcons.image}
+              alt="icon"
+              className="w-1/6 mx-auto"
+            />
           </div>
 
-          <div className="w-fit mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2">
+          <div className="w-fit max-h-[30dvh] mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2 overflow-y-auto">
+            {allProfileIcons.map((icon) => (
+              <div key={icon.profileID} className="">
+                {availableProfileList
+                  .map((icon) => icon.profileID)
+                  .includes(icon.profileID) ? (
+                  <>
+                    {icon.profileID === userData.profileID && (
+                      <button
+                        disabled
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+
+                    {icon.profileID !== userData.profileID && (
+                      <button
+                        disabled={isChanging}
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <button
+                    disabled
+                    className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-gray-400 grayscale"
+                  >
+                    <img src={icon.image} alt="icon" />
+                  </button>
+                )}
+
+                <p className="font-sb text-xs text-center text-white">
+                  {icon.name}
+                </p>
+              </div>
+            ))}
+            {allProfileIcons.map((icon) => (
+              <div key={icon.profileID} className="">
+                {availableProfileList
+                  .map((icon) => icon.profileID)
+                  .includes(icon.profileID) ? (
+                  <>
+                    {icon.profileID === userData.profileID && (
+                      <button
+                        disabled
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+
+                    {icon.profileID !== userData.profileID && (
+                      <button
+                        disabled={isChanging}
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <button
+                    disabled
+                    className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-gray-400 grayscale"
+                  >
+                    <img src={icon.image} alt="icon" />
+                  </button>
+                )}
+
+                <p className="font-sb text-xs text-center text-white">
+                  {icon.name}
+                </p>
+              </div>
+            ))}
+            {allProfileIcons.map((icon) => (
+              <div key={icon.profileID} className="">
+                {availableProfileList
+                  .map((icon) => icon.profileID)
+                  .includes(icon.profileID) ? (
+                  <>
+                    {icon.profileID === userData.profileID && (
+                      <button
+                        disabled
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+
+                    {icon.profileID !== userData.profileID && (
+                      <button
+                        disabled={isChanging}
+                        onClick={() => changeProfileID(icon.profileID)}
+                        className="w-full aspect-square"
+                      >
+                        <img
+                          src={icon.image}
+                          alt="icon"
+                          className="w-full h-full object-cover object-bottom"
+                        />
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <button
+                    disabled
+                    className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-gray-400 grayscale"
+                  >
+                    <img src={icon.image} alt="icon" />
+                  </button>
+                )}
+
+                <p className="font-sb text-xs text-center text-white">
+                  {icon.name}
+                </p>
+              </div>
+            ))}{" "}
             {allProfileIcons.map((icon) => (
               <div key={icon.profileID} className="">
                 {availableProfileList
@@ -151,7 +299,7 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
               </div>
             ))}
           </div>
-        </div>
+        </>
       )}
       <button
         id="back"
