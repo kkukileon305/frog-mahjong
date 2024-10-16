@@ -225,5 +225,8 @@
   },
   "EditProfileImage": {
     "title": "アイコン変更"
+  },
+  "error": {
+    "title": "メンテナンス中"
   }
 }

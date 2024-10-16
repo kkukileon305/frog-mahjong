@@ -97,6 +97,11 @@ axiosInstance.interceptors.response.use(
   async (e) => {
     const error = e as AxiosError<ErrorType>;
 
+    if (!error.response) {
+      window.location.href = "/maintenance";
+      return;
+    }
+
     // db error
     if (error.response && error.response.data.errType === INTERNAL_DB) {
       window.location.href = "/error";
