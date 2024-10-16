@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import { Metadata } from "next";
 import React from "react";
+import Script from "next/script";
 
 const fontKR = Noto_Sans_KR({ subsets: ["latin"] });
 const fontJP = Noto_Sans_JP({ subsets: ["latin"] });
@@ -41,6 +42,12 @@ const RootLayout = async ({
         </NextIntlClientProvider>
 
         <SpeedInsights />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574884642725131"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
