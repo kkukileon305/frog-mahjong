@@ -6,7 +6,11 @@ import axiosInstance from "@/utils/axios";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const SignOutBtn = () => {
+type SignOutBtnProps = {
+  noRequest?: boolean;
+};
+
+const SignOutBtn = ({ noRequest }: SignOutBtnProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const accessToken = getCookie("accessToken");
@@ -14,27 +18,36 @@ const SignOutBtn = () => {
   const m = useTranslations("Header");
 
   const signOut = async () => {
-    setIsLoading(true);
-    try {
-      await axiosInstance.post(
-        "/v0.1/auth/logout",
-        {},
-        {
-          headers: {
-            tkn: accessToken,
-          },
-        }
-      );
-    } catch (e) {
-      console.log("failed");
-    } finally {
-      setIsLoading(false);
+    if (noRequest) {
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
       deleteCookie("userID");
 
       router.push("/signin");
       router.refresh();
+    } else {
+      setIsLoading(true);
+      try {
+        await axiosInstance.post(
+          "/v0.1/auth/logout",
+          {},
+          {
+            headers: {
+              tkn: accessToken,
+            },
+          }
+        );
+      } catch (e) {
+        console.log("failed");
+      } finally {
+        setIsLoading(false);
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+        deleteCookie("userID");
+
+        router.push("/signin");
+        router.refresh();
+      }
     }
   };
 

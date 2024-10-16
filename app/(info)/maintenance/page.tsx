@@ -1,10 +1,8 @@
-"use client";
-
-import React from "react";
 import { useTranslations } from "next-intl";
 import SignOutBtn from "@/utils/components/SignOutBtn";
+import React from "react";
 
-const Error = () => {
+const Page = () => {
   const m = useTranslations("error");
 
   return (
@@ -18,4 +16,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default Page;
