@@ -7,10 +7,10 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 type SignOutBtnProps = {
-  isRequest?: boolean;
+  noRequest?: boolean;
 };
 
-const SignOutBtn = ({ isRequest }: SignOutBtnProps) => {
+const SignOutBtn = ({ noRequest }: SignOutBtnProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const accessToken = getCookie("accessToken");
@@ -18,7 +18,7 @@ const SignOutBtn = ({ isRequest }: SignOutBtnProps) => {
   const m = useTranslations("Header");
 
   const signOut = async () => {
-    if (isRequest) {
+    if (noRequest) {
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
       deleteCookie("userID");

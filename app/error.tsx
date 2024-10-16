@@ -12,7 +12,7 @@ const Error = () => {
       <p className="font-bold text-green-700 text-3xl">500</p>
       <p>{m("title")}</p>
       <div className="mt-4">
-        <SignOutBtn isRequest />
+        <SignOutBtn noRequest />
       </div>
     </div>
   );
