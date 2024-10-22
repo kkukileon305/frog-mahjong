@@ -1,8 +1,8 @@
-import { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
-import useGameStore from "@/utils/stores/useGameStore";
+import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import { useEffect } from "react";
@@ -15,7 +15,7 @@ import {
   PlayTogetherBody,
   PlayTogetherRequest,
   SocketResponseBody,
-} from "@/utils/constants/old-frog-mahjong/socketTypes";
+} from "@/utils/constants/frog-mahjong/socketTypes";
 import {
   CHAT,
   DISCARD,
@@ -48,7 +48,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
-  const store = useGameStore();
+  const store = useFrogMahjongStore();
 
   // sounds
   const audios = useSoundStore((s) => s.audios);
@@ -168,7 +168,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === JOIN_PLAY
       ) {
         if (data.gameInfo?.isFull) {
-          router.push("/rooms/quick-game");
+          router.push("/rooms/frog-mahjong");
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
         }

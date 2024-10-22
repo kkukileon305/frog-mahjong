@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 
 const ChatHistoryModal = () => {
   const m = useTranslations("ChatHistoryModal");
-  const chatList = useGameStore((s) => s.chatList);
+  const chatList = useOldFrogMahjongStore((s) => s.chatList);
 
   return (
     <div className="flex flex-col gap-4">

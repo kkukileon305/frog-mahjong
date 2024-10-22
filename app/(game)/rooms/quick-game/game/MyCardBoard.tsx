@@ -24,7 +24,7 @@ import {
   SUCCESS_LOAN,
 } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import calculateScore, { ScoreResult } from "@/utils/functions/calculateScore";
 
@@ -52,7 +52,7 @@ const MyCardBoard = ({
   getSelectedCards,
 }: MyCardProps) => {
   const m = useTranslations("MyCardBoard");
-  const { gameInfo, users, ws, isGetCard } = useGameStore((s) => ({
+  const { gameInfo, users, ws, isGetCard } = useOldFrogMahjongStore((s) => ({
     gameInfo: s.gameState?.gameInfo,
     ws: s.ws,
     users: s.gameState?.users,

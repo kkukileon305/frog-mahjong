@@ -2,9 +2,11 @@
 
 import CancelMatchBtn from "@/app/(game)/rooms/CancelMatchBtn";
 import { useTranslations } from "next-intl";
-import useQuickMatching, { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import useOldFrogMahjong, {
+  MatchingMode,
+} from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
@@ -13,7 +15,7 @@ import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import Image from "next/image";
-import useFrogMahjong from "@/utils/hooks/useFrogMahjong";
+import useFrogMahjong from "@/utils/hooks/frog-mahjong/useFrogMahjong";
 
 type CancelMatchBtnProps = {
   mode: MatchingMode;
@@ -47,13 +49,15 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
     },
   });
 
-  const oldConnect = useQuickMatching(mode);
+  const oldConnect = useOldFrogMahjong(mode);
   const frogMahjongConnect = useFrogMahjong(mode);
-  const { password, isMatching, isMatchingCompleted } = useGameStore((s) => ({
-    password: s.gameState?.gameInfo?.password,
-    isMatching: s.isMatching,
-    isMatchingCompleted: s.isMatchingCompleted,
-  }));
+  const { password, isMatching, isMatchingCompleted } = useOldFrogMahjongStore(
+    (s) => ({
+      password: s.gameState?.gameInfo?.password,
+      isMatching: s.isMatching,
+      isMatchingCompleted: s.isMatchingCompleted,
+    })
+  );
   const { setPassword, gameType } = useMatchSettingStore((s) => ({
     setPassword: s.setPassword,
     gameType: s.gameType,

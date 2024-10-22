@@ -8,7 +8,7 @@ import ChatHistoryModal from "@/app/(game)/rooms/quick-game/game/ChatHistoryModa
 import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 
 type Inputs = {
   message: string;
@@ -16,7 +16,7 @@ type Inputs = {
 
 const ChatForm = () => {
   const m = useTranslations("ChatForm");
-  const { gameState, roomID, ws } = useGameStore((s) => ({
+  const { gameState, roomID, ws } = useOldFrogMahjongStore((s) => ({
     gameState: s.gameState,
     roomID: s.gameState?.gameInfo?.roomID,
     ws: s.ws,

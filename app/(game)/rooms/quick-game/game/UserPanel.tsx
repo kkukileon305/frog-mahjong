@@ -11,7 +11,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { getCookie } from "cookies-next";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import ModalContainer from "@/utils/components/ModalContainer";
@@ -43,7 +43,7 @@ const UserPanel = ({
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
-  const { chatList, ws, gameState, isStarted } = useGameStore();
+  const { chatList, ws, gameState, isStarted } = useOldFrogMahjongStore();
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameState?.gameInfo?.roomID;

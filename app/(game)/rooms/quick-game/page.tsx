@@ -11,7 +11,7 @@ import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Game from "@/app/(game)/rooms/quick-game/game/Game";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 
@@ -24,7 +24,7 @@ const Page = () => {
 
   const router = useRouter();
   const [isHelpModal, setIsHelpModal] = useState(false);
-  const gameStore = useGameStore();
+  const gameStore = useOldFrogMahjongStore();
 
   const currentUser = gameStore.gameState?.users?.find(
     (user) => user.id === Number(userID)

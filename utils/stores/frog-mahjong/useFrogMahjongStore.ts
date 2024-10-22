@@ -3,7 +3,7 @@ import {
   ChatResponse,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/constants/old-frog-mahjong/socketTypes";
+} from "@/utils/constants/frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
 
 type GameResult = {
@@ -64,7 +64,7 @@ interface GameStore {
   clear: () => void;
 }
 
-const useGameStore = create(
+const useFrogMahjongStore = create(
   devtools<GameStore>((set) => ({
     ws: null as WebSocket | null,
     setWs: (ws: WebSocket | null) => set({ ws }),
@@ -159,4 +159,4 @@ const useGameStore = create(
   }))
 );
 
-export default useGameStore;
+export default useFrogMahjongStore;

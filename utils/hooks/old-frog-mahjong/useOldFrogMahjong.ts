@@ -29,14 +29,14 @@ import {
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
 import { useRouter } from "next/navigation";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import useSoundStore from "@/utils/stores/useSoundStore";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
-const useQuickMatching = (mode: MatchingMode) => {
+const useOldFrogMahjong = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -49,7 +49,7 @@ const useQuickMatching = (mode: MatchingMode) => {
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
-  const store = useGameStore();
+  const store = useOldFrogMahjongStore();
 
   // sounds
   const audios = useSoundStore((s) => s.audios);
@@ -224,4 +224,4 @@ const useQuickMatching = (mode: MatchingMode) => {
   return connectQuickMatchingSocket;
 };
 
-export default useQuickMatching;
+export default useOldFrogMahjong;
