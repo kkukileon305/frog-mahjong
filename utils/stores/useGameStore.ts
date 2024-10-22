@@ -3,7 +3,7 @@ import {
   ChatResponse,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
 
 type GameResult = {

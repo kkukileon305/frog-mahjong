@@ -2,7 +2,7 @@
 
 import { MatchingMode } from "@/utils/hooks/useQuickMatching";
 import { useTranslations } from "next-intl";
-import { CancelMatch } from "@/utils/constants/socketTypes";
+import { CancelMatch } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CANCEL_MATCH } from "@/utils/constants/const";
 import { getCookie } from "cookies-next";
 import useGameStore from "@/utils/stores/useGameStore";

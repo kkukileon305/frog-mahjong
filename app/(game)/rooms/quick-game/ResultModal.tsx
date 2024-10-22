@@ -6,7 +6,7 @@ import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import mergeBonus from "@/utils/functions/mergeBonus";
-import { QUITRequest } from "@/utils/constants/socketTypes";
+import { QUITRequest } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import useGameStore from "@/utils/stores/useGameStore";

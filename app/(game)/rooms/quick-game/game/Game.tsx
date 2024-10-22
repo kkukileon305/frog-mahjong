@@ -8,7 +8,7 @@ import {
   ImportRequest,
   ImportSingleCardBody,
   ImportSingleCardRequest,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/quick-game/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/quick-game/game/MyCardBoard";

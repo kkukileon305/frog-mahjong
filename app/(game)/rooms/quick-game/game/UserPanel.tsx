@@ -5,7 +5,7 @@ import {
   LoanBody,
   LoanRequest,
   UserSocket,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ChatItem from "@/app/(game)/rooms/quick-game/game/ChatItem";

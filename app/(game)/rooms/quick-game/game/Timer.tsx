@@ -11,7 +11,7 @@ import {
   LoanFailedBody,
   LoanFailedRequest,
   TimeoutDiscardRequest,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";

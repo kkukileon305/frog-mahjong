@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import useGameStore from "@/utils/stores/useGameStore";
 import { useEffect } from "react";
 import { getCookie } from "cookies-next";
-import { STARTRequest } from "@/utils/constants/socketTypes";
+import { STARTRequest } from "@/utils/constants/old-frog-mahjong/socketTypes";
 
 const ReadyStartText = () => {
   const userID = getCookie("userID") as string;

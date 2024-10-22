@@ -15,7 +15,7 @@ import {
   PlayTogetherBody,
   PlayTogetherRequest,
   SocketResponseBody,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import {
   CHAT,
   DISCARD,

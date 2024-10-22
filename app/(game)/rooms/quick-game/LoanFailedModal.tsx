@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Dispatch, SetStateAction } from "react";
-import { UserSocket } from "@/utils/constants/socketTypes";
+import { UserSocket } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import cards from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import { useTranslations } from "next-intl";

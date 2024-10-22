@@ -9,7 +9,7 @@ import {
   LoanSuccessRequest,
   WinRequest,
   WinRequestBody,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
