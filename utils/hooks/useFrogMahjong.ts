@@ -1,5 +1,11 @@
-import { useEffect } from "react";
+import { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
+import useGameStore from "@/utils/stores/useGameStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
+import getWsUrl from "@/utils/functions/getWsUrl";
+import { useEffect } from "react";
 import {
   ChatResponse,
   JoinPlayBody,
@@ -28,15 +34,8 @@ import {
   SUCCESS_LOAN,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
-import { useRouter } from "next/navigation";
-import useGameStore from "@/utils/stores/useGameStore";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
-import getWsUrl from "@/utils/functions/getWsUrl";
-import useSoundStore from "@/utils/stores/useSoundStore";
 
-export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
-
-const useQuickMatching = (mode: MatchingMode) => {
+const useFrogMahjong = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -63,7 +62,7 @@ const useQuickMatching = (mode: MatchingMode) => {
       timer,
       count,
       accessToken,
-      gameType: "FROG_MAHJONG_OLD",
+      gameType: "FROG_MAHJONG",
     });
 
     const newWs = new WebSocket(url);
@@ -224,4 +223,4 @@ const useQuickMatching = (mode: MatchingMode) => {
   return connectQuickMatchingSocket;
 };
 
-export default useQuickMatching;
+export default useFrogMahjong;

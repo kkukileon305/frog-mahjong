@@ -13,6 +13,7 @@ import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import Image from "next/image";
+import useFrogMahjong from "@/utils/hooks/useFrogMahjong";
 
 type CancelMatchBtnProps = {
   mode: MatchingMode;
@@ -46,13 +47,17 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
     },
   });
 
-  const connect = useQuickMatching(mode);
+  const oldConnect = useQuickMatching(mode);
+  const frogMahjongConnect = useFrogMahjong(mode);
   const { password, isMatching, isMatchingCompleted } = useGameStore((s) => ({
     password: s.gameState?.gameInfo?.password,
     isMatching: s.isMatching,
     isMatchingCompleted: s.isMatchingCompleted,
   }));
-  const setPassword = useMatchSettingStore((s) => s.setPassword);
+  const { setPassword, gameType } = useMatchSettingStore((s) => ({
+    setPassword: s.setPassword,
+    gameType: s.gameType,
+  }));
 
   useEffect(() => {
     if (mode === "ENTER") return;
@@ -65,7 +70,11 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
           },
         });
 
-        connect();
+        if (gameType === "FROG_MAHJONG_OLD") {
+          oldConnect();
+        } else if (gameType === "FROG_MAHJONG") {
+          frogMahjongConnect();
+        }
       } catch (e) {
         setError(JSON.stringify(e));
         console.log(e);
@@ -88,7 +97,11 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
           }
         );
 
-        connect();
+        if (gameType === "FROG_MAHJONG_OLD") {
+          oldConnect();
+        } else if (gameType === "FROG_MAHJONG") {
+          frogMahjongConnect();
+        }
       } catch (e) {
         setIsPasswordError(true);
         return;
