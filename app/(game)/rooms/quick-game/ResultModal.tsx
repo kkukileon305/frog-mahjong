@@ -6,17 +6,18 @@ import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import mergeBonus from "@/utils/functions/mergeBonus";
-import { QUITRequest } from "@/utils/constants/socketTypes";
+import { QUITRequest } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { QUIT_GAME } from "@/utils/constants/const";
 import useSoundStore from "@/utils/stores/useSoundStore";
 
 const ResultModal = () => {
   const m = useTranslations("ResultModal");
 
-  const { result, winner, clear, gameState, ws, setIsGameEnd } = useGameStore();
+  const { result, winner, clear, gameState, ws, setIsGameEnd } =
+    useOldFrogMahjongStore();
 
   const userID = getCookie("userID") as string;
   const router = useRouter();

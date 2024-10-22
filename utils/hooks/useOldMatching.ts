@@ -22,7 +22,7 @@ import {
   JOINRequest,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import commonAllReadySrc from "@/public/audios/all_ready.mp3";
 import commonLoanSrc from "@/public/audios/loan.mp3";
 import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";

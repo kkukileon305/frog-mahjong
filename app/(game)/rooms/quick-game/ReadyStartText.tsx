@@ -1,20 +1,22 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { useEffect } from "react";
 import { getCookie } from "cookies-next";
-import { STARTRequest } from "@/utils/constants/socketTypes";
+import { STARTRequest } from "@/utils/constants/old-frog-mahjong/socketTypes";
 
 const ReadyStartText = () => {
   const userID = getCookie("userID") as string;
 
-  const { ws, users, gameInfo, isGameEnd } = useGameStore((state) => ({
-    ws: state.ws,
-    users: state.gameState?.users,
-    gameInfo: state.gameState?.gameInfo,
-    isGameEnd: state.isGameEnd,
-  }));
+  const { ws, users, gameInfo, isGameEnd } = useOldFrogMahjongStore(
+    (state) => ({
+      ws: state.ws,
+      users: state.gameState?.users,
+      gameInfo: state.gameState?.gameInfo,
+      isGameEnd: state.isGameEnd,
+    })
+  );
 
   const m = useTranslations("Game");
 

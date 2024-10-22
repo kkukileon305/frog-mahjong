@@ -1,3 +1,5 @@
+import { GameType } from "@/utils/stores/useMatchSettingStore";
+
 type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
 type Props = {
@@ -6,14 +8,24 @@ type Props = {
   accessToken: string;
   timer: number;
   count: number;
+  gameType: GameType;
 };
 
-const getWsUrl = ({ mode, password, timer, count, accessToken }: Props) => {
+const getWsUrl = ({
+  mode,
+  password,
+  timer,
+  count,
+  accessToken,
+  gameType,
+}: Props) => {
   const baseUrl = process.env.NEXT_PUBLIC_BACKEND_WS_URL as string;
 
-  const normalUrl = `/v0.1/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`;
-  const createUrl = `/v0.1/rooms/play/together/ws?tkn=${accessToken}`;
-  const enterUrl = `/v0.1/rooms/join/play/ws?tkn=${accessToken}&password=${password}`;
+  const version = gameType === "FROG_MAHJONG_OLD" ? "v0.1" : "v2.1";
+
+  const normalUrl = `/${version}/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`;
+  const createUrl = `/${version}/rooms/play/together/ws?tkn=${accessToken}`;
+  const enterUrl = `/${version}/rooms/join/play/ws?tkn=${accessToken}&password=${password}`;
 
   switch (mode) {
     case "NORMAL":

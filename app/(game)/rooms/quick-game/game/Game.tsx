@@ -8,7 +8,7 @@ import {
   ImportRequest,
   ImportSingleCardBody,
   ImportSingleCardRequest,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/quick-game/game/UserPanel";
 import MyCardBoard from "@/app/(game)/rooms/quick-game/game/MyCardBoard";
@@ -31,7 +31,7 @@ import {
 import { useTranslations } from "next-intl";
 import ReadyStartText from "@/app/(game)/rooms/quick-game/ReadyStartText";
 import { getCookie } from "cookies-next";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
@@ -42,7 +42,7 @@ type GameProps = {
 
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
-  const { isStarted, ws, gameState } = useGameStore();
+  const { isStarted, ws, gameState } = useOldFrogMahjongStore();
   const [cards, setCards] = useState<CardImage[]>([]);
 
   const accessToken = getCookie("accessToken") as string;

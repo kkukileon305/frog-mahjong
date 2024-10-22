@@ -1,5 +1,11 @@
-import { useEffect } from "react";
+import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
+import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useSoundStore from "@/utils/stores/useSoundStore";
+import getWsUrl from "@/utils/functions/getWsUrl";
+import { useEffect } from "react";
 import {
   ChatResponse,
   JoinPlayBody,
@@ -9,7 +15,7 @@ import {
   PlayTogetherBody,
   PlayTogetherRequest,
   SocketResponseBody,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/frog-mahjong/socketTypes";
 import {
   CHAT,
   DISCARD,
@@ -28,15 +34,8 @@ import {
   SUCCESS_LOAN,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
-import { useRouter } from "next/navigation";
-import useGameStore from "@/utils/stores/useGameStore";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
-import getWsUrl from "@/utils/functions/getWsUrl";
-import useSoundStore from "@/utils/stores/useSoundStore";
 
-export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
-
-const useQuickMatching = (mode: MatchingMode) => {
+const useFrogMahjong = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -49,7 +48,7 @@ const useQuickMatching = (mode: MatchingMode) => {
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
-  const store = useGameStore();
+  const store = useFrogMahjongStore();
 
   // sounds
   const audios = useSoundStore((s) => s.audios);
@@ -63,6 +62,7 @@ const useQuickMatching = (mode: MatchingMode) => {
       timer,
       count,
       accessToken,
+      gameType: "FROG_MAHJONG",
     });
 
     const newWs = new WebSocket(url);
@@ -168,7 +168,7 @@ const useQuickMatching = (mode: MatchingMode) => {
         eventName === JOIN_PLAY
       ) {
         if (data.gameInfo?.isFull) {
-          router.push("/rooms/quick-game");
+          router.push("/rooms/frog-mahjong");
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
         }
@@ -223,4 +223,4 @@ const useQuickMatching = (mode: MatchingMode) => {
   return connectQuickMatchingSocket;
 };
 
-export default useQuickMatching;
+export default useFrogMahjong;

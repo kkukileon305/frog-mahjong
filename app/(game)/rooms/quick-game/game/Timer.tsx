@@ -11,7 +11,7 @@ import {
   LoanFailedBody,
   LoanFailedRequest,
   TimeoutDiscardRequest,
-} from "@/utils/constants/socketTypes";
+} from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
@@ -25,7 +25,7 @@ import {
   IMPORT_CARDS,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 
 type TimerProps = {
@@ -36,7 +36,7 @@ type TimerProps = {
 const Timer = ({ filteredCards, setSelectedCards }: TimerProps) => {
   const { roomID } = useParams<{ roomID: string }>();
 
-  const { ws, gameInfo, users } = useGameStore((s) => ({
+  const { ws, gameInfo, users } = useOldFrogMahjongStore((s) => ({
     gameInfo: s.gameState?.gameInfo,
     users: s.gameState?.users,
     ws: s.ws,

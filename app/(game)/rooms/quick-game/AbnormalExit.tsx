@@ -3,12 +3,12 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { useRouter } from "next/navigation";
 
 const AbnormalExit = () => {
   const m = useTranslations("AbnormalExit");
-  const clear = useGameStore((s) => s.clear);
+  const clear = useOldFrogMahjongStore((s) => s.clear);
 
   const router = useRouter();
 

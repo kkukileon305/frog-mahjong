@@ -42,12 +42,14 @@ const RootLayout = async ({
         </NextIntlClientProvider>
 
         <SpeedInsights />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574884642725131"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        {process.env.NODE_ENV !== "development" && (
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574884642725131"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

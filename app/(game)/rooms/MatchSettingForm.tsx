@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
-import { MatchingMode } from "@/utils/hooks/useQuickMatching";
+import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";

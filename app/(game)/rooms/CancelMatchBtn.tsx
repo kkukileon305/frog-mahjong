@@ -1,13 +1,14 @@
 "use client";
 
-import { MatchingMode } from "@/utils/hooks/useQuickMatching";
-import { useTranslations } from "next-intl";
-import { CancelMatch } from "@/utils/constants/socketTypes";
+import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
+import { CancelMatch } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { CANCEL_MATCH } from "@/utils/constants/const";
 import { getCookie } from "cookies-next";
-import useGameStore from "@/utils/stores/useGameStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { Dispatch, SetStateAction } from "react";
 import { IoClose } from "react-icons/io5";
+import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 type CancelMatchBtnProps = {
   setOpenMatchModal: Dispatch<SetStateAction<MatchingMode | null>>;
@@ -15,7 +16,12 @@ type CancelMatchBtnProps = {
 
 const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
   const userID = getCookie("userID") as string;
-  const store = useGameStore();
+  const oldFrogMahjongStore = useOldFrogMahjongStore();
+  const frogMahjongStore = useFrogMahjongStore();
+
+  const gameType = useMatchSettingStore((s) => s.gameType);
+  const store =
+    gameType === "FROG_MAHJONG_OLD" ? oldFrogMahjongStore : frogMahjongStore;
 
   const cancelQuickMatchingSocket = () => {
     const request: CancelMatch = {
