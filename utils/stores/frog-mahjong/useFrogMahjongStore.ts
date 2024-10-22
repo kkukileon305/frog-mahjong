@@ -5,6 +5,7 @@ import {
   UserSocket,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
+import { Mission } from "@/utils/axios";
 
 type GameResult = {
   beforeUsers: UserSocket[] | null;
@@ -60,6 +61,9 @@ interface GameStore {
 
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
+
+  missions: Mission[];
+  setMissions: (missions: Mission[]) => void;
 
   clear: () => void;
 }
@@ -137,6 +141,9 @@ const useFrogMahjongStore = create(
 
     isGameEnd: false,
     setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
+
+    missions: [],
+    setMissions: (missions: Mission[]) => set({ missions }),
 
     clear: () =>
       set({

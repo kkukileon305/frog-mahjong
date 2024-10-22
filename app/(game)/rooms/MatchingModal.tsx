@@ -14,8 +14,8 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
-import Image from "next/image";
 import useFrogMahjong from "@/utils/hooks/frog-mahjong/useFrogMahjong";
+import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 
 type CancelMatchBtnProps = {
   mode: MatchingMode;
@@ -50,14 +50,22 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   });
 
   const oldConnect = useOldFrogMahjong(mode);
+  const { oldPassword, oldIsMatching, oldIsMatchingCompleted } =
+    useOldFrogMahjongStore((s) => ({
+      oldPassword: s.gameState?.gameInfo?.password,
+      oldIsMatching: s.isMatching,
+      oldIsMatchingCompleted: s.isMatchingCompleted,
+    }));
+
   const frogMahjongConnect = useFrogMahjong(mode);
-  const { password, isMatching, isMatchingCompleted } = useOldFrogMahjongStore(
+  const { password, isMatching, isMatchingCompleted } = useFrogMahjongStore(
     (s) => ({
       password: s.gameState?.gameInfo?.password,
       isMatching: s.isMatching,
       isMatchingCompleted: s.isMatchingCompleted,
     })
   );
+
   const { setPassword, gameType } = useMatchSettingStore((s) => ({
     setPassword: s.setPassword,
     gameType: s.gameType,
@@ -120,14 +128,27 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   });
 
   const onClick = async () => {
-    if (password) {
-      try {
-        await navigator.clipboard.writeText(password);
+    if (gameType === "FROG_MAHJONG_OLD") {
+      if (oldPassword) {
+        try {
+          await navigator.clipboard.writeText(oldPassword);
 
-        setIsCopySuccess(true);
-      } catch (e) {
-        console.log(e);
-        setIsCopySuccess(false);
+          setIsCopySuccess(true);
+        } catch (e) {
+          console.log(e);
+          setIsCopySuccess(false);
+        }
+      }
+    } else if (gameType === "FROG_MAHJONG") {
+      if (password) {
+        try {
+          await navigator.clipboard.writeText(password);
+
+          setIsCopySuccess(true);
+        } catch (e) {
+          console.log(e);
+          setIsCopySuccess(false);
+        }
       }
     }
   };
@@ -159,18 +180,27 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
             <>
               {mode === "NORMAL" && (
                 <p className="text-center text-3xl font-bold">
-                  {m(isMatchingCompleted ? "complete" : "search")}
+                  {gameType === "FROG_MAHJONG_OLD" &&
+                    m(oldIsMatchingCompleted ? "complete" : "search")}
+                  {gameType === "FROG_MAHJONG" &&
+                    m(isMatchingCompleted ? "complete" : "search")}
                 </p>
               )}
 
               {mode === "CREATE" && (
                 <>
                   <p className="text-center text-3xl font-bold">
-                    {m(isMatchingCompleted ? "complete" : "send")}
+                    {gameType === "FROG_MAHJONG_OLD" &&
+                      m(oldIsMatchingCompleted ? "complete" : "send")}
+                    {gameType === "FROG_MAHJONG" &&
+                      m(isMatchingCompleted ? "complete" : "send")}
                   </p>
                   <div className="w-full flex items-center justify-center gap-4">
                     <p className="font-bold text-xl text-white bg-game-icon p-2 rounded-xl w-full max-w-64 text-center">
-                      {password ? password : m("loading")}
+                      {gameType === "FROG_MAHJONG_OLD" &&
+                        (oldPassword ? oldPassword : m("loading"))}{" "}
+                      {gameType === "FROG_MAHJONG" &&
+                        (password ? password : m("loading"))}
                     </p>
                     <button
                       onClick={onClick}
@@ -185,7 +215,10 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
               {mode === "ENTER" && (
                 <>
                   <p className="text-center text-3xl font-bold">
-                    {m(isMatchingCompleted ? "complete" : "write")}
+                    {gameType === "FROG_MAHJONG_OLD" &&
+                      m(oldIsMatchingCompleted ? "complete" : "write")}
+                    {gameType === "FROG_MAHJONG" &&
+                      m(isMatchingCompleted ? "complete" : "write")}
                   </p>
 
                   <form
@@ -205,7 +238,13 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                     </div>
 
                     <button
-                      disabled={isMatchingCompleted || isMatching || isLoading}
+                      disabled={
+                        oldIsMatchingCompleted ||
+                        oldIsMatching ||
+                        isLoading ||
+                        isMatchingCompleted ||
+                        isMatching
+                      }
                       className="bg-amber-500 font-bold text-white py-2 px-4 text-xl rounded-xl disabled:bg-gray-400"
                     >
                       {m("enter")}
