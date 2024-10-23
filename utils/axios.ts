@@ -88,6 +88,15 @@ export type AvailableProfileIconResponse = {
   profiles: AvailableProfileIcon[] | null;
 };
 
+export type Mission = {
+  id: number;
+  title: string;
+};
+
+export type MissionResponse = {
+  missions: Mission[];
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

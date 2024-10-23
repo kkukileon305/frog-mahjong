@@ -5,6 +5,8 @@ import {
   UserSocket,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
+import { Mission } from "@/utils/axios";
+import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 
 type GameResult = {
   beforeUsers: UserSocket[] | null;
@@ -60,6 +62,21 @@ interface GameStore {
 
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
+
+  missions: Mission[];
+  setMissions: (missions: Mission[]) => void;
+
+  isPickCardsModal: boolean;
+  setIsPickCardsModal: (isPickCardsModal: boolean) => void;
+
+  cards: CardImage[];
+  setCards: (cards: CardImage[]) => void;
+
+  isTurnOver: boolean;
+  setIsTurnOver: (isTurnOver: boolean) => void;
+
+  isVictoryFailed: boolean;
+  setIsVictoryFailed: (isVictoryFailed: boolean) => void;
 
   clear: () => void;
 }
@@ -138,6 +155,21 @@ const useFrogMahjongStore = create(
     isGameEnd: false,
     setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
 
+    missions: [],
+    setMissions: (missions: Mission[]) => set({ missions }),
+
+    isPickCardsModal: false,
+    setIsPickCardsModal: (isPickCardsModal) => set({ isPickCardsModal }),
+
+    cards: [],
+    setCards: (cards) => set({ cards }),
+
+    isTurnOver: false,
+    setIsTurnOver: (isTurnOver) => set({ isTurnOver }),
+
+    isVictoryFailed: false,
+    setIsVictoryFailed: (isVictoryFailed: boolean) => set({ isVictoryFailed }),
+
     clear: () =>
       set({
         ws: null,
@@ -155,6 +187,7 @@ const useFrogMahjongStore = create(
         },
         isMatchingCompleted: false,
         isGameEnd: false,
+        isPickCardsModal: false,
       }),
   }))
 );

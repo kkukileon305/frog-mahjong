@@ -154,10 +154,11 @@
     "loanVictory": "론 승리",
     "normalVictory": "쯔모",
     "suteru": "버리기",
-    "cancelSuteru": "버리기 취소",
+    "cancelSuteru": "취소",
     "loan": "론!",
     "cancelLoan": "론 취소",
-    "getSelectedCard": "가져오기"
+    "getSelectedCard": "가져오기",
+    "victory": "승리"
   },
   "ShuffleLeftCards": {
     "end": "종료"
@@ -229,5 +230,8 @@
   },
   "error": {
     "title": "서버 점검중"
+  },
+  "PickCardsModal": {
+    "title": "카드를 {number}개 골라주세요"
   }
 }
