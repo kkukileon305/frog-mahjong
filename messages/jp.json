@@ -228,5 +228,8 @@
   },
   "error": {
     "title": "メンテナンス中"
+  },
+  "PickCardsModal": {
+    "title": "牌を{number}枚選んでください"
   }
 }

@@ -6,6 +6,7 @@ import {
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
 import { Mission } from "@/utils/axios";
+import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 
 type GameResult = {
   beforeUsers: UserSocket[] | null;
@@ -64,6 +65,12 @@ interface GameStore {
 
   missions: Mission[];
   setMissions: (missions: Mission[]) => void;
+
+  isPickCardsModal: boolean;
+  setIsPickCardsModal: (isPickCardsModal: boolean) => void;
+
+  cards: CardImage[];
+  setCards: (cards: CardImage[]) => void;
 
   clear: () => void;
 }
@@ -145,6 +152,12 @@ const useFrogMahjongStore = create(
     missions: [],
     setMissions: (missions: Mission[]) => set({ missions }),
 
+    isPickCardsModal: false,
+    setIsPickCardsModal: (isPickCardsModal) => set({ isPickCardsModal }),
+
+    cards: [],
+    setCards: (cards) => set({ cards }),
+
     clear: () =>
       set({
         ws: null,
@@ -162,6 +175,7 @@ const useFrogMahjongStore = create(
         },
         isMatchingCompleted: false,
         isGameEnd: false,
+        isPickCardsModal: false,
       }),
   }))
 );

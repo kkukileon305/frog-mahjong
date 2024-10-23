@@ -229,5 +229,8 @@
   },
   "error": {
     "title": "서버 점검중"
+  },
+  "PickCardsModal": {
+    "title": "카드를 {number}개 골라주세요"
   }
 }

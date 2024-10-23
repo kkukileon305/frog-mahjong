@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { getCookie } from "cookies-next";
