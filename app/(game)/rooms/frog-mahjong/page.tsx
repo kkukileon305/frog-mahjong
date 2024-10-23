@@ -9,6 +9,8 @@ import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import Game from "@/app/(game)/rooms/frog-mahjong/Game";
+import ModalContainer from "@/utils/components/ModalContainer";
+import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 
 const Page = () => {
   const orientation = useScreenOrientation();
@@ -50,6 +52,12 @@ const Page = () => {
       <div className="relative w-full flex flex-col justify-between">
         {/*  結果モーダル*/}
         {/* ヘルプモーダル */}
+
+        {orientation === "portrait-primary" && (
+          <ModalContainer>
+            <WarningModal />
+          </ModalContainer>
+        )}
 
         <Game setIsHelpModal={setIsHelpModal} />
       </div>

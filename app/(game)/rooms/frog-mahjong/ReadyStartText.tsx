@@ -32,7 +32,7 @@ const ReadyStartText = () => {
     const getMissions = async () => {
       try {
         const { data } = await axiosInstance.get<MissionResponse>(
-          "/v0.1/game/missions"
+          "/v2.1/game/missions"
         );
 
         setMissions(data.missions);
@@ -53,7 +53,7 @@ const ReadyStartText = () => {
         return () => clearTimeout(timeout);
       } catch (e) {
         console.log(e);
-        // router.push("/rooms");
+        router.push("/rooms");
         clear();
       }
     };
