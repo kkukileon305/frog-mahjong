@@ -165,6 +165,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
       if (eventName === IMPORT_SINGLE_CARD) {
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(false);
+          store.setIsTurnOver(false);
+          store.setIsVictoryFailed(false);
         }
       }
 

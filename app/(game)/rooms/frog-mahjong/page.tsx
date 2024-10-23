@@ -37,7 +37,9 @@ const Page = () => {
     }
 
     const getCards = async () => {
-      const roomID = gameStore.gameState?.gameInfo?.roomID!;
+      const roomID = gameStore.gameState?.gameInfo?.roomID;
+
+      if (!roomID) return;
 
       try {
         const {

@@ -32,6 +32,7 @@ const PickCardsModal = () => {
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
 
+  // TODO: 카드 버려진 카드 제외
   const leftCards: LeftCard[] = cards.map((card) => ({
     ...card,
     picked:
@@ -70,11 +71,9 @@ const PickCardsModal = () => {
             className="w-full h-full flex justify-center items-center"
           >
             <button
-              className={`h-full aspect-[63/111] relative ${
-                (nokoriCardsLength === 0 || card.picked) && "grayscale"
-              }`}
+              className={`h-full aspect-[63/111] relative disabled:grayscale`}
               onClick={() => pickCard(card)}
-              disabled={!!card.picked || nokoriCardsLength === 0}
+              disabled={nokoriCardsLength === 0 || !!card.picked}
             >
               <img
                 className="object-fill"
