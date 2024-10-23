@@ -72,6 +72,12 @@ interface GameStore {
   cards: CardImage[];
   setCards: (cards: CardImage[]) => void;
 
+  isTurnOver: boolean;
+  setIsTurnOver: (isTurnOver: boolean) => void;
+
+  isVictoryFailed: boolean;
+  setIsVictoryFailed: (isVictoryFailed: boolean) => void;
+
   clear: () => void;
 }
 
@@ -157,6 +163,12 @@ const useFrogMahjongStore = create(
 
     cards: [],
     setCards: (cards) => set({ cards }),
+
+    isTurnOver: false,
+    setIsTurnOver: (isTurnOver) => set({ isTurnOver }),
+
+    isVictoryFailed: false,
+    setIsVictoryFailed: (isVictoryFailed: boolean) => set({ isVictoryFailed }),
 
     clear: () =>
       set({

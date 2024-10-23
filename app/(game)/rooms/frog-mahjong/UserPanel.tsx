@@ -168,7 +168,10 @@ const UserPanel = ({ user }: UserPanelProps) => {
             {isStarted && (
               <>
                 {userDiscardImages?.map((ci) => (
-                  <div key={ci.id} className="w-[calc((100%-28px)/17)] h-fit">
+                  <div
+                    key={ci.id}
+                    className="w-[calc((100%-28px)/17)] h-full flex justify-center items-center"
+                  >
                     <img
                       src={ci.imageSrc}
                       alt={ci.color + ci.name}

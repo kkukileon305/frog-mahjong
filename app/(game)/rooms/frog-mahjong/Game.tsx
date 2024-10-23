@@ -35,7 +35,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
   const audios = useSoundStore((s) => s.audios);
 
   const usersWithoutCurrentUser = users!.filter(
-    (user) => user.id === currentUser.id
+    (user) => user.id !== currentUser.id
   );
 
   return (

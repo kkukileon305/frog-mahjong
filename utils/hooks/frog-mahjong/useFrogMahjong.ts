@@ -162,6 +162,18 @@ const useFrogMahjong = (mode: MatchingMode) => {
         }
       }
 
+      if (eventName === IMPORT_SINGLE_CARD) {
+        if (data.gameInfo?.allPicked) {
+          store.setIsPickCardsModal(false);
+        }
+      }
+
+      if (eventName === DISCARD) {
+        if (data.gameInfo?.allPicked) {
+          store.setIsPickCardsModal(true);
+        }
+      }
+
       if (
         eventName === MATCH ||
         eventName === PLAY_TOGETHER ||

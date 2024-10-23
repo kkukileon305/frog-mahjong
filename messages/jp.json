@@ -156,7 +156,8 @@
     "cancelSuteru": "キャンセル",
     "loan": "ロン!",
     "cancelLoan": "キャンセル",
-    "getSelectedCard": "牌を取る"
+    "getSelectedCard": "牌を取る",
+    "victory": "あがり"
   },
   "ShuffleLeftCards": {
     "end": "終了"

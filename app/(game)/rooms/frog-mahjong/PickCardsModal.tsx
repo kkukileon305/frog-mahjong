@@ -29,6 +29,9 @@ const PickCardsModal = () => {
     roomID: s.gameState?.gameInfo?.roomID!,
   }));
 
+  const currentUser = users.find((u) => u.id === Number(userID))!;
+  const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
+
   const leftCards: LeftCard[] = cards.map((card) => ({
     ...card,
     picked:
@@ -57,7 +60,7 @@ const PickCardsModal = () => {
     <div className="w-full max-h-[500px] h-[calc(100dvh-64px)] flex flex-col">
       <p className="mb-2 text-center">
         {m("title", {
-          number: 6,
+          number: nokoriCardsLength,
         })}
       </p>
       <div className="w-full h-[calc(100dvh-96px)] grid grid-cols-11 grid-rows-4 gap-1 lg:gap-2">
@@ -67,9 +70,11 @@ const PickCardsModal = () => {
             className="w-full h-full flex justify-center items-center"
           >
             <button
-              className="h-full aspect-[63/111] relative"
+              className={`h-full aspect-[63/111] relative ${
+                (nokoriCardsLength === 0 || card.picked) && "grayscale"
+              }`}
               onClick={() => pickCard(card)}
-              disabled={!!card.picked}
+              disabled={!!card.picked || nokoriCardsLength === 0}
             >
               <img
                 className="object-fill"
