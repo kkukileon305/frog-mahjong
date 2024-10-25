@@ -16,7 +16,7 @@ import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
-import getPrevTurn from "@/utils/functions/getPrevTurn";
+import getPrevTurn from "@/utils/functions/old-frog-mahjong/getPrevTurn";
 import {
   DISCARD,
   FAILED_LOAN,
@@ -26,7 +26,9 @@ import {
 import { useTranslations } from "next-intl";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
-import calculateScore, { ScoreResult } from "@/utils/functions/calculateScore";
+import calculateScore, {
+  ScoreResult,
+} from "@/utils/functions/old-frog-mahjong/calculateScore";
 
 type MyCardProps = {
   discardMode: boolean;
