@@ -116,7 +116,9 @@ const PickCardsModal = () => {
                   alt={"sealed card"}
                 />
                 {card.picked && (
-                  <p className="absolute top-0">{card.picked.name}</p>
+                  <p className="absolute top-[calc(50%-8px)] w-full text-center">
+                    {card.picked.name}
+                  </p>
                 )}
               </button>
             </div>
