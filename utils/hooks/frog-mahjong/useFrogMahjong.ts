@@ -196,7 +196,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
           store.setIsStarted(true);
           audios?.commonStartAudio.play();
 
-          store.setBeforeResult(data.users);
           store.setIsOpenResultModal(false);
         }
       } else if (
@@ -209,7 +208,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
         const newWinner =
           data.users?.find((us) => us?.cards?.length === 6) || null;
 
-        store.setAfterResult(data.users);
         store.setIsOpenResultModal(true);
 
         store.setWinner(newWinner);

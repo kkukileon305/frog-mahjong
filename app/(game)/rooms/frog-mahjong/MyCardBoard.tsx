@@ -105,11 +105,8 @@ const MyCardBoard = () => {
     const isSuccess = checkMissions(items, missionID);
 
     if (isSuccess) {
-      // TODO 성공 했을 경우 요청 (점수 필요한가?)
       const body: WinRequestBody = {
         cards: items.map((card) => ({ cardID: card.id })),
-        playTurn: gameInfo?.playTurn as number,
-        score: 1,
       };
 
       const request: WinRequest = {
