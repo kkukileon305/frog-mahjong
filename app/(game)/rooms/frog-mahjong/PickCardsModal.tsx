@@ -32,8 +32,34 @@ const PickCardsModal = () => {
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
 
-  // TODO: 카드 버려진 카드 제외
-  const leftCards: LeftCard[] = cards.map((card) => ({
+  const allUserCardIds = users
+    ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
+    .flat();
+
+  const allUserPickedCardIds = users
+    ?.map((user) =>
+      user.pickedCards ? user.pickedCards.map((card) => card.cardID) : []
+    )
+    .flat();
+
+  const allUserCardWithoutPickedCardIds = allUserCardIds.filter(
+    (id) => !allUserPickedCardIds.includes(id)
+  );
+
+  const allUserDiscardedIds = users
+    ?.map((user) =>
+      user.discardedCards ? user.discardedCards.map((card) => card.cardID) : []
+    )
+    .flat();
+
+  const leftCardsWithoutPicked = cards.map((card) =>
+    allUserCardWithoutPickedCardIds?.includes(card.id) ||
+    allUserDiscardedIds?.includes(card.id)
+      ? { ...card, isValid: false }
+      : card
+  );
+
+  const leftCards: LeftCard[] = leftCardsWithoutPicked.map((card) => ({
     ...card,
     picked:
       users.find((user) =>
@@ -65,27 +91,31 @@ const PickCardsModal = () => {
         })}
       </p>
       <div className="w-full h-[calc(100dvh-96px)] grid grid-cols-11 grid-rows-4 gap-1 lg:gap-2">
-        {leftCards.map((card) => (
-          <div
-            key={card.id}
-            className="w-full h-full flex justify-center items-center"
-          >
-            <button
-              className={`h-full aspect-[63/111] relative disabled:grayscale`}
-              onClick={() => pickCard(card)}
-              disabled={nokoriCardsLength === 0 || !!card.picked}
+        {leftCards.map((card) =>
+          card.isValid ? (
+            <div
+              key={card.id}
+              className="w-full h-full flex justify-center items-center"
             >
-              <img
-                className="object-fill"
-                src={Sealed.src}
-                alt={"sealed card"}
-              />
-              {card.picked && (
-                <p className="absolute top-0">{card.picked.name}</p>
-              )}
-            </button>
-          </div>
-        ))}
+              <button
+                className={`h-full aspect-[63/111] relative disabled:grayscale`}
+                onClick={() => pickCard(card)}
+                disabled={nokoriCardsLength === 0 || !!card.picked}
+              >
+                <img
+                  className="object-fill"
+                  src={Sealed.src}
+                  alt={"sealed card"}
+                />
+                {card.picked && (
+                  <p className="absolute top-0">{card.picked.name}</p>
+                )}
+              </button>
+            </div>
+          ) : (
+            <div key={card.id} className="w-full h-full"></div>
+          )
+        )}
       </div>
     </div>
   );
