@@ -121,6 +121,8 @@ const MyCardBoard = () => {
       store.setIsVictoryFailed(true);
       store.setVictoryFailedModal(true);
 
+      audios?.timeoutAudio.play();
+
       setTimeout(() => {
         store.setVictoryFailedModal(false);
       }, 1000);

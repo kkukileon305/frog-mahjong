@@ -114,7 +114,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
 
                 {/* chat */}
                 <AnimatePresence>
-                  {targetUserChat.valid && (
+                  {targetUserChat?.valid && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 100 }}

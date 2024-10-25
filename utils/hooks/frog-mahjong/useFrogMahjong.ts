@@ -163,6 +163,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
       }
 
       if (eventName === IMPORT_SINGLE_CARD) {
+        audios?.cardMovieAudio.play();
+
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(false);
           store.setIsTurnOver(false);
@@ -173,6 +175,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
       if (eventName === DISCARD) {
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(true);
+          audios?.cardChapAudio.play();
         }
       }
 

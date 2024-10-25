@@ -28,41 +28,42 @@ function hasConsecutiveNames(cards: CardImage[]): boolean {
     "eight",
     "nine",
   ];
+  let count = 0;
   let tempIndex = -1;
-  let hasConsecutive = false;
 
   cards.forEach((card) => {
-    if (card.name === "bal" || card.name === "chung" || hasConsecutive) return;
+    if (card.name === "bal" || card.name === "chung" || count >= 2) return;
 
     const currentIndex = nameOrder.indexOf(card.name);
 
     // 연속된 숫자인지 확인
     if (tempIndex !== -1 && currentIndex === tempIndex + 1) {
-      hasConsecutive = true;
+      count = count + 1;
     }
 
     tempIndex = currentIndex;
   });
 
-  return hasConsecutive;
+  console.log(count);
+  return count >= 2;
 }
 
 function hasSameNamePair(cards: CardImage[]): boolean {
+  let count = 0;
   let previousName: string | null = null;
-  let hasPair = false;
 
   cards.forEach((card) => {
-    if (card.name === "bal" || card.name === "chung" || hasPair) return;
+    if (card.name === "bal" || card.name === "chung" || count >= 2) return;
 
     // 이전 이름과 동일한지 확인
     if (card.name === previousName) {
-      hasPair = true;
+      count = count + 1;
     }
 
     previousName = card.name;
   });
 
-  return hasPair;
+  return count >= 2;
 }
 
 export default checkMissions;
