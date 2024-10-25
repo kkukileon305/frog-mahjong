@@ -186,19 +186,23 @@ const MyCardBoard = () => {
       )}
 
       <div className="basis-1/6 flex gap-2">
-        <button
-          disabled={discardMode || isTurnOver || isVictoryFailed}
-          className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
-        >
-          {m("victory")}
-        </button>
-        <button
-          disabled={isTurnOver}
-          onClick={() => setDiscardMode(!discardMode)}
-          className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
-        >
-          {m(discardMode ? "cancelSuteru" : "suteru")}
-        </button>
+        {currentUser.cards && currentUser.cards.length >= 5 && (
+          <>
+            <button
+              disabled={discardMode || isTurnOver || isVictoryFailed}
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+            >
+              {m("victory")}
+            </button>
+            <button
+              disabled={isTurnOver}
+              onClick={() => setDiscardMode(!discardMode)}
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+            >
+              {m(discardMode ? "cancelSuteru" : "suteru")}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
