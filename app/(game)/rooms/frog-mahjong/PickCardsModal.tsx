@@ -98,12 +98,20 @@ const PickCardsModal = () => {
               className="w-full h-full flex justify-center items-center"
             >
               <button
-                className={`h-full aspect-[63/111] relative disabled:grayscale`}
+                className={`h-full aspect-[63/111] relative ${
+                  card.picked
+                    ? "border-2 border-red-400"
+                    : nokoriCardsLength === 0
+                    ? "grayscale"
+                    : "border-red-400"
+                }`}
                 onClick={() => pickCard(card)}
                 disabled={nokoriCardsLength === 0 || !!card.picked}
               >
                 <img
-                  className="object-fill"
+                  className={`object-fill ${
+                    (nokoriCardsLength === 0 || !!card.picked) && "grayscale"
+                  }`}
                   src={Sealed.src}
                   alt={"sealed card"}
                 />
