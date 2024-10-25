@@ -78,6 +78,9 @@ interface GameStore {
   isVictoryFailed: boolean;
   setIsVictoryFailed: (isVictoryFailed: boolean) => void;
 
+  victoryFailedModal: boolean;
+  setVictoryFailedModal: (victoryFailedModal: boolean) => void;
+
   clear: () => void;
 }
 
@@ -170,6 +173,10 @@ const useFrogMahjongStore = create(
     isVictoryFailed: false,
     setIsVictoryFailed: (isVictoryFailed: boolean) => set({ isVictoryFailed }),
 
+    victoryFailedModal: false,
+    setVictoryFailedModal: (victoryFailedModal: boolean) =>
+      set({ victoryFailedModal }),
+
     clear: () =>
       set({
         ws: null,
@@ -188,6 +195,9 @@ const useFrogMahjongStore = create(
         isMatchingCompleted: false,
         isGameEnd: false,
         isPickCardsModal: false,
+        victoryFailedModal: false,
+        isVictoryFailed: false,
+        isTurnOver: false,
       }),
   }))
 );
