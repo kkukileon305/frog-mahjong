@@ -10,31 +10,24 @@ import { CiCircleRemove } from "react-icons/ci";
 import {
   DiscardBody,
   DiscardRequest,
-} from "@/utils/constants/old-frog-mahjong/socketTypes";
+  WinRequest,
+  WinRequestBody,
+} from "@/utils/constants/frog-mahjong/socketTypes";
 import { DISCARD } from "@/utils/constants/const";
+import checkMissions from "@/utils/functions/frog-mahjong/checkMissions";
+import { MdOutlineCancel } from "react-icons/md";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
 
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
   const audios = useSoundStore((s) => s.audios);
-  const {
-    users,
-    gameInfo,
-    roomID,
-    ws,
-    isTurnOver,
-    isVictoryFailed,
-    setIsTurnOver,
-  } = useFrogMahjongStore((s) => ({
-    users: s.gameState?.users!,
-    gameInfo: s.gameState?.gameInfo!,
-    roomID: s.gameState?.gameInfo?.roomID!,
-    ws: s.ws,
-    isTurnOver: s.isTurnOver,
-    isVictoryFailed: s.isVictoryFailed,
-    setIsTurnOver: s.setIsTurnOver,
-  }));
+
+  const store = useFrogMahjongStore();
+  const users = store.gameState?.users!;
+  const gameInfo = store.gameState?.gameInfo!;
+  const roomID = store.gameState?.gameInfo?.roomID!;
+  const missionID = store.gameState?.gameInfo?.missionID!;
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -100,11 +93,39 @@ const MyCardBoard = () => {
         message: JSON.stringify(body),
       };
 
-      ws?.send(JSON.stringify(request));
+      store.ws?.send(JSON.stringify(request));
       setDiscardMode(false);
-      setIsTurnOver(true);
+      store.setIsTurnOver(true);
 
       audios?.cardChapAudio.play();
+    }
+  };
+
+  const victory = () => {
+    const isSuccess = checkMissions(items, missionID);
+
+    if (isSuccess) {
+      const body: WinRequestBody = {
+        cards: items.map((card) => ({ cardID: card.id })),
+      };
+
+      const request: WinRequest = {
+        userID: Number(userID),
+        event: "REQUEST_WIN",
+        roomID: Number(roomID),
+        message: JSON.stringify(body),
+      };
+
+      store.ws?.send(JSON.stringify(request));
+    } else {
+      store.setIsVictoryFailed(true);
+      store.setVictoryFailedModal(true);
+
+      audios?.timeoutAudio.play();
+
+      setTimeout(() => {
+        store.setVictoryFailedModal(false);
+      }, 1000);
     }
   };
 
@@ -132,11 +153,17 @@ const MyCardBoard = () => {
 
       {!discardMode && (
         <Reorder.Group
-          className="flex justify-center gap-1 rounded flex-wrap"
+          className="flex justify-center gap-1 rounded flex-wrap relative"
           axis="x"
           values={items}
           onReorder={setItems}
         >
+          {store.victoryFailedModal && (
+            <div className="absolute z-10 w-full h-full bg-black/50 flex flex-col justify-center items-center">
+              <MdOutlineCancel className="text-red-500 text-xl" />
+            </div>
+          )}
+
           {items.map((item, i) => (
             <Reorder.Item
               className={`cursor-pointer h-full ${i === 2 && "mr-2 lg:mr-4"}`}
@@ -149,7 +176,11 @@ const MyCardBoard = () => {
                   src={item.imageSrc}
                   alt={item.color + item.name}
                   draggable={false}
-                  className="h-full"
+                  className={`h-full ${
+                    currentUser.discardedCards?.find(
+                      (dc) => dc.cardID === item.id
+                    ) && "grayscale"
+                  }`}
                 />
               </div>
             </Reorder.Item>
@@ -166,7 +197,7 @@ const MyCardBoard = () => {
             >
               <button
                 className="relative h-full aspect-[63/111]"
-                disabled={!isOverFull || isTurnOver}
+                disabled={!isOverFull || store.isTurnOver}
                 onClick={() => discard(item)}
               >
                 <img
@@ -186,19 +217,26 @@ const MyCardBoard = () => {
       )}
 
       <div className="basis-1/6 flex gap-2">
-        <button
-          disabled={discardMode || isTurnOver || isVictoryFailed}
-          className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
-        >
-          {m("victory")}
-        </button>
-        <button
-          disabled={isTurnOver}
-          onClick={() => setDiscardMode(!discardMode)}
-          className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
-        >
-          {m(discardMode ? "cancelSuteru" : "suteru")}
-        </button>
+        {currentUser.cards && currentUser.cards.length >= 5 && (
+          <>
+            <button
+              onClick={victory}
+              disabled={
+                discardMode || store.isTurnOver || store.isVictoryFailed
+              }
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+            >
+              {m("victory")}
+            </button>
+            <button
+              disabled={store.isTurnOver}
+              onClick={() => setDiscardMode(!discardMode)}
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+            >
+              {m(discardMode ? "cancelSuteru" : "suteru")}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

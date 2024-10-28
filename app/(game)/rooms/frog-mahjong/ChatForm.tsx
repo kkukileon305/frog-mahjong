@@ -8,6 +8,7 @@ import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import ChatHistoryModal from "@/app/(game)/rooms/frog-mahjong/ChatHistoryModal";
 
 type Inputs = {
   message: string;
@@ -48,7 +49,11 @@ const ChatForm = () => {
 
   return (
     <>
-      {/*TODO:history modal*/}
+      {isOpen && (
+        <ModalContainer setIsOpen={setIsOpen} customColor="bg-white/50">
+          <ChatHistoryModal />
+        </ModalContainer>
+      )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}

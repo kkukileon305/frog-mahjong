@@ -43,22 +43,14 @@ const UserPanel = ({ user }: UserPanelProps) => {
     (user) => user.id === Number(userID)
   );
 
-  const targetUserChatList = chatList
-    .filter((chat) => chat.userID === user?.id && chat.valid)
-    .toReversed();
-
-  const lastCard =
-    user?.discardedCards &&
-    user?.discardedCards[user.discardedCards.length - 1];
+  const targetUserChat = chatList
+    .filter((chat) => chat.userID === user?.id)
+    .toReversed()[0];
 
   const userDiscardImages = user?.discardedCards?.map(
     (card) =>
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
-
-  const isActive = gameInfo?.loanInfo
-    ? gameInfo.loanInfo.userID === user?.id
-    : user?.turnNumber === gameInfo?.playTurn && isStarted;
 
   if (!user) {
     return <div className="h-full" />;
@@ -120,24 +112,45 @@ const UserPanel = ({ user }: UserPanelProps) => {
                   <div>icon</div>
                 )}
 
-                <div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">
-                  <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />
-                  <div
-                    className="bg-white w-[120px] lg:w-[240px] rounded -translate-x-2 text-black"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <div className="text-xs lg:text-base p-2 border-b">
-                      <p className="font-bold">{user.name}</p>
-                      <span className="">{user.email}</span>
-                    </div>
-                    <div
-                      onClick={() => setReportModalOpen(true)}
-                      className="text-xs lg:text-base cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"
+                {/* chat */}
+                <AnimatePresence>
+                  {targetUserChat?.valid && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 100 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute bottom-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg flex cursor-default "
                     >
-                      <p>{m("report")}</p>
-                    </div>
-                  </div>
-                </div>
+                      <div
+                        className="bg-white lg:w-[240px] rounded -translate-x-2 text-black p-1"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        {targetUserChat.message}
+                      </div>
+                      <div className="w-0 h-0 border-l-[10px] border-l-transparent border-t-[15px] border-t-white border-r-[10px] border-r-transparent" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* 드롭다운 유저 메뉴 */}
+                {/*<div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">*/}
+                {/*  <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />*/}
+                {/*  <div*/}
+                {/*    className="bg-white w-[120px] lg:w-[240px] rounded -translate-x-2 text-black"*/}
+                {/*    onClick={(e) => e.preventDefault()}*/}
+                {/*  >*/}
+                {/*    <div className="text-xs lg:text-base p-2 border-b">*/}
+                {/*      <p className="font-bold">{user.name}</p>*/}
+                {/*      <span className="">{user.email}</span>*/}
+                {/*    </div>*/}
+                {/*    <div*/}
+                {/*      onClick={() => setReportModalOpen(true)}*/}
+                {/*      className="text-xs lg:text-base cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"*/}
+                {/*    >*/}
+                {/*      <p>{m("report")}</p>*/}
+                {/*    </div>*/}
+                {/*  </div>*/}
+                {/*</div>*/}
               </div>
               <div className="">
                 <p className="font-bold text-[12px] lg:text-xl">{user.name}</p>

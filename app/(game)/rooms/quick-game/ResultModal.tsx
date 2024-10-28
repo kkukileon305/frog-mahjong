@@ -5,7 +5,7 @@ import cards from "@/app/(game)/rooms/quick-game/game/cards";
 import { FaPlus, FaEquals } from "react-icons/fa";
 import axiosInstance, { ScoreEndResult } from "@/utils/axios";
 import { getCookie } from "cookies-next";
-import mergeBonus from "@/utils/functions/mergeBonus";
+import mergeBonus from "@/utils/functions/old-frog-mahjong/mergeBonus";
 import { QUITRequest } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

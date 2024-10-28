@@ -176,8 +176,6 @@ export interface WinRequestBody {
   cards: {
     cardID: number;
   }[];
-  playTurn: number;
-  score: number;
 }
 
 export interface LoanRequest {

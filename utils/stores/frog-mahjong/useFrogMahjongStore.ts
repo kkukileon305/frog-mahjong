@@ -55,10 +55,10 @@ interface GameStore {
   addChat: (chat: ChatResponse) => void;
   filterChat: (chat: ChatResponse) => void;
 
-  result: GameResult;
-  setResult: (result: GameResult) => void;
-  setBeforeResult: (users: UserSocket[] | null) => void;
-  setAfterResult: (users: UserSocket[] | null) => void;
+  // result: GameResult;
+  // setResult: (result: GameResult) => void;
+  // setBeforeResult: (users: UserSocket[] | null) => void;
+  // setAfterResult: (users: UserSocket[] | null) => void;
 
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
@@ -77,6 +77,9 @@ interface GameStore {
 
   isVictoryFailed: boolean;
   setIsVictoryFailed: (isVictoryFailed: boolean) => void;
+
+  victoryFailedModal: boolean;
+  setVictoryFailedModal: (victoryFailedModal: boolean) => void;
 
   clear: () => void;
 }
@@ -120,24 +123,24 @@ const useFrogMahjongStore = create(
     winner: null as UserSocket | null,
     setWinner: (winner: UserSocket | null) => set({ winner }),
 
-    // prev
-    // results
-    result: { beforeUsers: null, afterUsers: null } as GameResult,
-    setResult: (result: GameResult) => set({ result }),
-    setBeforeResult: (users) =>
-      set({
-        result: {
-          beforeUsers: users,
-          afterUsers: null,
-        },
-      }),
-    setAfterResult: (users) =>
-      set((prevState) => ({
-        result: {
-          beforeUsers: prevState.result.beforeUsers,
-          afterUsers: users,
-        },
-      })),
+    // // prev
+    // // results
+    // result: { beforeUsers: null, afterUsers: null } as GameResult,
+    // setResult: (result: GameResult) => set({ result }),
+    // setBeforeResult: (users) =>
+    //   set({
+    //     result: {
+    //       beforeUsers: users,
+    //       afterUsers: null,
+    //     },
+    //   }),
+    // setAfterResult: (users) =>
+    //   set((prevState) => ({
+    //     result: {
+    //       beforeUsers: prevState.result.beforeUsers,
+    //       afterUsers: users,
+    //     },
+    //   })),
 
     // chats
     chatList: [],
@@ -170,6 +173,10 @@ const useFrogMahjongStore = create(
     isVictoryFailed: false,
     setIsVictoryFailed: (isVictoryFailed: boolean) => set({ isVictoryFailed }),
 
+    victoryFailedModal: false,
+    setVictoryFailedModal: (victoryFailedModal: boolean) =>
+      set({ victoryFailedModal }),
+
     clear: () =>
       set({
         ws: null,
@@ -181,13 +188,12 @@ const useFrogMahjongStore = create(
         isGetCard: false,
         kicked: false,
         winner: null,
-        result: {
-          beforeUsers: null,
-          afterUsers: null,
-        },
         isMatchingCompleted: false,
         isGameEnd: false,
         isPickCardsModal: false,
+        victoryFailedModal: false,
+        isVictoryFailed: false,
+        isTurnOver: false,
       }),
   }))
 );
