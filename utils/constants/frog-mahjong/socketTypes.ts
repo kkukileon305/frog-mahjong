@@ -107,6 +107,7 @@ export interface GameInfo {
   password: string;
   allPicked: boolean;
   missionID: number;
+  winner: number;
 }
 
 export interface LoanInfo {

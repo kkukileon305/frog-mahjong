@@ -44,7 +44,6 @@ function hasConsecutiveNames(cards: CardImage[]): boolean {
     tempIndex = currentIndex;
   });
 
-  console.log(count);
   return count >= 2;
 }
 

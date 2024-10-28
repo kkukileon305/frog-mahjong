@@ -42,7 +42,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     <>
       <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8">
         <div className="flex justify-center mb-2">
-          {isStarted ? <MissionPanel /> : <ReadyStartText />}
+          <MissionPanel />
         </div>
 
         <div className="flex flex-col h-full">

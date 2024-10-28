@@ -14,6 +14,7 @@ import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
+import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 
 const Page = () => {
   const orientation = useScreenOrientation();
@@ -84,6 +85,12 @@ const Page = () => {
     <div className="flex h-dvh overflow-hidden">
       <div className="relative w-full flex flex-col justify-between">
         {/*  結果モーダル*/}
+        {gameStore.isOpenResultModal && (
+          <ModalContainer setIsOpen={gameStore.setIsOpenResultModal}>
+            <ResultModal />
+          </ModalContainer>
+        )}
+
         {/* ヘルプモーダル */}
 
         {/* pick cards modal */}
