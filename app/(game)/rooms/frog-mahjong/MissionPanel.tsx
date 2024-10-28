@@ -99,6 +99,8 @@ const MissionPanel = () => {
     return (
       <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
         <div className="">
+          {isResultLoading && <p>loading...</p>}
+
           <div
             className="w-64 h-64 rounded-full border-4 border-gray-400 overflow-hidden"
             style={{
@@ -112,7 +114,7 @@ const MissionPanel = () => {
                 className="absolute w-1/2 h-1/2 top-0 left-1/2 origin-bottom"
                 style={{
                   transform: `translateX(-50%) rotate(${
-                    mission.id * (360 / allMissions.length)
+                    (mission.id - 1) * (360 / allMissions.length)
                   }deg)`,
                 }}
               >
@@ -125,10 +127,6 @@ const MissionPanel = () => {
         </div>
       </div>
     );
-  }
-
-  if (isResultLoading) {
-    return <p>load missions</p>;
   }
 
   return <>{currentMission && <p>{currentMission.title}</p>}</>;
