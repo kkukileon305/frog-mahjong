@@ -208,12 +208,9 @@ const useFrogMahjong = (mode: MatchingMode) => {
       ) {
         store.setIsStarted(false);
 
-        const newWinner =
-          data.users?.find((us) => us?.cards?.length === 6) || null;
-
         store.setIsOpenResultModal(true);
 
-        store.setWinner(newWinner);
+        store.setWinner(data.gameInfo?.winner || 0);
         store.setIsGameEnd(true);
       } else if (eventName === ROOM_OUT) {
         const currentUser = data.users?.find(

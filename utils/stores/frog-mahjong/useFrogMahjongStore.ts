@@ -48,8 +48,8 @@ interface GameStore {
   kicked: boolean;
   setKicked: (kicked: boolean) => void;
 
-  winner: UserSocket | null;
-  setWinner: (winner: UserSocket | null) => void;
+  winner: number;
+  setWinner: (winner: number) => void;
 
   chatList: ChatWithValid[];
   addChat: (chat: ChatResponse) => void;
@@ -120,8 +120,8 @@ const useFrogMahjongStore = create(
     kicked: false,
     setKicked: (kicked: boolean) => set({ kicked }),
 
-    winner: null as UserSocket | null,
-    setWinner: (winner: UserSocket | null) => set({ winner }),
+    winner: 0,
+    setWinner: (winner: number) => set({ winner }),
 
     // // prev
     // // results
@@ -187,7 +187,7 @@ const useFrogMahjongStore = create(
         isOpenResultModal: false,
         isGetCard: false,
         kicked: false,
-        winner: null,
+        winner: 0,
         isMatchingCompleted: false,
         isGameEnd: false,
         isPickCardsModal: false,

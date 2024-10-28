@@ -27,7 +27,7 @@ const ReadyStartText = () => {
   const currentUser = users?.find((user) => user.id === Number(userID));
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || isGameEnd) return;
 
     const getMissions = async () => {
       try {
@@ -38,7 +38,6 @@ const ReadyStartText = () => {
         setMissions(data.missions);
 
         if (!currentUser.isOwner) return;
-        if (isGameEnd) return;
 
         const timeout = setTimeout(() => {
           const request: STARTRequest = {
