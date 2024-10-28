@@ -200,6 +200,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
           audios?.commonStartAudio.play();
 
           store.setIsOpenResultModal(false);
+          store.setIsPickCardsModal(true);
         }
       } else if (
         eventName === REQUEST_WIN ||
