@@ -13,6 +13,7 @@ import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
 import coinIcon from "@/public/icons/coin.png";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
+import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -90,7 +91,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         />
       )}
 
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-8">
         <button
           disabled={!isLoaded}
           onClick={() => setIsProfileModalOpen(true)}
@@ -111,15 +112,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           )}
         </button>
         <div className="font-bold">
-          <p className="text-xl">{userData.name}</p>
-          <div className="flex gap-1 items-center">
-            <img src={coinIcon.src} alt="coin" className="w-5 aspect-square" />
-            <p className="">
-              {m("nokori", {
-                coin: userData.coin,
-              })}
-            </p>
-          </div>
+          <p className="text-2xl">{userData.name}</p>
+          <NokoriCoins userData={userData} />
         </div>
       </div>
 
