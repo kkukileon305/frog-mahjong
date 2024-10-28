@@ -72,8 +72,6 @@ const MissionPanel = () => {
     const spinRoulette = async () => {
       if (allMissions.length === 0) return;
 
-      setIsRouletteLoading(true);
-
       const length = allMissions.length;
       const baseDeg = 360 * (5 + (Math.floor(Math.random() * 5) + 1));
       const finalDeg = baseDeg + (missionID - 1) * (360 / length);
@@ -99,27 +97,27 @@ const MissionPanel = () => {
 
   if (isRouletteLoading) {
     return (
-      <div className="fixed z-30 w-full h-full bg-black/50 flex justify-center items-center">
+      <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
         <div className="">
           <div
-            className="w-64 h-64 rounded-full border-4 border-gray-400"
+            className="w-64 h-64 rounded-full border-4 border-gray-400 overflow-hidden"
             style={{
               transform: `rotate(${rotateDeg}deg)`,
               transition: "transform 5s ease-out",
             }}
           >
-            {[...Array(allMissions.length)].map((_, index) => (
+            {allMissions.map((mission, index) => (
               <div
-                key={index}
+                key={mission.id}
                 className="absolute w-1/2 h-1/2 top-0 left-1/2 origin-bottom"
                 style={{
                   transform: `translateX(-50%) rotate(${
-                    index * (360 / allMissions.length)
+                    mission.id * (360 / allMissions.length)
                   }deg)`,
                 }}
               >
                 <div className="w-full h-full bg-blue-500 flex items-center justify-center">
-                  <span className="text-white font-bold">{index + 1}</span>
+                  <span className="text-white font-bold">{mission.title}</span>
                 </div>
               </div>
             ))}
