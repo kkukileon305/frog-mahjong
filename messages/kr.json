@@ -144,7 +144,8 @@
     "help": "설명서",
     "playing": "진행중",
     "quit": "나가기",
-    "ready": "곧 시작됩니다"
+    "ready": "곧 시작됩니다",
+    "mission": "미션"
   },
   "MyCardBoard": {
     "dora": "도라",
@@ -232,6 +233,7 @@
     "title": "서버 점검중"
   },
   "PickCardsModal": {
-    "title": "카드를 {number}개 골라주세요"
+    "title": "카드를 {number}개 골라주세요",
+    "preview": "패 미리보기"
   }
 }

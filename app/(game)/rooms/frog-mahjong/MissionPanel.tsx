@@ -129,7 +129,20 @@ const MissionPanel = () => {
     );
   }
 
-  return <>{currentMission && <p>{currentMission.title}</p>}</>;
+  return (
+    <div className="w-full bg-white/50 rounded-xl p-1">
+      {currentMission && (
+        <div className="flex items-center gap-2">
+          <p className="p-2 basis-1/6 bg-yellow-button rounded-xl font-bold text-white text-center">
+            {m("mission")}
+          </p>
+          <p className="basis-5/6 text-center font-bold text-2xl">
+            {currentMission.title}
+          </p>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default MissionPanel;

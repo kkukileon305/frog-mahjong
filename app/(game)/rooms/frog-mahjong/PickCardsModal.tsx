@@ -15,7 +15,11 @@ type LeftCard = CardImage & {
   picked: null | UserSocket;
 };
 
-const PickCardsModal = () => {
+type PickCardsModalProps = {
+  inGame?: boolean;
+};
+
+const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const m = useTranslations("PickCardsModal");
 
   const userID = getCookie("userID") as string;
@@ -85,13 +89,28 @@ const PickCardsModal = () => {
 
   return (
     <div className="absolute w-full h-full top-0 left-0 z-30 flex justify-center items-center bg-game-icon">
-      <div className="w-full h-full p-4">
+      <div
+        className="w-full h-full"
+        style={{
+          padding: inGame ? "0px" : "16px",
+        }}
+      >
         <div className="w-full mx-auto h-full flex flex-col p-6 bg-white/50 rounded-xl overflow-hidden">
-          <p className="mb-8 font-bold text-2xl text-center">
-            {m("title", {
-              number: nokoriCardsLength,
-            })}
-          </p>
+          {!inGame && (
+            <p className="mb-8 font-bold text-2xl text-center">
+              {m("title", {
+                number: nokoriCardsLength,
+              })}
+            </p>
+          )}
+
+          {inGame && (
+            <p className=" font-bold text-base text-center">
+              {m("preview", {
+                number: nokoriCardsLength,
+              })}
+            </p>
+          )}
           <div className="w-full h-full grid grid-cols-7 grid-rows-8 landscape:grid-cols-12 landscape:grid-rows-5 gap-2">
             {leftCards.map((card) =>
               card.isValid ? (
@@ -100,7 +119,7 @@ const PickCardsModal = () => {
                   className="w-full h-full flex justify-center items-center"
                 >
                   <button
-                    className={`h-full aspect-[63/111] relative ${
+                    className={`w-full aspect-[63/111] relative ${
                       card.picked
                         ? "border-2 border-red-400"
                         : nokoriCardsLength === 0
