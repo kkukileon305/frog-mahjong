@@ -130,30 +130,10 @@ const MyCardBoard = () => {
   };
 
   return (
-    <div className="basis-1/4 overflow-hidden flex justify-center p-2 border-2 border-red-400 rounded-xl bg-white/50 gap-2">
-      <div className="basis-1/6 flex justify-center items-center gap-2">
-        <div className="w-8 lg:w-12 aspect-square relative group cursor-pointer">
-          {userIcon ? (
-            <img
-              className=" border-white border rounded-lg"
-              src={userIcon.image}
-              alt={currentUser.name}
-            />
-          ) : (
-            <div>icon</div>
-          )}
-        </div>
-        <div className="text-white">
-          <p className="font-bold text-[12px] lg:text-xl">{currentUser.name}</p>
-          <p className="font-bold text-[12px] lg:text-xl">
-            {currentUser.coin} Point
-          </p>
-        </div>
-      </div>
-
+    <div className="overflow-hidden flex justify-center p-2 border-2 border-white rounded-xl gap-2">
       {!discardMode && (
         <Reorder.Group
-          className="flex justify-center gap-1 rounded flex-wrap relative"
+          className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center"
           axis="x"
           values={items}
           onReorder={setItems}
@@ -166,12 +146,14 @@ const MyCardBoard = () => {
 
           {items.map((item, i) => (
             <Reorder.Item
-              className={`cursor-pointer h-full ${i === 2 && "mr-2 lg:mr-4"}`}
+              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center ${
+                i === 2 && "mr-2 lg:mr-4"
+              }`}
               key={item.id}
               value={item}
               onDragEnd={onDragEnd}
             >
-              <div className="relative h-full aspect-[63/111]">
+              <div className="w-full max-h-full relative aspect-[63/111] flex justify-center">
                 <img
                   src={item.imageSrc}
                   alt={item.color + item.name}
@@ -189,34 +171,38 @@ const MyCardBoard = () => {
       )}
 
       {discardMode && (
-        <ul className="flex justify-center gap-1 rounded flex-wrap">
+        <ul className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center">
           {items.map((item, i) => (
             <li
               key={item.id}
-              className={`cursor-pointer h-full ${i === 2 && "mr-2 lg:mr-4"}`}
+              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center justify-center ${
+                i === 2 && "mr-2 lg:mr-4"
+              }`}
             >
               <button
-                className="relative h-full aspect-[63/111]"
+                className="w-full max-h-full relative aspect-[63/111] flex justify-center"
                 disabled={!isOverFull || store.isTurnOver}
                 onClick={() => discard(item)}
               >
-                <img
-                  src={item.imageSrc}
-                  alt={item.color + item.name}
-                  draggable={false}
-                  className="h-full"
-                />
-                <CiCircleRemove
-                  color="red"
-                  className="w-4 h-4 absolute right-0 top-0"
-                />
+                <div className="relative">
+                  <img
+                    src={item.imageSrc}
+                    alt={item.color + item.name}
+                    draggable={false}
+                    className="h-full"
+                  />
+                  <CiCircleRemove
+                    color="red"
+                    className="w-4 h-4 absolute right-0 top-0"
+                  />
+                </div>
               </button>
             </li>
           ))}
         </ul>
       )}
 
-      <div className="basis-1/6 flex gap-2">
+      <div className="basis-1/6 flex flex-col gap-2 py-1">
         {currentUser.cards && currentUser.cards.length >= 5 && (
           <>
             <button
@@ -224,14 +210,14 @@ const MyCardBoard = () => {
               disabled={
                 discardMode || store.isTurnOver || store.isVictoryFailed
               }
-              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-pink-400 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {m("victory")}
             </button>
             <button
               disabled={store.isTurnOver}
               onClick={() => setDiscardMode(!discardMode)}
-              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-orange-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-green-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {m(discardMode ? "cancelSuteru" : "suteru")}
             </button>
