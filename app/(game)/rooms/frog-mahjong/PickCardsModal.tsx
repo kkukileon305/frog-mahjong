@@ -122,7 +122,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             </p>
           )}
 
-          <div className="w-full h-full grid grid-cols-6 grid-rows-8 landscape:grid-cols-12 landscape:grid-rows-5 gap-2">
+          <div className="w-full h-full grid grid-cols-7 grid-rows-8 landscape:grid-cols-12 landscape:grid-rows-5 gap-2">
             {leftCards.map((card) =>
               card.isValid ? (
                 <div
