@@ -133,7 +133,7 @@ const MyCardBoard = () => {
     <div className="overflow-hidden flex justify-center p-2 border-2 border-white rounded-xl gap-2">
       {!discardMode && (
         <Reorder.Group
-          className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center"
+          className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center py-1"
           axis="x"
           values={items}
           onReorder={setItems}
@@ -171,7 +171,7 @@ const MyCardBoard = () => {
       )}
 
       {discardMode && (
-        <ul className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center">
+        <ul className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center py-1">
           {items.map((item, i) => (
             <li
               key={item.id}
@@ -202,7 +202,7 @@ const MyCardBoard = () => {
         </ul>
       )}
 
-      <div className="basis-1/6 flex flex-col gap-2 py-1">
+      <div className="basis-1/6 flex flex-col gap-1 py-1 overflow-hidden">
         {currentUser.cards && currentUser.cards.length >= 5 && (
           <>
             <button
@@ -210,14 +210,14 @@ const MyCardBoard = () => {
               disabled={
                 discardMode || store.isTurnOver || store.isVictoryFailed
               }
-              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-pink-400 disabled:bg-gray-500 disabled:text-gray-400"
+              className="basis-1/2 text-[8px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-pink-400 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {m("victory")}
             </button>
             <button
               disabled={store.isTurnOver}
               onClick={() => setDiscardMode(!discardMode)}
-              className="basis-1/2 text-[12px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-green-800 disabled:bg-gray-500 disabled:text-gray-400"
+              className="basis-1/2 text-[8px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-green-800 disabled:bg-gray-500 disabled:text-gray-400"
             >
               {m(discardMode ? "cancelSuteru" : "suteru")}
             </button>

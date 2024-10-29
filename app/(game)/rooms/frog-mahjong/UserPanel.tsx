@@ -176,13 +176,13 @@ const UserPanel = ({ user }: UserPanelProps) => {
             {/*)}*/}
           </div>
 
-          <div className="basis-2/3 flex gap-1 p-2 rounded flex-wrap">
+          <div className="basis-2/3 h-fit grid grid-cols-6 grid-rows-2 gap-1 p-2 rounded flex-wrap">
             {isStarted && (
               <>
                 {userDiscardImages?.map((ci) => (
                   <div
                     key={ci.id}
-                    className="w-[calc((100%-28px)/17)] h-full flex justify-center items-center"
+                    className="w-full h-full flex justify-center items-center"
                   >
                     <img
                       src={ci.imageSrc}
