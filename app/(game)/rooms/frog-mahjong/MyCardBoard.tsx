@@ -175,7 +175,7 @@ const MyCardBoard = () => {
           {items.map((item, i) => (
             <li
               key={item.id}
-              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center justify-center ${
+              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center ${
                 i === 2 && "mr-2 lg:mr-4"
               }`}
             >
@@ -184,7 +184,7 @@ const MyCardBoard = () => {
                 disabled={!isOverFull || store.isTurnOver}
                 onClick={() => discard(item)}
               >
-                <div className="relative">
+                <div className="relative h-full">
                   <img
                     src={item.imageSrc}
                     alt={item.color + item.name}

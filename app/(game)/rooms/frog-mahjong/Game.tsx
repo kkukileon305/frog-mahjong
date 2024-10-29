@@ -44,16 +44,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
             <PickCardsModal inGame />
           </div>
           <div className="basis-1/2 flex flex-col h-full">
-            <div className="basis-1/4">
+            <div className="h-1/4">
               <UserPanel user={users[0]} />
             </div>
-            <div className="basis-1/4">
+            <div className="h-1/4">
               <UserPanel user={users[1]} />
             </div>
-            <div className="basis-1/4">
+            <div className="h-1/4">
               <UserPanel user={users[2]} />
             </div>
-            <div className="basis-1/4">
+            <div className="h-1/4">
               <UserPanel user={users[3]} />
             </div>
           </div>

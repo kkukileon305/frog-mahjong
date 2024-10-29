@@ -95,53 +95,54 @@ const MissionPanel = () => {
     spinRoulette();
   }, [allMissions]);
 
-  if (isRouletteLoading) {
-    return (
-      <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
-        <div className="">
-          {isResultLoading && <p>loading...</p>}
+  return (
+    <>
+      {isRouletteLoading && (
+        <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
+          <div className="">
+            {isResultLoading && <p>loading...</p>}
 
-          <div
-            className="w-64 h-64 rounded-full border-4 border-gray-400 overflow-hidden"
-            style={{
-              transform: `rotate(${rotateDeg}deg)`,
-              transition: "transform 5s ease-out",
-            }}
-          >
-            {allMissions.map((mission, index) => (
-              <div
-                key={mission.id}
-                className="absolute w-1/2 h-1/2 top-0 left-1/2 origin-bottom"
-                style={{
-                  transform: `translateX(-50%) rotate(${
-                    (mission.id - 1) * (360 / allMissions.length)
-                  }deg)`,
-                }}
-              >
-                <div className="w-full h-full bg-blue-500 flex items-center justify-center">
-                  <span className="text-white font-bold">{mission.title}</span>
+            <div
+              className="w-64 h-64 rounded-full border-4 border-gray-400 overflow-hidden"
+              style={{
+                transform: `rotate(${rotateDeg}deg)`,
+                transition: "transform 5s ease-out",
+              }}
+            >
+              {allMissions.map((mission, index) => (
+                <div
+                  key={mission.id}
+                  className="absolute w-1/2 h-1/2 top-0 left-1/2 origin-bottom"
+                  style={{
+                    transform: `translateX(-50%) rotate(${
+                      (mission.id - 1) * (360 / allMissions.length)
+                    }deg)`,
+                  }}
+                >
+                  <div className="w-full h-full bg-blue-500 flex items-center justify-center">
+                    <span className="text-white font-bold">
+                      {mission.title}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full bg-white/50 rounded-xl p-1">
-      {currentMission && (
+      )}
+      <div className="w-full bg-white/50 rounded-xl p-1">
         <div className="flex items-center gap-2">
           <p className="p-2 basis-1/6 bg-yellow-button rounded-xl font-bold text-white text-center">
             {m("mission")}
           </p>
-          <p className="basis-5/6 text-center font-bold text-2xl">
-            {currentMission.title}
-          </p>
+          {currentMission && (
+            <p className="basis-5/6 text-center font-bold text-2xl">
+              {currentMission.title}
+            </p>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
