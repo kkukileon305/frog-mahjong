@@ -143,7 +143,8 @@
     "help": "説明",
     "playing": "進行中",
     "quit": "出る",
-    "ready": "まもなく始まります"
+    "ready": "まもなく始まります",
+    "mission": "ミッション"
   },
   "MyCardBoard": {
     "dora": "ドラ",
@@ -231,6 +232,8 @@
     "title": "メンテナンス中"
   },
   "PickCardsModal": {
-    "title": "牌を{number}枚選んでください"
+    "title": "牌を{number}枚選んでください",
+    "preview": "プレビュー",
+    "draw": "引き分け"
   }
 }

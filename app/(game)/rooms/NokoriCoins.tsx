@@ -41,13 +41,19 @@ const NokoriCoins = ({ userData }: NokoriCoinsProps) => {
 
   return (
     <div className="relative flex gap-1 items-center">
-      <img src={coinIcon.src} alt="coin" className="w-6 aspect-square z-[5]" />
+      <img src={coinIcon.src} alt="coin" className="w-6 aspect-square z-10" />
       <div className="bg-white/50 rounded-r h-5 w-28 pl-4 pr-2 absolute left-3 top-[calc(50%-10px)] flex justify-between items-center">
         <p className="text-[14px]">{userData.coin} / 30</p>
 
-        <p className="text-game-icon text-xs">
-          {remainderMinutes}:{remainderOnlySeconds}
-        </p>
+        {userData.coin !== 30 && (
+          <p className="text-game-icon text-xs">
+            {remainderMinutes}:{remainderOnlySeconds}
+          </p>
+        )}
+
+        {userData.coin === 30 && (
+          <p className="text-game-icon text-xs">05:00</p>
+        )}
       </div>
     </div>
   );

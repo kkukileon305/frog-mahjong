@@ -92,19 +92,19 @@ const UserPanel = ({ user }: UserPanelProps) => {
             opacity: 0,
             y: 30,
           }}
-          className="border-2 lg:border-4 flex bg-white/20 border-white rounded-xl text-white h-full"
+          className="flex text-white h-full"
         >
           <div
-            className={`basis-1/6 flex flex-col w-full rounded-t-lg px-2 py-1 lg:py-2`}
+            className={`basis-1/3 flex flex-col w-full rounded-t-lg py-1 lg:py-2`}
           >
-            <div className="flex justify-center items-center gap-2 h-full">
+            <div className="flex flex-col items-center gap-2 h-[calc(100%-24px)]">
               <div
                 tabIndex={0}
-                className="w-8 lg:w-12 aspect-square relative group cursor-pointer"
+                className="max-h-full max-w-full aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
                   <img
-                    className=" border-white border rounded-lg"
+                    className="w-full aspect-square object-cover object-bottom"
                     src={userIcon.image}
                     alt={user.name}
                   />
@@ -152,10 +152,9 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 {/*  </div>*/}
                 {/*</div>*/}
               </div>
-              <div className="">
-                <p className="font-bold text-[12px] lg:text-xl">{user.name}</p>
-                <p className="font-bold text-[12px] lg:text-xl">
-                  {user.coin} Point
+              <div className="bg-yellow-button rounded w-full">
+                <p className="font-bold text-[12px] lg:text-xl text-center">
+                  {user.name}
                 </p>
               </div>
             </div>
@@ -177,13 +176,13 @@ const UserPanel = ({ user }: UserPanelProps) => {
             {/*)}*/}
           </div>
 
-          <div className="basis-5/6 flex gap-1 p-2 rounded flex-wrap">
+          <div className="basis-2/3 h-fit grid grid-cols-6 grid-rows-2 gap-1 p-2 rounded flex-wrap">
             {isStarted && (
               <>
                 {userDiscardImages?.map((ci) => (
                   <div
                     key={ci.id}
-                    className="w-[calc((100%-28px)/17)] h-full flex justify-center items-center"
+                    className="w-full h-full flex justify-center items-center"
                   >
                     <img
                       src={ci.imageSrc}

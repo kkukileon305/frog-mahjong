@@ -91,20 +91,8 @@ const Page = () => {
           </ModalContainer>
         )}
 
-        {/* ヘルプモーダル */}
-
         {/* pick cards modal */}
-        {gameStore.isPickCardsModal && (
-          <ModalContainer setIsOpen={gameStore.setIsPickCardsModal}>
-            <PickCardsModal />
-          </ModalContainer>
-        )}
-
-        {orientation === "portrait-primary" && (
-          <ModalContainer>
-            <WarningModal />
-          </ModalContainer>
-        )}
+        {gameStore.isPickCardsModal && <PickCardsModal />}
 
         <Game setIsHelpModal={setIsHelpModal} />
       </div>

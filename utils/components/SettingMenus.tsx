@@ -84,7 +84,7 @@ const SettingMenus = () => {
         </div>
 
         {isOpen && (
-          <div className="absolute top-[calc(100%+4px)] right-0 flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
+          <div className="absolute top-[calc(100%+4px)] z-30 right-0 flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
             <div className="bg-white hover:bg-gray-200 p-2 border-b">
               <label htmlFor="volume">{m("volume")} </label>
               <input

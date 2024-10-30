@@ -8,6 +8,7 @@ import getWsUrl from "@/utils/functions/getWsUrl";
 import { useEffect } from "react";
 import {
   ChatResponse,
+  GameOverRequest,
   JoinPlayBody,
   JoinPlayRequest,
   MatchBodyRequest,
@@ -174,7 +175,38 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
       if (eventName === DISCARD) {
         if (data.gameInfo?.allPicked) {
-          store.setIsPickCardsModal(true);
+          const users = data.users;
+
+          const allUserCardIds = users
+            ?.map((user) =>
+              user.cards ? user.cards.map((card) => card.cardID) : []
+            )
+            .flat()!;
+
+          const allUserDiscardedIds = users
+            ?.map((user) =>
+              user.discardedCards
+                ? user.discardedCards.map((card) => card.cardID)
+                : []
+            )
+            .flat()!;
+
+          const isAllPicked =
+            allUserCardIds.length + allUserDiscardedIds.length === 44;
+
+          if (isAllPicked) {
+            const req: GameOverRequest = {
+              event: "GAME_OVER",
+              userID: Number(userID),
+              message: "",
+              roomID: Number(data.gameInfo.roomID),
+            };
+
+            store.ws?.send(JSON.stringify(req));
+          } else {
+            store.setIsPickCardsModal(true);
+          }
+
           audios?.cardChapAudio.play();
         }
       }

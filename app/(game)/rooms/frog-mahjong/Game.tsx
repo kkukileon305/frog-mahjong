@@ -11,6 +11,7 @@ import ChatForm from "@/app/(game)/rooms/frog-mahjong/ChatForm";
 import MyCardBoard from "@/app/(game)/rooms/frog-mahjong/MyCardBoard";
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/frog-mahjong/UserPanel";
+import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -24,39 +25,41 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameInfo?.roomID;
-  const users = gameState?.users;
-
-  const [discardMode, setDiscardMode] = useState(false);
-  const [selectedCards, setSelectedCards] = useState<CardImage[]>([]);
+  const users = gameState?.users!;
 
   const userID = getCookie("userID") as string;
   const currentUser = users?.find((user) => user.id === Number(userID))!;
 
   const audios = useSoundStore((s) => s.audios);
 
-  const usersWithoutCurrentUser = users!.filter(
-    (user) => user.id !== currentUser.id
-  );
-
   return (
     <>
-      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8">
-        <div className="flex justify-center mb-2">
+      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8 gap-4">
+        <div className="flex justify-center">
           <MissionPanel />
         </div>
 
-        <div className="flex flex-col h-full">
-          <div className="basis-1/4">
-            <UserPanel user={usersWithoutCurrentUser[0]} />
+        <div className="flex gap-2 h-full">
+          <div className="basis-1/2 relative">
+            <PickCardsModal inGame />
           </div>
-          <div className="basis-1/4">
-            <UserPanel user={usersWithoutCurrentUser[1]} />
+          <div className="basis-1/2 flex flex-col h-full">
+            <div className="h-1/4">
+              <UserPanel user={users[0]} />
+            </div>
+            <div className="h-1/4">
+              <UserPanel user={users[1]} />
+            </div>
+            <div className="h-1/4">
+              <UserPanel user={users[2]} />
+            </div>
+            <div className="h-1/4">
+              <UserPanel user={users[3]} />
+            </div>
           </div>
-          <div className="basis-1/4">
-            <UserPanel user={usersWithoutCurrentUser[2]} />
-          </div>
-          <MyCardBoard />
         </div>
+
+        <MyCardBoard />
       </div>
 
       <div className="flex h-8 lg:h-10 justify-end bg-game-bar">
