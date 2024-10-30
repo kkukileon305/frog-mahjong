@@ -233,6 +233,7 @@
   },
   "PickCardsModal": {
     "title": "牌を{number}枚選んでください",
-    "preview": "プレビュー"
+    "preview": "プレビュー",
+    "draw": "引き分け"
   }
 }

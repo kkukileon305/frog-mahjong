@@ -115,14 +115,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
           )}
 
           {inGame && (
-            <p className=" font-bold text-base text-center">
+            <p className="mb-4 font-bold text-base text-center">
               {m("preview", {
                 number: nokoriCardsLength,
               })}
             </p>
           )}
 
-          <div className="w-full h-full grid grid-cols-7 grid-rows-8 landscape:grid-cols-12 landscape:grid-rows-5 gap-2">
+          <div className="w-full h-full grid grid-cols-6 landscape:grid-cols-12 grid-rows-9 gap-1 relative">
             {leftCards.map((card) =>
               card.isValid ? (
                 <div
@@ -134,7 +134,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       card.picked
                         ? "border-2 border-red-400"
                         : nokoriCardsLength === 0
-                        ? "grayscale"
+                        ? inGame
+                          ? ""
+                          : "grayscale"
                         : "border-red-400"
                     }`}
                     onClick={() => pickCard(card)}
@@ -143,7 +145,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                     <img
                       className={`w-full h-full object-fill ${
                         (nokoriCardsLength === 0 || !!card.picked) &&
-                        "grayscale"
+                        (inGame ? "" : "grayscale")
                       }`}
                       src={Sealed.src}
                       alt={"sealed card"}

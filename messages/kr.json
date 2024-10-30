@@ -234,6 +234,7 @@
   },
   "PickCardsModal": {
     "title": "카드를 {number}개 골라주세요",
-    "preview": "패 미리보기"
+    "preview": "패 미리보기",
+    "draw": "무승부"
   }
 }
