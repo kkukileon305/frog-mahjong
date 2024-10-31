@@ -14,6 +14,7 @@ import ProgressBar from "@/utils/components/ProgressBar";
 import coinIcon from "@/public/icons/coin.png";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
+import SettingMenus from "@/utils/components/SettingMenus";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -142,7 +143,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
               ))}
             </div>
           </div>
-
           <div className="flex flex-col mb-4 landscape:mb-2">
             <label className="text-center text-responsive font-bold">
               {m("maxPlayerNumber")}
@@ -164,7 +164,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
               ))}
             </div>
           </div>
-
           {userData.coin > 0 &&
             (isLoading || !isLoaded ? (
               <div className="flex h-[104px] justify-center items-center gap-4">
@@ -199,12 +198,15 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 </div>
               </div>
             ))}
-
           {userData.coin <= 0 && (
             <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">
               <p>{m("noCoin")}</p>
             </div>
           )}
+
+          <div className="flex justify-center">
+            <SettingMenus />
+          </div>
         </>
       </form>
     </div>

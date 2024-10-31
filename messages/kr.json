@@ -203,7 +203,9 @@
     "term": "이용약관",
     "privacy": "개인정보 처리방침",
     "license": "라이센스",
-    "quit": "회원탈퇴"
+    "quit": "회원탈퇴",
+    "close": "닫기",
+    "language": "언어"
   },
   "Warning": {
     "title": "화면을 가로로 <br></br> 돌려주세요"

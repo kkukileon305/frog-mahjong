@@ -11,6 +11,8 @@ import SignOutBtn from "@/utils/components/SignOutBtn";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import SwitchLocale from "@/utils/components/SwitchLocale";
+import SwitchLocaleSlide from "@/utils/components/SwitchLocaleSlide";
 
 const SettingMenus = () => {
   const m = useTranslations("Settings");
@@ -74,19 +76,15 @@ const SettingMenus = () => {
         </ModalContainer>
       )}
 
-      <div id="setting" className="relative" tabIndex={0}>
-        <div
-          className={`cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200 ${
-            isOpen && "bg-gray-200"
-          }`}
-        >
+      <div id="setting" className="" tabIndex={0}>
+        <div className="cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200">
           <IoMdSettings size={24} />
         </div>
 
         {isOpen && (
-          <div className="absolute top-[calc(100%+4px)] z-30 right-0 flex flex-col border rounded-xl overflow-hidden drop-shadow-lg">
-            <div className="bg-white hover:bg-gray-200 p-2 border-b">
-              <label htmlFor="volume">{m("volume")} </label>
+          <ModalContainer setIsOpen={setIsOpen}>
+            <div className="bg-white hover:bg-gray-200 p-2 border-b flex flex-col">
+              <label htmlFor="volume">{m("volume")}</label>
               <input
                 tabIndex={0}
                 id="volume"
@@ -96,7 +94,7 @@ const SettingMenus = () => {
                 step="0.01"
                 defaultValue={volume}
                 onChange={handleVolumeChange}
-                className="focus:outline-none"
+                className="focus:outline-none w-32"
               />
             </div>
 
@@ -126,8 +124,11 @@ const SettingMenus = () => {
 
             <div className="bg-gray-200 h-[1px]" />
 
-            <div className="bg-white w-full hover:bg-gray-200">
-              <label className="w-full inline-flex items-center cursor-pointer justify-center py-2">
+            <div className="bg-white w-full flex justify-between">
+              <span className="basis-1/2 ms-3 text-sm font-medium text-gray-900 flex items-center">
+                use old
+              </span>
+              <label className="w-fit inline-flex items-center cursor-pointer justify-center py-2">
                 <input
                   type="checkbox"
                   checked={gameType === "FROG_MAHJONG_OLD"}
@@ -135,9 +136,6 @@ const SettingMenus = () => {
                   className="sr-only peer"
                 />
                 <div className="relative w-11 h-6 bg-gray-200 outline-none peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                <span className="ms-3 text-sm font-medium text-gray-900">
-                  use old
-                </span>
               </label>
             </div>
 
@@ -162,7 +160,20 @@ const SettingMenus = () => {
                 </div>
               </>
             )}
-          </div>
+
+            <div className="my-2">
+              <SwitchLocaleSlide />
+            </div>
+
+            <div className="flex justify-end mt-4">
+              <button
+                id="back"
+                className="bg-game-icon px-2 py-1 rounded-lg font-bold text-white"
+              >
+                {m("close")}
+              </button>
+            </div>
+          </ModalContainer>
         )}
       </div>
     </>
