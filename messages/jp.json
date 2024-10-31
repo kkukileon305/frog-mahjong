@@ -202,7 +202,9 @@
     "term": "利用契約",
     "privacy": "個人情報について",
     "license": "ライセンス契約",
-    "quit": "アカウント削除"
+    "quit": "アカウント削除",
+    "close": "閉じる",
+    "language": "言語"
   },
   "Warning": {
     "title": "画面を横に<br></br>してください"
