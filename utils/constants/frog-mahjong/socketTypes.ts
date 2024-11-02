@@ -108,6 +108,7 @@ export interface GameInfo {
   allPicked: boolean;
   missionID: number;
   winner: number;
+  openCards: number[];
 }
 
 export interface LoanInfo {

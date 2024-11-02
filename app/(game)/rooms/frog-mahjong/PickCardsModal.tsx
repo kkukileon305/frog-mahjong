@@ -10,6 +10,7 @@ import {
   UserSocket,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { getCookie } from "cookies-next";
+import getRandomElements from "@/utils/functions/getRandomElements";
 
 type LeftCard = CardImage & {
   picked: null | UserSocket;
@@ -25,13 +26,15 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const { cards, users, ws, playTurn, roomID } = useFrogMahjongStore((s) => ({
-    cards: s.cards,
-    users: s.gameState?.users!,
-    ws: s.ws,
-    playTurn: s.gameState?.gameInfo?.playTurn!,
-    roomID: s.gameState?.gameInfo?.roomID!,
-  }));
+  const { cards, users, ws, playTurn, roomID, openCardIds } =
+    useFrogMahjongStore((s) => ({
+      cards: s.cards,
+      users: s.gameState?.users!,
+      ws: s.ws,
+      playTurn: s.gameState?.gameInfo?.playTurn!,
+      roomID: s.gameState?.gameInfo?.roomID!,
+      openCardIds: s.gameState?.gameInfo?.openCards || [],
+    }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
@@ -57,12 +60,15 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     .flat();
 
   const leftCardsWithoutPicked = cards.map((card) =>
+    allUserCardIds?.includes(card.id) ||
     allUserCardWithoutPickedCardIds?.includes(card.id) ||
-    allUserDiscardedIds?.includes(card.id)
+    allUserDiscardedIds?.includes(card.id) ||
+    openCardIds?.includes(card.id)
       ? { ...card, isValid: false }
       : card
   );
 
+  // 뭉탱이카드
   const leftCards: LeftCard[] = leftCardsWithoutPicked.map((card) => ({
     ...card,
     picked:
@@ -71,7 +77,39 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       ) || null,
   }));
 
+  const openCardsWithoutPicked = openCardIds.map(
+    (od) => cards.find((d) => d.id === od)!
+  );
+
+  // 열린카드
+  const openCards: LeftCard[] = openCardsWithoutPicked.map((card) => ({
+    ...card,
+    picked:
+      users.find((user) =>
+        user.pickedCards?.find((pc) => pc.cardID === card.id)
+      ) || null,
+  }));
+
   const pickCard = (card: LeftCard) => {
+    const body: ImportSingleCardBody = {
+      cardID: card.id,
+      playTurn,
+    };
+
+    const request: ImportSingleCardRequest = {
+      userID: Number(userID),
+      event: "IMPORT_SINGLE_CARD",
+      message: JSON.stringify(body),
+      roomID,
+    };
+
+    ws?.send(JSON.stringify(request));
+  };
+
+  const pickCards = () => {
+    const validCards = leftCards.filter((card) => card.isValid);
+
+    const card = getRandomElements(validCards, 1)[0];
     const body: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
@@ -122,8 +160,29 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             </p>
           )}
 
-          <div className="w-full h-full grid grid-cols-6 landscape:grid-cols-12 grid-rows-9 gap-1 relative">
-            {leftCards.map((card) =>
+          <div className="w-full h-full flex border">
+            <div className="w-full h-full flex justify-center items-center">
+              <button
+                onClick={pickCards}
+                className={`max-w-full max-h-full aspect-[63/111] relative`}
+                disabled={nokoriCardsLength === 0 || inGame}
+              >
+                <img
+                  className={`w-full h-full object-fill ${
+                    nokoriCardsLength === 0 && (inGame ? "" : "grayscale")
+                  }`}
+                  src={Sealed.src}
+                  alt={"sealed card"}
+                />
+                <p className="absolute top-0">
+                  cards
+                  <br />
+                  {leftCards.filter((lc) => lc.isValid).length}개
+                </p>
+              </button>
+            </div>
+
+            {openCards.map((card) =>
               card.isValid ? (
                 <div
                   key={card.id}
@@ -140,7 +199,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         : "border-red-400"
                     }`}
                     onClick={() => pickCard(card)}
-                    disabled={nokoriCardsLength === 0 || !!card.picked}
+                    disabled={
+                      nokoriCardsLength === 0 || !!card.picked || inGame
+                    }
                   >
                     <img
                       className={`w-full h-full object-fill ${
