@@ -36,7 +36,7 @@ export const PARAM_BAD = "PARAM_BAD";
 // languages
 export const LOCALE_COOKIE_NAME = "LOCALE_NAME";
 export const KR = "kr";
-export const JP = "jp";
+export const JP = "ja";
 export const US = "us";
 export const CN = "cn";
 export const TW = "tw";
