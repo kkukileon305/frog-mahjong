@@ -37,6 +37,7 @@ const Page = () => {
       router.push("/rooms");
     }
 
+    // 카드 순서 불러와서 저장
     const getCards = async () => {
       const roomID = gameStore.gameState?.gameInfo?.roomID;
 
