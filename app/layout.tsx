@@ -36,6 +36,9 @@ const RootLayout = async ({
 
   return (
     <html lang={locale}>
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-8565533394290929" />
+      </head>
       <body className={locale === "kr" ? fontKR.className : fontJP.className}>
         <NextIntlClientProvider messages={messages}>
           <div className="min-h-[calc(100dvh)] bg-main bg-top">{children}</div>
@@ -45,7 +48,7 @@ const RootLayout = async ({
         {process.env.NODE_ENV !== "development" && (
           <Script
             async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4574884642725131"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8565533394290929"
             crossOrigin="anonymous"
             strategy="afterInteractive"
           />
