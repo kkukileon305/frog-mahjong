@@ -106,7 +106,7 @@ export interface GameInfo {
   roomID: number;
   password: string;
   allPicked: boolean;
-  missionID: number;
+  missionIDs: number[];
   winner: number;
   openCards: number[];
 }

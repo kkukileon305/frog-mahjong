@@ -1,17 +1,17 @@
 import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 
-const checkMissions = (cards: CardImage[], missionID: number) => {
-  switch (missionID) {
-    case 1: {
-      // 연속된 숫자 2쌍
-      return hasConsecutiveNames(cards);
-    }
-
-    case 2: {
-      // 동일한 숫자 2쌍
-      return hasSameNamePair(cards);
-    }
-  }
+const checkMissions = (cards: CardImage[], missionIDs: number[]) => {
+  // switch (missionID) {
+  //   case 1: {
+  //     // 연속된 숫자 2쌍
+  //     return hasConsecutiveNames(cards);
+  //   }
+  //
+  //   case 2: {
+  //     // 동일한 숫자 2쌍
+  //     return hasSameNamePair(cards);
+  //   }
+  // }
 
   return false;
 };

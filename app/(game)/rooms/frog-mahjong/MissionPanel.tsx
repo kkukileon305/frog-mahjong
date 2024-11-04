@@ -14,7 +14,7 @@ const MissionPanel = () => {
 
   const {
     allMissions,
-    missionID,
+    missionIDs,
     setIsPickCardsModal,
     ws,
     users,
@@ -24,7 +24,7 @@ const MissionPanel = () => {
     clear,
   } = useFrogMahjongStore((s) => ({
     allMissions: s.missions,
-    missionID: s.gameState?.gameInfo?.missionID as number,
+    missionIDs: s.gameState?.gameInfo?.missionIDs,
     setIsPickCardsModal: s.setIsPickCardsModal,
     ws: s.ws,
     users: s.gameState?.users,
@@ -41,7 +41,7 @@ const MissionPanel = () => {
   const [isRouletteLoading, setIsRouletteLoading] = useState(true);
   const [isResultLoading, setIsResultLoading] = useState(false);
 
-  const currentMission = allMissions.find((m) => m.id === missionID);
+  const currentMissions = allMissions.filter((m) => missionIDs?.includes(m.id));
 
   const [rotateDeg, setRotateDeg] = useState(0);
 
@@ -74,7 +74,7 @@ const MissionPanel = () => {
 
       const length = allMissions.length;
       const baseDeg = 360 * (5 + (Math.floor(Math.random() * 5) + 1));
-      const finalDeg = baseDeg + (missionID - 1) * (360 / length);
+      const finalDeg = baseDeg + 4 * (360 / length);
 
       setRotateDeg(finalDeg);
       await delay(10000);
@@ -99,35 +99,7 @@ const MissionPanel = () => {
     <>
       {isRouletteLoading && (
         <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
-          <div className="">
-            {isResultLoading && <p>loading...</p>}
-
-            <div
-              className="w-64 h-64 rounded-full border-4 border-gray-400 overflow-hidden"
-              style={{
-                transform: `rotate(${rotateDeg}deg)`,
-                transition: "transform 5s ease-out",
-              }}
-            >
-              {allMissions.map((mission, index) => (
-                <div
-                  key={mission.id}
-                  className="absolute w-1/2 h-1/2 top-0 left-1/2 origin-bottom"
-                  style={{
-                    transform: `translateX(-50%) rotate(${
-                      (mission.id - 1) * (360 / allMissions.length)
-                    }deg)`,
-                  }}
-                >
-                  <div className="w-full h-full bg-blue-500 flex items-center justify-center">
-                    <span className="text-white font-bold">
-                      {mission.title}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          룰렛이펙트
         </div>
       )}
       <div className="w-full bg-white/50 rounded-xl p-1">
@@ -135,11 +107,15 @@ const MissionPanel = () => {
           <p className="p-2 basis-1/6 bg-yellow-button rounded-xl font-bold text-white text-center">
             {m("mission")}
           </p>
-          {currentMission && (
-            <p className="basis-5/6 text-center font-bold text-2xl">
-              {currentMission.title}
-            </p>
-          )}
+          {currentMissions &&
+            currentMissions.map((m) => (
+              <p
+                key={m.id}
+                className="basis-5/6 text-center font-bold text-2xl"
+              >
+                {m.title}
+              </p>
+            ))}
         </div>
       </div>
     </>

@@ -208,7 +208,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         (nokoriCardsLength === 0 || !!card.picked) &&
                         (inGame ? "" : "grayscale")
                       }`}
-                      src={Sealed.src}
+                      src={card.imageSrc}
                       alt={"sealed card"}
                     />
                     {card.picked && (
