@@ -27,7 +27,7 @@ const MyCardBoard = () => {
   const users = store.gameState?.users!;
   const gameInfo = store.gameState?.gameInfo!;
   const roomID = store.gameState?.gameInfo?.roomID!;
-  const missionID = store.gameState?.gameInfo?.missionID!;
+  const missionIDs = store.gameState?.gameInfo?.missionIDs!;
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -102,7 +102,7 @@ const MyCardBoard = () => {
   };
 
   const victory = () => {
-    const isSuccess = checkMissions(items, missionID);
+    const isSuccess = checkMissions(items, missionIDs);
 
     if (isSuccess) {
       const body: WinRequestBody = {
