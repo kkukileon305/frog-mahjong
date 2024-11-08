@@ -26,23 +26,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
           <MissionPanel />
         </div>
 
-        <div className="flex gap-2 h-full">
-          <div className="basis-1/2 relative">
+        <div className="flex gap-2 h-full flex-col">
+          <div className="basis-1/2 relative flex justify-center items-center">
             <PickCardsModal inGame />
           </div>
-          <div className="basis-1/2 flex flex-col h-full">
-            <div className="h-1/4">
-              <UserPanel user={users[0]} />
-            </div>
-            <div className="h-1/4">
-              <UserPanel user={users[1]} />
-            </div>
-            <div className="h-1/4">
-              <UserPanel user={users[2]} />
-            </div>
-            <div className="h-1/4">
-              <UserPanel user={users[3]} />
-            </div>
+          <div className="basis-1/2 h-full grid grid-cols-2 grid-rows-2 gap-4">
+            {users.map((user) => (
+              <div key={user.id}>
+                <UserPanel key={user.id} user={user} />
+              </div>
+            ))}
           </div>
         </div>
 

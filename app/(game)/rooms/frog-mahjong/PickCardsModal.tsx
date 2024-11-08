@@ -129,11 +129,26 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   if (inGame) {
-    return <></>;
+    return (
+      <div className="p-8 bg-white/50 rounded-xl overflow-hidden">
+        <p className="font-bold text-2xl text-center mb-2">{m("preview")}</p>
+
+        <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
+          {openCards?.map((card) => (
+            <img
+              key={card.id}
+              className="w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
+              src={card.image}
+              alt={"sealed card"}
+            />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-[#FCE4C0] text-[#7F674D] z-30">
+    <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game text-[#7F674D] z-30">
       <div className="w-full h-full p-4">
         <div
           className="w-full mx-auto h-full flex flex-col rounded-xl overflow-hidden"
@@ -154,11 +169,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </p>
 
               <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
-                <div className="h-[calc(50%-8px)] flex gap-4">
+                <div className="h-[calc(50%-8px)] flex gap-4 justify-center">
                   {openCards.map((card) => (
                     <div
                       key={card.id}
-                      className="basis-1/3 flex justify-center items-center"
+                      className="w-[calc((100%-32px)/3)] flex justify-center items-center"
                     >
                       <button
                         className={`h-full overflow-hidden aspect-[63/111] relative ${
@@ -210,7 +225,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             <div className="basis-1/3 border-8 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
               <p className="font-bold text-2xl text-center mb-2">
                 {m("myCard")}
-                <span className="ml-4">{currentUserCards?.length}/4</span>
+                <span className="ml-4">{currentUserCards?.length || 0}/4</span>
               </p>
 
               <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
