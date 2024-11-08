@@ -43,8 +43,6 @@ const InnerPage = () => {
           expires: new Date(today.getTime() + 3600000 * 24 * 7),
         });
 
-        await loadImages();
-
         router.refresh();
         router.push("/rooms");
       } catch (e) {
