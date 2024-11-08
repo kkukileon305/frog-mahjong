@@ -236,6 +236,9 @@
   "PickCardsModal": {
     "title": "牌を{number}枚選んでください",
     "preview": "プレビュー",
-    "draw": "引き分け"
+    "draw": "引き分け",
+    "selectOpen": "カードデックから選択",
+    "selectRandom": "ランダム選択",
+    "myCard": "ぼくのカード"
   }
 }

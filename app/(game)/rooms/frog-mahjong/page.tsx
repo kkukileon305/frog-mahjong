@@ -22,6 +22,9 @@ import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 const Page = () => {
   useDetectNavigation();
 
+  // 새로운 카드 에셋 로드 boolean
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
@@ -70,6 +73,7 @@ const Page = () => {
           )
         );
 
+        setIsLoaded(true);
         gameStore.setCards(cards);
       } catch (e) {
         router.push("/rooms");
@@ -107,7 +111,13 @@ const Page = () => {
         {/* pick cards modal */}
         {gameStore.isPickCardsModal && <PickCardsModal />}
 
-        <Game setIsHelpModal={setIsHelpModal} />
+        {!isLoaded && (
+          <div className="h-full flex justify-center items-center">
+            <p>카드 정보 불러오는중</p>
+          </div>
+        )}
+
+        {isLoaded && <Game setIsHelpModal={setIsHelpModal} />}
       </div>
     </div>
   );
