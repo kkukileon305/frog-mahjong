@@ -1,15 +1,11 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useTranslations } from "next-intl";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import { getCookie } from "cookies-next";
-import useSoundStore from "@/utils/stores/useSoundStore";
-import ReadyStartText from "@/app/(game)/rooms/frog-mahjong/ReadyStartText";
 import MissionPanel from "@/app/(game)/rooms/frog-mahjong/MissionPanel";
 import ChatForm from "@/app/(game)/rooms/frog-mahjong/ChatForm";
 import MyCardBoard from "@/app/(game)/rooms/frog-mahjong/MyCardBoard";
-import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import UserPanel from "@/app/(game)/rooms/frog-mahjong/UserPanel";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 
@@ -19,18 +15,9 @@ type GameProps = {
 
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
-  const accessToken = getCookie("accessToken") as string;
 
-  const { isStarted, ws, gameState, missions } = useFrogMahjongStore();
-
-  const gameInfo = gameState?.gameInfo;
-  const roomID = gameInfo?.roomID;
+  const gameState = useFrogMahjongStore((s) => s.gameState);
   const users = gameState?.users!;
-
-  const userID = getCookie("userID") as string;
-  const currentUser = users?.find((user) => user.id === Number(userID))!;
-
-  const audios = useSoundStore((s) => s.audios);
 
   return (
     <>

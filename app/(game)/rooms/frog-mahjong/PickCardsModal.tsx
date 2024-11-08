@@ -3,7 +3,6 @@
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import Sealed from "@/public/cards/sealed.jpg";
 import { useTranslations } from "next-intl";
-import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import {
   ImportSingleCardBody,
   ImportSingleCardRequest,
@@ -11,8 +10,9 @@ import {
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
+import { BirdCard } from "@/utils/axios";
 
-type LeftCard = CardImage & {
+type LeftCard = BirdCard & {
   picked: null | UserSocket;
 };
 
@@ -37,7 +37,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
-  const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
+  const nokoriCardsLength = 4 - (currentUser?.cards?.length || 0);
 
   const allUserCardIds = users
     ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
@@ -59,13 +59,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     )
     .flat();
 
-  const leftCardsWithoutPicked = cards.map((card) =>
-    allUserCardIds?.includes(card.id) ||
-    allUserCardWithoutPickedCardIds?.includes(card.id) ||
-    allUserDiscardedIds?.includes(card.id) ||
-    openCardIds?.includes(card.id)
-      ? { ...card, isValid: false }
-      : card
+  const leftCardsWithoutPicked = cards.filter(
+    (card) =>
+      !(
+        allUserCardIds?.includes(card.id) ||
+        allUserCardWithoutPickedCardIds?.includes(card.id) ||
+        allUserDiscardedIds?.includes(card.id) ||
+        openCardIds?.includes(card.id)
+      )
   );
 
   // 뭉탱이카드
@@ -107,9 +108,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   const pickCards = () => {
-    const validCards = leftCards.filter((card) => card.isValid);
-
-    const card = getRandomElements(validCards, 1)[0];
+    const card = getRandomElements(leftCards, 1)[0];
     const body: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
@@ -177,51 +176,45 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                 <p className="absolute top-0">
                   cards
                   <br />
-                  {leftCards.filter((lc) => lc.isValid).length}개
+                  {leftCards.length}개
                 </p>
               </button>
             </div>
 
-            {openCards.map((card) =>
-              card.isValid ? (
-                <div
-                  key={card.id}
-                  className="w-full h-full flex justify-center items-center"
+            {openCards.map((card) => (
+              <div
+                key={card.id}
+                className="w-full h-full flex justify-center items-center"
+              >
+                <button
+                  className={`max-w-full max-h-full aspect-[63/111] relative ${
+                    card.picked
+                      ? "border-2 border-red-400"
+                      : nokoriCardsLength === 0
+                      ? inGame
+                        ? ""
+                        : "grayscale"
+                      : "border-red-400"
+                  }`}
+                  onClick={() => pickCard(card)}
+                  disabled={nokoriCardsLength === 0 || !!card.picked || inGame}
                 >
-                  <button
-                    className={`max-w-full max-h-full aspect-[63/111] relative ${
-                      card.picked
-                        ? "border-2 border-red-400"
-                        : nokoriCardsLength === 0
-                        ? inGame
-                          ? ""
-                          : "grayscale"
-                        : "border-red-400"
+                  <img
+                    className={`w-full h-full object-fill ${
+                      (nokoriCardsLength === 0 || !!card.picked) &&
+                      (inGame ? "" : "grayscale")
                     }`}
-                    onClick={() => pickCard(card)}
-                    disabled={
-                      nokoriCardsLength === 0 || !!card.picked || inGame
-                    }
-                  >
-                    <img
-                      className={`w-full h-full object-fill ${
-                        (nokoriCardsLength === 0 || !!card.picked) &&
-                        (inGame ? "" : "grayscale")
-                      }`}
-                      src={card.imageSrc}
-                      alt={"sealed card"}
-                    />
-                    {card.picked && (
-                      <p className="absolute top-[calc(50%-8px)] w-full text-center font-bold">
-                        {card.picked.name}
-                      </p>
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <div key={card.id} className="w-full h-full"></div>
-              )
-            )}
+                    src={card.image}
+                    alt={"sealed card"}
+                  />
+                  {card.picked && (
+                    <p className="absolute top-[calc(50%-8px)] w-full text-center font-bold">
+                      {card.picked.name}
+                    </p>
+                  )}
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

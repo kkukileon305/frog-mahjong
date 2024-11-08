@@ -253,6 +253,7 @@ export interface UserSocket {
   coin: number;
   turnNumber: number;
   profileID: number;
+  missionSuccessCount: number;
 }
 
 export type UserCard = {

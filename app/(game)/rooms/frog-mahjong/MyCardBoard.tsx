@@ -1,7 +1,6 @@
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { getCookie } from "cookies-next";
 import React, { useEffect, useState } from "react";
-import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import { Reorder } from "framer-motion";
 import useSoundStore from "@/utils/stores/useSoundStore";
@@ -16,6 +15,7 @@ import {
 import { DISCARD } from "@/utils/constants/const";
 import checkMissions from "@/utils/functions/frog-mahjong/checkMissions";
 import { MdOutlineCancel } from "react-icons/md";
+import { BirdCard } from "@/utils/axios";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
@@ -28,6 +28,7 @@ const MyCardBoard = () => {
   const gameInfo = store.gameState?.gameInfo!;
   const roomID = store.gameState?.gameInfo?.roomID!;
   const missionIDs = store.gameState?.gameInfo?.missionIDs!;
+  const cards = store.cards;
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -37,15 +38,14 @@ const MyCardBoard = () => {
   const currentUser = users.find((user) => user.id === Number(userID))!;
 
   const userCardImages = currentUser.cards?.map(
-    (card) =>
-      cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
+    (card) => cards.find((cardImage) => cardImage.id === card.cardID)!
   );
 
   const userIcon = profileIcons.find(
     (icon) => icon.profileID === currentUser?.profileID
   )!;
 
-  const [items, setItems] = useState<CardImage[]>(userCardImages || []);
+  const [items, setItems] = useState<BirdCard[]>(userCardImages || []);
 
   useEffect(() => {
     const newItems = userCardImages?.sort((ci) => ci.id) || [];
@@ -79,7 +79,7 @@ const MyCardBoard = () => {
 
   const isOverFull = !!(currentUser?.cards && currentUser?.cards?.length >= 6);
 
-  const discard = (ci: CardImage) => {
+  const discard = (ci: BirdCard) => {
     if (isOverFull) {
       const body: DiscardBody = {
         cardID: ci.id,
@@ -155,8 +155,8 @@ const MyCardBoard = () => {
             >
               <div className="w-full max-h-full relative aspect-[63/111] flex justify-center">
                 <img
-                  src={item.imageSrc}
-                  alt={item.color + item.name}
+                  src={item.image}
+                  alt={item.name}
                   draggable={false}
                   className={`h-full ${
                     currentUser.discardedCards?.find(
@@ -186,8 +186,8 @@ const MyCardBoard = () => {
               >
                 <div className="relative h-full">
                   <img
-                    src={item.imageSrc}
-                    alt={item.color + item.name}
+                    src={item.image}
+                    alt={item.name}
                     draggable={false}
                     className="h-full"
                   />
