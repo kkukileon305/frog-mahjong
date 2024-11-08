@@ -11,7 +11,6 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        game: `url('../public/bg/game_background.jpg')`,
         rooms: "url('../public/bg/room_background.jpg')",
         main: "url('../public/bg/main_background.jpg')",
       },
@@ -31,6 +30,7 @@ const config: Config = {
       "game-icon": "#62A38C",
       "game-button": "#D5F5FF",
       "yellow-button": "#FFA800",
+      game: "#FCE4C0",
     },
   },
   plugins: [],

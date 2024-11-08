@@ -12,14 +12,18 @@ import Game from "@/app/(game)/rooms/frog-mahjong/Game";
 import ModalContainer from "@/utils/components/ModalContainer";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
-import axiosInstance, { CardListResponse } from "@/utils/axios";
-import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
+import axiosInstance, {
+  BirdCard,
+  CardListResponse,
+  ImportCardBody,
+} from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 
 const Page = () => {
-  const orientation = useScreenOrientation();
-
   useDetectNavigation();
+
+  // 새로운 카드 에셋 로드 boolean
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -45,20 +49,32 @@ const Page = () => {
 
       try {
         const {
-          data: { cardIDList },
-        } = await axiosInstance.get<CardListResponse>(
-          `/v0.1/game/${roomID}/deck`,
-          {
-            headers: {
-              tkn: accessToken,
-            },
-          }
+          data: { cards },
+        } = await axiosInstance.get<ImportCardBody>("/v2.1/game/cards", {
+          headers: {
+            tkn: accessToken,
+          },
+        });
+
+        await Promise.all(
+          cards.map(
+            (card) =>
+              new Promise<BirdCard>((res, rej) => {
+                const img = new Image();
+
+                img.src = card.image;
+                img.onload = () => {
+                  res(card);
+                };
+                img.onerror = () => {
+                  rej(new Error(`Failed to load image ${card.image}`));
+                };
+              })
+          )
         );
 
-        const newCards = cardIDList.map(
-          (cardID) => cardDataList.find((ci) => ci.id === cardID)!
-        );
-        gameStore.setCards(newCards);
+        setIsLoaded(true);
+        gameStore.setCards(cards);
       } catch (e) {
         router.push("/rooms");
         gameStore.clear();
@@ -95,7 +111,13 @@ const Page = () => {
         {/* pick cards modal */}
         {gameStore.isPickCardsModal && <PickCardsModal />}
 
-        <Game setIsHelpModal={setIsHelpModal} />
+        {!isLoaded && (
+          <div className="h-full flex justify-center items-center">
+            <p>카드 정보 불러오는중</p>
+          </div>
+        )}
+
+        {isLoaded && <Game setIsHelpModal={setIsHelpModal} />}
       </div>
     </div>
   );

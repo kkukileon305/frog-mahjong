@@ -64,7 +64,7 @@ const SignInForm = () => {
         expires: new Date(today.getTime() + 3600000 * 24 * 7),
       });
 
-      await loadImages();
+      // await loadImages();
 
       router.refresh();
       router.push("/rooms");

@@ -3,7 +3,6 @@
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import Sealed from "@/public/cards/sealed.jpg";
 import { useTranslations } from "next-intl";
-import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
 import {
   ImportSingleCardBody,
   ImportSingleCardRequest,
@@ -11,8 +10,9 @@ import {
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
+import { BirdCard } from "@/utils/axios";
 
-type LeftCard = CardImage & {
+type LeftCard = BirdCard & {
   picked: null | UserSocket;
 };
 
@@ -37,7 +37,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
-  const nokoriCardsLength = 6 - (currentUser?.cards?.length || 0);
+  const currentUserCards = currentUser.cards?.map(
+    (uc) => cards.find((c) => c.id === uc.cardID)!
+  );
+
+  const nokoriCardsLength = 4 - (currentUser?.cards?.length || 0);
 
   const allUserCardIds = users
     ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
@@ -59,13 +63,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     )
     .flat();
 
-  const leftCardsWithoutPicked = cards.map((card) =>
-    allUserCardIds?.includes(card.id) ||
-    allUserCardWithoutPickedCardIds?.includes(card.id) ||
-    allUserDiscardedIds?.includes(card.id) ||
-    openCardIds?.includes(card.id)
-      ? { ...card, isValid: false }
-      : card
+  const leftCardsWithoutPicked = cards.filter(
+    (card) =>
+      !(
+        allUserCardIds?.includes(card.id) ||
+        allUserCardWithoutPickedCardIds?.includes(card.id) ||
+        allUserDiscardedIds?.includes(card.id) ||
+        openCardIds?.includes(card.id)
+      )
   );
 
   // 뭉탱이카드
@@ -107,9 +112,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   const pickCards = () => {
-    const validCards = leftCards.filter((card) => card.isValid);
-
-    const card = getRandomElements(validCards, 1)[0];
+    const card = getRandomElements(leftCards, 1)[0];
     const body: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
@@ -125,103 +128,117 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     ws?.send(JSON.stringify(request));
   };
 
+  if (inGame) {
+    return (
+      <div className="p-8 bg-white/50 rounded-xl overflow-hidden">
+        <p className="font-bold text-2xl text-center mb-2">{m("preview")}</p>
+
+        <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
+          {openCards?.map((card) => (
+            <img
+              key={card.id}
+              className="w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
+              src={card.image}
+              alt={"sealed card"}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game-icon"
-      style={{
-        zIndex: inGame ? "10" : "30",
-      }}
-    >
-      <div
-        className="w-full h-full"
-        style={{
-          padding: inGame ? "0px" : "16px",
-        }}
-      >
+    <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game text-[#7F674D] z-30">
+      <div className="w-full h-full p-4">
         <div
-          className="w-full mx-auto h-full flex flex-col bg-white/50 rounded-xl overflow-hidden"
+          className="w-full mx-auto h-full flex flex-col rounded-xl overflow-hidden"
           style={{
-            padding: inGame ? "8px" : "24px",
+            padding: inGame ? "4px" : "12px",
           }}
         >
-          {!inGame && (
-            <p className="mb-8 font-bold text-2xl text-center">
-              {m("title", {
-                number: nokoriCardsLength,
-              })}
-            </p>
-          )}
+          <p className="mb-4 font-bold text-2xl text-center">
+            {m("title", {
+              number: nokoriCardsLength,
+            })}
+          </p>
 
-          {inGame && (
-            <p className="mb-4 font-bold text-base text-center">
-              {m("preview", {
-                number: nokoriCardsLength,
-              })}
-            </p>
-          )}
+          <div className="w-full h-full flex flex-col gap-2">
+            <div className="basis-2/3 border-[10px] border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
+              <p className="text-2xl mb-5 font-bold text-center">
+                {m("selectOpen")}
+              </p>
 
-          <div className="w-full h-full flex border">
-            <div className="w-full h-full flex justify-center items-center">
-              <button
-                onClick={pickCards}
-                className={`max-w-full max-h-full aspect-[63/111] relative`}
-                disabled={nokoriCardsLength === 0 || inGame}
-              >
-                <img
-                  className={`w-full h-full object-fill ${
-                    nokoriCardsLength === 0 && (inGame ? "" : "grayscale")
-                  }`}
-                  src={Sealed.src}
-                  alt={"sealed card"}
-                />
-                <p className="absolute top-0">
-                  cards
-                  <br />
-                  {leftCards.filter((lc) => lc.isValid).length}개
-                </p>
-              </button>
+              <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
+                <div className="h-[calc(50%-8px)] flex gap-4 justify-center">
+                  {openCards.map((card) => (
+                    <div
+                      key={card.id}
+                      className="w-[calc((100%-32px)/3)] flex justify-center items-center"
+                    >
+                      <button
+                        className={`h-full overflow-hidden aspect-[63/111] relative ${
+                          card.picked
+                            ? "border-2 border-red-400"
+                            : nokoriCardsLength === 0
+                            ? "grayscale"
+                            : "border-red-400"
+                        }`}
+                        onClick={() => pickCard(card)}
+                        disabled={
+                          nokoriCardsLength === 0 || !!card.picked || inGame
+                        }
+                      >
+                        <img
+                          className={`w-full h-full object-fill ${
+                            (nokoriCardsLength === 0 || !!card.picked) &&
+                            "grayscale"
+                          }`}
+                          src={card.image}
+                          alt={"sealed card"}
+                        />
+                        {card.picked && (
+                          <p className="absolute top-[calc(50%-8px)] w-full text-center font-bold">
+                            {card.picked.name}
+                          </p>
+                        )}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="h-[calc(50%-8px)] flex justify-center items-center gap-6 bg-[#FDF9E0] border-[#796858] border-8 rounded p-2">
+                  <button
+                    onClick={pickCards}
+                    className="h-full aspect-[63/111] bg-[#C9F2A3] border-8 border-[#796858] rounded disabled:bg-gray-200"
+                    disabled={nokoriCardsLength === 0 || inGame}
+                  />
+                  <div className="flex flex-col items-center">
+                    <p className="font-bold text-2xl">
+                      {leftCards.length}/{cards.length}
+                    </p>
+                    <p className="font-bold text-2xl">{m("selectRandom")}</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {openCards.map((card) =>
-              card.isValid ? (
-                <div
-                  key={card.id}
-                  className="w-full h-full flex justify-center items-center"
-                >
-                  <button
-                    className={`max-w-full max-h-full aspect-[63/111] relative ${
-                      card.picked
-                        ? "border-2 border-red-400"
-                        : nokoriCardsLength === 0
-                        ? inGame
-                          ? ""
-                          : "grayscale"
-                        : "border-red-400"
-                    }`}
-                    onClick={() => pickCard(card)}
-                    disabled={
-                      nokoriCardsLength === 0 || !!card.picked || inGame
-                    }
-                  >
-                    <img
-                      className={`w-full h-full object-fill ${
-                        (nokoriCardsLength === 0 || !!card.picked) &&
-                        (inGame ? "" : "grayscale")
-                      }`}
-                      src={card.imageSrc}
-                      alt={"sealed card"}
-                    />
-                    {card.picked && (
-                      <p className="absolute top-[calc(50%-8px)] w-full text-center font-bold">
-                        {card.picked.name}
-                      </p>
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <div key={card.id} className="w-full h-full"></div>
-              )
-            )}
+            <div className="basis-1/3 border-8 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
+              <p className="font-bold text-2xl text-center mb-2">
+                {m("myCard")}
+                <span className="ml-4">{currentUserCards?.length || 0}/4</span>
+              </p>
+
+              <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
+                {currentUserCards?.map((card) => (
+                  <img
+                    key={card.id}
+                    className="w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
+                    src={card.image}
+                    alt={"sealed card"}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

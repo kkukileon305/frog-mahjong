@@ -5,13 +5,7 @@ import {
   UserSocket,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { devtools } from "zustand/middleware";
-import { Mission } from "@/utils/axios";
-import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
-
-type GameResult = {
-  beforeUsers: UserSocket[] | null;
-  afterUsers: UserSocket[] | null;
-};
+import { BirdCard, Mission } from "@/utils/axios";
 
 type ChatWithValid = ChatResponse & {
   valid: boolean;
@@ -69,8 +63,8 @@ interface GameStore {
   isPickCardsModal: boolean;
   setIsPickCardsModal: (isPickCardsModal: boolean) => void;
 
-  cards: CardImage[];
-  setCards: (cards: CardImage[]) => void;
+  cards: BirdCard[];
+  setCards: (cards: BirdCard[]) => void;
 
   isTurnOver: boolean;
   setIsTurnOver: (isTurnOver: boolean) => void;

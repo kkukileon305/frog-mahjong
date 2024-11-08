@@ -94,13 +94,11 @@ const UserPanel = ({ user }: UserPanelProps) => {
           }}
           className="flex text-white h-full"
         >
-          <div
-            className={`basis-1/3 flex flex-col w-full rounded-t-lg py-1 lg:py-2`}
-          >
-            <div className="flex flex-col items-center gap-2 h-[calc(100%-24px)]">
+          <div className="w-[40%] flex flex-col rounded-t-lg py-1 lg:py-2">
+            <div className="flex flex-col items-center h-full">
               <div
                 tabIndex={0}
-                className="max-h-full max-w-full aspect-square relative group cursor-pointer"
+                className="max-h-full max-w-full h-[calc(100%-24px)] aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
                   <img
@@ -152,10 +150,8 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 {/*  </div>*/}
                 {/*</div>*/}
               </div>
-              <div className="bg-yellow-button rounded w-full">
-                <p className="font-bold text-[12px] lg:text-xl text-center">
-                  {user.name}
-                </p>
+              <div className="bg-white text-black font-bold rounded w-full">
+                <p className="font-bold lg:text-xl text-center">{user.name}</p>
               </div>
             </div>
 
@@ -176,25 +172,27 @@ const UserPanel = ({ user }: UserPanelProps) => {
             {/*)}*/}
           </div>
 
-          <div className="basis-2/3 h-fit grid grid-cols-6 grid-rows-2 gap-1 p-2 rounded flex-wrap">
-            {isStarted && (
-              <>
-                {userDiscardImages?.map((ci) => (
-                  <div
-                    key={ci.id}
-                    className="w-full h-full flex justify-center items-center"
-                  >
-                    <img
-                      src={ci.imageSrc}
-                      alt={ci.color + ci.name}
-                      width={40}
-                      height={58}
-                      className={`w-full`}
-                    />
-                  </div>
-                ))}
-              </>
-            )}
+          <div className="w-[60%] h-full py-2">
+            <div className="h-full bg-white/50 grid grid-cols-6 grid-rows-2 gap-1 p-2 rounded flex-wrap">
+              {isStarted && (
+                <>
+                  {userDiscardImages?.map((ci) => (
+                    <div
+                      key={ci.id}
+                      className="w-full h-full flex justify-center items-center"
+                    >
+                      <img
+                        src={ci.imageSrc}
+                        alt={ci.color + ci.name}
+                        width={40}
+                        height={58}
+                        className={`w-full`}
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
           </div>
         </motion.div>
       </div>

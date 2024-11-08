@@ -102,20 +102,21 @@ const MissionPanel = () => {
           룰렛이펙트
         </div>
       )}
-      <div className="w-full bg-white/50 rounded-xl p-1">
-        <div className="flex items-center gap-2">
-          <p className="p-2 basis-1/6 bg-yellow-button rounded-xl font-bold text-white text-center">
+
+      <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-8">
+        <div className="">
+          <p className="p-2 basis-1/6 bg-[#FA4E38] rounded-xl font-bold text-white text-center">
             {m("mission")}
           </p>
-          {currentMissions &&
-            currentMissions.map((m) => (
-              <p
-                key={m.id}
-                className="basis-5/6 text-center font-bold text-2xl"
-              >
-                {m.title}
-              </p>
-            ))}
+
+          <div className="py-2 px-4">
+            {currentMissions &&
+              currentMissions.map((m, index) => (
+                <p key={m.id} className="basis-5/6 font-bold text-xs">
+                  {index + 1}. {m.title}
+                </p>
+              ))}
+          </div>
         </div>
       </div>
     </>

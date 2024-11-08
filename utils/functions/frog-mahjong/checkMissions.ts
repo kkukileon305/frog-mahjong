@@ -1,6 +1,6 @@
-import { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
+import { BirdCard } from "@/utils/axios";
 
-const checkMissions = (cards: CardImage[], missionIDs: number[]) => {
+const checkMissions = (cards: BirdCard[], missionIDs: number[]) => {
   // switch (missionID) {
   //   case 1: {
   //     // 연속된 숫자 2쌍
@@ -16,7 +16,7 @@ const checkMissions = (cards: CardImage[], missionIDs: number[]) => {
   return false;
 };
 
-function hasConsecutiveNames(cards: CardImage[]): boolean {
+function hasConsecutiveNames(cards: BirdCard[]): boolean {
   const nameOrder = [
     "one",
     "two",
@@ -47,7 +47,7 @@ function hasConsecutiveNames(cards: CardImage[]): boolean {
   return count >= 2;
 }
 
-function hasSameNamePair(cards: CardImage[]): boolean {
+function hasSameNamePair(cards: BirdCard[]): boolean {
   let count = 0;
   let previousName: string | null = null;
 

@@ -78,6 +78,19 @@ export type CardListResponse = {
   cardIDList: number[];
 };
 
+export type BirdCard = {
+  id: number;
+  name: string;
+  image: string;
+  size: number;
+  habitat: string;
+  beakDirection: string;
+};
+
+export interface ImportCardBody {
+  cards: BirdCard[];
+}
+
 export type AvailableProfileIcon = {
   currentCount: number;
   isAchieved: boolean;
