@@ -130,7 +130,7 @@ const MyCardBoard = () => {
   };
 
   return (
-    <div className="overflow-hidden flex justify-center p-2 border-2 border-white rounded-xl gap-2">
+    <div className="h-full overflow-hidden flex justify-center flex-col p-2 bg-white rounded-xl gap-2">
       {!discardMode && (
         <Reorder.Group
           className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center py-1"
