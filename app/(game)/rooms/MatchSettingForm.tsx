@@ -203,10 +203,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
               <p>{m("noCoin")}</p>
             </div>
           )}
-
-          <div className="flex justify-center">
-            <SettingMenus />
-          </div>
         </>
       </form>
     </div>

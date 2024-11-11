@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import Header from "@/app/Header";
 import Match from "@/app/(game)/rooms/Match";
 import FormMetadataLoading from "@/app/(game)/rooms/FormMetadataLoading";
+import SettingMenus from "@/utils/components/SettingMenus";
 
 const Page = async () => {
   return (
@@ -10,6 +10,10 @@ const Page = async () => {
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>
+
+        <div className="w-full absolute flex justify-end top-0 left-0 text-black">
+          <SettingMenus />
+        </div>
       </div>
     </div>
   );

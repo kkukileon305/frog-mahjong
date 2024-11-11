@@ -1,14 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  LoanBody,
-  LoanRequest,
-  UserSocket,
-} from "@/utils/constants/old-frog-mahjong/socketTypes";
-import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ChatItem from "@/app/(game)/rooms/frog-mahjong/ChatItem";
+import { UserSocket } from "@/utils/constants/old-frog-mahjong/socketTypes";
+import React, { useState } from "react";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
@@ -17,6 +11,7 @@ import ModalContainer from "@/utils/components/ModalContainer";
 import ReportModal from "@/app/(game)/rooms/frog-mahjong/ReportModal";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import RedOne from "@/public/cards/red_one.png";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -33,7 +28,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
-  const { chatList, ws, gameState, isStarted } = useFrogMahjongStore();
+  const { chatList, ws, gameState, isStarted, cards } = useFrogMahjongStore();
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameState?.gameInfo?.roomID;
@@ -47,10 +42,11 @@ const UserPanel = ({ user }: UserPanelProps) => {
     .filter((chat) => chat.userID === user?.id)
     .toReversed()[0];
 
-  const userDiscardImages = user?.discardedCards?.map(
-    (card) =>
-      cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
+  const userDiscardImages = user?.discardedCards?.map((card) =>
+    cards.find((cardImage) => cardImage.id === card.cardID)
   );
+
+  const userLastDiscardImage = userDiscardImages?.toReversed()[0];
 
   if (!user) {
     return <div className="h-full" />;
@@ -94,11 +90,11 @@ const UserPanel = ({ user }: UserPanelProps) => {
           }}
           className="flex text-white h-full"
         >
-          <div className="w-[40%] flex flex-col rounded-t-lg py-1 lg:py-2">
+          <div className="w-full flex flex-col rounded-t-lg py-1 lg:py-2">
             <div className="flex flex-col items-center h-full">
               <div
                 tabIndex={0}
-                className="max-h-full max-w-full h-[calc(100%-24px)] aspect-square relative group cursor-pointer"
+                className="h-[calc((100%-24px)/2)] p-1 aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
                   <img
@@ -150,48 +146,29 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 {/*  </div>*/}
                 {/*</div>*/}
               </div>
-              <div className="bg-white text-black font-bold rounded w-full">
-                <p className="font-bold lg:text-xl text-center">{user.name}</p>
+
+              <div className="px-4 text-black font-bold w-full">
+                <p className="bg-white font-bold rounded lg:text-xl text-center">
+                  {user.name}
+                </p>
               </div>
-            </div>
 
-            {/*마지막 버린 카드*/}
-            {/*{isStarted && lastCardImage && (*/}
-            {/*  <button*/}
-            {/*    className="w-6 lg:w-10 border border-red-400 disabled:border-gray-400 rounded overflow-hidden"*/}
-            {/*    disabled={!isLoanSelectMode}*/}
-            {/*    onClick={onLoanCard}*/}
-            {/*  >*/}
-            {/*    <img*/}
-            {/*      src={lastCardImage.imageSrc}*/}
-            {/*      alt={lastCardImage.color + lastCardImage.name}*/}
-            {/*      width={40}*/}
-            {/*      height={58}*/}
-            {/*    />*/}
-            {/*  </button>*/}
-            {/*)}*/}
-          </div>
-
-          <div className="w-[60%] h-full py-2">
-            <div className="h-full bg-white/50 grid grid-cols-6 grid-rows-2 gap-1 p-2 rounded flex-wrap">
-              {isStarted && (
-                <>
-                  {userDiscardImages?.map((ci) => (
-                    <div
-                      key={ci.id}
-                      className="w-full h-full flex justify-center items-center"
-                    >
-                      <img
-                        src={ci.imageSrc}
-                        alt={ci.color + ci.name}
-                        width={40}
-                        height={58}
-                        className={`w-full`}
-                      />
-                    </div>
-                  ))}
-                </>
+              {isStarted && userLastDiscardImage && (
+                <button className="w-full border border-red-400 disabled:border-gray-400 rounded overflow-hidden">
+                  <img
+                    src={userLastDiscardImage.image}
+                    alt={userLastDiscardImage.name}
+                    width={40}
+                    height={58}
+                  />
+                </button>
               )}
+
+              <img
+                src={RedOne.src}
+                alt={"asd"}
+                className="h-[calc((100%-24px)/2)] m-1 aspect-[63/111] border-4 border-[#796858] rounded overflow-hidden"
+              />
             </div>
           </div>
         </motion.div>

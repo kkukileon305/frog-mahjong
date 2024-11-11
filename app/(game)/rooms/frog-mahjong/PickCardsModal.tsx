@@ -130,7 +130,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   if (inGame) {
     return (
-      <div className="p-8 bg-white/50 rounded-xl overflow-hidden">
+      <div className="h-full py-4 px-12 bg-white/50 rounded-xl overflow-hidden">
         <p className="font-bold text-2xl text-center mb-2">{m("preview")}</p>
 
         <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
