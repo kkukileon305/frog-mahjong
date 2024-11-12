@@ -75,6 +75,8 @@
   "ResetPassword" : {
     "title": "受け取ったメールを確認してください",
     "verifyCode": "認証コード",
+    "writeEmail": "メールアドレスを入力してください",
+    "checkEmail": "正しいメールアドレスを入力してください",
     "writeCode": "認証コードを入力してください",
     "newPassword": "新しいパスワード(英数字6桁以上)",
     "writePassword": "新しいパスワードを入力してください",
