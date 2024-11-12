@@ -1,22 +1,11 @@
-import { getCookie } from "cookies-next";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import logo from "@/public/logos/logo.png";
 import Image from "next/image";
 import React from "react";
-import { redirect } from "next/navigation";
 import SwitchLocale from "@/utils/components/SwitchLocale";
 
 const Home = async () => {
-  const refreshToken = getCookie("refreshToken", {
-    cookies,
-  });
-
-  if (refreshToken) {
-    redirect("/rooms");
-  }
-
   const m = await getTranslations("MainPage");
 
   return (
