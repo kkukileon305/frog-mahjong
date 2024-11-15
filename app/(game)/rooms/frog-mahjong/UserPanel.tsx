@@ -153,22 +153,17 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 </p>
               </div>
 
-              {isStarted && userLastDiscardImage && (
-                <button className="w-full border border-red-400 disabled:border-gray-400 rounded overflow-hidden">
-                  <img
-                    src={userLastDiscardImage.image}
-                    alt={userLastDiscardImage.name}
-                    width={40}
-                    height={58}
-                  />
-                </button>
-              )}
-
-              <img
-                src={RedOne.src}
-                alt={"asd"}
-                className="h-[calc((100%-24px)/2)] m-1 aspect-[63/111] border-4 border-[#796858] rounded overflow-hidden"
-              />
+              <div className="h-[calc((100%-24px)/2)]">
+                {isStarted && userLastDiscardImage && (
+                  <button className="h-full overflow-hidden">
+                    <img
+                      src={userLastDiscardImage.image}
+                      alt={userLastDiscardImage.name}
+                      className="h-full"
+                    />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </motion.div>
