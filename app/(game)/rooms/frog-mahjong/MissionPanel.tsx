@@ -13,7 +13,7 @@ const MissionPanel = () => {
   const userID = getCookie("userID") as string;
 
   const {
-    allMissions,
+    missions,
     missionIDs,
     setIsPickCardsModal,
     ws,
@@ -23,7 +23,7 @@ const MissionPanel = () => {
     setMissions,
     clear,
   } = useFrogMahjongStore((s) => ({
-    allMissions: s.missions,
+    missions: s.missions,
     missionIDs: s.gameState?.gameInfo?.missionIDs,
     setIsPickCardsModal: s.setIsPickCardsModal,
     ws: s.ws,
@@ -41,7 +41,7 @@ const MissionPanel = () => {
   const [isRouletteLoading, setIsRouletteLoading] = useState(true);
   const [isResultLoading, setIsResultLoading] = useState(false);
 
-  const currentMissions = allMissions.filter((m) => missionIDs?.includes(m.id));
+  const currentMissions = missions.filter((m) => missionIDs?.includes(m.id));
 
   const [rotateDeg, setRotateDeg] = useState(0);
 
@@ -70,9 +70,9 @@ const MissionPanel = () => {
 
   useEffect(() => {
     const spinRoulette = async () => {
-      if (allMissions.length === 0) return;
+      if (missions.length === 0) return;
 
-      const length = allMissions.length;
+      const length = missions.length;
       const baseDeg = 360 * (5 + (Math.floor(Math.random() * 5) + 1));
       const finalDeg = baseDeg + 4 * (360 / length);
 
@@ -93,7 +93,7 @@ const MissionPanel = () => {
     };
 
     spinRoulette();
-  }, [allMissions]);
+  }, [missions]);
 
   return (
     <>
