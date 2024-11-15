@@ -77,7 +77,7 @@ const MyCardBoard = () => {
     await audios?.cardMovieAudio.play();
   };
 
-  const isOverFull = !!(currentUser?.cards && currentUser?.cards?.length >= 6);
+  const isOverFull = !!(currentUser?.cards && currentUser?.cards?.length >= 4);
 
   const discard = (ci: BirdCard) => {
     if (isOverFull) {
@@ -100,6 +100,10 @@ const MyCardBoard = () => {
       audios?.cardChapAudio.play();
     }
   };
+
+  const currentMissions = store.missions.filter((m) =>
+    missionIDs?.includes(m.id)
+  );
 
   const victory = () => {
     const isSuccess = checkMissions(items, missionIDs);
@@ -130,10 +134,10 @@ const MyCardBoard = () => {
   };
 
   return (
-    <div className="h-full overflow-hidden flex justify-center flex-col p-2 bg-white rounded-xl gap-2">
+    <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-white rounded-xl gap-1">
       {!discardMode && (
         <Reorder.Group
-          className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center py-1"
+          className="w-full h-[calc(100%-44px)] flex gap-1 rounded relative basis-4/5 justify-center py-1"
           axis="x"
           values={items}
           onReorder={setItems}
@@ -144,11 +148,9 @@ const MyCardBoard = () => {
             </div>
           )}
 
-          {items.map((item, i) => (
+          {items.map((item) => (
             <Reorder.Item
-              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center ${
-                i === 2 && "mr-2 lg:mr-4"
-              }`}
+              className={`cursor-pointer basis-1/4 max-h-full aspect-[63/111] flex items-center`}
               key={item.id}
               value={item}
               onDragEnd={onDragEnd}
@@ -171,20 +173,18 @@ const MyCardBoard = () => {
       )}
 
       {discardMode && (
-        <ul className="w-full h-full flex gap-1 rounded flex-wrap relative basis-4/5 justify-center py-1">
-          {items.map((item, i) => (
+        <ul className="w-full h-[calc(100%-44px)] flex gap-1 rounded relative basis-4/5 justify-center py-1">
+          {items.map((item) => (
             <li
               key={item.id}
-              className={`cursor-pointer w-[13%] max-h-full aspect-[63/111] flex items-center ${
-                i === 2 && "mr-2 lg:mr-4"
-              }`}
+              className={`cursor-pointer basis-1/4 max-h-full aspect-[63/111] flex items-center`}
             >
               <button
                 className="w-full max-h-full relative aspect-[63/111] flex justify-center"
                 disabled={!isOverFull || store.isTurnOver}
                 onClick={() => discard(item)}
               >
-                <div className="relative h-full">
+                <div className="relative w-full max-h-full aspect-[63/111] flex justify-center">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -202,25 +202,38 @@ const MyCardBoard = () => {
         </ul>
       )}
 
-      <div className="basis-1/6 flex flex-col gap-1 py-1 overflow-hidden">
-        {currentUser.cards && currentUser.cards.length >= 5 && (
+      <div className="h-8 flex gap-4 py-1 overflow-hidden">
+        {currentUser.cards && (
           <>
-            <button
-              onClick={victory}
-              disabled={
-                discardMode || store.isTurnOver || store.isVictoryFailed
-              }
-              className="basis-1/2 text-[8px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-pink-400 disabled:bg-gray-500 disabled:text-gray-400"
-            >
-              {m("victory")}
-            </button>
-            <button
-              disabled={store.isTurnOver}
-              onClick={() => setDiscardMode(!discardMode)}
-              className="basis-1/2 text-[8px] lg:text-base text-white p-1 lg:p-2 rounded font-bold bg-green-800 disabled:bg-gray-500 disabled:text-gray-400"
-            >
-              {m(discardMode ? "cancelSuteru" : "suteru")}
-            </button>
+            <div className="flex gap-1">
+              {currentMissions?.map((mission, idx) => (
+                <div
+                  key={mission.id}
+                  className="font-bold aspect-square flex justify-center items-center bg-[#C8F3A3]"
+                >
+                  {idx + 1}
+                </div>
+              ))}
+            </div>
+
+            <div className="flex w-[calc(100%-96px)] gap-4">
+              <button
+                onClick={victory}
+                disabled={
+                  discardMode || store.isTurnOver || store.isVictoryFailed
+                }
+                className="basis-1/2 flex items-center justify-center text-[10px] lg:text-base p-1 lg:p-2 rounded font-bold bg-[#C6D4FF] disabled:bg-gray-500 disabled:text-gray-400"
+              >
+                {m("victory")}
+              </button>
+              <button
+                disabled={store.isTurnOver}
+                onClick={() => setDiscardMode(!discardMode)}
+                className="basis-1/2 flex items-center justify-center text-[10px] lg:text-base p-1 lg:p-2 rounded font-bold bg-[#C8F3A3] disabled:bg-gray-500 disabled:text-gray-400"
+              >
+                {m(discardMode ? "cancelSuteru" : "suteru")}
+              </button>
+            </div>
           </>
         )}
       </div>
