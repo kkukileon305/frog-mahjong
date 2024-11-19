@@ -57,8 +57,8 @@ interface GameStore {
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
 
-  missions: Mission[];
-  setMissions: (missions: Mission[]) => void;
+  allMissions: Mission[];
+  setAllMissions: (allMissions: Mission[]) => void;
 
   isPickCardsModal: boolean;
   setIsPickCardsModal: (isPickCardsModal: boolean) => void;
@@ -152,8 +152,8 @@ const useFrogMahjongStore = create(
     isGameEnd: false,
     setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
 
-    missions: [],
-    setMissions: (missions: Mission[]) => set({ missions }),
+    allMissions: [],
+    setAllMissions: (allMissions: Mission[]) => set({ allMissions }),
 
     isPickCardsModal: false,
     setIsPickCardsModal: (isPickCardsModal) => set({ isPickCardsModal }),

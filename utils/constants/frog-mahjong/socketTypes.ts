@@ -180,47 +180,15 @@ export interface WinRequestBody {
   }[];
 }
 
-export interface LoanRequest {
-  roomID: number;
-  event: "LOAN";
-  message: string;
-}
-
-export interface LoanBody {
-  cardID: number;
-  targetUserID: number;
-  playTurn: number;
-}
-
-export interface LoanFailedRequest {
-  roomID: number;
-  event: "FAILED_LOAN";
-  message: string;
-}
-
-export interface LoanFailedBody {
-  cardID: number;
-  targetUserID: number;
-  playTurn: number;
-}
-
-export interface LoanSuccessRequest {
+export interface MissionRequest {
   userID: number;
-  roomID: number;
-  event: "SUCCESS_LOAN";
+  event: "MISSION";
   message: string;
 }
 
-export interface LoanSuccessBody {
-  cards: {
-    cardID: number;
-  }[];
-  playTurn: number;
-  score: number;
-  loanInfo: {
-    targetUserID: number;
-    cardID: number;
-  };
+export interface MissionBody {
+  missionIDs: number[];
+  cards: number[];
 }
 
 export interface GameOverRequest {

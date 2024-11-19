@@ -1,68 +1,106 @@
-import { BirdCard } from "@/utils/axios";
+import { BirdCard, Mission } from "@/utils/axios";
 
-const checkMissions = (cards: BirdCard[], missionIDs: number[]) => {
-  // switch (missionID) {
-  //   case 1: {
-  //     // 연속된 숫자 2쌍
-  //     return hasConsecutiveNames(cards);
-  //   }
-  //
-  //   case 2: {
-  //     // 동일한 숫자 2쌍
-  //     return hasSameNamePair(cards);
-  //   }
-  // }
+/**
+ * 1	새 크기가 60cm 이상	size >= 60
+ * 2	새 크기가 60cm 미만	size < 60
+ * 3	숲에서 사는 새	habitat == forest
+ * 4	초원에서 사는 새	habitat == field
+ * 5	물에서 사는 새	habitat == water
+ * 6	이름에 신체 부위가 들어간 새	name in [머리, 가슴, 다리 ...]
+ * 7	이름에 색깔이 들어간 새	name in [검은, 흰, 노랑, 붉은, 자줏빛, 푸른, ...]
+ * 8	서식지가 2곳 이상인 새	len(habitat) >= 2
+ * 9	부리 방향이 오른쪽인 새	beak_direction == right
+ * 10	부리 방향이 왼쪽인 새	beak_direction == left
+ * 11	둥지가 접시형인 새	nest == bowl
+ * 12	둥지가 구멍형인 새	nest == cavity
+ * 13	둥지가 지면형인 새	nest == ground
+ * 14	둥지가 플랫폼인 새	nest == platform
+ */
 
-  return false;
-};
+/*
+ * "name": string
+ * "size": 30,
+ * "habitat": "forest field water"
+ * "beakDirection": "right"
+ * "nest": "wild"
+ */
 
-function hasConsecutiveNames(cards: BirdCard[]): boolean {
-  const nameOrder = [
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
-  let count = 0;
-  let tempIndex = -1;
+function getSuccessMissionIDs(
+  cards: BirdCard[],
+  currentMissions: Mission[]
+): number[] {
+  console.log(cards);
 
-  cards.forEach((card) => {
-    if (card.name === "bal" || card.name === "chung" || count >= 2) return;
+  return currentMissions
+    .filter((mission) => {
+      return cards.every((card) => {
+        switch (mission.id) {
+          case 1:
+            // 새 크기가 60cm 이상	size >= 60
+            return card.size >= 60;
+          case 2:
+            // 새 크기가 60cm 미만	size < 60
+            return card.size < 60;
+          case 3:
+            // 숲에서 사는 새	habitat == forest
+            if (card.habitat.includes("all")) {
+              return true;
+            }
 
-    const currentIndex = nameOrder.indexOf(card.name);
+            return card.habitat.includes("forest");
+          case 4:
+            // 초원에서 사는 새	habitat == field
+            if (card.habitat.includes("all")) {
+              return true;
+            }
 
-    // 연속된 숫자인지 확인
-    if (tempIndex !== -1 && currentIndex === tempIndex + 1) {
-      count = count + 1;
-    }
+            return card.habitat.includes("field");
+          case 5:
+            // 물에서 사는 새	habitat == water
+            if (card.habitat.includes("all")) {
+              return true;
+            }
 
-    tempIndex = currentIndex;
-  });
+            return card.habitat.includes("water");
+          case 6:
+            // 이름에 신체 부위가 들어간 새	name in [머리, 가슴, 다리 ...]
+            const bodyParts = ["머리", "가슴", "다리"];
+            return bodyParts.some((part) => card.name.includes(part));
+          case 7:
+            // 7	이름에 색깔이 들어간 새	name in [검은, 흰, 노랑, 붉은, 자줏빛, 푸른, ...]
+            const colorParts = ["검은", "흰", "노랑", "붉은", "자줏빛", "푸른"];
+            return colorParts.some((part) => card.name.includes(part));
+          case 8:
+            // 8	서식지가 2곳 이상인 새	len(habitat) >= 2
+            if (card.habitat.includes("all")) {
+              return true;
+            }
 
-  return count >= 2;
+            return card.habitat.split(" ").length >= 2;
+          case 9:
+            // 9	부리 방향이 오른쪽인 새	beak_direction == right
+            return card.beakDirection === "right";
+          case 10:
+            // 10	부리 방향이 왼쪽인 새	beak_direction == left
+            return card.beakDirection === "left";
+          case 11:
+            // 11	둥지가 접시형인 새	nest == bowl
+            return card.nest === "bowl";
+          case 12:
+            // 12	둥지가 구멍형인 새	nest == cavity
+            return card.nest === "cavity";
+          case 13:
+            // 13	둥지가 지면형인 새	nest == ground
+            return card.nest === "ground";
+          case 14:
+            // 14	둥지가 플랫폼인 새	nest == platform
+            return card.nest === "platform";
+          default:
+            return false;
+        }
+      });
+    })
+    .map((mission) => mission.id);
 }
 
-function hasSameNamePair(cards: BirdCard[]): boolean {
-  let count = 0;
-  let previousName: string | null = null;
-
-  cards.forEach((card) => {
-    if (card.name === "bal" || card.name === "chung" || count >= 2) return;
-
-    // 이전 이름과 동일한지 확인
-    if (card.name === previousName) {
-      count = count + 1;
-    }
-
-    previousName = card.name;
-  });
-
-  return count >= 2;
-}
-
-export default checkMissions;
+export default getSuccessMissionIDs;

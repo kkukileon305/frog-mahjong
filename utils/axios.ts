@@ -84,8 +84,23 @@ export type BirdCard = {
   image: string;
   size: number;
   habitat: string;
-  beakDirection: string;
+  beakDirection: BeakDirection;
+  nest: Nest;
 };
+
+export enum BeakDirection {
+  Center = "center",
+  Left = "left",
+  Right = "right",
+}
+
+export enum Nest {
+  Bowl = "bowl",
+  Cavity = "cavity",
+  Ground = "ground",
+  Platform = "platform",
+  Wild = "wild",
+}
 
 export interface ImportCardBody {
   cards: BirdCard[];
