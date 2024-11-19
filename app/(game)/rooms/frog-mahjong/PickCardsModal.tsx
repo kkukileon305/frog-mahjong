@@ -210,7 +210,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   <button
                     onClick={pickCards}
                     className="h-full aspect-[63/111] bg-[#C9F2A3] border-8 border-[#796858] rounded disabled:bg-gray-200"
-                    disabled={nokoriCardsLength === 0 || inGame}
+                    disabled={
+                      nokoriCardsLength === 0 ||
+                      inGame ||
+                      leftCards.length === 0
+                    }
                   />
                   <div className="flex flex-col items-center">
                     <p className="font-bold text-2xl">
