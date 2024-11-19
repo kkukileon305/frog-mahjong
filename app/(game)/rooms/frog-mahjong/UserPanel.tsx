@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { UserSocket } from "@/utils/constants/old-frog-mahjong/socketTypes";
+import { UserSocket } from "@/utils/constants/frog-mahjong/socketTypes";
 import React, { useState } from "react";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";
@@ -97,11 +97,17 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 className="h-[calc((100%-24px)/2)] p-1 aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
-                  <img
-                    className="w-full aspect-square object-cover object-bottom"
-                    src={userIcon.image}
-                    alt={user.name}
-                  />
+                  <div className="relative w-full aspect-square border-2 border-[#F19830] rounded">
+                    <img
+                      className="w-full aspect-square object-cover object-bottom"
+                      src={userIcon.image}
+                      alt={user.name}
+                    />
+
+                    <div className="w-5 h-5 flex justify-center items-center font-bold rounded-full top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-[#F19830] absolute">
+                      <p>{user.missionSuccessCount}</p>
+                    </div>
+                  </div>
                 ) : (
                   <div>icon</div>
                 )}

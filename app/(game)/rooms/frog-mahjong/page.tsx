@@ -103,9 +103,7 @@ const Page = () => {
       <div className="relative w-full flex flex-col justify-between">
         {/*  結果モーダル*/}
         {gameStore.isOpenResultModal && (
-          <ModalContainer setIsOpen={gameStore.setIsOpenResultModal}>
-            <ResultModal />
-          </ModalContainer>
+          <ResultModal setIsOpen={gameStore.setIsOpenResultModal} />
         )}
 
         {/* pick cards modal */}

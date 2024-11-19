@@ -9,13 +9,16 @@ import { CiCircleRemove } from "react-icons/ci";
 import {
   DiscardBody,
   DiscardRequest,
+  MissionBody,
+  MissionRequest,
   WinRequest,
   WinRequestBody,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { DISCARD } from "@/utils/constants/const";
-import checkMissions from "@/utils/functions/frog-mahjong/checkMissions";
+import getSuccessMissionIDs from "@/utils/functions/frog-mahjong/checkMissions";
 import { MdOutlineCancel } from "react-icons/md";
 import { BirdCard } from "@/utils/axios";
+import { request } from "node:http";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
@@ -30,8 +33,13 @@ const MyCardBoard = () => {
   const missionIDs = store.gameState?.gameInfo?.missionIDs!;
   const cards = store.cards;
 
+  const currentMissions = store.allMissions.filter((m) =>
+    missionIDs?.includes(m.id)
+  );
+
+  const [clearMissionIDs, setClearMissionIDs] = useState<number[]>([]);
+
   const userID = getCookie("userID") as string;
-  const accessToken = getCookie("accessToken") as string;
 
   const [discardMode, setDiscardMode] = useState<boolean>(false);
 
@@ -40,10 +48,6 @@ const MyCardBoard = () => {
   const userCardImages = currentUser.cards?.map(
     (card) => cards.find((cardImage) => cardImage.id === card.cardID)!
   );
-
-  const userIcon = profileIcons.find(
-    (icon) => icon.profileID === currentUser?.profileID
-  )!;
 
   const [items, setItems] = useState<BirdCard[]>(userCardImages || []);
 
@@ -101,26 +105,50 @@ const MyCardBoard = () => {
     }
   };
 
-  const currentMissions = store.missions.filter((m) =>
-    missionIDs?.includes(m.id)
-  );
-
   const victory = () => {
-    const isSuccess = checkMissions(items, missionIDs);
+    const successMissionIDs = getSuccessMissionIDs(items, currentMissions);
 
-    if (isSuccess) {
+    const mergedClearIds = Array.from(
+      new Set([...clearMissionIDs, ...successMissionIDs])
+    );
+
+    if (mergedClearIds.length === 3) {
       const body: WinRequestBody = {
-        cards: items.map((card) => ({ cardID: card.id })),
+        cards: items.map((i) => ({
+          cardID: i.id,
+        })),
       };
 
-      const request: WinRequest = {
-        userID: Number(userID),
+      const req: WinRequest = {
+        userID: currentUser?.id,
         event: "REQUEST_WIN",
-        roomID: Number(roomID),
+        roomID: roomID,
+        message: JSON.stringify(body),
+      };
+
+      store.ws?.send(JSON.stringify(req));
+      return;
+    }
+
+    const isSuccess = successMissionIDs.length !== 0;
+
+    if (isSuccess) {
+      const body: MissionBody = {
+        missionIDs: successMissionIDs.filter(
+          (sd) => !clearMissionIDs.includes(sd)
+        ),
+        cards: items.map((item) => item.id),
+      };
+
+      const request: MissionRequest = {
+        userID: currentUser?.id,
+        event: "MISSION",
         message: JSON.stringify(body),
       };
 
       store.ws?.send(JSON.stringify(request));
+      store.setIsVictoryFailed(true);
+      audios?.cardChapAudio.play();
     } else {
       store.setIsVictoryFailed(true);
       store.setVictoryFailedModal(true);
@@ -131,6 +159,8 @@ const MyCardBoard = () => {
         store.setVictoryFailedModal(false);
       }, 1000);
     }
+
+    setClearMissionIDs(mergedClearIds);
   };
 
   return (
@@ -209,7 +239,11 @@ const MyCardBoard = () => {
               {currentMissions?.map((mission, idx) => (
                 <div
                   key={mission.id}
-                  className="font-bold aspect-square flex justify-center items-center bg-[#C8F3A3]"
+                  className={`font-bold aspect-square flex justify-center items-center ${
+                    clearMissionIDs.includes(mission.id)
+                      ? "bg-red-400"
+                      : "bg-[#C8F3A3]"
+                  }`}
                 >
                   {idx + 1}
                 </div>

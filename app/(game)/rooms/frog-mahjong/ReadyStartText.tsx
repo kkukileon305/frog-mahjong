@@ -12,13 +12,13 @@ const ReadyStartText = () => {
   const router = useRouter();
   const userID = getCookie("userID") as string;
 
-  const { ws, users, gameInfo, isGameEnd, setMissions, clear } =
+  const { ws, users, gameInfo, isGameEnd, setAllMissions, clear } =
     useFrogMahjongStore((state) => ({
       ws: state.ws,
       users: state.gameState?.users,
       gameInfo: state.gameState?.gameInfo,
       isGameEnd: state.isGameEnd,
-      setMissions: state.setMissions,
+      setAllMissions: state.setAllMissions,
       clear: state.clear,
     }));
 
@@ -35,7 +35,7 @@ const ReadyStartText = () => {
           "/v2.1/game/missions"
         );
 
-        setMissions(data.missions);
+        setAllMissions(data.missions);
 
         if (!currentUser.isOwner) return;
 

@@ -13,24 +13,24 @@ const MissionPanel = () => {
   const userID = getCookie("userID") as string;
 
   const {
-    missions,
+    allMissions,
     missionIDs,
     setIsPickCardsModal,
     ws,
     users,
     gameInfo,
     isGameEnd,
-    setMissions,
+    setAllMissions,
     clear,
   } = useFrogMahjongStore((s) => ({
-    missions: s.missions,
+    allMissions: s.allMissions,
     missionIDs: s.gameState?.gameInfo?.missionIDs,
     setIsPickCardsModal: s.setIsPickCardsModal,
     ws: s.ws,
     users: s.gameState?.users,
     gameInfo: s.gameState?.gameInfo,
     isGameEnd: s.isGameEnd,
-    setMissions: s.setMissions,
+    setAllMissions: s.setAllMissions,
     clear: s.clear,
   }));
 
@@ -41,7 +41,7 @@ const MissionPanel = () => {
   const [isRouletteLoading, setIsRouletteLoading] = useState(true);
   const [isResultLoading, setIsResultLoading] = useState(false);
 
-  const currentMissions = missions.filter((m) => missionIDs?.includes(m.id));
+  const currentMissions = allMissions.filter((m) => missionIDs?.includes(m.id));
 
   const [rotateDeg, setRotateDeg] = useState(0);
 
@@ -56,7 +56,7 @@ const MissionPanel = () => {
           "/v2.1/game/missions"
         );
 
-        setMissions(data.missions);
+        setAllMissions(data.missions);
         setIsResultLoading(false);
       } catch (e) {
         console.log(e);
@@ -70,9 +70,9 @@ const MissionPanel = () => {
 
   useEffect(() => {
     const spinRoulette = async () => {
-      if (missions.length === 0) return;
+      if (allMissions.length === 0) return;
 
-      const length = missions.length;
+      const length = allMissions.length;
       const baseDeg = 360 * (5 + (Math.floor(Math.random() * 5) + 1));
       const finalDeg = baseDeg + 4 * (360 / length);
 
@@ -93,7 +93,7 @@ const MissionPanel = () => {
     };
 
     spinRoulette();
-  }, [missions]);
+  }, [allMissions]);
 
   return (
     <>
