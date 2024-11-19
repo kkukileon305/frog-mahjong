@@ -18,6 +18,7 @@ import { DISCARD } from "@/utils/constants/const";
 import getSuccessMissionIDs from "@/utils/functions/frog-mahjong/checkMissions";
 import { MdOutlineCancel } from "react-icons/md";
 import { BirdCard } from "@/utils/axios";
+import { request } from "node:http";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
@@ -107,6 +108,28 @@ const MyCardBoard = () => {
   const victory = () => {
     const successMissionIDs = getSuccessMissionIDs(items, currentMissions);
 
+    const mergedClearIds = Array.from(
+      new Set([...clearMissionIDs, ...successMissionIDs])
+    );
+
+    if (mergedClearIds.length === 3) {
+      const body: WinRequestBody = {
+        cards: items.map((i) => ({
+          cardID: i.id,
+        })),
+      };
+
+      const req: WinRequest = {
+        userID: currentUser?.id,
+        event: "REQUEST_WIN",
+        roomID: roomID,
+        message: JSON.stringify(body),
+      };
+
+      store.ws?.send(JSON.stringify(req));
+      return;
+    }
+
     const isSuccess = successMissionIDs.length !== 0;
 
     if (isSuccess) {
@@ -137,9 +160,7 @@ const MyCardBoard = () => {
       }, 1000);
     }
 
-    setClearMissionIDs(
-      Array.from(new Set([...clearMissionIDs, ...successMissionIDs]))
-    );
+    setClearMissionIDs(mergedClearIds);
   };
 
   return (
