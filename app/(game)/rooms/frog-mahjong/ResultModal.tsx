@@ -30,7 +30,11 @@ const ResultModal = ({
   const [result, setResult] = useState<Result | null>(null);
 
   const { clear, gameState, ws, allMissions, cards } = useFrogMahjongStore();
+  const users = useRef(gameState?.users);
+
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
+
+  const currentMissionIDs = gameState?.gameInfo?.missionIDs!;
 
   const winner = gameState?.users?.find((u) => u.missionSuccessCount === 3);
   const winnerIcon = profileIcons.find(
@@ -162,6 +166,47 @@ const ResultModal = ({
               </div>
             )}
           </>
+        )}
+
+        {!winner && (
+          <div className="p-4 h-[calc(100%-40px)] flex flex-col">
+            <p className="text-3xl text-[#FA4E38] text-center">{m("fail")}</p>
+
+            <ul className="text-center py-4">
+              {allMissions
+                .filter((am) => currentMissionIDs.includes(am.id))
+                .map((m, idx) => (
+                  <li key={m.id}>
+                    {idx + 1}. {m.title}
+                  </li>
+                ))}
+            </ul>
+
+            <ul className="max-w-[320px] h-full mx-auto grid grid-cols-2 grid-rows-2 p-4">
+              {users.current?.map((u) => (
+                <li key={u.id} className="p-2">
+                  <div className="relative w-full aspect-square border-2 border-[#F19830] rounded">
+                    <img
+                      className="w-full aspect-square object-cover object-bottom"
+                      src={
+                        profileIcons.find((ic) => ic.profileID === u.profileID)
+                          ?.image
+                      }
+                      alt={u.name}
+                    />
+
+                    <div className="w-5 h-5 flex justify-center items-center font-bold rounded-full top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-[#F19830] absolute">
+                      <p>{u.missionSuccessCount}</p>
+                    </div>
+                  </div>
+
+                  <p className="mx-2 px-2 text-center bg-[#FCE4C0] rounded mt-1">
+                    {u.name}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         <button

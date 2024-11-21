@@ -128,7 +128,8 @@
     "loading": "結果を読み込み中",
     "close": "閉じる",
     "san": "さん",
-    "success": "ミッション達成！"
+    "success": "ミッション達成！",
+    "fail": "ミッション失敗！"
   },
   "HelpModal": {
     "calRule": "点数計算ルール",
