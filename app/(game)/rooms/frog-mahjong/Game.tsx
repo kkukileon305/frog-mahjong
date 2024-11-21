@@ -44,7 +44,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         </div>
       </div>
 
-      <div className="flex h-8 lg:h-10 justify-end bg-game-bar">
+      <div className="flex h-8 lg:h-10 justify-end bg-[#ECB5C1]">
         <div className="basis-1/5" />
 
         <div className="basis-3/5 p-1">

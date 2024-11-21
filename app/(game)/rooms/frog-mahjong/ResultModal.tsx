@@ -26,6 +26,7 @@ const ResultModal = ({
 }) => {
   const m = useTranslations("ResultModal");
 
+  const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
 
   const { clear, gameState, ws, allMissions, cards } = useFrogMahjongStore();
@@ -66,6 +67,8 @@ const ResultModal = ({
 
   const getResult = async () => {
     try {
+      setIsLoading(true);
+
       const { data } = await axiosInstance.post<Result>(
         "/v2.1/game/result",
         {
@@ -82,10 +85,15 @@ const ResultModal = ({
       setResult(data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
+
   useEffect(() => {
-    getResult();
+    if (winner) {
+      getResult();
+    }
   }, []);
 
   return (
@@ -96,13 +104,13 @@ const ResultModal = ({
       <div className="p-2 bg-white w-full h-full border-[#796858] border-8 rounded flex flex-col gap-2">
         {winner && (
           <>
-            {!result && (
+            {isLoading && (
               <div className="h-[calc(100%-40px)] flex justify-center items-center">
                 loading...
               </div>
             )}
 
-            {result && (
+            {!isLoading && result && (
               <div className="h-[calc(100%-40px)]">
                 <div className="flex justify-center items-center gap-4 h-16">
                   <img src={winnerIcon?.image} alt="" className="w-16 h-16" />
