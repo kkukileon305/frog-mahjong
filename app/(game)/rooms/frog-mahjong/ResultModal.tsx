@@ -17,6 +17,7 @@ import { QUIT_GAME } from "@/utils/constants/const";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import axiosInstance, { Result } from "@/utils/axios";
+import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 
 const ResultModal = ({
   setIsOpen,
@@ -27,7 +28,13 @@ const ResultModal = ({
 
   const [result, setResult] = useState<Result | null>(null);
 
-  const { winner: winnerID, clear, gameState, ws } = useFrogMahjongStore();
+  const { clear, gameState, ws, allMissions, cards } = useFrogMahjongStore();
+  const profileIcons = useProfileIconStore((s) => s.profileIcons);
+
+  const winner = gameState?.users?.find((u) => u.missionSuccessCount === 3);
+  const winnerIcon = profileIcons.find(
+    (icon) => icon.profileID === winner?.profileID
+  );
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -59,13 +66,6 @@ const ResultModal = ({
 
   const getResult = async () => {
     try {
-      const winnerCount = Math.max(
-        ...gameState?.users?.map((user) => user.missionSuccessCount)!
-      );
-      const winner = gameState?.users?.find(
-        (user) => user.missionSuccessCount === winnerCount
-      );
-
       const { data } = await axiosInstance.post<Result>(
         "/v2.1/game/result",
         {
@@ -90,20 +90,76 @@ const ResultModal = ({
 
   return (
     <div
-      className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2"
+      className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2 font-sb"
       onClick={onClose}
     >
-      <div className="p-4">
-        <h3 className="text-3xl font-bold mb-8 text-center">{m("title")}</h3>
-        <p>result</p>
+      <div className="p-2 bg-white w-full h-full border-[#796858] border-8 rounded flex flex-col gap-2">
+        {winner && (
+          <>
+            {!result && (
+              <div className="h-[calc(100%-40px)] flex justify-center items-center">
+                loading...
+              </div>
+            )}
 
-        {!result && <p>loading...</p>}
-        {result && <p>{JSON.stringify(result)}</p>}
+            {result && (
+              <div className="h-[calc(100%-40px)]">
+                <div className="flex justify-center items-center gap-4 h-16">
+                  <img src={winnerIcon?.image} alt="" className="w-16 h-16" />
+                  <div className="flex flex-col gap-1 font-bold text-[#FA4E38]">
+                    <p>
+                      {winner?.name}
+                      {m("san")}
+                    </p>
+                    <p>{m("success")}</p>
+                  </div>
+                </div>
+
+                <div className="h-[calc(100%-64px)] gap-2 pt-2 flex flex-col">
+                  {result.missions.map((mission, idx) => (
+                    <div
+                      key={mission.missionID}
+                      className="h-1/3 overflow-hidden flex flex-col gap-2"
+                    >
+                      <p>
+                        {idx + 1}.{" "}
+                        {
+                          allMissions.find((al) => al.id === mission.missionID)
+                            ?.title
+                        }
+                      </p>
+                      <ul className="h-[calc(100%-30px)] flex gap-2">
+                        {mission.cards
+                          .map(
+                            (cardID) =>
+                              cards.find((card) => card.id === cardID)!
+                          )
+                          .map((card) => (
+                            <li
+                              key={card.id}
+                              className="basis-1/4 max-h-full aspect-[63/111] flex items-center"
+                            >
+                              <img
+                                src={card.image}
+                                alt={card.name}
+                                draggable={false}
+                                className={`h-full aspect-[63/111] mx-auto`}
+                              />
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
         <button
           onClick={init}
           id="back"
-          className="w-full bg-sky-500 rounded-lg py-3 text-white font-bold disabled:bg-gray-400"
+          className="w-full h-8 bg-[#FA4E38] rounded-lg py-1 text-white font-bold disabled:bg-gray-400"
         >
           {m("close")}
         </button>

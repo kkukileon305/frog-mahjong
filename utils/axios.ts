@@ -126,8 +126,8 @@ export type MissionResponse = {
 };
 
 export interface Result {
-  missions: MissionResult[];
   winner: number;
+  missions: MissionResult[];
 }
 
 export interface MissionResult {

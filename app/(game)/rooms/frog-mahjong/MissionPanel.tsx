@@ -22,6 +22,7 @@ const MissionPanel = () => {
     isGameEnd,
     setAllMissions,
     clear,
+    clearMissionIDs,
   } = useFrogMahjongStore((s) => ({
     allMissions: s.allMissions,
     missionIDs: s.gameState?.gameInfo?.missionIDs,
@@ -32,6 +33,7 @@ const MissionPanel = () => {
     isGameEnd: s.isGameEnd,
     setAllMissions: s.setAllMissions,
     clear: s.clear,
+    clearMissionIDs: s.clearMissionIDs,
   }));
 
   const m = useTranslations("Game");
@@ -112,7 +114,12 @@ const MissionPanel = () => {
           <div className="py-2 px-4">
             {currentMissions &&
               currentMissions.map((m, index) => (
-                <p key={m.id} className="basis-5/6 font-bold text-xs">
+                <p
+                  key={m.id}
+                  className={`basis-5/6 font-bold text-xs ${
+                    clearMissionIDs.includes(m.id) && "line-through"
+                  }`}
+                >
                   {index + 1}. {m.title}
                 </p>
               ))}
