@@ -125,6 +125,16 @@ export type MissionResponse = {
   missions: Mission[];
 };
 
+export interface Result {
+  missions: MissionResult[];
+  winner: number;
+}
+
+export interface MissionResult {
+  cards: number[];
+  missionID: number;
+}
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

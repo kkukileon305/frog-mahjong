@@ -49,11 +49,6 @@ interface GameStore {
   addChat: (chat: ChatResponse) => void;
   filterChat: (chat: ChatResponse) => void;
 
-  // result: GameResult;
-  // setResult: (result: GameResult) => void;
-  // setBeforeResult: (users: UserSocket[] | null) => void;
-  // setAfterResult: (users: UserSocket[] | null) => void;
-
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
 
@@ -74,6 +69,9 @@ interface GameStore {
 
   victoryFailedModal: boolean;
   setVictoryFailedModal: (victoryFailedModal: boolean) => void;
+
+  clearMissionIDs: number[];
+  setClearMissionIDs: (isClearMissionIDs: number[]) => void;
 
   clear: () => void;
 }
@@ -117,25 +115,6 @@ const useFrogMahjongStore = create(
     winner: 0,
     setWinner: (winner: number) => set({ winner }),
 
-    // // prev
-    // // results
-    // result: { beforeUsers: null, afterUsers: null } as GameResult,
-    // setResult: (result: GameResult) => set({ result }),
-    // setBeforeResult: (users) =>
-    //   set({
-    //     result: {
-    //       beforeUsers: users,
-    //       afterUsers: null,
-    //     },
-    //   }),
-    // setAfterResult: (users) =>
-    //   set((prevState) => ({
-    //     result: {
-    //       beforeUsers: prevState.result.beforeUsers,
-    //       afterUsers: users,
-    //     },
-    //   })),
-
     // chats
     chatList: [],
     addChat: (newChat: ChatResponse) =>
@@ -171,6 +150,9 @@ const useFrogMahjongStore = create(
     setVictoryFailedModal: (victoryFailedModal: boolean) =>
       set({ victoryFailedModal }),
 
+    clearMissionIDs: [],
+    setClearMissionIDs: (clearMissionIDs) => set({ clearMissionIDs }),
+
     clear: () =>
       set({
         ws: null,
@@ -188,6 +170,7 @@ const useFrogMahjongStore = create(
         victoryFailedModal: false,
         isVictoryFailed: false,
         isTurnOver: false,
+        clearMissionIDs: [],
       }),
   }))
 );
