@@ -192,7 +192,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
             .flat()!;
 
           const isAllPicked =
-            allUserCardIds.length + allUserDiscardedIds.length === 44;
+            allUserCardIds.length + allUserDiscardedIds.length === 24;
 
           if (isAllPicked) {
             const req: GameOverRequest = {

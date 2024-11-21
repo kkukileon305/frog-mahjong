@@ -64,7 +64,7 @@ function getSuccessMissionIDs(
             return card.habitat.includes("water");
           case 6:
             // 이름에 신체 부위가 들어간 새	name in [머리, 가슴, 다리 ...]
-            const bodyParts = ["머리", "가슴", "다리", "날개"];
+            const bodyParts = ["머리", "가슴", "다리", "날개", "뺨", "꼬리"];
             return bodyParts.some((part) => card.name.includes(part));
           case 7:
             // 7	이름에 색깔이 들어간 새	name in [검은, 흰, 노랑, 붉은, 자줏빛, 푸른, ...]
