@@ -37,8 +37,6 @@ const MyCardBoard = () => {
     missionIDs?.includes(m.id)
   );
 
-  const [clearMissionIDs, setClearMissionIDs] = useState<number[]>([]);
-
   const userID = getCookie("userID") as string;
 
   const [discardMode, setDiscardMode] = useState<boolean>(false);
@@ -109,33 +107,15 @@ const MyCardBoard = () => {
     const successMissionIDs = getSuccessMissionIDs(items, currentMissions);
 
     const mergedClearIds = Array.from(
-      new Set([...clearMissionIDs, ...successMissionIDs])
+      new Set([...store.clearMissionIDs, ...successMissionIDs])
     );
-
-    if (mergedClearIds.length === 3) {
-      const body: WinRequestBody = {
-        cards: items.map((i) => ({
-          cardID: i.id,
-        })),
-      };
-
-      const req: WinRequest = {
-        userID: currentUser?.id,
-        event: "REQUEST_WIN",
-        roomID: roomID,
-        message: JSON.stringify(body),
-      };
-
-      store.ws?.send(JSON.stringify(req));
-      return;
-    }
 
     const isSuccess = successMissionIDs.length !== 0;
 
     if (isSuccess) {
       const body: MissionBody = {
         missionIDs: successMissionIDs.filter(
-          (sd) => !clearMissionIDs.includes(sd)
+          (sd) => !store.clearMissionIDs.includes(sd)
         ),
         cards: items.map((item) => item.id),
       };
@@ -160,8 +140,29 @@ const MyCardBoard = () => {
       }, 1000);
     }
 
-    setClearMissionIDs(mergedClearIds);
+    store.setClearMissionIDs(mergedClearIds);
   };
+
+  // mission clear count check
+  useEffect(() => {
+    if (currentUser.missionSuccessCount === 3) {
+      const body: WinRequestBody = {
+        cards: items.map((i) => ({
+          cardID: i.id,
+        })),
+      };
+
+      const req: WinRequest = {
+        userID: currentUser?.id,
+        event: "REQUEST_WIN",
+        roomID: roomID,
+        message: JSON.stringify(body),
+      };
+
+      store.ws?.send(JSON.stringify(req));
+      return;
+    }
+  }, [currentUser.missionSuccessCount]);
 
   return (
     <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-white rounded-xl gap-1">
@@ -240,7 +241,7 @@ const MyCardBoard = () => {
                 <div
                   key={mission.id}
                   className={`font-bold aspect-square flex justify-center items-center ${
-                    clearMissionIDs.includes(mission.id)
+                    store.clearMissionIDs.includes(mission.id)
                       ? "bg-red-400"
                       : "bg-[#C8F3A3]"
                   }`}
