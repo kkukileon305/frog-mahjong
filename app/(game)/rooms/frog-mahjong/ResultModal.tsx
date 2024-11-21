@@ -6,6 +6,7 @@ import React, {
   SetStateAction,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { getCookie } from "cookies-next";
 import { QUITRequest } from "@/utils/constants/frog-mahjong/socketTypes";
@@ -15,6 +16,7 @@ import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore
 import { QUIT_GAME } from "@/utils/constants/const";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
+import axiosInstance, { Result } from "@/utils/axios";
 
 const ResultModal = ({
   setIsOpen,
@@ -23,9 +25,12 @@ const ResultModal = ({
 }) => {
   const m = useTranslations("ResultModal");
 
+  const [result, setResult] = useState<Result | null>(null);
+
   const { winner: winnerID, clear, gameState, ws } = useFrogMahjongStore();
 
   const userID = getCookie("userID") as string;
+  const accessToken = getCookie("accessToken") as string;
   const router = useRouter();
 
   const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -52,7 +57,36 @@ const ResultModal = ({
     router.push("/rooms");
   };
 
-  useEffect(() => {}, []);
+  const getResult = async () => {
+    try {
+      const winnerCount = Math.max(
+        ...gameState?.users?.map((user) => user.missionSuccessCount)!
+      );
+      const winner = gameState?.users?.find(
+        (user) => user.missionSuccessCount === winnerCount
+      );
+
+      const { data } = await axiosInstance.post<Result>(
+        "/v2.1/game/result",
+        {
+          roomID: Number(gameState?.gameInfo?.roomID),
+          userID: winner?.id,
+        },
+        {
+          headers: {
+            tkn: accessToken,
+          },
+        }
+      );
+
+      setResult(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getResult();
+  }, []);
 
   return (
     <div
@@ -62,6 +96,9 @@ const ResultModal = ({
       <div className="p-4">
         <h3 className="text-3xl font-bold mb-8 text-center">{m("title")}</h3>
         <p>result</p>
+
+        {!result && <p>loading...</p>}
+        {result && <p>{JSON.stringify(result)}</p>}
 
         <button
           onClick={init}
