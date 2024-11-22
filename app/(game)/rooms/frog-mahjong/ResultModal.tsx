@@ -152,7 +152,7 @@ const ResultModal = ({
                           .map((card) => (
                             <li
                               key={card.id}
-                              className="basis-1/4 max-h-full aspect-[63/111] flex items-center"
+                              className="w-[calc((100%-24px)/4)] max-h-full aspect-[63/111] flex items-center"
                             >
                               <img
                                 src={card.image}
