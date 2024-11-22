@@ -73,6 +73,9 @@ interface GameStore {
   clearMissionIDs: number[];
   setClearMissionIDs: (isClearMissionIDs: number[]) => void;
 
+  timer: number;
+  setTimer: (timer: number) => void;
+
   clear: () => void;
 }
 
@@ -152,6 +155,9 @@ const useFrogMahjongStore = create(
 
     clearMissionIDs: [],
     setClearMissionIDs: (clearMissionIDs) => set({ clearMissionIDs }),
+
+    timer: 0,
+    setTimer: (timer: number) => set({ timer }),
 
     clear: () =>
       set({

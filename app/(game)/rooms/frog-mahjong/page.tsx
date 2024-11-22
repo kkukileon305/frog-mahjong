@@ -18,9 +18,11 @@ import axiosInstance, {
   ImportCardBody,
 } from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
+import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
 
 const Page = () => {
   useDetectNavigation();
+  useTimer();
 
   // 새로운 카드 에셋 로드 boolean
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,6 +41,8 @@ const Page = () => {
   useEffect(() => {
     if (!gameStore.gameState?.gameInfo) {
       router.push("/rooms");
+
+      return;
     }
 
     // 카드 순서 불러와서 저장
@@ -77,6 +81,7 @@ const Page = () => {
         gameStore.setCards(cards);
       } catch (e) {
         router.push("/rooms");
+        gameStore.ws?.close();
         gameStore.clear();
       }
     };
