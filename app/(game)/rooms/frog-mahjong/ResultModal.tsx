@@ -35,8 +35,11 @@ const ResultModal = ({
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
 
   const currentMissionIDs = gameState?.gameInfo?.missionIDs!;
+  const currentMissions = useRef(
+    allMissions.filter((am) => currentMissionIDs.includes(am.id))
+  );
 
-  const winner = gameState?.users?.find((u) => u.missionSuccessCount === 3);
+  const winner = users.current?.find((u) => u.missionSuccessCount === 3);
   const winnerIcon = profileIcons.find(
     (icon) => icon.profileID === winner?.profileID
   );
@@ -149,7 +152,7 @@ const ResultModal = ({
                           .map((card) => (
                             <li
                               key={card.id}
-                              className="basis-1/4 max-h-full aspect-[63/111] flex items-center"
+                              className="w-[calc((100%-24px)/4)] max-h-full aspect-[63/111] flex items-center"
                             >
                               <img
                                 src={card.image}
@@ -173,13 +176,11 @@ const ResultModal = ({
             <p className="text-3xl text-[#FA4E38] text-center">{m("fail")}</p>
 
             <ul className="text-center py-4">
-              {allMissions
-                .filter((am) => currentMissionIDs.includes(am.id))
-                .map((m, idx) => (
-                  <li key={m.id}>
-                    {idx + 1}. {m.title}
-                  </li>
-                ))}
+              {currentMissions.current.map((m, idx) => (
+                <li key={m.id}>
+                  {idx + 1}. {m.title}
+                </li>
+              ))}
             </ul>
 
             <ul className="max-w-[320px] h-full mx-auto grid grid-cols-2 grid-rows-2 p-4">
