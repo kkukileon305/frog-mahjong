@@ -80,6 +80,7 @@ const Page = () => {
         setIsLoaded(true);
         gameStore.setCards(cards);
       } catch (e) {
+        console.log(e);
         router.push("/rooms");
         gameStore.ws?.close();
         gameStore.clear();

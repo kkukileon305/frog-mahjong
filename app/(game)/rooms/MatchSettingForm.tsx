@@ -74,6 +74,20 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     setPassword(value.password!);
   });
 
+  if (isLoading || !isLoaded) {
+    return (
+      <div className="w-full">
+        <div className="flex h-[104px] justify-center items-center gap-4">
+          {assetLength === 0 ? (
+            <p className="text-white">{m("getAsset")}</p>
+          ) : (
+            <ProgressBar progress={progress} />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       {isProfileModalOpen && (
