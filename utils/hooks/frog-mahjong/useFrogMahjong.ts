@@ -136,6 +136,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
       const data = JSON.parse(parsedBody.message) as SocketResponseBody;
       store.setGameState(data);
 
+      // TODO: 이벤트별로 정리
+
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // 비정상 종료
         store.setIsAbnormalExit(true);
@@ -170,6 +172,13 @@ const useFrogMahjong = (mode: MatchingMode) => {
           store.setIsPickCardsModal(false);
           store.setIsTurnOver(false);
           store.setIsVictoryFailed(false);
+
+          const fullTime =
+            useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+
+          if (fullTime) {
+            store.setTimer(fullTime);
+          }
         }
       }
 
@@ -191,8 +200,10 @@ const useFrogMahjong = (mode: MatchingMode) => {
             )
             .flat()!;
 
+          // 무승부 체크
           const isAllPicked =
-            allUserCardIds.length + allUserDiscardedIds.length === 24;
+            allUserCardIds.length + allUserDiscardedIds.length ===
+            useFrogMahjongStore.getState().cards.length;
 
           if (isAllPicked) {
             const req: GameOverRequest = {
@@ -205,6 +216,12 @@ const useFrogMahjong = (mode: MatchingMode) => {
             store.ws?.send(JSON.stringify(req));
           } else {
             store.setIsPickCardsModal(true);
+            const fullTime =
+              useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+
+            if (fullTime) {
+              store.setTimer(fullTime);
+            }
           }
 
           audios?.cardChapAudio.play();
@@ -228,6 +245,13 @@ const useFrogMahjong = (mode: MatchingMode) => {
         audios?.commonLoanFailedAudio.play();
       } else if (eventName === START) {
         if (data.errorInfo === null) {
+          const fullTime =
+            useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+
+          if (fullTime) {
+            store.setTimer(fullTime);
+          }
+
           store.setIsStarted(true);
           audios?.commonStartAudio.play();
 

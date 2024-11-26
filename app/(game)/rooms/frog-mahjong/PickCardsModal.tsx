@@ -11,6 +11,7 @@ import {
 import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
+import { useEffect } from "react";
 
 type LeftCard = BirdCard & {
   picked: null | UserSocket;
@@ -26,7 +27,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const { cards, users, ws, playTurn, roomID, openCardIds } =
+  const { cards, users, timer, ws, playTurn, roomID, openCardIds } =
     useFrogMahjongStore((s) => ({
       cards: s.cards,
       users: s.gameState?.users!,
@@ -34,6 +35,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       playTurn: s.gameState?.gameInfo?.playTurn!,
       roomID: s.gameState?.gameInfo?.roomID!,
       openCardIds: s.gameState?.gameInfo?.openCards || [],
+      timer: s.timer,
     }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
@@ -134,17 +136,26 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         <p className="font-bold text-2xl text-center mb-2">{m("preview")}</p>
 
         <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
-          {openCards?.map((card) => (
-            <img
-              key={card.id}
-              className="w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
-              src={card.image}
-              alt={"sealed card"}
-            />
-          ))}
+          <div className="w-[calc(100%-48px)] flex gap-2">
+            {openCards?.map((card) => (
+              <img
+                key={card.id}
+                className="w-[calc((100%-16px)/3)] aspect-[63/111] object-fill"
+                src={card.image}
+                alt={"sealed card"}
+              />
+            ))}
+          </div>
+          <div className="w-10">{timer >= 0 ? timer : 0}</div>
         </div>
       </div>
     );
+  }
+
+  // timer === 0 and not inGame
+  if (timer === 0) {
+    // TODO: IMPORT_CARDS
+    // 서버에서 만료
   }
 
   return (
@@ -217,10 +228,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                     }
                   />
                   <div className="flex flex-col items-center">
+                    <p>{timer >= 0 ? timer : 0}</p>
+                    <p className="font-bold text-2xl">{m("selectRandom")}</p>
                     <p className="font-bold text-2xl">
                       {leftCards.length}/{cards.length}
                     </p>
-                    <p className="font-bold text-2xl">{m("selectRandom")}</p>
                   </div>
                 </div>
               </div>

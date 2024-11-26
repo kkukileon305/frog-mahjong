@@ -19,6 +19,7 @@ import getSuccessMissionIDs from "@/utils/functions/frog-mahjong/checkMissions";
 import { MdOutlineCancel } from "react-icons/md";
 import { BirdCard } from "@/utils/axios";
 import { request } from "node:http";
+import getRandomElements from "@/utils/functions/getRandomElements";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
@@ -163,6 +164,33 @@ const MyCardBoard = () => {
       return;
     }
   }, [currentUser.missionSuccessCount]);
+
+  useEffect(() => {
+    if (store.timer === 0) {
+      // 만료시 랜덤
+      const randomCard = getRandomElements(items, 1)[0];
+
+      if (isOverFull) {
+        const body: DiscardBody = {
+          cardID: randomCard.id,
+          playTurn: gameInfo?.playTurn as number,
+        };
+
+        const request: DiscardRequest = {
+          userID: currentUser?.id,
+          event: DISCARD,
+          roomID: Number(roomID),
+          message: JSON.stringify(body),
+        };
+
+        store.ws?.send(JSON.stringify(request));
+        setDiscardMode(false);
+        store.setIsTurnOver(true);
+
+        audios?.cardChapAudio.play();
+      }
+    }
+  }, [store.timer]);
 
   return (
     <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-white rounded-xl gap-1">

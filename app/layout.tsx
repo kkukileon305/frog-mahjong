@@ -44,7 +44,6 @@ const RootLayout = async ({
           <div className="min-h-[calc(100dvh)] bg-main bg-top">{children}</div>
         </NextIntlClientProvider>
 
-        <SpeedInsights />
         {process.env.NODE_ENV !== "development" && (
           <Script
             async
