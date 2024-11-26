@@ -11,6 +11,7 @@ import {
 import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
+import { useEffect } from "react";
 
 type LeftCard = BirdCard & {
   picked: null | UserSocket;
@@ -149,6 +150,12 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         </div>
       </div>
     );
+  }
+
+  // timer === 0 and not inGame
+  if (timer === 0) {
+    // TODO: IMPORT_CARDS
+    // 서버에서 만료
   }
 
   return (
