@@ -198,7 +198,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
           </p>
 
           <div className="w-full h-full flex flex-col gap-2">
-            <div className="basis-2/3 border-[10px] border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
+            <div className="basis-2/3 border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
               <p className="text-2xl mb-5 font-bold text-center">
                 {m("selectOpen")}
               </p>
@@ -241,10 +241,10 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   ))}
                 </div>
 
-                <div className="h-[calc(50%-8px)] flex justify-center items-center gap-6 bg-[#FDF9E0] border-[#796858] border-8 rounded p-2">
+                <div className="h-[calc(50%-8px)] flex justify-center items-center gap-6 bg-[#FDF9E0] border-[#796858] border-2 rounded p-2">
                   <button
                     onClick={pickCards}
-                    className="h-full aspect-[63/111] bg-[#C9F2A3] border-8 border-[#796858] rounded disabled:bg-gray-200"
+                    className="h-full aspect-[63/111] bg-[#C9F2A3] border-2 border-[#796858] rounded disabled:bg-gray-200"
                     disabled={
                       nokoriCardsLength === 0 ||
                       inGame ||
@@ -262,7 +262,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </div>
             </div>
 
-            <div className="basis-1/3 border-8 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
+            <div className="basis-1/3 border-2 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
               <p className="font-bold text-2xl text-center mb-2">
                 {m("myCard")}
                 <span className="ml-4">{currentUserCards?.length || 0}/4</span>

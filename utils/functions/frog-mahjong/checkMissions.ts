@@ -25,12 +25,34 @@ import { BirdCard, Mission } from "@/utils/axios";
  * "nest": "wild"
  */
 
+export const colorParts = [
+  "검은",
+  "흰",
+  "노랑",
+  "노란",
+  "붉은",
+  "자줏빛",
+  "푸른",
+  "갈색",
+  "파랑",
+  "황금",
+];
+
+const bodyParts = [
+  "머리",
+  "가슴",
+  "다리",
+  "날개",
+  "뺨",
+  "꼬리",
+  "댕기",
+  "엉덩이",
+];
+
 function getSuccessMissionIDs(
   cards: BirdCard[],
   currentMissions: Mission[]
 ): number[] {
-  // console.log(cards);
-
   return currentMissions
     .filter((mission) => {
       return cards.every((card) => {
@@ -64,20 +86,14 @@ function getSuccessMissionIDs(
             return card.habitat.includes("water");
           case 6:
             // 이름에 신체 부위가 들어간 새	name in [머리, 가슴, 다리 ...]
-            const bodyParts = ["머리", "가슴", "다리", "날개", "뺨", "꼬리"];
-            return bodyParts.some((part) => card.name.includes(part));
+            return bodyParts.some((part) =>
+              card.name.normalize("NFC").includes(part.normalize("NFC"))
+            );
           case 7:
             // 7	이름에 색깔이 들어간 새	name in [검은, 흰, 노랑, 붉은, 자줏빛, 푸른, ...]
-            const colorParts = [
-              "검은",
-              "흰",
-              "노랑",
-              "붉은",
-              "자줏빛",
-              "푸른",
-              "갈색",
-            ];
-            return colorParts.some((part) => card.name.includes(part));
+            return colorParts.some((part) =>
+              card.name.normalize("NFC").includes(part.normalize("NFC"))
+            );
           case 8:
             // 8	서식지가 2곳 이상인 새	len(habitat) >= 2
             if (card.habitat.includes("all")) {
