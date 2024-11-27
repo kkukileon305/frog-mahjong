@@ -76,6 +76,9 @@ interface GameStore {
   timer: number;
   setTimer: (timer: number) => void;
 
+  isTimeOut: boolean;
+  setIsTimeOut: (isTimeOut: boolean) => void;
+
   clear: () => void;
 }
 
@@ -158,6 +161,9 @@ const useFrogMahjongStore = create(
 
     timer: 0,
     setTimer: (timer: number) => set({ timer }),
+
+    isTimeOut: false,
+    setIsTimeOut: (isTimeOut) => set({ isTimeOut }),
 
     clear: () =>
       set({

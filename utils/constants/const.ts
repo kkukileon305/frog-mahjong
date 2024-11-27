@@ -17,6 +17,7 @@ export const SUCCESS_LOAN = "SUCCESS_LOAN";
 export const ROOM_OUT = "ROOM_OUT";
 export const CHAT = "CHAT";
 export const IMPORT_SINGLE_CARD = "IMPORT_SINGLE_CARD";
+export const RANDOM = "RANDOM";
 export const IMPORT_CARDS = "IMPORT_CARDS";
 export const TIME_OUT_DISCARD = "TIME_OUT_DISCARD";
 export const MATCH = "MATCH";

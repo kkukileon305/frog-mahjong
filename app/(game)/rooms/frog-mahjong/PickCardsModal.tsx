@@ -12,6 +12,7 @@ import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
 import { useEffect } from "react";
+import { RANDOM } from "@/utils/constants/const";
 
 type LeftCard = BirdCard & {
   picked: null | UserSocket;
@@ -27,16 +28,27 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const { cards, users, timer, ws, playTurn, roomID, openCardIds } =
-    useFrogMahjongStore((s) => ({
-      cards: s.cards,
-      users: s.gameState?.users!,
-      ws: s.ws,
-      playTurn: s.gameState?.gameInfo?.playTurn!,
-      roomID: s.gameState?.gameInfo?.roomID!,
-      openCardIds: s.gameState?.gameInfo?.openCards || [],
-      timer: s.timer,
-    }));
+  const {
+    cards, //
+    users,
+    timer,
+    ws,
+    playTurn,
+    roomID,
+    openCardIds,
+    isTimeOut,
+    setIsTimeOut,
+  } = useFrogMahjongStore((s) => ({
+    cards: s.cards,
+    users: s.gameState?.users!,
+    ws: s.ws,
+    playTurn: s.gameState?.gameInfo?.playTurn!,
+    roomID: s.gameState?.gameInfo?.roomID!,
+    openCardIds: s.gameState?.gameInfo?.openCards || [],
+    timer: s.timer,
+    isTimeOut: s.isTimeOut,
+    setIsTimeOut: s.setIsTimeOut,
+  }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const currentUserCards = currentUser.cards?.map(
@@ -130,6 +142,24 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     ws?.send(JSON.stringify(request));
   };
 
+  // timer === 0 and not inGame
+  if (timer === 0 && !isTimeOut && nokoriCardsLength && !inGame) {
+    const body = {
+      count: nokoriCardsLength,
+    };
+
+    const req = {
+      userID: Number(userID),
+      roomID: Number(roomID),
+      event: RANDOM,
+      message: JSON.stringify(body),
+    };
+
+    ws?.send(JSON.stringify(req));
+
+    setIsTimeOut(true);
+  }
+
   if (inGame) {
     return (
       <div className="h-full py-4 px-12 bg-white/50 rounded-xl overflow-hidden">
@@ -150,12 +180,6 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         </div>
       </div>
     );
-  }
-
-  // timer === 0 and not inGame
-  if (timer === 0) {
-    // TODO: IMPORT_CARDS
-    // 서버에서 만료
   }
 
   return (
