@@ -129,9 +129,7 @@ const MyCardBoard = () => {
 
     if (isSuccess) {
       const body: MissionBody = {
-        missionIDs: successMissionIDs.filter(
-          (sd) => !store.clearMissionIDs.includes(sd)
-        ),
+        missionIDs: clearMissionsWithoutBefore,
         cards: items.map((item) => item.id),
       };
 
