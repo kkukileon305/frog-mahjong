@@ -29,6 +29,7 @@ import {
   LOAN,
   MATCH,
   PLAY_TOGETHER,
+  RANDOM,
   REQUEST_WIN,
   ROOM_OUT,
   START,
@@ -165,7 +166,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
         }
       }
 
-      if (eventName === IMPORT_SINGLE_CARD) {
+      if (eventName === IMPORT_SINGLE_CARD || eventName === RANDOM) {
         audios?.cardMovieAudio.play();
 
         if (data.gameInfo?.allPicked) {
@@ -216,6 +217,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
             store.ws?.send(JSON.stringify(req));
           } else {
             store.setIsPickCardsModal(true);
+            store.setIsTimeOut(false);
             const fullTime =
               useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
 
