@@ -111,7 +111,21 @@ const MyCardBoard = () => {
       new Set([...store.clearMissionIDs, ...successMissionIDs])
     );
 
-    const isSuccess = successMissionIDs.length !== 0;
+    if (process.env.NODE_ENV === "development") {
+      console.log("성공 미션 ID:", successMissionIDs);
+      console.log("이미 클리어한 ID: ", store.clearMissionIDs);
+      console.log(
+        "성공에서 클리어 뺸 ID:",
+        successMissionIDs.filter((sd) => !store.clearMissionIDs.includes(sd))
+      );
+    }
+
+    // 기존 클리어한 값 제외
+    const clearMissionsWithoutBefore = successMissionIDs.filter(
+      (sd) => !store.clearMissionIDs.includes(sd)
+    );
+
+    const isSuccess = clearMissionsWithoutBefore.length !== 0;
 
     if (isSuccess) {
       const body: MissionBody = {

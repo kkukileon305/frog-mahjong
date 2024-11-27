@@ -108,7 +108,7 @@ const ResultModal = ({
       className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2 font-sb"
       onClick={onClose}
     >
-      <div className="p-2 bg-white w-full h-full border-[#796858] border-8 rounded flex flex-col gap-2">
+      <div className="p-2 bg-white w-full h-full border-[#796858] border-2 rounded-lg flex flex-col gap-2">
         {winner && (
           <>
             {isLoading && (
