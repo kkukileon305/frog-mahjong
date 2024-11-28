@@ -78,6 +78,13 @@ const SignInForm = () => {
       ) {
         setIsSignInFailed(true);
       }
+
+      if (error.response?.data.errType === "USER_ALREADY_EXISTED") {
+        setIsSignInFailed(true);
+        console.log('USER_ALREADY_EXISTED"');
+      }
+
+      // TODO: 중복로그인 에러 확인
       setIsLoading(false);
     }
   };

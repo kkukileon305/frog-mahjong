@@ -1,7 +1,7 @@
 "use client";
 
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import Sealed from "@/public/cards/sealed.jpg";
+import Timer from "@/public/icons/timer.png";
 import { useTranslations } from "next-intl";
 import {
   ImportSingleCardBody,
@@ -38,6 +38,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     openCardIds,
     isTimeOut,
     setIsTimeOut,
+    isGameEnd,
   } = useFrogMahjongStore((s) => ({
     cards: s.cards,
     users: s.gameState?.users!,
@@ -48,6 +49,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     timer: s.timer,
     isTimeOut: s.isTimeOut,
     setIsTimeOut: s.setIsTimeOut,
+    isGameEnd: s.isGameEnd,
   }));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
@@ -143,7 +145,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   // timer === 0 and not inGame
-  if (timer === 0 && !isTimeOut && nokoriCardsLength && !inGame) {
+  if (timer === 0 && !isTimeOut && nokoriCardsLength && !inGame && !isGameEnd) {
     const body = {
       count: nokoriCardsLength,
     };
@@ -176,7 +178,18 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               />
             ))}
           </div>
-          <div className="w-10">{timer >= 0 ? timer : 0}</div>
+          <div className="aspect-[205/235] relative">
+            <img
+              src={Timer.src}
+              alt="timer"
+              className="aspect-[205/235]"
+              width={205}
+              height={235}
+            />
+            <p className="absolute w-12 text-center font-bold text-xl left-[calc(50%-24px)] top-[calc(50%-10px)]">
+              {timer >= 0 ? timer : 0}
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -251,12 +264,25 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       leftCards.length === 0
                     }
                   />
-                  <div className="flex flex-col items-center">
-                    <p>{timer >= 0 ? timer : 0}</p>
-                    <p className="font-bold text-2xl">{m("selectRandom")}</p>
-                    <p className="font-bold text-2xl">
-                      {leftCards.length}/{cards.length}
-                    </p>
+                  <div className="h-full flex flex-col items-center">
+                    <div className="w-20 aspect-[205/235] relative">
+                      <img
+                        src={Timer.src}
+                        alt="timer"
+                        className="aspect-[205/235]"
+                        width={205}
+                        height={235}
+                      />
+                      <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-xl text-center top-[calc(50%-10px)] font-bold">
+                        {timer >= 0 ? timer : 0}
+                      </p>
+                    </div>
+                    <div className=" flex flex-col items-center">
+                      <p className="font-bold text-2xl">{m("selectRandom")}</p>
+                      <p className="font-bold text-2xl">
+                        {leftCards.length}/{cards.length}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
