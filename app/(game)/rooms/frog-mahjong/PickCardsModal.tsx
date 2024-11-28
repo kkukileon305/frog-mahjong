@@ -278,8 +278,8 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       </p>
                     </div>
                     <div className=" flex flex-col items-center">
-                      <p className="font-bold text-2xl">{m("selectRandom")}</p>
-                      <p className="font-bold text-2xl">
+                      <p className="font-bold text-sm">{m("selectRandom")}</p>
+                      <p className="font-bold text-sm">
                         {leftCards.length}/{cards.length}
                       </p>
                     </div>
