@@ -40,6 +40,15 @@ const SignOutBtn = ({ noRequest }: SignOutBtnProps) => {
       } catch (e) {
         console.log("failed");
       } finally {
+        if ("serviceWorker" in navigator) {
+          const registrations =
+            await navigator.serviceWorker.getRegistrations();
+          for (let registration of registrations) {
+            await registration.unregister();
+          }
+          // console.log("Service worker unregistered");
+        }
+
         setIsLoading(false);
         deleteCookie("accessToken");
         deleteCookie("refreshToken");

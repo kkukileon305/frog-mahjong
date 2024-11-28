@@ -6,7 +6,7 @@ import { getMessaging } from "firebase/messaging";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDnpmMSU1wFfp7p-F-ycK3M0a0HhbKyyPU",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "frog-f72a1.firebaseapp.com",
   projectId: "frog-f72a1",
   storageBucket: "frog-f72a1.firebasestorage.app",
