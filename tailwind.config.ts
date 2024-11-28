@@ -10,6 +10,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        "fade-in-out": "fadeInOut 3s ease-in-out",
+      },
+      keyframes: {
+        fadeInOut: {
+          "0%": { opacity: "0", transform: "translateY(-100%)" },
+          "5%": { opacity: "1", transform: "translateY(0%)" },
+          "90%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+      },
       backgroundImage: {
         rooms: "url('../public/bg/room_background.jpg')",
         main: "url('../public/bg/main_background.jpg')",

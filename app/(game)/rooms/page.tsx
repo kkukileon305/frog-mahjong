@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import Match from "@/app/(game)/rooms/Match";
 import FormMetadataLoading from "@/app/(game)/rooms/FormMetadataLoading";
 import SettingMenus from "@/utils/components/SettingMenus";
+import Notification from "@/app/(game)/rooms/Notification";
 
 const Page = async () => {
   return (
@@ -15,6 +16,8 @@ const Page = async () => {
           <SettingMenus />
         </div>
       </div>
+
+      <Notification />
     </div>
   );
 };

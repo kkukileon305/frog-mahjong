@@ -9,12 +9,13 @@ import ModalContainer from "@/utils/components/ModalContainer";
 import QuitModal from "@/app/(game)/rooms/QuitModal";
 import SignOutBtn from "@/utils/components/SignOutBtn";
 import { getCookie } from "cookies-next";
-import { cookies } from "next/headers";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
-import SwitchLocale from "@/utils/components/SwitchLocale";
 import SwitchLocaleSlide from "@/utils/components/SwitchLocaleSlide";
+import OnlyClient from "@/utils/components/OnlyClient";
+import RequestPermission from "@/utils/components/RequestPermission";
 
 const SettingMenus = () => {
+  // const curPermission = useRequestPermission();
   const m = useTranslations("Settings");
 
   const refreshToken = getCookie("refreshToken");
@@ -70,6 +71,10 @@ const SettingMenus = () => {
 
   return (
     <>
+      <OnlyClient>
+        <RequestPermission />
+      </OnlyClient>
+
       {isQuitModalOpen && (
         <ModalContainer setIsOpen={setIsQuitModalOpen}>
           <QuitModal />
@@ -107,6 +112,7 @@ const SettingMenus = () => {
                 {m("term")}
               </Link>
             </div>
+
             <div className="bg-white">
               <Link
                 className="p-2 block hover:bg-gray-200"
@@ -121,9 +127,7 @@ const SettingMenus = () => {
                 {m("license")}
               </Link>
             </div>
-
             <div className="bg-gray-200 h-[1px]" />
-
             <div className="bg-white w-full flex justify-between">
               <span className="basis-1/2 ms-3 text-sm font-medium text-gray-900 flex items-center">
                 use old
@@ -160,9 +164,17 @@ const SettingMenus = () => {
                 </div>
               </>
             )}
-
             <div className="my-2">
               <SwitchLocaleSlide />
+            </div>
+
+            <div className="bg-white w-full flex justify-between">
+              <span className="basis-1/2 ms-2 text-sm font-medium text-gray-900 flex items-center">
+                알림
+              </span>
+              <label className="w-fit inline-flex items-center cursor-pointer justify-center py-2">
+                {Notification.permission === "granted" ? "ON" : "OFF"}
+              </label>
             </div>
 
             <div className="flex justify-end mt-4">
