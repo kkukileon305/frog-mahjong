@@ -14,6 +14,25 @@ const RequestPermission = () => {
     Notification.permission
   );
 
+  async function retryGetDeviceToken(
+    retries: number
+  ): Promise<string | undefined> {
+    if (!messaging) return;
+    try {
+      return await getToken(messaging, {
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+      });
+    } catch (error) {
+      if (retries === 0) {
+        console.error("최대 재시도 횟수 초과:", error);
+        throw error;
+      } else {
+        console.warn(`getDeviceToken 재시도 중... 남은 횟수: ${retries}`);
+        return retryGetDeviceToken(retries - 1);
+      }
+    }
+  }
+
   async function requestPermission(): Promise<void> {
     if (!messaging) return;
     registerServiceWorker();
@@ -24,9 +43,7 @@ const RequestPermission = () => {
 
       if (permission === "granted") {
         // getToken은 브라우저가 필요해서 서버에 실행할 수 없음
-        const token = await getToken(messaging, {
-          vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        });
+        const token = await retryGetDeviceToken(3);
 
         // push_token을 server로 보내고 업데이트
         await axiosInstance.post(
