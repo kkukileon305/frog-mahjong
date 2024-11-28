@@ -178,7 +178,7 @@ const MyCardBoard = () => {
   }, [currentUser.missionSuccessCount]);
 
   useEffect(() => {
-    if (store.timer === 0 && !store.isPickCardsModal) {
+    if (store.timer === 0 && !store.isPickCardsModal && !store.isGameEnd) {
       // 만료시 랜덤
       const randomCard = getRandomElements(items, 1)[0];
 
