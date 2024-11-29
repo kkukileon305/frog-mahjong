@@ -99,8 +99,6 @@ const MyCardBoard = () => {
       store.ws?.send(JSON.stringify(request));
       setDiscardMode(false);
       store.setIsTurnOver(true);
-
-      audios?.cardChapAudio.play();
     }
   };
 
@@ -141,12 +139,12 @@ const MyCardBoard = () => {
 
       store.ws?.send(JSON.stringify(request));
       store.setIsVictoryFailed(true);
-      audios?.cardChapAudio.play();
+      audios?.missionSuccess.play();
     } else {
       store.setIsVictoryFailed(true);
       store.setVictoryFailedModal(true);
 
-      audios?.timeoutAudio.play();
+      audios?.missionFailed.play();
 
       setTimeout(() => {
         store.setVictoryFailedModal(false);

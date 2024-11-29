@@ -1,6 +1,5 @@
 "use client";
 
-import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
@@ -9,20 +8,17 @@ import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import Game from "@/app/(game)/rooms/frog-mahjong/Game";
-import ModalContainer from "@/utils/components/ModalContainer";
-import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
-import axiosInstance, {
-  BirdCard,
-  CardListResponse,
-  ImportCardBody,
-} from "@/utils/axios";
+import axiosInstance, { BirdCard, ImportCardBody } from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
+import useSoundStore from "@/utils/stores/useSoundStore";
 
 const Page = () => {
   useDetectNavigation();
   useTimer();
+
+  const audios = useSoundStore((s) => s.audios);
 
   // 새로운 카드 에셋 로드 boolean
   const [isLoaded, setIsLoaded] = useState(false);

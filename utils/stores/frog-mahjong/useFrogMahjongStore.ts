@@ -73,6 +73,9 @@ interface GameStore {
   clearMissionIDs: number[];
   setClearMissionIDs: (isClearMissionIDs: number[]) => void;
 
+  isRouletteLoading: boolean;
+  setIsRouletteLoading: (isRouletteLoading: boolean) => void;
+
   timer: number;
   setTimer: (timer: number) => void;
 
@@ -165,6 +168,10 @@ const useFrogMahjongStore = create(
     isTimeOut: false,
     setIsTimeOut: (isTimeOut) => set({ isTimeOut }),
 
+    isRouletteLoading: false,
+    setIsRouletteLoading: (isRouletteLoading: boolean) =>
+      set({ isRouletteLoading }),
+
     clear: () =>
       set({
         ws: null,
@@ -183,6 +190,8 @@ const useFrogMahjongStore = create(
         isVictoryFailed: false,
         isTurnOver: false,
         clearMissionIDs: [],
+        isRouletteLoading: false,
+        isTimeOut: false,
       }),
   }))
 );

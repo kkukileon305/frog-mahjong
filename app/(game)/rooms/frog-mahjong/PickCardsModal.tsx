@@ -145,22 +145,30 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   // timer === 0 and not inGame
-  if (timer === 0 && !isTimeOut && nokoriCardsLength && !inGame && !isGameEnd) {
-    const body = {
-      count: nokoriCardsLength,
-    };
+  useEffect(() => {
+    if (
+      timer === 0 &&
+      !isTimeOut &&
+      nokoriCardsLength &&
+      !inGame &&
+      !isGameEnd
+    ) {
+      const body = {
+        count: nokoriCardsLength,
+      };
 
-    const req = {
-      userID: Number(userID),
-      roomID: Number(roomID),
-      event: RANDOM,
-      message: JSON.stringify(body),
-    };
+      const req = {
+        userID: Number(userID),
+        roomID: Number(roomID),
+        event: RANDOM,
+        message: JSON.stringify(body),
+      };
 
-    ws?.send(JSON.stringify(req));
+      ws?.send(JSON.stringify(req));
 
-    setIsTimeOut(true);
-  }
+      setIsTimeOut(true);
+    }
+  }, [timer]);
 
   if (inGame) {
     return (
@@ -178,7 +186,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               />
             ))}
           </div>
-          <div className="aspect-[205/235] relative">
+          <div
+            className={`aspect-[205/235] relative ${timer > 5 && "grayscale"}`}
+          >
             <img
               src={Timer.src}
               alt="timer"
@@ -186,7 +196,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               width={205}
               height={235}
             />
-            <p className="absolute w-12 text-center font-bold text-xl left-[calc(50%-24px)] top-[calc(50%-10px)]">
+            <p className="absolute w-12 text-center font-bold text-3xl text-red-500 left-[calc(50%-24px)] top-[calc(50%-14px)]">
               {timer >= 0 ? timer : 0}
             </p>
           </div>
@@ -265,7 +275,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                     }
                   />
                   <div className="h-full flex flex-col items-center">
-                    <div className="w-20 aspect-[205/235] relative">
+                    <div
+                      className={`w-20 aspect-[205/235] relative ${
+                        timer > 5 && "grayscale"
+                      }`}
+                    >
                       <img
                         src={Timer.src}
                         alt="timer"
@@ -273,7 +287,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         width={205}
                         height={235}
                       />
-                      <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-xl text-center top-[calc(50%-10px)] font-bold">
+                      <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-3xl text-red-500 text-center top-[calc(50%-16px)] font-bold">
                         {timer >= 0 ? timer : 0}
                       </p>
                     </div>
