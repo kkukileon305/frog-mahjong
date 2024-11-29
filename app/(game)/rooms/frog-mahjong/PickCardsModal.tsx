@@ -145,22 +145,30 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   };
 
   // timer === 0 and not inGame
-  if (timer === 0 && !isTimeOut && nokoriCardsLength && !inGame && !isGameEnd) {
-    const body = {
-      count: nokoriCardsLength,
-    };
+  useEffect(() => {
+    if (
+      timer === 0 &&
+      !isTimeOut &&
+      nokoriCardsLength &&
+      !inGame &&
+      !isGameEnd
+    ) {
+      const body = {
+        count: nokoriCardsLength,
+      };
 
-    const req = {
-      userID: Number(userID),
-      roomID: Number(roomID),
-      event: RANDOM,
-      message: JSON.stringify(body),
-    };
+      const req = {
+        userID: Number(userID),
+        roomID: Number(roomID),
+        event: RANDOM,
+        message: JSON.stringify(body),
+      };
 
-    ws?.send(JSON.stringify(req));
+      ws?.send(JSON.stringify(req));
 
-    setIsTimeOut(true);
-  }
+      setIsTimeOut(true);
+    }
+  }, [timer]);
 
   if (inGame) {
     return (

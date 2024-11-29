@@ -17,6 +17,11 @@ import failAudioSrc from "@/public/audios/fail.mp3";
 import myTurnSrc from "@/public/audios/myturn.mp3";
 import timeoutSrc from "@/public/audios/timeout.mp3";
 import coinIcon from "@/public/icons/coin.png";
+import missionSuccessSrc from "@/public/audios/mission_success.mp3";
+import missionFailedSrc from "@/public/audios/mission_failed.mp3";
+import bgSrc from "@/public/audios/bg.mp3";
+import cardSelectSrc from "@/public/audios/card_select.mp3";
+import cardDiscardSrc from "@/public/audios/card_discard.mp3";
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 import axiosInstance from "@/utils/axios";
@@ -71,6 +76,11 @@ const usePreloadAssets = () => {
     failAudio: failAudioSrc,
     myTurnAudio: myTurnSrc,
     timeoutAudio: timeoutSrc,
+    missionSuccess: missionSuccessSrc,
+    missionFailed: missionFailedSrc,
+    bg: bgSrc,
+    cardSelect: cardSelectSrc,
+    cardDiscard: cardDiscardSrc,
   }).map(([assetName, audioUrl]) => ({
     url: audioUrl,
     assetName,

@@ -167,7 +167,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
       }
 
       if (eventName === IMPORT_SINGLE_CARD || eventName === RANDOM) {
-        audios?.cardMovieAudio.play();
+        audios?.cardSelect.play();
 
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(false);
@@ -184,6 +184,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
       }
 
       if (eventName === DISCARD) {
+        audios?.cardDiscard.play();
+
         if (data.gameInfo?.allPicked) {
           const users = data.users;
 
@@ -225,8 +227,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
               store.setTimer(fullTime);
             }
           }
-
-          audios?.cardChapAudio.play();
         }
       }
 
@@ -256,9 +256,12 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
           store.setIsStarted(true);
           audios?.commonStartAudio.play();
+          audios && (audios.bg.loop = true);
+          audios?.bg.play();
 
           store.setIsOpenResultModal(false);
           store.setIsPickCardsModal(true);
+          store.setIsRouletteLoading(false);
         }
       } else if (
         eventName === REQUEST_WIN ||
@@ -271,6 +274,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
         store.setWinner(data.gameInfo?.winner || 0);
         store.setIsGameEnd(true);
+        audios?.commonStartAudio.pause();
+        audios && (audios.bg.currentTime = 0);
       } else if (eventName === ROOM_OUT) {
         const currentUser = data.users?.find(
           (user) => user.id === Number(userID)
