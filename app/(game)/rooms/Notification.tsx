@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { MessagePayload, onMessage } from "@firebase/messaging";
-import { messaging } from "@/utils/firebaseConfig";
 import useNotificationStore from "@/utils/stores/useNotificationStore";
+import useMessagingStore from "@/utils/stores/useMessagingStore";
 
 const Notification = () => {
   const { notifications, addNotification, removeNotification } =
     useNotificationStore();
+  const { messaging } = useMessagingStore();
 
   useEffect(() => {
     if (!messaging) return;
@@ -25,7 +26,7 @@ const Notification = () => {
         removeNotification(id);
       }, 3000);
     });
-  }, []);
+  }, [messaging]);
 
   return (
     <div className="fixed left-4 top-4 z-50 w-[calc(100%-32px)]">

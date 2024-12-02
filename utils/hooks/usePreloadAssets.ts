@@ -28,6 +28,10 @@ import axiosInstance from "@/utils/axios";
 import useProfileIconStore, {
   ProfileIcon,
 } from "@/utils/stores/useProfileIconStore";
+import useMessagingStore from "@/utils/stores/useMessagingStore";
+import { isSupported } from "@firebase/messaging";
+import { getMessaging } from "firebase/messaging";
+import { app } from "@/utils/firebaseConfig";
 
 type AssetType = {
   url: string;
@@ -48,6 +52,8 @@ const usePreloadAssets = () => {
     setAssetLength,
     assetLength,
   } = useAssetStore();
+
+  const messagingStore = useMessagingStore();
 
   const { setAudios, setVolume } = useSoundStore();
   const { setProfileIcon } = useProfileIconStore();
@@ -197,6 +203,24 @@ const usePreloadAssets = () => {
     }
   };
 
+  const setFCM = async () => {
+    const supported = await isSupported();
+    messagingStore.setIsSupported(supported);
+
+    if (!supported) {
+      messagingStore.setInitialized(true);
+      return;
+    }
+
+    const mApp = typeof window !== "undefined" ? getMessaging(app) : null;
+
+    if (mApp) {
+      messagingStore.setMessaging(mApp);
+    }
+
+    messagingStore.setInitialized(true);
+  };
+
   return {
     isLoaded,
     isError,
@@ -204,6 +228,7 @@ const usePreloadAssets = () => {
     isLoading,
     loadedAssetCount,
     assetLength,
+    setFCM,
   };
 };
 

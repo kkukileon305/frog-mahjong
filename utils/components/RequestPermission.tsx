@@ -2,17 +2,18 @@
 
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
-import { messaging } from "@/utils/firebaseConfig";
 import { registerServiceWorker } from "@/utils/functions/registerServiceWorker";
-import { getToken } from "@firebase/messaging";
+import { getToken, isSupported } from "@firebase/messaging";
 import axiosInstance from "@/utils/axios";
+import useMessagingStore from "@/utils/stores/useMessagingStore";
 
 const RequestPermission = () => {
   const accessToken = getCookie("accessToken");
 
-  const [curPermission, setCurPermission] = useState<NotificationPermission>(
-    Notification.permission
-  );
+  const [curPermission, setCurPermission] =
+    useState<NotificationPermission | null>(null);
+
+  const { messaging } = useMessagingStore();
 
   async function retryGetDeviceToken(
     retries: number
@@ -35,6 +36,7 @@ const RequestPermission = () => {
 
   async function requestPermission(): Promise<void> {
     if (!messaging) return;
+
     registerServiceWorker();
 
     try {
@@ -66,8 +68,9 @@ const RequestPermission = () => {
   }
 
   useEffect(() => {
+    if (!messaging) return;
     requestPermission();
-  }, []);
+  }, [messaging]);
 
   return <></>;
 };
