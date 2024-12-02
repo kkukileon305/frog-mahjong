@@ -8,6 +8,7 @@ const Page = async () => {
   return (
     <div className="relative">
       <div className="max-w-[800px] min-h-[calc(100dvh-64px)] flex items-center w-full mx-auto py-4 px-2">
+        <Notification />
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
         </Suspense>
@@ -16,8 +17,6 @@ const Page = async () => {
           <SettingMenus />
         </div>
       </div>
-
-      <Notification />
     </div>
   );
 };

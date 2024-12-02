@@ -274,7 +274,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
         store.setWinner(data.gameInfo?.winner || 0);
         store.setIsGameEnd(true);
-        audios?.commonStartAudio.pause();
+        audios?.bg.pause();
         audios && (audios.bg.currentTime = 0);
       } else if (eventName === ROOM_OUT) {
         const currentUser = data.users?.find(

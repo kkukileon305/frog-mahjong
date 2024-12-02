@@ -24,6 +24,7 @@ type PickCardsModalProps = {
 
 const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const m = useTranslations("PickCardsModal");
+  const gameM = useTranslations("Game");
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -39,6 +40,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     isTimeOut,
     setIsTimeOut,
     isGameEnd,
+    allMissions,
+    missionIDs,
+    clearMissionIDs,
   } = useFrogMahjongStore((s) => ({
     cards: s.cards,
     users: s.gameState?.users!,
@@ -50,7 +54,12 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     isTimeOut: s.isTimeOut,
     setIsTimeOut: s.setIsTimeOut,
     isGameEnd: s.isGameEnd,
+    allMissions: s.allMissions,
+    missionIDs: s.gameState?.gameInfo?.missionIDs,
+    clearMissionIDs: s.clearMissionIDs,
   }));
+
+  const currentMissions = allMissions.filter((m) => missionIDs?.includes(m.id));
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const currentUserCards = currentUser.cards?.map(
@@ -207,23 +216,41 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   return (
     <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game text-[#7F674D] z-30">
-      <div className="w-full h-full p-4">
+      <div className="w-full h-full p-0">
         <div
           className="w-full mx-auto h-full flex flex-col rounded-xl overflow-hidden"
           style={{
-            padding: inGame ? "4px" : "12px",
+            padding: inGame ? "4px" : "8px",
           }}
         >
-          <p className="mb-4 font-bold text-2xl text-center">
-            {m("title", {
-              number: nokoriCardsLength,
-            })}
-          </p>
+          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-2 mb-2">
+            <div className="">
+              <p className="p-0 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+                {gameM("mission")}
+              </p>
 
-          <div className="w-full h-full flex flex-col gap-2">
-            <div className="basis-2/3 border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
-              <p className="text-2xl mb-5 font-bold text-center">
-                {m("selectOpen")}
+              <div className="py-2 px-4">
+                {currentMissions &&
+                  currentMissions.map((m, index) => (
+                    <p
+                      key={m.id}
+                      className={`basis-5/6 font-bold text-xs ${
+                        clearMissionIDs.includes(m.id) && "line-through"
+                      }`}
+                    >
+                      {index + 1}. {m.title}
+                    </p>
+                  ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full h-full flex flex-col">
+            <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
+              <p className="mb-5 font-bold text-center">
+                {m("selectOpen", {
+                  count: nokoriCardsLength,
+                })}
               </p>
 
               <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
@@ -302,17 +329,17 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </div>
             </div>
 
-            <div className="basis-1/3 border-2 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
-              <p className="font-bold text-2xl text-center mb-2">
+            <div className="h-[calc((100%-8px)/3)] mt-2 border-2 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
+              <p className="font-bold text-center mb-2">
                 {m("myCard")}
                 <span className="ml-4">{currentUserCards?.length || 0}/4</span>
               </p>
 
-              <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
+              <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden justify-center">
                 {currentUserCards?.map((card) => (
                   <img
                     key={card.id}
-                    className="w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
+                    className="max-w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
                     src={card.image}
                     alt={"sealed card"}
                   />
