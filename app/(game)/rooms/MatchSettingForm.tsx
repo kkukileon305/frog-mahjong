@@ -42,6 +42,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     loadedAssetCount,
     isError,
     isLoaded,
+    setFCM,
   } = usePreloadAssets();
 
   const progress = Math.floor((loadedAssetCount * 100) / assetLength);
@@ -66,6 +67,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     setCount(2);
     setTimer(formMetadata.timers[0]);
     loadImages();
+    setFCM();
   }, []);
 
   watch((value) => {

@@ -20,6 +20,16 @@ const SettingMenus = () => {
 
   const refreshToken = getCookie("refreshToken");
 
+  const [notificationStatus, setNotificationStatus] = useState<
+    "granted" | "default" | "denied" | null
+  >(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setNotificationStatus(Notification.permission);
+    }
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isQuitModalOpen, setIsQuitModalOpen] = useState<boolean>(false);
 
@@ -173,7 +183,7 @@ const SettingMenus = () => {
                 알림
               </span>
               <label className="w-fit inline-flex items-center cursor-pointer justify-center py-2">
-                {Notification.permission === "granted" ? "ON" : "OFF"}
+                {notificationStatus === "granted" ? "ON" : "OFF"}
               </label>
             </div>
 
