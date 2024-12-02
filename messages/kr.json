@@ -244,8 +244,8 @@
     "title": "카드를 {number}개 골라주세요",
     "preview": "패 미리보기",
     "draw": "무승부",
-    "selectOpen": "카드덱에서 선택",
-    "selectRandom": "랜덤으로 선택",
+    "selectOpen": "카드덱&랜덤에서 총 {count}장 골라주세요",
+    "selectRandom": "남은카드",
     "myCard": "내가 고른 카드"
   }
 }

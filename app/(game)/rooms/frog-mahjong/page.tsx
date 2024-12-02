@@ -12,13 +12,10 @@ import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 import axiosInstance, { BirdCard, ImportCardBody } from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
-import useSoundStore from "@/utils/stores/useSoundStore";
 
 const Page = () => {
   useDetectNavigation();
   useTimer();
-
-  const audios = useSoundStore((s) => s.audios);
 
   // 새로운 카드 에셋 로드 boolean
   const [isLoaded, setIsLoaded] = useState(false);
