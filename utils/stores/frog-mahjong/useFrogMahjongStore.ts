@@ -192,6 +192,7 @@ const useFrogMahjongStore = create(
         clearMissionIDs: [],
         isRouletteLoading: false,
         isTimeOut: false,
+        allMissions: [],
       }),
   }))
 );
