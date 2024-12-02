@@ -37,6 +37,7 @@ export type TokenType = {
   accessToken: string;
   refreshToken: string;
   userID: number;
+  isDuplicateLogin: boolean;
 };
 
 export type ErrorType = {

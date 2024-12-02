@@ -12,6 +12,7 @@ import { PASSWORD_NOT_MATCH } from "@/utils/constants/const";
 import { useTranslations } from "next-intl";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ProgressBar from "@/utils/components/ProgressBar";
+import useNotificationStore from "@/utils/stores/useNotificationStore";
 
 type SignInInputs = {
   email: string;
@@ -36,6 +37,7 @@ const SignInForm = () => {
   } = usePreloadAssets();
 
   const [isSignInFailed, setIsSignInFailed] = useState(false);
+  const addNotification = useNotificationStore((s) => s.addNotification);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,11 +46,25 @@ const SignInForm = () => {
 
     try {
       const {
-        data: { accessToken, refreshToken, userID },
+        data: { accessToken, refreshToken, userID, isDuplicateLogin },
       } = await axiosInstance.post<TokenType>("/v0.1/auth/signin", {
         email: inputs.email,
         password: inputs.password,
       });
+
+      if (isDuplicateLogin) {
+        const id = new Date().getTime();
+
+        addNotification({
+          id,
+          from: "system",
+          collapseKey: "",
+          messageId: String(id),
+          notification: {
+            title: m("duplicate"),
+          },
+        });
+      }
 
       const today = new Date();
 
