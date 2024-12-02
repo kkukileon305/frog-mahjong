@@ -29,13 +29,13 @@ const Notification = () => {
 
   return (
     <div className="fixed left-4 top-4 z-50 w-[calc(100%-32px)]">
-      {notifications.map((toast) => (
+      {notifications.map((notification) => (
         <div
-          key={toast.id}
-          onClick={() => removeNotification(toast.id)}
+          key={notification.id}
+          onClick={() => removeNotification(notification.id)}
           className="w-full mx-auto mb-4 opacity-0 animate-fade-in-out shadow-lg flex items-center max-w-sm px-4 py-3 rounded-lg bg-white"
         >
-          {toast.notification?.title}
+          {notification.notification?.title}
         </div>
       ))}
     </div>
