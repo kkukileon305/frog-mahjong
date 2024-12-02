@@ -161,7 +161,7 @@ const usePreloadAssets = () => {
           }, {} as Record<string, HTMLAudioElement>) as GameAudios;
 
           setAudios(audioObject);
-          setVolume(parseFloat(localStorage.getItem("volume") || "0.5"));
+          setVolume(parseFloat(localStorage.getItem("volume") || "0.2"));
 
           if (process.env.NODE_ENV === "development") {
             console.log("sound init!");

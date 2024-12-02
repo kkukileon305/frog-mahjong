@@ -36,7 +36,7 @@ const useSoundStore = create<SoundStore>((set) => ({
   audios: null,
   setAudios: (audios: GameAudios) => set({ audios }),
 
-  volume: 0.2,
+  volume: 0.05,
   setVolume: (volume: number) =>
     set((prev) => {
       if (prev.audios) {
