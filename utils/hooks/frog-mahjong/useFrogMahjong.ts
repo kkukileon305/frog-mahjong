@@ -137,8 +137,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
       const data = JSON.parse(parsedBody.message) as SocketResponseBody;
       store.setGameState(data);
 
-      // TODO: 이벤트별로 정리
-
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // 비정상 종료
         store.setIsAbnormalExit(true);
@@ -168,6 +166,27 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
       if (eventName === IMPORT_SINGLE_CARD || eventName === RANDOM) {
         audios?.cardSelect.play();
+
+        const requestedCard = useFrogMahjongStore.getState().pickable.card;
+
+        const curUser = data.users?.find((u) => u.id === Number(userID));
+        const importedCard = curUser?.cards?.find(
+          (c) => c.cardID === requestedCard?.id
+        );
+        const importedPickedCard = curUser?.pickedCards?.find(
+          (c) => c.cardID === requestedCard?.id
+        );
+
+        if (importedCard || importedPickedCard) {
+          if (process.env.NODE_ENV === "development") {
+            console.log("set pickable true!");
+          }
+
+          store.setPickable({
+            isPickable: true,
+            card: null,
+          });
+        }
 
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(false);
