@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { getMessaging } from "firebase/messaging";
 import { Messaging } from "@firebase/messaging";
 
 type MessagingStore = {

@@ -29,41 +29,22 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const {
-    cards, //
-    users,
-    timer,
-    ws,
-    playTurn,
-    roomID,
-    openCardIds,
-    isTimeOut,
-    setIsTimeOut,
-    isGameEnd,
-    allMissions,
-    missionIDs,
-    clearMissionIDs,
-  } = useFrogMahjongStore((s) => ({
-    cards: s.cards,
-    users: s.gameState?.users!,
-    ws: s.ws,
-    playTurn: s.gameState?.gameInfo?.playTurn!,
-    roomID: s.gameState?.gameInfo?.roomID!,
-    openCardIds: s.gameState?.gameInfo?.openCards || [],
-    timer: s.timer,
-    isTimeOut: s.isTimeOut,
-    setIsTimeOut: s.setIsTimeOut,
-    isGameEnd: s.isGameEnd,
-    allMissions: s.allMissions,
-    missionIDs: s.gameState?.gameInfo?.missionIDs,
-    clearMissionIDs: s.clearMissionIDs,
-  }));
+  const gameStore = useFrogMahjongStore();
 
-  const currentMissions = allMissions.filter((m) => missionIDs?.includes(m.id));
+  const users = gameStore.gameState?.users!;
+  const playTurn = gameStore.gameState?.gameInfo?.playTurn!;
+  const roomID = gameStore.gameState?.gameInfo?.roomID!;
+  const openCardIds = gameStore.gameState?.gameInfo?.openCards || [];
+
+  const missionIDs = gameStore.gameState?.gameInfo?.missionIDs;
+
+  const currentMissions = gameStore.allMissions.filter((m) =>
+    missionIDs?.includes(m.id)
+  );
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
   const currentUserCards = currentUser.cards?.map(
-    (uc) => cards.find((c) => c.id === uc.cardID)!
+    (uc) => gameStore.cards.find((c) => c.id === uc.cardID)!
   );
 
   const nokoriCardsLength = 4 - (currentUser?.cards?.length || 0);
@@ -88,7 +69,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     )
     .flat();
 
-  const leftCardsWithoutPicked = cards.filter(
+  const leftCardsWithoutPicked = gameStore.cards.filter(
     (card) =>
       !(
         allUserCardIds?.includes(card.id) ||
@@ -108,7 +89,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   }));
 
   const openCardsWithoutPicked = openCardIds.map(
-    (od) => cards.find((d) => d.id === od)!
+    (od) => gameStore.cards.find((d) => d.id === od)!
   );
 
   // 열린카드
@@ -121,6 +102,10 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   }));
 
   const pickCard = (card: LeftCard) => {
+    if (!gameStore.pickable.isPickable) {
+      return;
+    }
+
     const body: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
@@ -133,10 +118,18 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       roomID,
     };
 
-    ws?.send(JSON.stringify(request));
+    gameStore.setPickable({
+      isPickable: false,
+      card,
+    });
+    gameStore.ws?.send(JSON.stringify(request));
   };
 
   const pickCards = () => {
+    if (!gameStore.pickable.isPickable) {
+      return;
+    }
+
     const card = getRandomElements(leftCards, 1)[0];
     const body: ImportSingleCardBody = {
       cardID: card.id,
@@ -150,17 +143,21 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       roomID,
     };
 
-    ws?.send(JSON.stringify(request));
+    gameStore.setPickable({
+      isPickable: false,
+      card,
+    });
+    gameStore.ws?.send(JSON.stringify(request));
   };
 
   // timer === 0 and not inGame
   useEffect(() => {
     if (
-      timer === 0 &&
-      !isTimeOut &&
+      gameStore.timer === 0 &&
+      !gameStore.isTimeOut &&
       nokoriCardsLength &&
       !inGame &&
-      !isGameEnd
+      !gameStore.isGameEnd
     ) {
       const body = {
         count: nokoriCardsLength,
@@ -173,11 +170,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         message: JSON.stringify(body),
       };
 
-      ws?.send(JSON.stringify(req));
+      gameStore.ws?.send(JSON.stringify(req));
 
-      setIsTimeOut(true);
+      gameStore.setIsTimeOut(true);
     }
-  }, [timer]);
+  }, [gameStore.timer]);
 
   if (inGame) {
     return (
@@ -196,7 +193,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             ))}
           </div>
           <div
-            className={`aspect-[205/235] relative ${timer > 5 && "grayscale"}`}
+            className={`aspect-[205/235] relative ${
+              gameStore.timer > 5 && "grayscale"
+            }`}
           >
             <img
               src={Timer.src}
@@ -206,7 +205,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               height={235}
             />
             <p className="absolute w-12 text-center font-bold text-3xl text-red-500 left-[calc(50%-24px)] top-[calc(50%-14px)]">
-              {timer >= 0 ? timer : 0}
+              {gameStore.timer >= 0 ? gameStore.timer : 0}
             </p>
           </div>
         </div>
@@ -223,9 +222,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             padding: inGame ? "4px" : "8px",
           }}
         >
-          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-2 mb-2">
+          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4 mb-2">
             <div className="">
-              <p className="p-0 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+              <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
                 {gameM("mission")}
               </p>
 
@@ -234,8 +233,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   currentMissions.map((m, index) => (
                     <p
                       key={m.id}
-                      className={`basis-5/6 font-bold text-xs ${
-                        clearMissionIDs.includes(m.id) && "line-through"
+                      className={`basis-5/6 font-bold text-xs text-black ${
+                        gameStore.clearMissionIDs.includes(m.id) &&
+                        "line-through"
                       }`}
                     >
                       {index + 1}. {m.title}
@@ -245,7 +245,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             </div>
           </div>
 
-          <div className="w-full h-full flex flex-col">
+          <div className="w-full h-[calc(100%-116px)] flex flex-col">
             <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
               <p className="mb-5 font-bold text-center">
                 {m("selectOpen", {
@@ -301,27 +301,27 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       leftCards.length === 0
                     }
                   />
-                  <div className="h-full flex flex-col items-center">
+                  <div className="h-full flex flex-col items-center justify-center">
                     <div
-                      className={`w-20 aspect-[205/235] relative ${
-                        timer > 5 && "grayscale"
+                      className={`h-[calc(100%-40px)] aspect-[205/235] relative ${
+                        gameStore.timer > 5 && "grayscale"
                       }`}
                     >
                       <img
                         src={Timer.src}
                         alt="timer"
-                        className="aspect-[205/235]"
+                        className="h-full aspect-[205/235]"
                         width={205}
                         height={235}
                       />
                       <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-3xl text-red-500 text-center top-[calc(50%-16px)] font-bold">
-                        {timer >= 0 ? timer : 0}
+                        {gameStore.timer >= 0 ? gameStore.timer : 0}
                       </p>
                     </div>
                     <div className=" flex flex-col items-center">
                       <p className="font-bold text-sm">{m("selectRandom")}</p>
                       <p className="font-bold text-sm">
-                        {leftCards.length}/{cards.length}
+                        {leftCards.length}/{gameStore.cards.length}
                       </p>
                     </div>
                   </div>

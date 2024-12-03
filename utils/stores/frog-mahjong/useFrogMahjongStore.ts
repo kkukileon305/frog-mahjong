@@ -11,6 +11,11 @@ type ChatWithValid = ChatResponse & {
   valid: boolean;
 };
 
+type Pickable = {
+  isPickable: boolean;
+  card: BirdCard | null;
+};
+
 interface GameStore {
   ws: WebSocket | null;
   setWs: (ws: WebSocket | null) => void;
@@ -81,6 +86,9 @@ interface GameStore {
 
   isTimeOut: boolean;
   setIsTimeOut: (isTimeOut: boolean) => void;
+
+  pickable: Pickable;
+  setPickable: (pickable: Pickable) => void;
 
   clear: () => void;
 }
@@ -171,6 +179,12 @@ const useFrogMahjongStore = create(
     isRouletteLoading: false,
     setIsRouletteLoading: (isRouletteLoading: boolean) =>
       set({ isRouletteLoading }),
+
+    pickable: {
+      isPickable: true,
+      card: null,
+    },
+    setPickable: (pickable) => set({ pickable }),
 
     clear: () =>
       set({
