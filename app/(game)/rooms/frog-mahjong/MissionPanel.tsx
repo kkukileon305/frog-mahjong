@@ -85,9 +85,9 @@ const MissionPanel = () => {
         </div>
       )}
 
-      <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-8">
+      <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4">
         <div className="">
-          <p className="p-2 basis-1/6 bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+          <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
             {m("mission")}
           </p>
 

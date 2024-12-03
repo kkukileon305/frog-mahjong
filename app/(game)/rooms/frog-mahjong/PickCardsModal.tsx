@@ -223,9 +223,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             padding: inGame ? "4px" : "8px",
           }}
         >
-          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-2 mb-2">
+          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4 mb-2">
             <div className="">
-              <p className="p-0 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+              <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
                 {gameM("mission")}
               </p>
 
@@ -234,7 +234,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   currentMissions.map((m, index) => (
                     <p
                       key={m.id}
-                      className={`basis-5/6 font-bold text-xs ${
+                      className={`basis-5/6 font-bold text-xs text-black ${
                         clearMissionIDs.includes(m.id) && "line-through"
                       }`}
                     >
@@ -245,7 +245,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             </div>
           </div>
 
-          <div className="w-full h-full flex flex-col">
+          <div className="w-full h-[calc(100%-116px)] flex flex-col">
             <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
               <p className="mb-5 font-bold text-center">
                 {m("selectOpen", {
@@ -301,16 +301,16 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       leftCards.length === 0
                     }
                   />
-                  <div className="h-full flex flex-col items-center">
+                  <div className="h-full flex flex-col items-center justify-center">
                     <div
-                      className={`w-20 aspect-[205/235] relative ${
+                      className={`h-[calc(100%-40px)] aspect-[205/235] relative ${
                         timer > 5 && "grayscale"
                       }`}
                     >
                       <img
                         src={Timer.src}
                         alt="timer"
-                        className="aspect-[205/235]"
+                        className="h-full aspect-[205/235]"
                         width={205}
                         height={235}
                       />
