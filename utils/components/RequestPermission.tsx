@@ -45,7 +45,7 @@ const RequestPermission = () => {
 
       if (permission === "granted") {
         // getToken은 브라우저가 필요해서 서버에 실행할 수 없음
-        const token = await retryGetDeviceToken(3);
+        const token = await retryGetDeviceToken(5);
 
         // push_token을 server로 보내고 업데이트
         await axiosInstance.post(

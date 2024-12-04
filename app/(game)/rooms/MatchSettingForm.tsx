@@ -11,10 +11,8 @@ import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
 import ModalContainer from "@/utils/components/ModalContainer";
 import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
-import coinIcon from "@/public/icons/coin.png";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
-import SettingMenus from "@/utils/components/SettingMenus";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
