@@ -7,6 +7,7 @@ import { getCookie } from "cookies-next";
 import axiosInstance, { MissionResponse } from "@/utils/axios";
 import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
 import delay from "@/utils/functions/delay";
+import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
 
 const MissionPanel = () => {
   const router = useRouter();
@@ -77,6 +78,45 @@ const MissionPanel = () => {
     spinRoulette();
   }, [gameStore.allMissions]);
 
+  // 남은 카드들중 미션에 부합하는거 표시
+  const users = gameStore.gameState?.users!;
+
+  const allUserCardIds = users
+    ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
+    .flat();
+
+  const allUserPickedCardIds = users
+    ?.map((user) =>
+      user.pickedCards ? user.pickedCards.map((card) => card.cardID) : []
+    )
+    .flat();
+
+  const allUserCardWithoutPickedCardIds = allUserCardIds.filter(
+    (id) => !allUserPickedCardIds.includes(id)
+  );
+
+  const allUserDiscardedIds = users
+    ?.map((user) =>
+      user.discardedCards ? user.discardedCards.map((card) => card.cardID) : []
+    )
+    .flat();
+
+  const openCardIds = gameStore.gameState?.gameInfo?.openCards || [];
+
+  const leftCardsWithoutPickedWithOpenCards = gameStore.cards.filter(
+    (card) =>
+      !(
+        allUserCardIds?.includes(card.id) ||
+        allUserCardWithoutPickedCardIds?.includes(card.id) ||
+        allUserDiscardedIds?.includes(card.id)
+      )
+  );
+
+  const nokoriPassCards = getSuccessCardIds(
+    leftCardsWithoutPickedWithOpenCards,
+    currentMissions
+  );
+
   return (
     <>
       {gameStore.isRouletteLoading && (
@@ -94,14 +134,17 @@ const MissionPanel = () => {
           <div className="py-2 px-4">
             {currentMissions &&
               currentMissions.map((m, index) => (
-                <p
+                <div
                   key={m.id}
-                  className={`basis-5/6 font-bold text-xs ${
+                  className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
                     gameStore.clearMissionIDs.includes(m.id) && "line-through"
                   }`}
                 >
-                  {index + 1}. {m.title}
-                </p>
+                  <p>
+                    {index + 1}. {m.title}
+                  </p>
+                  <p>{nokoriPassCards[index].length}</p>
+                </div>
               ))}
           </div>
         </div>

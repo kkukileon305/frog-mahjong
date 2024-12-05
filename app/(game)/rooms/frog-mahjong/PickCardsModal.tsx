@@ -13,6 +13,7 @@ import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
 import { useEffect } from "react";
 import { RANDOM } from "@/utils/constants/const";
+import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
 
 type LeftCard = BirdCard & {
   picked: null | UserSocket;
@@ -77,6 +78,20 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         allUserDiscardedIds?.includes(card.id) ||
         openCardIds?.includes(card.id)
       )
+  );
+
+  const leftCardsWithoutPickedWithOpenCards = gameStore.cards.filter(
+    (card) =>
+      !(
+        allUserCardIds?.includes(card.id) ||
+        allUserCardWithoutPickedCardIds?.includes(card.id) ||
+        allUserDiscardedIds?.includes(card.id)
+      )
+  );
+
+  const nokoriPassCards = getSuccessCardIds(
+    leftCardsWithoutPickedWithOpenCards,
+    currentMissions
   );
 
   // 뭉탱이카드
@@ -231,15 +246,18 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               <div className="py-2 px-4">
                 {currentMissions &&
                   currentMissions.map((m, index) => (
-                    <p
+                    <div
                       key={m.id}
-                      className={`basis-5/6 font-bold text-xs text-black ${
+                      className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
                         gameStore.clearMissionIDs.includes(m.id) &&
                         "line-through"
                       }`}
                     >
-                      {index + 1}. {m.title}
-                    </p>
+                      <p>
+                        {index + 1}. {m.title}
+                      </p>
+                      <p>{nokoriPassCards[index].length}</p>
+                    </div>
                   ))}
               </div>
             </div>
