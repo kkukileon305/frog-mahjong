@@ -21,8 +21,6 @@ const MissionPanel = () => {
     (user) => user.id === Number(userID)
   );
 
-  const [isResultLoading, setIsResultLoading] = useState(false);
-
   const currentMissions = gameStore.allMissions.filter((m) =>
     gameStore.gameState?.gameInfo?.missionIDs?.includes(m.id)
   );
@@ -35,14 +33,11 @@ const MissionPanel = () => {
 
     const getMissions = async () => {
       try {
-        setIsResultLoading(true);
-
         const { data } = await axiosInstance.get<MissionResponse>(
           "/v2.1/game/missions"
         );
 
         gameStore.setAllMissions(data.missions);
-        setIsResultLoading(false);
       } catch (e) {
         console.log(e);
         router.push("/rooms");
@@ -62,6 +57,7 @@ const MissionPanel = () => {
       const finalDeg = baseDeg + 4 * (360 / length);
 
       setRotateDeg(finalDeg);
+
       await delay(10000);
 
       if (!currentUser?.isOwner) return;

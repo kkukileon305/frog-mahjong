@@ -31,7 +31,9 @@
     "signIn": "로그인",
     "loadingImages": "에셋을 불러오는 중 {loadedAssetCount}/{assetLength}",
     "getAsset": "에셋 정보를 불러오는중",
-    "duplicate": "기존 기기에서 로그아웃되었습니다"
+    "anotherSignOut": "기존 기기에서 로그아웃되었습니다",
+    "duplicate": "중복된 로그인입니다. <br></br>로그아웃 하시겠습니까?",
+    "close": "닫기"
   },
   "SignUp": {
     "title": "회원가입",
