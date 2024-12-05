@@ -136,8 +136,8 @@
     "fail": "미션 실패！"
   },
   "HelpModal": {
-    "calRule": "점수계산 규칙",
-    "cardsInfo": "패의 구성",
+    "color": "색깔들",
+    "body": "신체부분들",
     "close": "닫기"
   },
   "Game": {

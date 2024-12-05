@@ -42,7 +42,7 @@ export const colorParts = [
   "푸른",
 ];
 
-const bodyParts = [
+export const bodyParts = [
   "가슴",
   "머리",
   "엉덩이",

@@ -135,8 +135,8 @@
     "fail": "ミッション失敗！"
   },
   "HelpModal": {
-    "calRule": "点数計算ルール",
-    "cardsInfo": "牌",
+    "color": "カラー",
+    "body": "身体部分",
     "close": "閉じる"
   },
   "Game": {

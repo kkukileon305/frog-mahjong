@@ -9,14 +9,13 @@ import MyCardBoard from "@/app/(game)/rooms/frog-mahjong/MyCardBoard";
 import UserPanel from "@/app/(game)/rooms/frog-mahjong/UserPanel";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 
-type GameProps = {
-  setIsHelpModal: Dispatch<SetStateAction<boolean>>;
-};
-
-const Game = ({ setIsHelpModal }: GameProps) => {
+const Game = () => {
   const m = useTranslations("Game");
 
-  const gameState = useFrogMahjongStore((s) => s.gameState);
+  const { gameState, setIsHelpModalOpen } = useFrogMahjongStore((s) => ({
+    gameState: s.gameState,
+    setIsHelpModalOpen: s.setIsHelpModalOpen,
+  }));
   const users = gameState?.users!;
 
   return (
@@ -53,7 +52,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
         <div className="flex basis-1/5">
           <button
-            onClick={() => setIsHelpModal(true)}
+            onClick={() => setIsHelpModalOpen(true)}
             className="text-xs lg:text-base w-full bg-game-button font-bold"
           >
             {m("help")}

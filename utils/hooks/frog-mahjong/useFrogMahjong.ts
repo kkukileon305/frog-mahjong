@@ -237,6 +237,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
             store.ws?.send(JSON.stringify(req));
           } else {
+            store.setIsHelpModalOpen(false);
             store.setIsPickCardsModal(true);
             store.setIsTimeOut(false);
             const fullTime =

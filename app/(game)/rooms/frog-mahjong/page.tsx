@@ -12,10 +12,13 @@ import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
 import axiosInstance, { BirdCard, ImportCardBody } from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
+import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
 
 const Page = () => {
   useDetectNavigation();
   useTimer();
+
+  const isHelpModalOpen = useFrogMahjongStore((s) => s.isHelpModalOpen);
 
   // 새로운 카드 에셋 로드 boolean
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,7 +27,6 @@ const Page = () => {
   const accessToken = getCookie("accessToken") as string;
 
   const router = useRouter();
-  const [isHelpModal, setIsHelpModal] = useState(false);
   const gameStore = useFrogMahjongStore();
 
   const currentUser = gameStore.gameState?.users?.find(
@@ -108,13 +110,16 @@ const Page = () => {
         {/* pick cards modal */}
         {gameStore.isPickCardsModal && <PickCardsModal />}
 
+        {/* help modal */}
+        {isHelpModalOpen && <HelpModal />}
+
         {!isLoaded && (
           <div className="h-full flex justify-center items-center">
             <p>카드 정보 불러오는중</p>
           </div>
         )}
 
-        {isLoaded && <Game setIsHelpModal={setIsHelpModal} />}
+        {isLoaded && <Game />}
       </div>
     </div>
   );
