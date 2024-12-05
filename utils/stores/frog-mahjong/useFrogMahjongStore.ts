@@ -90,6 +90,9 @@ interface GameStore {
   pickable: Pickable;
   setPickable: (pickable: Pickable) => void;
 
+  isHelpModalOpen: boolean;
+  setIsHelpModalOpen: (isHelpModalOpen: boolean) => void;
+
   clear: () => void;
 }
 
@@ -186,6 +189,9 @@ const useFrogMahjongStore = create(
     },
     setPickable: (pickable) => set({ pickable }),
 
+    isHelpModalOpen: false,
+    setIsHelpModalOpen: (isHelpModalOpen) => set({ isHelpModalOpen }),
+
     clear: () =>
       set({
         ws: null,
@@ -207,6 +213,7 @@ const useFrogMahjongStore = create(
         isRouletteLoading: false,
         isTimeOut: false,
         allMissions: [],
+        isHelpModalOpen: false,
       }),
   }))
 );

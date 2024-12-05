@@ -49,7 +49,6 @@ const SignInForm = () => {
 
   const signIn = async (inputs: SignInInputs) => {
     try {
-      setIsPending(true);
       const {
         data: { accessToken, refreshToken, userID, isDuplicateLogin },
       } = await axiosInstance.post<TokenType>("/v0.1/auth/signin", {
@@ -66,7 +65,7 @@ const SignInForm = () => {
           collapseKey: "",
           messageId: String(id),
           notification: {
-            title: m("duplicate"),
+            title: m("anotherSignOut"),
           },
         });
       }
@@ -104,8 +103,6 @@ const SignInForm = () => {
         setIsSignInFailed(true);
         console.log('USER_ALREADY_EXISTED"');
       }
-    } finally {
-      setIsPending(false);
     }
   };
 
@@ -153,21 +150,28 @@ const SignInForm = () => {
       {isDuplicated && (
         <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-50">
           <div className="bg-white p-4 shadow-lg rounded-xl flex flex-col items-center justify-center gap-4">
-            <p>Duplicated Login</p>
+            <p className="text-center">
+              {m.rich("duplicate", {
+                br: (chunks) => <br />,
+              })}
+            </p>
             <div className="flex gap-2">
               <button
                 className="bg-blue-400 px-2 py-1 rounded font-bold text-white disabled:bg-gray-200"
-                onClick={() => signIn(watch())}
+                onClick={() => {
+                  setIsPending(true);
+                  signIn(watch());
+                }}
                 disabled={isPending}
               >
-                login
+                {m("signIn")}
               </button>
               <button
                 className="bg-red-400 px-2 py-1 rounded font-bold text-white disabled:bg-gray-200"
                 onClick={() => setIsDuplicated(false)}
                 disabled={isPending}
               >
-                close
+                {m("close")}
               </button>
             </div>
           </div>
