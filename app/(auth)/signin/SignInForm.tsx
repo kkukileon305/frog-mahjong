@@ -49,7 +49,6 @@ const SignInForm = () => {
 
   const signIn = async (inputs: SignInInputs) => {
     try {
-      setIsPending(true);
       const {
         data: { accessToken, refreshToken, userID, isDuplicateLogin },
       } = await axiosInstance.post<TokenType>("/v0.1/auth/signin", {
@@ -104,8 +103,6 @@ const SignInForm = () => {
         setIsSignInFailed(true);
         console.log('USER_ALREADY_EXISTED"');
       }
-    } finally {
-      setIsPending(false);
     }
   };
 
@@ -157,7 +154,10 @@ const SignInForm = () => {
             <div className="flex gap-2">
               <button
                 className="bg-blue-400 px-2 py-1 rounded font-bold text-white disabled:bg-gray-200"
-                onClick={() => signIn(watch())}
+                onClick={() => {
+                  setIsPending(true);
+                  signIn(watch());
+                }}
                 disabled={isPending}
               >
                 login
