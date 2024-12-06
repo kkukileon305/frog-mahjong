@@ -7,6 +7,7 @@ import { FormMetadata, UserData } from "@/utils/axios";
 import { TOKEN_BAD } from "@/utils/constants/errTypes";
 import { redirect } from "next/navigation";
 import MatchSettingForm from "@/app/(game)/rooms/MatchSettingForm";
+import Tutorial from "@/app/(game)/rooms/Tutorial";
 
 const Page = async () => {
   const accessToken = getCookie("accessToken", {
@@ -47,9 +48,9 @@ const Page = async () => {
 
         <MatchSettingForm formMetadata={formMetadata} userData={userData} />
 
-        <div className="w-full absolute flex justify-end top-0 left-0 text-black">
-          <SettingMenus />
-        </div>
+        <Tutorial />
+
+        <SettingMenus />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="h-[calc(100dvh)] flex items-center max-w-2xl mx-auto">
+    <div className="h-[calc(100dvh)] flex items-center max-w-2xl mx-auto p-2">
       <div className="h-[452px] w-full ">
         <div className="flex justify-center gap-2">
           <div className="w-12 aspect-square rounded-xl bg-gray-200 animate-pulse"></div>
