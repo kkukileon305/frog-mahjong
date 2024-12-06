@@ -76,7 +76,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
   if (isLoading || !isLoaded) {
     return (
-      <div className="w-full h-full flex flex-col justify-center items-center p-2 bg-[#5A9175]">
+      <div className="w-full h-full flex flex-col justify-center items-center p-2">
         <div className="flex w-full h-[104px] justify-center items-center gap-4">
           {assetLength === 0 ? (
             <p className="text-white">{m("getAsset")}</p>

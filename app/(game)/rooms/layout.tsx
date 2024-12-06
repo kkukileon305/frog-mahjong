@@ -3,7 +3,9 @@ const Layout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <div className="min-h-[calc(100dvh)] relative">{children}</div>;
+  return (
+    <div className="min-h-[calc(100dvh)] relative bg-[#5A9175]">{children}</div>
+  );
 };
 
 export default Layout;
