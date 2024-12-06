@@ -1,6 +1,6 @@
 "use client";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
@@ -8,6 +8,10 @@ import axiosInstance, { MissionResponse } from "@/utils/axios";
 import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
 import delay from "@/utils/functions/delay";
 import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
+import RouletteLoading from "@/public/effects/roulette_loading.gif";
+import Roulette1 from "@/public/effects/roulette1.png";
+import Roulette2 from "@/public/effects/roulette2.png";
+import Roulette3 from "@/public/effects/roulette3.png";
 
 const MissionPanel = () => {
   const router = useRouter();
@@ -24,8 +28,6 @@ const MissionPanel = () => {
   const currentMissions = gameStore.allMissions.filter((m) =>
     gameStore.gameState?.gameInfo?.missionIDs?.includes(m.id)
   );
-
-  const [rotateDeg, setRotateDeg] = useState(0);
 
   useEffect(() => {
     if (!currentUser || gameStore.isGameEnd) return;
@@ -47,32 +49,6 @@ const MissionPanel = () => {
 
     getMissions();
   }, []);
-
-  useEffect(() => {
-    const spinRoulette = async () => {
-      if (gameStore.allMissions.length === 0) return;
-
-      const length = gameStore.allMissions.length;
-      const baseDeg = 360 * (5 + (Math.floor(Math.random() * 5) + 1));
-      const finalDeg = baseDeg + 4 * (360 / length);
-
-      setRotateDeg(finalDeg);
-
-      await delay(10000);
-
-      if (!currentUser?.isOwner) return;
-
-      const request: STARTRequest = {
-        roomID: Number(gameStore.gameState?.gameInfo?.roomID),
-        event: "START",
-        message: "",
-      };
-
-      gameStore.ws?.send(JSON.stringify(request));
-    };
-
-    spinRoulette();
-  }, [gameStore.allMissions]);
 
   // 남은 카드들중 미션에 부합하는거 표시
   const users = gameStore.gameState?.users!;
@@ -97,8 +73,6 @@ const MissionPanel = () => {
     )
     .flat();
 
-  const openCardIds = gameStore.gameState?.gameInfo?.openCards || [];
-
   const leftCardsWithoutPickedWithOpenCards = gameStore.cards.filter(
     (card) =>
       !(
@@ -114,38 +88,30 @@ const MissionPanel = () => {
   );
 
   return (
-    <>
-      {gameStore.isRouletteLoading && (
-        <div className="fixed top-0 z-30 w-full h-full bg-black/50 flex justify-center items-center">
-          룰렛이펙트
-        </div>
-      )}
+    <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4">
+      <div className="">
+        <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+          {m("mission")}
+        </p>
 
-      <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4">
-        <div className="">
-          <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
-            {m("mission")}
-          </p>
-
-          <div className="py-2 px-4">
-            {currentMissions &&
-              currentMissions.map((m, index) => (
-                <div
-                  key={m.id}
-                  className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
-                    gameStore.clearMissionIDs.includes(m.id) && "line-through"
-                  }`}
-                >
-                  <p>
-                    {index + 1}. {m.title}
-                  </p>
-                  <p>{nokoriPassCards[index].length}</p>
-                </div>
-              ))}
-          </div>
+        <div className="py-2 px-4">
+          {currentMissions &&
+            currentMissions.map((m, index) => (
+              <div
+                key={m.id}
+                className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
+                  gameStore.clearMissionIDs.includes(m.id) && "line-through"
+                }`}
+              >
+                <p>
+                  {index + 1}. {m.title}
+                </p>
+                <p>{nokoriPassCards[index].length}</p>
+              </div>
+            ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -4,9 +4,7 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="min-h-[calc(100dvh)] bg-rooms bg-center bg-cover relative">
-      {children}
-    </div>
+    <div className="min-h-[calc(100dvh)] relative bg-[#5A9175]">{children}</div>
   );
 };
 

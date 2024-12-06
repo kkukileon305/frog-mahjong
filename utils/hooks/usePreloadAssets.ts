@@ -5,6 +5,11 @@ import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import gameBackground from "@/public/bg/game_background.jpg";
 import roomBackground from "@/public/bg/room_background.jpg";
+import Roulette0 from "@/public/effects/roulette0.png";
+import Roulette1 from "@/public/effects/roulette1.png";
+import Roulette2 from "@/public/effects/roulette2.png";
+import Roulette3 from "@/public/effects/roulette3.png";
+import RouletteLoading from "@/public/effects/roulette_loading.gif";
 import commonAllReadySrc from "@/public/audios/all_ready.mp3";
 import commonLoanSrc from "@/public/audios/loan.mp3";
 import commonLoanFailedSrc from "@/public/audios/loanfailed.mp3";
@@ -65,6 +70,11 @@ const usePreloadAssets = () => {
     gameBackground,
     roomBackground,
     Timer,
+    Roulette0,
+    Roulette1,
+    Roulette2,
+    Roulette3,
+    RouletteLoading,
   ].map((image) => ({
     url: image.src,
     type: "image",

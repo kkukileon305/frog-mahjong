@@ -67,12 +67,18 @@ const SettingMenus = () => {
     const handler = (e: MouseEvent) => {
       const target = e.target as Element;
 
-      setIsOpen(!!target.closest("#setting"));
+      const isBack = !!target.closest("#back");
+
+      if (!isBack) {
+        setIsOpen(
+          !!target.closest("#setting") || !!target.closest("#setting-button")
+        );
+      }
     };
 
-    window.addEventListener("mousedown", handler);
+    window.addEventListener("click", handler);
 
-    return () => window.removeEventListener("mousedown", handler);
+    return () => window.removeEventListener("click", handler);
   }, []);
 
   const handleGameTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -91,13 +97,9 @@ const SettingMenus = () => {
         </ModalContainer>
       )}
 
-      <div id="setting" className="" tabIndex={0}>
-        <div className="cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200">
-          <IoMdSettings size={24} />
-        </div>
-
-        {isOpen && (
-          <ModalContainer setIsOpen={setIsOpen}>
+      {isOpen && (
+        <ModalContainer setIsOpen={setIsOpen}>
+          <div>
             <div className="bg-white hover:bg-gray-200 p-2 border-b flex flex-col">
               <label htmlFor="volume">{m("volume")}</label>
               <input
@@ -195,8 +197,20 @@ const SettingMenus = () => {
                 {m("close")}
               </button>
             </div>
-          </ModalContainer>
-        )}
+          </div>
+        </ModalContainer>
+      )}
+
+      <div
+        id="setting-button"
+        className="w-fit absolute flex justify-end top-0 left-0 text-black"
+      >
+        <button
+          onClick={() => setIsOpen(true)}
+          className="cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200"
+        >
+          <IoMdSettings size={24} />
+        </button>
       </div>
     </>
   );

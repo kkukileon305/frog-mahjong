@@ -13,6 +13,7 @@ import axiosInstance, { BirdCard, ImportCardBody } from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
 import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
+import Roulette from "@/app/(game)/rooms/frog-mahjong/Roulette";
 
 const Page = () => {
   useDetectNavigation();
@@ -112,6 +113,9 @@ const Page = () => {
 
         {/* help modal */}
         {isHelpModalOpen && <HelpModal />}
+
+        {/* roulette */}
+        {gameStore.isRouletteLoading && <Roulette />}
 
         {!isLoaded && (
           <div className="h-full flex justify-center items-center">
