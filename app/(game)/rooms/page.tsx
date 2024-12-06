@@ -7,7 +7,7 @@ import Notification from "@/app/(game)/rooms/Notification";
 const Page = async () => {
   return (
     <div className="relative">
-      <div className="max-w-[800px] min-h-[calc(100dvh-64px)] flex items-center w-full mx-auto py-4 px-2">
+      <div className="h-[calc(100dvh)] flex items-center w-full mx-auto">
         <Notification />
         <Suspense fallback={<FormMetadataLoading />}>
           <Match />
