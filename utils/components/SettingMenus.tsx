@@ -203,7 +203,7 @@ const SettingMenus = () => {
 
       <div
         id="setting-button"
-        className="w-fit absolute flex justify-end top-0 left-0 text-black"
+        className="w-fit absolute flex justify-end top-0 right-0 text-black"
       >
         <button
           onClick={() => setIsOpen(true)}
