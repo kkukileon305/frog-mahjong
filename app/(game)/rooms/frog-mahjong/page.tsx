@@ -17,8 +17,7 @@ import Roulette from "@/app/(game)/rooms/frog-mahjong/Roulette";
 
 const Page = () => {
   useDetectNavigation();
-  // TODO
-  // useTimer();
+  useTimer();
 
   const isHelpModalOpen = useFrogMahjongStore((s) => s.isHelpModalOpen);
 

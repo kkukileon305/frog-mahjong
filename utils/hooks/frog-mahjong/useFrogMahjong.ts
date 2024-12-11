@@ -138,7 +138,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
       const data = JSON.parse(parsedBody.message) as SocketResponseBody;
 
       if (data.errorInfo?.type === ERR_NOT_FOUND_CARD) {
-        console.log(1);
         if (process.env.NODE_ENV === "development") {
           console.log("set pickable true! with 404");
         }
