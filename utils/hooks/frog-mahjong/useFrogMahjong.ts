@@ -21,6 +21,7 @@ import {
   CHAT,
   DISCARD,
   ERR_ABNORMAL_EXIT,
+  ERR_NOT_FOUND_CARD,
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_CARDS,
@@ -135,6 +136,20 @@ const useFrogMahjong = (mode: MatchingMode) => {
       }
 
       const data = JSON.parse(parsedBody.message) as SocketResponseBody;
+
+      if (data.errorInfo?.type === ERR_NOT_FOUND_CARD) {
+        console.log(1);
+        if (process.env.NODE_ENV === "development") {
+          console.log("set pickable true! with 404");
+        }
+
+        store.setPickable({
+          isPickable: true,
+          card: null,
+        });
+        return;
+      }
+
       store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
