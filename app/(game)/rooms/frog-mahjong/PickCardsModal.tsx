@@ -272,11 +272,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </p>
 
               <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
-                <div className="h-[calc(50%-8px)] flex gap-4 justify-center">
+                <div className="h-[calc(50%-8px)] gap-4 grid grid-cols-3">
                   {openCards.map((card) => (
                     <div
                       key={card.id}
-                      className="w-[calc((100%-32px)/3)] flex justify-center items-center"
+                      className="w-full h-full overflow-hidden flex justify-center items-center"
                     >
                       <button
                         className={`h-full overflow-hidden aspect-[63/111] relative ${
