@@ -272,11 +272,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </p>
 
               <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
-                <div className="h-[calc(50%-8px)] flex gap-4 justify-center">
+                <div className="h-[calc(50%-8px)] gap-4 grid grid-cols-3">
                   {openCards.map((card) => (
                     <div
                       key={card.id}
-                      className="w-[calc((100%-32px)/3)] flex justify-center items-center"
+                      className="w-full h-full overflow-hidden flex justify-center items-center"
                     >
                       <button
                         className={`h-full overflow-hidden aspect-[63/111] relative ${
@@ -321,7 +321,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   />
                   <div className="h-full flex flex-col items-center justify-center">
                     <div
-                      className={`h-[calc(100%-40px)] aspect-[205/235] relative ${
+                      className={`h-[calc(100%-60px)] aspect-[205/235] relative ${
                         gameStore.timer > 5 && "grayscale"
                       }`}
                     >
@@ -336,8 +336,23 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         {gameStore.timer >= 0 ? gameStore.timer : 0}
                       </p>
                     </div>
-                    <div className=" flex flex-col items-center">
+                    <div className="mt-2 flex flex-col items-center">
                       <p className="font-bold text-sm">{m("selectRandom")}</p>
+                      <p className="font-bold text-sm">
+                        {leftCards.length}/{gameStore.cards.length}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="h-full flex flex-col items-center justify-center">
+                    <div
+                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] flex justify-center items-center text-white font-bold text-3xl`}
+                    >
+                      ON
+                    </div>
+
+                    <div className="mt-2 flex flex-col items-center">
+                      <p className="font-bold text-sm">{m("change")}</p>
                       <p className="font-bold text-sm">
                         {leftCards.length}/{gameStore.cards.length}
                       </p>

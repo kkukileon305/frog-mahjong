@@ -203,7 +203,7 @@ const MyCardBoard = () => {
   }, [store.timer]);
 
   return (
-    <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-white rounded-xl gap-1">
+    <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-[#FDF9E0] rounded-xl gap-1 border-4 border-white">
       {!discardMode && (
         <Reorder.Group
           className="w-full h-[calc(100%-44px)] flex gap-1 rounded relative basis-4/5 justify-center py-1"
