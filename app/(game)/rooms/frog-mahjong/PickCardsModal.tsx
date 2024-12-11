@@ -321,7 +321,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   />
                   <div className="h-full flex flex-col items-center justify-center">
                     <div
-                      className={`h-[calc(100%-40px)] aspect-[205/235] relative ${
+                      className={`h-[calc(100%-60px)] aspect-[205/235] relative ${
                         gameStore.timer > 5 && "grayscale"
                       }`}
                     >
@@ -336,8 +336,23 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         {gameStore.timer >= 0 ? gameStore.timer : 0}
                       </p>
                     </div>
-                    <div className=" flex flex-col items-center">
+                    <div className="mt-2 flex flex-col items-center">
                       <p className="font-bold text-sm">{m("selectRandom")}</p>
+                      <p className="font-bold text-sm">
+                        {leftCards.length}/{gameStore.cards.length}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="h-full flex flex-col items-center justify-center">
+                    <div
+                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] flex justify-center items-center text-white font-bold text-3xl`}
+                    >
+                      ON
+                    </div>
+
+                    <div className="mt-2 flex flex-col items-center">
+                      <p className="font-bold text-sm">{m("change")}</p>
                       <p className="font-bold text-sm">
                         {leftCards.length}/{gameStore.cards.length}
                       </p>

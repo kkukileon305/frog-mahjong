@@ -247,6 +247,7 @@
     "draw": "引き分け",
     "selectOpen": "カードデックから選択",
     "selectRandom": "ランダム選択",
-    "myCard": "ぼくのカード"
+    "myCard": "ぼくのカード",
+    "change": "카드팩 교체"
   }
 }
