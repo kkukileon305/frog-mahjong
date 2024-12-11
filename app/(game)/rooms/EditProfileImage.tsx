@@ -105,7 +105,7 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
             />
           </div>
 
-          <div className="w-fit max-h-[30dvh] mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-6 gap-2 overflow-y-auto">
+          <div className="w-fit max-h-[30dvh] mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-3 gap-2 overflow-y-auto">
             {allProfileIcons.map((icon) => (
               <div key={icon.profileID} className="">
                 {availableProfileList
@@ -121,7 +121,7 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
                         <img
                           src={icon.image}
                           alt="icon"
-                          className="w-full h-full object-cover object-bottom"
+                          className="w-full h-full object-fill object-bottom"
                         />
                       </button>
                     )}

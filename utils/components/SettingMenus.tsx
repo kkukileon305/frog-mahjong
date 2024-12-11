@@ -63,24 +63,6 @@ const SettingMenus = () => {
     setDebounceTimeout(newTimeout);
   };
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const target = e.target as Element;
-
-      const isBack = !!target.closest("#back");
-
-      if (!isBack) {
-        setIsOpen(
-          !!target.closest("#setting") || !!target.closest("#setting-button")
-        );
-      }
-    };
-
-    window.addEventListener("click", handler);
-
-    return () => window.removeEventListener("click", handler);
-  }, []);
-
   const handleGameTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setGameType(e.currentTarget.checked ? "FROG_MAHJONG_OLD" : "FROG_MAHJONG");
   };
