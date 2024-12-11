@@ -1,10 +1,10 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import MissionPanel from "@/app/(game)/rooms/frog-mahjong/MissionPanel";
-import ChatForm from "@/app/(game)/rooms/frog-mahjong/ChatForm";
+import ChatEmoji from "@/app/(game)/rooms/frog-mahjong/ChatEmoji";
 import MyCardBoard from "@/app/(game)/rooms/frog-mahjong/MyCardBoard";
 import UserPanel from "@/app/(game)/rooms/frog-mahjong/UserPanel";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
@@ -20,7 +20,7 @@ const Game = () => {
 
   return (
     <>
-      <div className="relative w-full h-[calc(100%-32px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8">
+      <div className="relative w-full h-[calc(100%-40px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8">
         <div className="flex justify-center">
           <MissionPanel />
         </div>
@@ -43,14 +43,12 @@ const Game = () => {
         </div>
       </div>
 
-      <div className="flex h-8 lg:h-10 justify-end bg-[#ECB5C1]">
-        <div className="basis-1/5" />
-
-        <div className="basis-3/5 p-1">
-          <ChatForm />
+      <div className="flex h-10 lg:h-10 justify-end bg-[#ECB5C1]">
+        <div className="w-4/5">
+          <ChatEmoji />
         </div>
 
-        <div className="flex basis-1/5">
+        <div className="flex w-1/5">
           <button
             onClick={() => setIsHelpModalOpen(true)}
             className="text-xs lg:text-base w-full bg-game-button font-bold"
