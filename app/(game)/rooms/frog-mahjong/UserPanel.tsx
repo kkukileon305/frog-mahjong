@@ -97,7 +97,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 className="h-[calc((100%-24px)/2)] p-1 aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
-                  <div className="relative w-full aspect-square border-2 border-[#F19830] rounded">
+                  <div className="relative w-full aspect-square border-[3px] border-[#F19830] rounded">
                     <img
                       className="w-full aspect-square object-cover object-bottom"
                       src={userIcon.image}
