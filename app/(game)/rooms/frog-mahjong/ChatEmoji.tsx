@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 
@@ -45,14 +46,15 @@ const ChatEmoji = () => {
   return (
     <Swiper
       className="w-full h-full flex"
-      spaceBetween={50}
-      slidesPerView="auto"
+      modules={[Navigation]}
+      spaceBetween={0}
+      slidesPerView={5}
       style={{
         padding: 4,
       }}
     >
       {emojis.map((e) => (
-        <SwiperSlide key={e}>
+        <SwiperSlide key={e} className="w-fit">
           <div className="flex justify-center items-center bg-green-400 rounded-full h-full aspect-square">
             {e}
           </div>
