@@ -155,6 +155,17 @@ export interface DiscardRequest {
   message: string;
 }
 
+export interface ItemChangeBody {
+  itemID: number;
+}
+
+export interface ItemChangeRequest {
+  userID: number;
+  roomID: number;
+  event: "ITEM_CHANGE";
+  message: string;
+}
+
 export interface DiscardBody {
   cardID: number;
   playTurn: number;
@@ -222,7 +233,13 @@ export interface UserSocket {
   turnNumber: number;
   profileID: number;
   missionSuccessCount: number;
+  items: Item[];
 }
+
+export type Item = {
+  itemID: number;
+  remainingUses: number;
+};
 
 export type UserCard = {
   cardID: number;

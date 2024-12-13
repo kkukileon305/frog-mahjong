@@ -93,6 +93,9 @@ interface GameStore {
   isHelpModalOpen: boolean;
   setIsHelpModalOpen: (isHelpModalOpen: boolean) => void;
 
+  isUseItem: boolean;
+  setIsUseItem: (isUseItem: boolean) => void;
+
   clear: () => void;
 }
 
@@ -192,6 +195,9 @@ const useFrogMahjongStore = create(
     isHelpModalOpen: false,
     setIsHelpModalOpen: (isHelpModalOpen) => set({ isHelpModalOpen }),
 
+    isUseItem: false,
+    setIsUseItem: (isUseItem: boolean) => set({ isUseItem }),
+
     clear: () =>
       set({
         ws: null,
@@ -214,6 +220,7 @@ const useFrogMahjongStore = create(
         isTimeOut: false,
         allMissions: [],
         isHelpModalOpen: false,
+        isUseItem: false,
       }),
   }))
 );

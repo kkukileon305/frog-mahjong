@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import {
   ImportSingleCardBody,
   ImportSingleCardRequest,
+  ItemChangeBody,
+  ItemChangeRequest,
   UserSocket,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import { getCookie } from "cookies-next";
@@ -44,6 +46,8 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   );
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
+
+  const currentUserItems = currentUser.items;
   const currentUserCards = currentUser.cards?.map(
     (uc) => gameStore.cards.find((c) => c.id === uc.cardID)!
   );
@@ -137,6 +141,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       isPickable: false,
       card,
     });
+    gameStore.setIsUseItem(true);
     gameStore.ws?.send(JSON.stringify(request));
   };
 
@@ -162,7 +167,24 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       isPickable: false,
       card,
     });
+    gameStore.setIsUseItem(true);
     gameStore.ws?.send(JSON.stringify(request));
+  };
+
+  const useFirstItem = () => {
+    const body: ItemChangeBody = {
+      itemID: 1,
+    };
+
+    const req: ItemChangeRequest = {
+      userID: Number(userID),
+      event: "ITEM_CHANGE",
+      message: JSON.stringify(body),
+      roomID,
+    };
+
+    gameStore.ws?.send(JSON.stringify(req));
+    gameStore.setIsUseItem(true);
   };
 
   // timer === 0 and not inGame
@@ -345,16 +367,21 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   </div>
 
                   <div className="h-full flex flex-col items-center justify-center">
-                    <div
-                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] flex justify-center items-center text-white font-bold text-3xl`}
+                    <button
+                      onClick={useFirstItem}
+                      disabled={
+                        gameStore.isUseItem ||
+                        currentUserItems[0].remainingUses === 0
+                      }
+                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl`}
                     >
                       ON
-                    </div>
+                    </button>
 
                     <div className="mt-2 flex flex-col items-center">
                       <p className="font-bold text-sm">{m("change")}</p>
                       <p className="font-bold text-sm">
-                        {leftCards.length}/{gameStore.cards.length}
+                        {currentUserItems[0].remainingUses}/3
                       </p>
                     </div>
                   </div>
