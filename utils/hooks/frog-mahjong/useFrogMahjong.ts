@@ -154,6 +154,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // 비정상 종료
         store.setIsAbnormalExit(true);
+        audios?.bg.pause();
+        audios && (audios.bg.currentTime = 0);
         return;
       }
 
