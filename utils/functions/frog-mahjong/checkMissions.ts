@@ -55,6 +55,8 @@ export const bodyParts = [
   "눈",
 ];
 
+export const nestParts = ["ground", "cavity", "bowl", "platform"];
+
 // 144개의 카드들 중 현재 미션에 부합하는 카드 id들을 return함, 단순 표시용
 // mission to id[]
 
@@ -116,18 +118,18 @@ export function getSuccessCardIds(
           case 10:
             // 10	부리 방향이 왼쪽인 새	beak_direction == left
             return card.beakDirection === "left";
-          case 11:
-            // 11	둥지가 접시형인 새	nest == bowl
-            return card.nest === "bowl";
           case 12:
-            // 12	둥지가 구멍형인 새	nest == cavity
-            return card.nest === "cavity";
+            // 12	둥지가 그릇 둥지인 새	nest == bowl
+            return card.nest === "bowl";
           case 13:
-            // 13	둥지가 지면형인 새	nest == ground
-            return card.nest === "ground";
-          case 14:
-            // 14	둥지가 플랫폼인 새	nest == platform
+            // 12	둥지가 평평형인 새	nest == platform
             return card.nest === "platform";
+          case 14:
+            // 13	둥지가 구멍형인 새	nest == cavity
+            return card.nest === "cavity";
+          case 15:
+            // 14	둥지가 지면위 새	nest == ground
+            return card.nest === "ground";
           default:
             return false;
         }
@@ -196,18 +198,18 @@ function getSuccessMissionIDs(
           case 10:
             // 10	부리 방향이 왼쪽인 새	beak_direction == left
             return card.beakDirection === "left";
-          case 11:
-            // 11	둥지가 접시형인 새	nest == bowl
-            return card.nest === "bowl";
           case 12:
-            // 12	둥지가 구멍형인 새	nest == cavity
-            return card.nest === "cavity";
+            // 12	둥지가 그릇 둥지인 새	nest == bowl
+            return card.nest === "bowl";
           case 13:
-            // 13	둥지가 지면형인 새	nest == ground
-            return card.nest === "ground";
-          case 14:
-            // 14	둥지가 플랫폼인 새	nest == platform
+            // 12	둥지가 평평형인 새	nest == platform
             return card.nest === "platform";
+          case 14:
+            // 13	둥지가 구멍형인 새	nest == cavity
+            return card.nest === "cavity";
+          case 15:
+            // 14	둥지가 지면위 새	nest == ground
+            return card.nest === "ground";
           default:
             return false;
         }
