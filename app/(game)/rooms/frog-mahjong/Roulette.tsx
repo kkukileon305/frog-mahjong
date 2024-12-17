@@ -48,6 +48,11 @@ const Roulette = () => {
       if (gameStore.allMissions.length === 0) return;
 
       slidingContainer.current &&
+        (slidingContainer.current.style.transform = `translateY(0%)`);
+
+      await delay(10);
+
+      slidingContainer.current &&
         (slidingContainer.current.style.transform = `translateY(-${titleIndexes[0]}00%)`);
       await delay(1000);
       setStep(1);
@@ -97,28 +102,38 @@ const Roulette = () => {
               className="h-full transition-transform duration-1000"
               style={{ transform: "translateY(0%)" }}
             >
-              {lieTitles.map((title, index) => (
+              {lieTitles.map((mission, index) => (
                 <div
                   key={index}
-                  className="w-full text-center h-full flex items-center justify-center"
+                  className="w-full text-center h-full flex items-center justify-center gap-2"
                 >
-                  {title.title}
+                  <p>{mission.title}</p>
+
+                  {mission.image && (
+                    <img src={mission.image} alt="" className="w-8 h-8" />
+                  )}
                 </div>
               ))}
             </div>
           </div>
 
-          {titles.map((title, idx) => (
-            <p
-              key={title.id}
+          {titles.map((mission, idx) => (
+            <div
+              key={mission.id}
               className="w-[80%] text-nowrap overflow-hidden text-center absolute left-1/2 -translate-x-1/2"
               style={{
-                bottom: `calc(${2 - idx}8%)`,
+                bottom: `calc(${2 - idx}7.5%)`,
                 display: idx < step ? "block" : "none",
               }}
             >
-              {title.title}
-            </p>
+              <div className="flex items-center justify-center gap-2">
+                <p>{mission.title}</p>
+
+                {mission.image && (
+                  <img src={mission.image} alt="" className="w-8 h-8" />
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </div>

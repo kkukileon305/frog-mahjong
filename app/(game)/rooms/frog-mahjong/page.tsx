@@ -9,7 +9,12 @@ import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import Game from "@/app/(game)/rooms/frog-mahjong/Game";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
-import axiosInstance, { BirdCard, ImportCardBody } from "@/utils/axios";
+import axiosInstance, {
+  BirdCard,
+  ImportCardBody,
+  Mission,
+  MissionResponse,
+} from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
 import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
@@ -17,7 +22,7 @@ import Roulette from "@/app/(game)/rooms/frog-mahjong/Roulette";
 
 const Page = () => {
   useDetectNavigation();
-  useTimer();
+  // useTimer();
 
   const isHelpModalOpen = useFrogMahjongStore((s) => s.isHelpModalOpen);
 
@@ -73,7 +78,6 @@ const Page = () => {
           )
         );
 
-        setIsLoaded(true);
         gameStore.setCards(cards);
       } catch (e) {
         console.log(e);
@@ -83,7 +87,44 @@ const Page = () => {
       }
     };
 
-    getCards();
+    const getMissions = async () => {
+      try {
+        const { data } = await axiosInstance.get<MissionResponse>(
+          "/v2.1/game/missions"
+        );
+
+        await Promise.all(
+          data.missions.map(
+            (mission) =>
+              new Promise<Mission>((res, rej) => {
+                if (!mission.image) return res(mission);
+
+                const img = new Image();
+
+                img.src = mission.image;
+                img.onload = () => {
+                  res(mission);
+                };
+                img.onerror = () => {
+                  rej(new Error(`Failed to load image ${mission.image}`));
+                };
+              })
+          )
+        );
+
+        gameStore.setAllMissions(data.missions);
+      } catch (e) {
+        console.log(e);
+        router.push("/rooms");
+        gameStore.clear();
+      }
+    };
+
+    (async () => {
+      await getCards();
+      await getMissions();
+      setIsLoaded(true);
+    })();
   }, []);
 
   if (!gameStore.gameState?.gameInfo) {

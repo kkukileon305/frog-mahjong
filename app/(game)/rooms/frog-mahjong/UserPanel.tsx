@@ -122,12 +122,11 @@ const UserPanel = ({ user }: UserPanelProps) => {
                       className="absolute bottom-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg flex cursor-default "
                     >
                       <div
-                        className="bg-white lg:w-[240px] rounded -translate-x-2 text-black p-1"
+                        className="bg-white w-8 h-8 rounded -translate-x-2 text-black p-1 flex justify-center items-center"
                         onClick={(e) => e.preventDefault()}
                       >
                         {targetUserChat.message}
                       </div>
-                      <div className="w-0 h-0 border-l-[10px] border-l-transparent border-t-[15px] border-t-white border-r-[10px] border-r-transparent" />
                     </motion.div>
                   )}
                 </AnimatePresence>

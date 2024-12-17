@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
-import axiosInstance, { MissionResponse } from "@/utils/axios";
+import axiosInstance, {
+  BirdCard,
+  Mission,
+  MissionResponse,
+} from "@/utils/axios";
 import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
 import delay from "@/utils/functions/delay";
 import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
@@ -32,22 +36,6 @@ const MissionPanel = () => {
   useEffect(() => {
     if (!currentUser || gameStore.isGameEnd) return;
     gameStore.setIsRouletteLoading(true);
-
-    const getMissions = async () => {
-      try {
-        const { data } = await axiosInstance.get<MissionResponse>(
-          "/v2.1/game/missions"
-        );
-
-        gameStore.setAllMissions(data.missions);
-      } catch (e) {
-        console.log(e);
-        router.push("/rooms");
-        gameStore.clear();
-      }
-    };
-
-    getMissions();
   }, []);
 
   // 남은 카드들중 미션에 부합하는거 표시
@@ -103,9 +91,13 @@ const MissionPanel = () => {
                   gameStore.clearMissionIDs.includes(m.id) && "line-through"
                 }`}
               >
-                <p>
-                  {index + 1}. {m.title}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p>
+                    {index + 1}. {m.title}
+                  </p>
+
+                  {m.image && <img src={m.image} alt="" className="w-4 h-4" />}
+                </div>
                 <p>{nokoriPassCards[index].length}</p>
               </div>
             ))}
