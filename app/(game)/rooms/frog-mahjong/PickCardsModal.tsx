@@ -215,10 +215,10 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   if (inGame) {
     return (
-      <div className="h-full py-4 px-12 bg-white/50 rounded-xl overflow-hidden">
-        <p className="font-bold text-2xl text-center mb-2">{m("preview")}</p>
+      <div className="h-full py-2 px-4 bg-white/50 rounded-xl overflow-hidden">
+        <p className="font-bold text-center mb-2">{m("preview")}</p>
 
-        <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden">
+        <div className="w-full h-[calc(100%-32px)] flex gap-2 overflow-hidden">
           <div className="w-[calc(100%-48px)] flex gap-2">
             {openCards?.map((card) => (
               <img
@@ -230,7 +230,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             ))}
           </div>
           <div
-            className={`aspect-[205/235] relative ${
+            className={`aspect-[205/235] p-2 relative ${
               gameStore.timer > 5 && "grayscale"
             }`}
           >
@@ -275,9 +275,15 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         "line-through"
                       }`}
                     >
-                      <p>
-                        {index + 1}. {m.title}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p>
+                          {index + 1}. {m.title}
+                        </p>
+
+                        {m.image && (
+                          <img src={m.image} alt="" className="w-4 h-4" />
+                        )}
+                      </div>
                       <p>{nokoriPassCards[index].length}</p>
                     </div>
                   ))}
@@ -360,7 +366,13 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                     </div>
                     <div className="mt-2 flex flex-col items-center">
                       <p className="font-bold text-sm">{m("selectRandom")}</p>
-                      <p className="font-bold text-sm">
+                      <p
+                        className="font-bold text-xl"
+                        style={{
+                          WebkitTextStroke: "1px #7F674D",
+                          color: "white",
+                        }}
+                      >
                         {leftCards.length}/{gameStore.cards.length}
                       </p>
                     </div>
@@ -380,7 +392,13 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
                     <div className="mt-2 flex flex-col items-center">
                       <p className="font-bold text-sm">{m("change")}</p>
-                      <p className="font-bold text-sm">
+                      <p
+                        className="font-bold text-xl"
+                        style={{
+                          WebkitTextStroke: "1px #7F674D",
+                          color: "white",
+                        }}
+                      >
                         {currentUserItems[0].remainingUses}/3
                       </p>
                     </div>
