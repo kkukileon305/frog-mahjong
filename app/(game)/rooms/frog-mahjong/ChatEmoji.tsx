@@ -9,12 +9,7 @@ import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 
-type Inputs = {
-  message: string;
-};
-
 const ChatEmoji = () => {
-  const m = useTranslations("ChatForm");
   const { gameState, roomID, ws } = useFrogMahjongStore((s) => ({
     gameState: s.gameState,
     roomID: s.gameState?.gameInfo?.roomID,
@@ -26,22 +21,19 @@ const ChatEmoji = () => {
     (user) => user.id === Number(userID)
   );
 
-  const { register, reset, handleSubmit } = useForm<Inputs>();
+  const emojis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-  const onSubmit: SubmitHandler<Inputs> = (inputs) => {
+  const sendEmoji = (e: string) => {
     const request = {
       userID: currentUser?.id!,
       roomID: Number(roomID),
       event: "CHAT",
-      message: inputs.message,
+      message: e,
       name: currentUser?.name,
     };
 
     ws?.send(JSON.stringify(request));
-    reset();
   };
-
-  const emojis = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
     <Swiper
@@ -55,9 +47,12 @@ const ChatEmoji = () => {
     >
       {emojis.map((e) => (
         <SwiperSlide key={e} className="w-fit">
-          <div className="flex justify-center items-center bg-green-400 rounded-full h-full aspect-square">
+          <button
+            onClick={() => sendEmoji(e)}
+            className="flex justify-center items-center bg-green-400 rounded-full h-full aspect-square"
+          >
             {e}
-          </div>
+          </button>
         </SwiperSlide>
       ))}
     </Swiper>
