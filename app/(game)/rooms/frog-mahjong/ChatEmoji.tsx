@@ -1,7 +1,5 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { Swiper, SwiperSlide } from "swiper/react";
