@@ -26,9 +26,6 @@ const Page = () => {
 
   const isHelpModalOpen = useFrogMahjongStore((s) => s.isHelpModalOpen);
 
-  // 새로운 카드 에셋 로드 boolean
-  const [isLoaded, setIsLoaded] = useState(false);
-
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
@@ -45,86 +42,6 @@ const Page = () => {
 
       return;
     }
-
-    // 카드 순서 불러와서 저장
-    const getCards = async () => {
-      const roomID = gameStore.gameState?.gameInfo?.roomID;
-
-      if (!roomID) return;
-
-      try {
-        const {
-          data: { cards },
-        } = await axiosInstance.get<ImportCardBody>("/v2.1/game/cards", {
-          headers: {
-            tkn: accessToken,
-          },
-        });
-
-        await Promise.all(
-          cards.map(
-            (card) =>
-              new Promise<BirdCard>((res, rej) => {
-                const img = new Image();
-
-                img.src = card.image;
-                img.onload = () => {
-                  res(card);
-                };
-                img.onerror = () => {
-                  rej(new Error(`Failed to load image ${card.image}`));
-                };
-              })
-          )
-        );
-
-        gameStore.setCards(cards);
-      } catch (e) {
-        console.log(e);
-        router.push("/rooms");
-        gameStore.ws?.close();
-        gameStore.clear();
-      }
-    };
-
-    const getMissions = async () => {
-      try {
-        const { data } = await axiosInstance.get<MissionResponse>(
-          "/v2.1/game/missions"
-        );
-
-        await Promise.all(
-          data.missions.map(
-            (mission) =>
-              new Promise<Mission>((res, rej) => {
-                if (!mission.image) return res(mission);
-
-                const img = new Image();
-
-                img.src = mission.image;
-                img.onload = () => {
-                  res(mission);
-                };
-                img.onerror = () => {
-                  rej(new Error(`Failed to load image ${mission.image}`));
-                };
-              })
-          )
-        );
-
-        gameStore.setAllMissions(data.missions);
-      } catch (e) {
-        console.log(e);
-        router.push("/rooms");
-        gameStore.clear();
-      }
-    };
-
-    (async () => {
-      await getCards();
-      await getMissions();
-      setIsLoaded(true);
-    })();
   }, []);
 
   if (!gameStore.gameState?.gameInfo) {
@@ -158,13 +75,7 @@ const Page = () => {
         {/* roulette */}
         {gameStore.isRouletteLoading && <Roulette />}
 
-        {!isLoaded && (
-          <div className="h-full flex justify-center items-center">
-            <p>카드 정보 불러오는중</p>
-          </div>
-        )}
-
-        {isLoaded && <Game />}
+        <Game />
       </div>
     </div>
   );

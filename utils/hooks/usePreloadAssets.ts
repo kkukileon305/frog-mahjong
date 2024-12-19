@@ -29,7 +29,7 @@ import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
-import axiosInstance from "@/utils/axios";
+import axiosInstance, {BirdCard, ImportCardBody, Mission, MissionResponse} from "@/utils/axios";
 import useProfileIconStore, {
   ProfileIcon,
 } from "@/utils/stores/useProfileIconStore";
@@ -37,6 +37,8 @@ import useMessagingStore from "@/utils/stores/useMessagingStore";
 import { isSupported } from "@firebase/messaging";
 import { getMessaging } from "firebase/messaging";
 import { app } from "@/utils/firebaseConfig";
+import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import {getCookie} from "cookies-next";
 
 type AssetType = {
   url: string;
@@ -103,20 +105,69 @@ const usePreloadAssets = () => {
     type: "audio",
   }));
 
+  const gameStore = useFrogMahjongStore();
+
+  const userID = getCookie("userID") as string;
+  const accessToken = getCookie("accessToken") as string;
+
+  const getMissions = async () => {
+    try {
+      const { data } = await axiosInstance.get<MissionResponse>(
+        "/v2.1/game/missions"
+      );
+
+      gameStore.setAllMissions(data.missions);
+      return data.missions.filter(mission => mission.image)
+    } catch (e) {
+      console.log(e);
+
+      return []
+    }
+  };
+
+  const getCards = async () => {
+    try {
+      const {
+        data: { cards },
+      } = await axiosInstance.get<ImportCardBody>("/v2.1/game/cards", {
+        headers: {
+          tkn: accessToken,
+        },
+      });
+
+
+      gameStore.setCards(cards);
+      return cards
+    } catch (e) {
+      console.log(e);
+      return []
+    }
+  };
+
   const getAssets = async () => {
     try {
       const { data } = await axiosInstance.get<{ profiles: ProfileIcon[] }>(
         "/v0.1/profiles"
       );
 
-      setProfileIcon(data.profiles);
+      setProfileIcon(data.profiles)
+
+      const missionAssets: AssetType[]  = (await getMissions()).map((mission) => ({
+        url: mission.image,
+        type: "image",
+      }));
+
+      const cardAssets: AssetType[]  = (await getCards()).map((card) => ({
+        url: card.image,
+        type: "image",
+      }));
 
       const iconAsset: AssetType[] = data.profiles.map((pf) => ({
         url: pf.image,
         type: "profile",
       }));
 
-      const allAssets = [...imageAssets, ...iconAsset, ...audioAssets];
+      const allAssets = [...imageAssets, ...iconAsset, ...audioAssets, ...missionAssets, ...cardAssets];
 
       setAssetLength(allAssets.length);
       return allAssets;
