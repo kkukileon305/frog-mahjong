@@ -12,6 +12,7 @@ import ReportModal from "@/app/(game)/rooms/frog-mahjong/ReportModal";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import RedOne from "@/public/cards/red_one.png";
+import getEmojiFromName from "@/utils/functions/getEmojiFromName";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -116,8 +117,9 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 <AnimatePresence>
                   {targetUserChat?.valid && (
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 100 }}
+                      key={targetUserChat.message}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 100, y: 0 }}
                       exit={{ opacity: 0 }}
                       className="absolute bottom-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg flex cursor-default "
                     >
@@ -125,31 +127,14 @@ const UserPanel = ({ user }: UserPanelProps) => {
                         className="bg-white w-8 h-8 rounded -translate-x-2 text-black p-1 flex justify-center items-center"
                         onClick={(e) => e.preventDefault()}
                       >
-                        {targetUserChat.message}
+                        <img
+                          src={getEmojiFromName(targetUserChat.message)?.src}
+                          alt={targetUserChat.message}
+                        />
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                {/* 드롭다운 유저 메뉴 */}
-                {/*<div className="absolute top-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg invisible group-focus:visible flex cursor-default opacity-0 group-focus:opacity-100 duration-100">*/}
-                {/*  <div className="w-0 h-0 border-l-[10px] border-l-transparent border-b-[15px] border-b-white border-r-[10px] border-r-transparent" />*/}
-                {/*  <div*/}
-                {/*    className="bg-white w-[120px] lg:w-[240px] rounded -translate-x-2 text-black"*/}
-                {/*    onClick={(e) => e.preventDefault()}*/}
-                {/*  >*/}
-                {/*    <div className="text-xs lg:text-base p-2 border-b">*/}
-                {/*      <p className="font-bold">{user.name}</p>*/}
-                {/*      <span className="">{user.email}</span>*/}
-                {/*    </div>*/}
-                {/*    <div*/}
-                {/*      onClick={() => setReportModalOpen(true)}*/}
-                {/*      className="text-xs lg:text-base cursor-pointer p-2 font-bold text-red-500 hover:bg-gray-400"*/}
-                {/*    >*/}
-                {/*      <p>{m("report")}</p>*/}
-                {/*    </div>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
               </div>
 
               <div className="px-4 text-black font-bold w-full">
