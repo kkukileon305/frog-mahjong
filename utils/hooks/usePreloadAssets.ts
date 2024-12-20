@@ -1,5 +1,6 @@
 "use client";
 
+import AudioAssets from "@/public/audios/audio_assets.mp3";
 import EmojiAngry from "@/public/emojis/angry.png";
 import EmojiHeart from "@/public/emojis/heart.png";
 import EmojiNormal from "@/public/emojis/normal.png";
@@ -46,6 +47,7 @@ import { getMessaging } from "firebase/messaging";
 import { app } from "@/utils/firebaseConfig";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { getCookie } from "cookies-next";
+import useAudioStore from "@/utils/stores/useAudioStore";
 
 type AssetType = {
   url: string;
@@ -70,6 +72,8 @@ const usePreloadAssets = () => {
   const messagingStore = useMessagingStore();
 
   const { setAudios, setVolume } = useSoundStore();
+  const { setAudio } = useAudioStore();
+
   const { setProfileIcon } = useProfileIconStore();
 
   // static image assets
@@ -97,28 +101,11 @@ const usePreloadAssets = () => {
   }));
 
   // static audio assets
-  const audioAssets: AssetType[] = Object.entries({
-    commonAllReadyAudio: commonAllReadySrc,
-    commonLoanAudio: commonLoanSrc,
-    commonLoanFailedAudio: commonLoanFailedSrc,
-    commonStartAudio: commonStartSrc,
-    cardChapAudio: cardChapWavSrc,
-    cardMovieAudio: cardMoveSrc,
-    commonDrawAudio: commonDrawSrc,
-    winAudio: winAudioSrc,
-    failAudio: failAudioSrc,
-    myTurnAudio: myTurnSrc,
-    timeoutAudio: timeoutSrc,
-    missionSuccess: missionSuccessSrc,
-    missionFailed: missionFailedSrc,
-    bg: bgSrc,
-    cardSelect: cardSelectSrc,
-    cardDiscard: cardDiscardSrc,
-  }).map(([assetName, audioUrl]) => ({
-    url: audioUrl,
-    assetName,
+  const audioAsset: AssetType = {
+    url: AudioAssets,
+    assetName: "audio assets",
     type: "audio",
-  }));
+  };
 
   const gameStore = useFrogMahjongStore();
 
@@ -184,9 +171,9 @@ const usePreloadAssets = () => {
       }));
 
       const allAssets = [
+        audioAsset,
         ...imageAssets,
         ...iconAsset,
-        ...audioAssets,
         ...missionAssets,
         ...cardAssets,
       ];
@@ -240,16 +227,11 @@ const usePreloadAssets = () => {
         })
       )
         .then((assets) => {
-          const audioAssets = assets.filter((asset) => asset.type === "audio");
+          const audioAsset = assets.filter(
+            (asset) => asset.type === "audio"
+          )[0];
 
-          const audioObject = audioAssets.reduce((acc, asset) => {
-            if (asset.assetName && asset.type === "audio") {
-              acc[asset.assetName] = new Audio(asset.url);
-            }
-            return acc;
-          }, {} as Record<string, HTMLAudioElement>) as GameAudios;
-
-          setAudios(audioObject);
+          setAudio(new Audio(audioAsset.url));
           setVolume(parseFloat(localStorage.getItem("volume") || "0.2"));
 
           if (process.env.NODE_ENV === "development") {
