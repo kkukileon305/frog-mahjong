@@ -101,11 +101,28 @@ const usePreloadAssets = () => {
   }));
 
   // static audio assets
-  const audioAsset: AssetType = {
-    url: AudioAssets,
-    assetName: "audio assets",
+  const audioAssets: AssetType[] = Object.entries({
+    commonAllReadyAudio: commonAllReadySrc,
+    commonLoanAudio: commonLoanSrc,
+    commonLoanFailedAudio: commonLoanFailedSrc,
+    commonStartAudio: commonStartSrc,
+    cardChapAudio: cardChapWavSrc,
+    cardMovieAudio: cardMoveSrc,
+    commonDrawAudio: commonDrawSrc,
+    winAudio: winAudioSrc,
+    failAudio: failAudioSrc,
+    myTurnAudio: myTurnSrc,
+    timeoutAudio: timeoutSrc,
+    missionSuccess: missionSuccessSrc,
+    missionFailed: missionFailedSrc,
+    bg: bgSrc,
+    cardSelect: cardSelectSrc,
+    cardDiscard: cardDiscardSrc,
+  }).map(([assetName, audioUrl]) => ({
+    url: audioUrl,
+    assetName,
     type: "audio",
-  };
+  }));
 
   const gameStore = useFrogMahjongStore();
 
@@ -171,7 +188,7 @@ const usePreloadAssets = () => {
       }));
 
       const allAssets = [
-        audioAsset,
+        ...audioAssets,
         ...imageAssets,
         ...iconAsset,
         ...missionAssets,
@@ -227,11 +244,16 @@ const usePreloadAssets = () => {
         })
       )
         .then((assets) => {
-          const audioAsset = assets.filter(
-            (asset) => asset.type === "audio"
-          )[0];
+          const audioAssets = assets.filter((asset) => asset.type === "audio");
 
-          setAudio(new Audio(audioAsset.url));
+          const audioObject = audioAssets.reduce((acc, asset) => {
+            if (asset.assetName && asset.type === "audio") {
+              acc[asset.assetName] = new Audio(asset.url);
+            }
+            return acc;
+          }, {} as Record<string, HTMLAudioElement>) as GameAudios;
+
+          setAudios(audioObject);
           setVolume(parseFloat(localStorage.getItem("volume") || "0.2"));
 
           if (process.env.NODE_ENV === "development") {

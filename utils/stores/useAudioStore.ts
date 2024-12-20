@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import AudioAssets from "@/public/audios/audio_assets.mp3";
 
 interface Clip {
