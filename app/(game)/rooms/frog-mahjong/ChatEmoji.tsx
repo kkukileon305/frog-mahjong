@@ -6,6 +6,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
 import "swiper/css";
+import { StaticImageData } from "next/image";
+import getEmojiFromName, {
+  emojiNames,
+} from "@/utils/functions/getEmojiFromName";
+
+type Emoji = {
+  name: string;
+  image: StaticImageData;
+};
 
 const ChatEmoji = () => {
   const { gameState, roomID, ws } = useFrogMahjongStore((s) => ({
@@ -18,8 +27,6 @@ const ChatEmoji = () => {
   const currentUser = gameState?.users?.find(
     (user) => user.id === Number(userID)
   );
-
-  const emojis = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
   const sendEmoji = (e: string) => {
     const request = {
@@ -38,18 +45,18 @@ const ChatEmoji = () => {
       className="w-full h-full flex"
       modules={[Navigation]}
       spaceBetween={0}
-      slidesPerView={5}
+      slidesPerView={5.3}
       style={{
         padding: 4,
       }}
     >
-      {emojis.map((e) => (
+      {emojiNames.map((e) => (
         <SwiperSlide key={e} className="w-fit">
           <button
             onClick={() => sendEmoji(e)}
-            className="flex justify-center items-center bg-green-400 rounded-full h-full aspect-square"
+            className="flex justify-center items-center rounded-full w-8 h-full aspect-square"
           >
-            {e}
+            <img src={getEmojiFromName(e)?.src} alt="" />
           </button>
         </SwiperSlide>
       ))}

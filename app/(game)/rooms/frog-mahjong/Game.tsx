@@ -25,7 +25,7 @@ const Game = () => {
           <MissionPanel />
         </div>
 
-        <div className="flex h-[calc(100%-128px)] flex-col">
+        <div className="flex h-[calc(100%-108px)] flex-col">
           <div className="h-[calc(30%)] relative flex justify-center items-center p-2">
             <PickCardsModal inGame />
           </div>

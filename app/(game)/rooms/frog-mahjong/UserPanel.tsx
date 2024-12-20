@@ -12,6 +12,7 @@ import ReportModal from "@/app/(game)/rooms/frog-mahjong/ReportModal";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import RedOne from "@/public/cards/red_one.png";
+import getEmojiFromName from "@/utils/functions/getEmojiFromName";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -116,8 +117,9 @@ const UserPanel = ({ user }: UserPanelProps) => {
                 <AnimatePresence>
                   {targetUserChat?.valid && (
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 100 }}
+                      key={targetUserChat.message}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 100, y: 0 }}
                       exit={{ opacity: 0 }}
                       className="absolute bottom-[calc(100%+4px)] left-[calc(50%-10px)] flex-col drop-shadow-lg flex cursor-default "
                     >
@@ -125,7 +127,10 @@ const UserPanel = ({ user }: UserPanelProps) => {
                         className="bg-white w-8 h-8 rounded -translate-x-2 text-black p-1 flex justify-center items-center"
                         onClick={(e) => e.preventDefault()}
                       >
-                        {targetUserChat.message}
+                        <img
+                          src={getEmojiFromName(targetUserChat.message)?.src}
+                          alt={targetUserChat.message}
+                        />
                       </div>
                     </motion.div>
                   )}

@@ -131,7 +131,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
         setTimeout(() => {
           store.filterChat(chatBody);
-        }, 5000);
+        }, 2000);
         return;
       }
 

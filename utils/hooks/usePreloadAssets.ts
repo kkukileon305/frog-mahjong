@@ -36,7 +36,7 @@ import cardDiscardSrc from "@/public/audios/card_discard.mp3";
 
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
-import axiosInstance, { ImportCardBody, MissionResponse} from "@/utils/axios";
+import axiosInstance, { ImportCardBody, MissionResponse } from "@/utils/axios";
 import useProfileIconStore, {
   ProfileIcon,
 } from "@/utils/stores/useProfileIconStore";
@@ -45,7 +45,7 @@ import { isSupported } from "@firebase/messaging";
 import { getMessaging } from "firebase/messaging";
 import { app } from "@/utils/firebaseConfig";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import {getCookie} from "cookies-next";
+import { getCookie } from "cookies-next";
 
 type AssetType = {
   url: string;
@@ -90,7 +90,7 @@ const usePreloadAssets = () => {
     EmojiNormal,
     EmojiSad,
     EmojiSleep,
-    EmojiSmile
+    EmojiSmile,
   ].map((image) => ({
     url: image.src,
     type: "image",
@@ -132,11 +132,11 @@ const usePreloadAssets = () => {
       );
 
       gameStore.setAllMissions(data.missions);
-      return data.missions.filter(mission => mission.image)
+      return data.missions.filter((mission) => mission.image);
     } catch (e) {
       console.log(e);
 
-      return []
+      return [];
     }
   };
 
@@ -150,12 +150,11 @@ const usePreloadAssets = () => {
         },
       });
 
-
       gameStore.setCards(cards);
-      return cards
+      return cards;
     } catch (e) {
       console.log(e);
-      return []
+      return [];
     }
   };
 
@@ -165,14 +164,16 @@ const usePreloadAssets = () => {
         "/v0.1/profiles"
       );
 
-      setProfileIcon(data.profiles)
+      setProfileIcon(data.profiles);
 
-      const missionAssets: AssetType[]  = (await getMissions()).map((mission) => ({
-        url: mission.image,
-        type: "image",
-      }));
+      const missionAssets: AssetType[] = (await getMissions()).map(
+        (mission) => ({
+          url: mission.image,
+          type: "image",
+        })
+      );
 
-      const cardAssets: AssetType[]  = (await getCards()).map((card) => ({
+      const cardAssets: AssetType[] = (await getCards()).map((card) => ({
         url: card.image,
         type: "image",
       }));
@@ -182,7 +183,13 @@ const usePreloadAssets = () => {
         type: "profile",
       }));
 
-      const allAssets = [...imageAssets, ...iconAsset, ...audioAssets, ...missionAssets, ...cardAssets];
+      const allAssets = [
+        ...imageAssets,
+        ...iconAsset,
+        ...audioAssets,
+        ...missionAssets,
+        ...cardAssets,
+      ];
 
       setAssetLength(allAssets.length);
       return allAssets;

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Dispatch,
-  MouseEventHandler,
-  ReactNode,
-  SetStateAction,
-} from "react";
+import { Dispatch, MouseEventHandler, ReactNode, SetStateAction } from "react";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 
 type ModalContainerProps = {
