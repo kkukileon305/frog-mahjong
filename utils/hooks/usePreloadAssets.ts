@@ -1,5 +1,11 @@
 "use client";
 
+import EmojiAngry from "@/public/emojis/angry.png";
+import EmojiHeart from "@/public/emojis/heart.png";
+import EmojiNormal from "@/public/emojis/normal.png";
+import EmojiSad from "@/public/emojis/sad.png";
+import EmojiSleep from "@/public/emojis/sleep.png";
+import EmojiSmile from "@/public/emojis/smile.png";
 import Timer from "@/public/icons/timer.png";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
@@ -27,9 +33,10 @@ import missionFailedSrc from "@/public/audios/mission_failed.mp3";
 import bgSrc from "@/public/audios/bg.mp3";
 import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
+
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
-import axiosInstance, {BirdCard, ImportCardBody, Mission, MissionResponse} from "@/utils/axios";
+import axiosInstance, { ImportCardBody, MissionResponse} from "@/utils/axios";
 import useProfileIconStore, {
   ProfileIcon,
 } from "@/utils/stores/useProfileIconStore";
@@ -65,6 +72,7 @@ const usePreloadAssets = () => {
   const { setAudios, setVolume } = useSoundStore();
   const { setProfileIcon } = useProfileIconStore();
 
+  // static image assets
   const imageAssets: AssetType[] = [
     coinIcon,
     frogPink,
@@ -77,11 +85,18 @@ const usePreloadAssets = () => {
     Roulette2,
     Roulette3,
     RouletteLoading,
+    EmojiAngry,
+    EmojiHeart,
+    EmojiNormal,
+    EmojiSad,
+    EmojiSleep,
+    EmojiSmile
   ].map((image) => ({
     url: image.src,
     type: "image",
   }));
 
+  // static audio assets
   const audioAssets: AssetType[] = Object.entries({
     commonAllReadyAudio: commonAllReadySrc,
     commonLoanAudio: commonLoanSrc,
