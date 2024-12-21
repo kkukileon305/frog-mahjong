@@ -82,6 +82,16 @@ export interface DORABody {
   playTurn: number;
 }
 
+export interface SocketResponse {
+  message: string;
+  event: string;
+  roomID: number;
+  userID: number;
+  chatID: number;
+  sessionID: string;
+  name: string;
+}
+
 export interface SocketResponseBody {
   users: UserSocket[] | null;
   gameInfo?: GameInfo;

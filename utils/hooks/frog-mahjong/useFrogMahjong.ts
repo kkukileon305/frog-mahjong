@@ -15,6 +15,7 @@ import {
   MatchRequest,
   PlayTogetherBody,
   PlayTogetherRequest,
+  SocketResponse,
   SocketResponseBody,
 } from "@/utils/constants/frog-mahjong/socketTypes";
 import {
@@ -121,7 +122,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
     store.ws.addEventListener("message", (event) => {
       const body = event.data;
-      const parsedBody = JSON.parse(body);
+      const parsedBody = JSON.parse(body) as SocketResponse;
       const eventName = parsedBody.event;
 
       if (eventName === CHAT) {
@@ -276,6 +277,11 @@ const useFrogMahjong = (mode: MatchingMode) => {
           router.push("/rooms/frog-mahjong");
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
+
+          // session을 localstorage에 저장
+          const sessionID = parsedBody.sessionID;
+
+          localStorage.setItem("sessionID", sessionID);
         }
       } else if (eventName === LOAN) {
         audios?.commonLoanAudio.play();
