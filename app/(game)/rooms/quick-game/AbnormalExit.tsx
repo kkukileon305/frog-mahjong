@@ -17,6 +17,9 @@ const AbnormalExit = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       router.push("/rooms");
+
+      localStorage.removeItem("sessionID");
+
       oldClear();
       clear();
     }, 3000);
@@ -30,6 +33,8 @@ const AbnormalExit = () => {
         <p className="font-bold text-3xl">{m("title")}</p>
         <Link
           onClick={() => {
+            localStorage.removeItem("sessionID");
+
             oldClear();
             clear();
           }}

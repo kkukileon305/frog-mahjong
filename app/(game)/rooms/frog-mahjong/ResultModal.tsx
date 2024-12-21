@@ -61,6 +61,9 @@ const ResultModal = ({
 
   const init = () => {
     clear();
+
+    localStorage.removeItem("sessionID");
+
     const quitReq: QUITRequest = {
       roomID: Number(gameState?.gameInfo?.roomID),
       event: QUIT_GAME,
