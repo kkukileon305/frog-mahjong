@@ -72,6 +72,8 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   }));
 
   useEffect(() => {
+    localStorage.setItem("matchMode", mode);
+
     if (mode === "ENTER") return;
 
     (async () => {

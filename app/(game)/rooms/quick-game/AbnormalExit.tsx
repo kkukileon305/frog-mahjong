@@ -34,6 +34,7 @@ const AbnormalExit = () => {
         <Link
           onClick={() => {
             localStorage.removeItem("sessionID");
+            localStorage.removeItem("matchMode");
 
             oldClear();
             clear();
