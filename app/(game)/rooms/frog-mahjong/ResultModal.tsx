@@ -29,7 +29,8 @@ const ResultModal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
 
-  const { clear, gameState, ws, allMissions, cards } = useFrogMahjongStore();
+  const { clear, gameState, ws, allMissions, cards, timerId } =
+    useFrogMahjongStore();
   const users = useRef(gameState?.users);
 
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
@@ -64,6 +65,7 @@ const ResultModal = ({
 
     localStorage.removeItem("sessionID");
     localStorage.removeItem("matchMode");
+    timerId && clearTimeout(timerId);
 
     const quitReq: QUITRequest = {
       roomID: Number(gameState?.gameInfo?.roomID),

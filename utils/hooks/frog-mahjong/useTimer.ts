@@ -18,8 +18,6 @@ const useTimer = () => {
     }, 1000);
 
     setTimerId(intervalId);
-
-    return () => clearInterval(intervalId);
   }, [fullTime]);
 };
 

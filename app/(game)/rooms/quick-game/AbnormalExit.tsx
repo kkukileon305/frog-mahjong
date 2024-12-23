@@ -10,8 +10,11 @@ import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore
 const AbnormalExit = () => {
   const m = useTranslations("AbnormalExit");
   const oldClear = useOldFrogMahjongStore((s) => s.clear);
-  const clear = useFrogMahjongStore((s) => s.clear);
-  const ws = useFrogMahjongStore((s) => s.ws);
+  const { clear, ws, timerId } = useFrogMahjongStore((s) => ({
+    clear: s.clear,
+    ws: s.ws,
+    timerId: s.timerId,
+  }));
 
   const router = useRouter();
 
@@ -30,6 +33,7 @@ const AbnormalExit = () => {
     oldClear();
     clear();
     ws?.close();
+    timerId && clearTimeout(timerId);
 
     return () => clearTimeout(timeout);
   }, []);
