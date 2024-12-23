@@ -88,6 +88,9 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     );
   }
 
+  const sessionID = localStorage.getItem("sessionID");
+  const prevMode = localStorage.getItem("matchMode");
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center bg-rooms bg-center bg-cover p-2">
       {isProfileModalOpen && (

@@ -96,6 +96,12 @@ interface GameStore {
   isUseItem: boolean;
   setIsUseItem: (isUseItem: boolean) => void;
 
+  sessionID: string | null;
+  setSessionID: (setIsUseItem: string) => void;
+
+  mode: string | null;
+  setMode: (mode: string) => void;
+
   clear: () => void;
 }
 
@@ -198,6 +204,12 @@ const useFrogMahjongStore = create(
     isUseItem: false,
     setIsUseItem: (isUseItem: boolean) => set({ isUseItem }),
 
+    sessionID: null,
+    setSessionID: (sessionID) => set({ sessionID }),
+
+    mode: null,
+    setMode: (mode) => set({ mode }),
+
     clear: () =>
       set({
         ws: null,
@@ -220,6 +232,8 @@ const useFrogMahjongStore = create(
         isTimeOut: false,
         isHelpModalOpen: false,
         isUseItem: false,
+        sessionID: null,
+        mode: null,
       }),
   }))
 );

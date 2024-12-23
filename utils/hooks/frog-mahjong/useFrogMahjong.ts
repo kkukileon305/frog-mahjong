@@ -273,10 +273,10 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
-        const sessionID = localStorage.getItem("sessionID");
+        const sessionID = useFrogMahjongStore.getState().sessionID;
 
         if (!sessionID) {
-          localStorage.setItem("sessionID", parsedBody.sessionID);
+          store.setSessionID(parsedBody.sessionID);
         }
 
         if (data.gameInfo?.isFull) {

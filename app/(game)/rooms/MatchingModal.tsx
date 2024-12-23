@@ -58,13 +58,13 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
     }));
 
   const frogMahjongConnect = useFrogMahjong(mode);
-  const { password, isMatching, isMatchingCompleted } = useFrogMahjongStore(
-    (s) => ({
+  const { password, isMatching, isMatchingCompleted, setMode } =
+    useFrogMahjongStore((s) => ({
       password: s.gameState?.gameInfo?.password,
       isMatching: s.isMatching,
       isMatchingCompleted: s.isMatchingCompleted,
-    })
-  );
+      setMode: s.setMode,
+    }));
 
   const { setPassword, gameType } = useMatchSettingStore((s) => ({
     setPassword: s.setPassword,
@@ -72,7 +72,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   }));
 
   useEffect(() => {
-    localStorage.setItem("matchMode", mode);
+    setMode("mode");
 
     if (mode === "ENTER") return;
 
