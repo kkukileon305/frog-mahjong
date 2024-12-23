@@ -273,15 +273,16 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        const sessionID = localStorage.getItem("sessionID");
+
+        if (!sessionID) {
+          localStorage.setItem("sessionID", parsedBody.sessionID);
+        }
+
         if (data.gameInfo?.isFull) {
           router.push("/rooms/frog-mahjong");
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
-
-          // session을 localstorage에 저장
-          const sessionID = parsedBody.sessionID;
-
-          localStorage.setItem("sessionID", sessionID);
         }
       } else if (eventName === LOAN) {
         audios?.commonLoanAudio.play();
