@@ -153,11 +153,16 @@ const useFrogMahjong = (mode: MatchingMode) => {
       store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
-        // 비정상 종료
-        store.setIsAbnormalExit(true);
-        audios?.bg.pause();
-        audios && (audios.bg.currentTime = 0);
-        return;
+        // 연결 끊김
+        const intervalId = useFrogMahjongStore.getState().timerId;
+
+        intervalId && clearTimeout(intervalId);
+
+        // TODO: 30초이상 재접속 없을시
+        // store.setIsAbnormalExit(true);
+        // audios?.bg.pause();
+        // audios && (audios.bg.currentTime = 0);
+        // return;
       }
 
       if (eventName !== FAILED_LOAN) {
@@ -207,6 +212,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
         if (data.gameInfo?.allPicked) {
           store.setIsPickCardsModal(false);
+          localStorage.setItem("pick", "false");
           store.setIsTurnOver(false);
           store.setIsVictoryFailed(false);
 
@@ -257,6 +263,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
             store.setIsHelpModalOpen(false);
             store.setIsUseItem(false);
             store.setIsPickCardsModal(true);
+            localStorage.setItem("pick", "true");
             store.setIsTimeOut(false);
             const fullTime =
               useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
@@ -273,6 +280,27 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        const fullTime =
+          useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+
+        if (fullTime) {
+          store.setTimer(fullTime);
+        }
+
+        const isPickedBefore = localStorage.getItem("pick") === "true";
+
+        store.setIsPickCardsModal(isPickedBefore);
+
+        if (useFrogMahjongStore.getState().isStarted) {
+          const intervalId = setInterval(() => {
+            const newTime = useFrogMahjongStore.getState().timer - 1;
+
+            store.setTimer(newTime);
+          }, 1000);
+
+          store.setTimerId(intervalId);
+        }
+
         const sessionID = useFrogMahjongStore.getState().sessionID;
 
         if (!sessionID) {
@@ -305,6 +333,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
           store.setIsOpenResultModal(false);
           store.setIsPickCardsModal(true);
+          localStorage.setItem("pick", "true");
           store.setIsRouletteLoading(false);
         }
       } else if (

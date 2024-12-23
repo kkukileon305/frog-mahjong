@@ -35,14 +35,6 @@ const Page = () => {
       router.push("/rooms");
 
       return;
-    } else {
-      const sessionID = gameStore.sessionID;
-      const mode = gameStore.mode;
-
-      if (sessionID && mode) {
-        localStorage.setItem("sessionID", sessionID);
-        localStorage.setItem("matchMode", mode);
-      }
     }
   }, []);
 

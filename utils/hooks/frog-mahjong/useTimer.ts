@@ -14,7 +14,9 @@ const useTimer = () => {
     setTimer(fullTime);
 
     const intervalId = setInterval(() => {
-      setTimer(useFrogMahjongStore.getState().timer - 1);
+      const newTime = useFrogMahjongStore.getState().timer - 1;
+
+      setTimer(newTime);
     }, 1000);
 
     setTimerId(intervalId);
