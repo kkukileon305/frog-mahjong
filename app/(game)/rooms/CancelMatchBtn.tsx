@@ -34,6 +34,8 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
     store.ws?.send(JSON.stringify(request));
     store.clear();
 
+    localStorage.removeItem("sessionID");
+
     setOpenMatchModal(null);
   };
 
