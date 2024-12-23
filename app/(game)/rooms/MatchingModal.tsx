@@ -198,7 +198,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                       m(isMatchingCompleted ? "complete" : "send")}
                   </p>
                   <div className="w-full flex items-center justify-center gap-4">
-                    <p className="font-bold text-xl text-white bg-game-icon p-2 rounded-xl w-full max-w-64 text-center">
+                    <p className="w-[calc(100%-136px)] font-bold text-xl text-white bg-game-icon p-2 rounded-xl max-w-64 text-center">
                       {gameType === "FROG_MAHJONG_OLD" &&
                         (oldPassword ? oldPassword : m("loading"))}{" "}
                       {gameType === "FROG_MAHJONG" &&
@@ -206,7 +206,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
                     </p>
                     <button
                       onClick={onClick}
-                      className="bg-yellow-button font-bold text-white py-2 px-4 text-xl rounded-xl"
+                      className="w-[110px] bg-yellow-button font-bold text-white py-2 px-4 text-xl rounded-xl"
                     >
                       {m(isCopySuccess ? "copySuccess" : "copy")}
                     </button>
