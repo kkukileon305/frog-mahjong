@@ -11,6 +11,7 @@ const AbnormalExit = () => {
   const m = useTranslations("AbnormalExit");
   const oldClear = useOldFrogMahjongStore((s) => s.clear);
   const clear = useFrogMahjongStore((s) => s.clear);
+  const ws = useFrogMahjongStore((s) => s.ws);
 
   const router = useRouter();
 
@@ -18,10 +19,12 @@ const AbnormalExit = () => {
     const timeout = setTimeout(() => {
       router.push("/rooms");
 
+      localStorage.removeItem("matchMode");
       localStorage.removeItem("sessionID");
 
       oldClear();
       clear();
+      ws?.close();
     }, 3000);
 
     return () => clearTimeout(timeout);
@@ -38,6 +41,7 @@ const AbnormalExit = () => {
 
             oldClear();
             clear();
+            ws?.close();
           }}
           className="bg-white py-2 px-4 mt-4 border border-blue-400 rounded-xl text-blue-400 font-bold"
           href={"/rooms"}
