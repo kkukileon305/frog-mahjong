@@ -2,19 +2,13 @@
 
 import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import Game from "@/app/(game)/rooms/frog-mahjong/Game";
 import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
-import axiosInstance, {
-  BirdCard,
-  ImportCardBody,
-  Mission,
-  MissionResponse,
-} from "@/utils/axios";
 import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
 import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
@@ -53,7 +47,7 @@ const Page = () => {
   }, []);
 
   if (!gameStore.gameState?.gameInfo) {
-    return <></>;
+    redirect("/rooms");
   }
 
   // abnormal
