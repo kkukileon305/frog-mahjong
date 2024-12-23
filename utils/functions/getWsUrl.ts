@@ -24,15 +24,14 @@ function getWsUrl({
   const version = gameType === "FROG_MAHJONG_OLD" ? "v0.1" : "v2.1";
 
   const sessionID = localStorage.getItem("sessionID");
-  const prevMode = localStorage.getItem("matchMode");
 
   const normalUrl = `/${version}/rooms/match/ws?tkn=${accessToken}&timer=${timer}&count=${count}`;
   const createUrl = `/${version}/rooms/play/together/ws?tkn=${accessToken}`;
   const enterUrl = `/${version}/rooms/join/play/ws?tkn=${accessToken}&password=${password}`;
 
   const addPrevGame = (url: string) => {
-    if (sessionID && prevMode) {
-      return `${url}&sessionID=${sessionID}&`;
+    if (sessionID) {
+      return `${url}&sessionID=${sessionID}`;
     } else {
       return url;
     }
@@ -40,11 +39,11 @@ function getWsUrl({
 
   switch (mode) {
     case "NORMAL":
-      return baseUrl + normalUrl;
+      return baseUrl + addPrevGame(normalUrl);
     case "CREATE":
-      return baseUrl + createUrl;
+      return baseUrl + addPrevGame(createUrl);
     case "ENTER":
-      return baseUrl + enterUrl;
+      return baseUrl + addPrevGame(enterUrl);
     default:
       throw new Error("유효하지 않은 mode입니다.");
   }

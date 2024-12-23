@@ -88,8 +88,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     );
   }
 
-  const sessionID = localStorage.getItem("sessionID");
-  const prevMode = localStorage.getItem("matchMode");
+  const prevMode = localStorage.getItem("matchMode") as MatchingMode | null;
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center bg-rooms bg-center bg-cover p-2">
@@ -100,6 +99,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         >
           <EditProfileImage userData={userData} />
         </ModalContainer>
+      )}
+
+      {prevMode && (
+        <MatchingModal mode={prevMode} setOpenMatchModal={setOpenMatchModal} />
       )}
 
       {openMatchModal && (

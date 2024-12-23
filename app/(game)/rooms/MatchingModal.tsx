@@ -72,7 +72,7 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
   }));
 
   useEffect(() => {
-    setMode("mode");
+    setMode(mode);
 
     if (mode === "ENTER") return;
 
