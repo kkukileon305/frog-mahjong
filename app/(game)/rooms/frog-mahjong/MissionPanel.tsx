@@ -18,7 +18,6 @@ import Roulette2 from "@/public/effects/roulette2.png";
 import Roulette3 from "@/public/effects/roulette3.png";
 
 const MissionPanel = () => {
-  const router = useRouter();
   const userID = getCookie("userID") as string;
 
   const gameStore = useFrogMahjongStore();
@@ -35,7 +34,12 @@ const MissionPanel = () => {
 
   useEffect(() => {
     if (!currentUser || gameStore.isGameEnd) return;
-    gameStore.setIsRouletteLoading(true);
+
+    const sessionID = localStorage.getItem("sessionID");
+
+    if (!sessionID) {
+      gameStore.setIsRouletteLoading(true);
+    }
   }, []);
 
   // 남은 카드들중 미션에 부합하는거 표시

@@ -33,7 +33,6 @@ import missionFailedSrc from "@/public/audios/mission_failed.mp3";
 import bgSrc from "@/public/audios/bg.mp3";
 import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
-
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 import axiosInstance, { ImportCardBody, MissionResponse } from "@/utils/axios";
@@ -70,6 +69,7 @@ const usePreloadAssets = () => {
   const messagingStore = useMessagingStore();
 
   const { setAudios, setVolume } = useSoundStore();
+
   const { setProfileIcon } = useProfileIconStore();
 
   // static image assets
@@ -184,9 +184,9 @@ const usePreloadAssets = () => {
       }));
 
       const allAssets = [
+        ...audioAssets,
         ...imageAssets,
         ...iconAsset,
-        ...audioAssets,
         ...missionAssets,
         ...cardAssets,
       ];

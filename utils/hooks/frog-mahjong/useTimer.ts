@@ -2,9 +2,9 @@ import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore
 import { useEffect } from "react";
 
 const useTimer = () => {
-  const { setTimer, fullTime } = useFrogMahjongStore((s) => ({
-    timer: s.timer,
+  const { setTimer, fullTime, setTimerId } = useFrogMahjongStore((s) => ({
     setTimer: s.setTimer,
+    setTimerId: s.setTimerId,
     fullTime: s.gameState?.gameInfo?.timer,
   }));
 
@@ -14,10 +14,12 @@ const useTimer = () => {
     setTimer(fullTime);
 
     const intervalId = setInterval(() => {
-      setTimer(useFrogMahjongStore.getState().timer - 1);
+      const newTime = useFrogMahjongStore.getState().timer - 1;
+
+      setTimer(newTime);
     }, 1000);
 
-    return () => clearInterval(intervalId);
+    setTimerId(intervalId);
   }, [fullTime]);
 };
 

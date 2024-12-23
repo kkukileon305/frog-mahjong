@@ -381,10 +381,11 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   <div className="h-full flex flex-col items-center justify-center">
                     <button
                       onClick={useFirstItem}
-                      disabled={
-                        gameStore.isUseItem ||
-                        currentUserItems[0].remainingUses === 0
-                      }
+                      disabled
+                      // disabled={
+                      //   gameStore.isUseItem ||
+                      //   currentUserItems[0].remainingUses === 0
+                      // }
                       className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl`}
                     >
                       ON
@@ -399,7 +400,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                           color: "white",
                         }}
                       >
-                        {currentUserItems[0].remainingUses}/3
+                        {/*{currentUserItems[0].remainingUses}/3*/}Dis
                       </p>
                     </div>
                   </div>

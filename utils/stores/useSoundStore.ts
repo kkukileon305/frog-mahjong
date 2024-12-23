@@ -6,22 +6,22 @@ import cardSelect from "@/public/audios/card_select.mp3";
 import cardDiscard from "@/public/audios/card_discard.mp3";
 
 export type GameAudios = {
-  commonAllReadyAudio: HTMLAudioElement;
-  commonLoanAudio: HTMLAudioElement;
-  commonLoanFailedAudio: HTMLAudioElement;
-  commonStartAudio: HTMLAudioElement;
-  cardChapAudio: HTMLAudioElement;
   cardMovieAudio: HTMLAudioElement;
-  commonDrawAudio: HTMLAudioElement;
-  winAudio: HTMLAudioElement;
+  cardChapAudio: HTMLAudioElement;
   failAudio: HTMLAudioElement;
+  commonStartAudio: HTMLAudioElement;
+  commonLoanAudio: HTMLAudioElement;
+  winAudio: HTMLAudioElement;
+  commonLoanFailedAudio: HTMLAudioElement;
+  commonAllReadyAudio: HTMLAudioElement;
   myTurnAudio: HTMLAudioElement;
+  commonDrawAudio: HTMLAudioElement;
   timeoutAudio: HTMLAudioElement;
-  missionSuccess: HTMLAudioElement;
-  missionFailed: HTMLAudioElement;
-  bg: HTMLAudioElement;
   cardSelect: HTMLAudioElement;
+  bg: HTMLAudioElement;
   cardDiscard: HTMLAudioElement;
+  missionFailed: HTMLAudioElement;
+  missionSuccess: HTMLAudioElement;
 };
 
 type SoundStore = {
