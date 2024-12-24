@@ -65,6 +65,7 @@ const ResultModal = ({
 
     localStorage.removeItem("sessionID");
     localStorage.removeItem("matchMode");
+    localStorage.removeItem("pick");
     timerId && clearTimeout(timerId);
 
     const quitReq: QUITRequest = {
