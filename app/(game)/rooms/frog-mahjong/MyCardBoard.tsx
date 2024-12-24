@@ -137,9 +137,12 @@ const MyCardBoard = () => {
 
       store.ws?.send(JSON.stringify(request));
       store.setIsVictoryFailed(true);
+      localStorage.setItem("victoryFailed", "true");
       audios?.missionSuccess.play();
     } else {
       store.setIsVictoryFailed(true);
+      localStorage.setItem("victoryFailed", "true");
+
       store.setVictoryFailedModal(true);
 
       audios?.missionFailed.play();

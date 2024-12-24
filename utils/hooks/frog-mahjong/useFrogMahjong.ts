@@ -217,6 +217,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
           store.setIsPickCardsModal(false);
           localStorage.setItem("pick", "false");
           store.setIsTurnOver(false);
+
           store.setIsVictoryFailed(false);
 
           const fullTime =
@@ -297,6 +298,9 @@ const useFrogMahjong = (mode: MatchingMode) => {
           data.gameInfo?.missionIDs.includes(m.id)
         );
         store.setCurrentMissions(cm);
+
+        const victoryFailed = localStorage.getItem("victoryFailed") === "true";
+        store.setIsVictoryFailed(victoryFailed);
 
         if (fullTime) {
           store.setTimer(fullTime);
