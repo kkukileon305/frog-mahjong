@@ -37,6 +37,7 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
     localStorage.removeItem("sessionID");
     localStorage.removeItem("matchMode");
     localStorage.removeItem("pick");
+    localStorage.removeItem("clearMissions");
 
     setOpenMatchModal(null);
   };

@@ -283,6 +283,13 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        const cleared = localStorage.getItem("clearMissions");
+
+        if (cleared) {
+          const clearedMissionIDs = JSON.parse(cleared) as number[];
+          store.setClearMissionIDs(clearedMissionIDs);
+        }
+
         const fullTime =
           useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
 

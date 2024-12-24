@@ -30,6 +30,7 @@ const AbnormalExit = () => {
     localStorage.removeItem("matchMode");
     localStorage.removeItem("sessionID");
     localStorage.removeItem("pick");
+    localStorage.removeItem("clearMissions");
 
     return () => {
       clearTimeout(timeout);

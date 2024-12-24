@@ -150,6 +150,7 @@ const MyCardBoard = () => {
     }
 
     store.setClearMissionIDs(mergedClearIds);
+    localStorage.setItem("clearMissions", JSON.stringify(mergedClearIds));
   };
 
   // mission clear count check
