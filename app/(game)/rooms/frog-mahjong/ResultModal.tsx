@@ -65,6 +65,9 @@ const ResultModal = ({
 
     localStorage.removeItem("sessionID");
     localStorage.removeItem("matchMode");
+    localStorage.removeItem("pick");
+    localStorage.removeItem("clearMissions");
+
     timerId && clearTimeout(timerId);
 
     const quitReq: QUITRequest = {
@@ -75,7 +78,10 @@ const ResultModal = ({
     };
 
     ws?.send(JSON.stringify(quitReq));
-    router.push("/rooms");
+
+    setTimeout(() => {
+      router.push("/rooms");
+    }, 0);
   };
 
   const getResult = async () => {

@@ -22,6 +22,7 @@ import {
   CHAT,
   DISCARD,
   ERR_ABNORMAL_EXIT,
+  ERR_GAME_TERMINATED,
   ERR_NOT_FOUND_CARD,
   FAILED_LOAN,
   GAME_OVER,
@@ -152,17 +153,19 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
       store.setGameState(data);
 
-      if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
+      if (data.errorInfo?.type === ERR_GAME_TERMINATED) {
         // 연결 끊김
         const intervalId = useFrogMahjongStore.getState().timerId;
 
         intervalId && clearTimeout(intervalId);
+      }
 
+      if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // TODO: 30초이상 재접속 없을시
-        // store.setIsAbnormalExit(true);
-        // audios?.bg.pause();
-        // audios && (audios.bg.currentTime = 0);
-        // return;
+        store.setIsAbnormalExit(true);
+        audios?.bg.pause();
+        audios && (audios.bg.currentTime = 0);
+        return;
       }
 
       if (eventName !== FAILED_LOAN) {
@@ -280,8 +283,20 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        const cleared = localStorage.getItem("clearMissions");
+
+        if (cleared) {
+          const clearedMissionIDs = JSON.parse(cleared) as number[];
+          store.setClearMissionIDs(clearedMissionIDs);
+        }
+
         const fullTime =
           useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+
+        const cm = store.allMissions.filter((m) =>
+          data.gameInfo?.missionIDs.includes(m.id)
+        );
+        store.setCurrentMissions(cm);
 
         if (fullTime) {
           store.setTimer(fullTime);

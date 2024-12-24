@@ -34,9 +34,7 @@ const MyCardBoard = () => {
   const missionIDs = store.gameState?.gameInfo?.missionIDs!;
   const cards = store.cards;
 
-  const currentMissions = store.allMissions.filter((m) =>
-    missionIDs?.includes(m.id)
-  );
+  const currentMissions = store.currentMissions;
 
   const userID = getCookie("userID") as string;
 
@@ -152,6 +150,7 @@ const MyCardBoard = () => {
     }
 
     store.setClearMissionIDs(mergedClearIds);
+    localStorage.setItem("clearMissions", JSON.stringify(mergedClearIds));
   };
 
   // mission clear count check

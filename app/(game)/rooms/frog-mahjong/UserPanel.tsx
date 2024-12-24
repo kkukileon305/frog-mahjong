@@ -144,7 +144,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
               </div>
 
               <div className="h-[calc((100%-24px)/2)]">
-                {isStarted && userLastDiscardImage && (
+                {userLastDiscardImage && (
                   <button className="h-full overflow-hidden">
                     <img
                       src={userLastDiscardImage.image}

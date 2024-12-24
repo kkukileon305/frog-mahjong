@@ -28,10 +28,6 @@ const MissionPanel = () => {
     (user) => user.id === Number(userID)
   );
 
-  const currentMissions = gameStore.allMissions.filter((m) =>
-    gameStore.gameState?.gameInfo?.missionIDs?.includes(m.id)
-  );
-
   useEffect(() => {
     if (!currentUser || gameStore.isGameEnd) return;
 
@@ -76,7 +72,7 @@ const MissionPanel = () => {
 
   const nokoriPassCards = getSuccessCardIds(
     leftCardsWithoutPickedWithOpenCards,
-    currentMissions
+    gameStore.currentMissions
   );
 
   return (
@@ -87,8 +83,8 @@ const MissionPanel = () => {
         </p>
 
         <div className="py-2 px-4">
-          {currentMissions &&
-            currentMissions.map((m, index) => (
+          {gameStore.currentMissions &&
+            gameStore.currentMissions.map((m, index) => (
               <div
                 key={m.id}
                 className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
