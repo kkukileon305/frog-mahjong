@@ -67,6 +67,7 @@ const ResultModal = ({
     localStorage.removeItem("matchMode");
     localStorage.removeItem("pick");
     localStorage.removeItem("clearMissions");
+    localStorage.removeItem("victoryFailed");
 
     timerId && clearTimeout(timerId);
 

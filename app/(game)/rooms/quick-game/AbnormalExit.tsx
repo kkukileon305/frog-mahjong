@@ -31,6 +31,7 @@ const AbnormalExit = () => {
     localStorage.removeItem("sessionID");
     localStorage.removeItem("pick");
     localStorage.removeItem("clearMissions");
+    localStorage.removeItem("victoryFailed");
 
     return () => {
       clearTimeout(timeout);
