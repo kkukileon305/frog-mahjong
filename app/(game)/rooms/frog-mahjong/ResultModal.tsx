@@ -78,7 +78,10 @@ const ResultModal = ({
     };
 
     ws?.send(JSON.stringify(quitReq));
-    router.push("/rooms");
+
+    setTimeout(() => {
+      router.push("/rooms");
+    }, 0);
   };
 
   const getResult = async () => {
