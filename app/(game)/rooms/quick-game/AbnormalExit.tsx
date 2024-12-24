@@ -19,13 +19,13 @@ const AbnormalExit = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      router.push("/rooms");
-
-      if (process.env.NODE_ENV === "development") {
-        console.log("abnormal redirect");
-      }
-    }, 3000);
+    // const timeout = setTimeout(() => {
+    //   router.push("/rooms");
+    //
+    //   if (process.env.NODE_ENV === "development") {
+    //     console.log("abnormal redirect");
+    //   }
+    // }, 3000);
 
     localStorage.removeItem("matchMode");
     localStorage.removeItem("sessionID");
@@ -34,7 +34,7 @@ const AbnormalExit = () => {
     localStorage.removeItem("victoryFailed");
 
     return () => {
-      clearTimeout(timeout);
+      // clearTimeout(timeout);
 
       oldClear();
       clear();

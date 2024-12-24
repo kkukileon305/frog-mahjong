@@ -13,6 +13,7 @@ import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
 import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
 import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
 import Roulette from "@/app/(game)/rooms/frog-mahjong/Roulette";
+import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
 
 const Page = () => {
   useDetectNavigation();
@@ -38,7 +39,10 @@ const Page = () => {
     }
   }, []);
 
-  if (!gameStore.gameState?.gameInfo) {
+  if (
+    !gameStore.gameState?.gameInfo &&
+    gameStore.gameState?.errorInfo?.type !== ERR_ABNORMAL_EXIT
+  ) {
     redirect("/rooms");
   }
 
