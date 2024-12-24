@@ -31,12 +31,14 @@ const AbnormalExit = () => {
     localStorage.removeItem("sessionID");
     localStorage.removeItem("pick");
 
-    oldClear();
-    clear();
-    ws?.close();
-    timerId && clearTimeout(timerId);
+    return () => {
+      clearTimeout(timeout);
 
-    return () => clearTimeout(timeout);
+      oldClear();
+      clear();
+      ws?.close();
+      timerId && clearTimeout(timerId);
+    };
   }, []);
 
   return (

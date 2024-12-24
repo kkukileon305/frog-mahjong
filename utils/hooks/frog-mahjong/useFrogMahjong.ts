@@ -286,6 +286,11 @@ const useFrogMahjong = (mode: MatchingMode) => {
         const fullTime =
           useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
 
+        const cm = store.allMissions.filter((m) =>
+          data.gameInfo?.missionIDs.includes(m.id)
+        );
+        store.setCurrentMissions(cm);
+
         if (fullTime) {
           store.setTimer(fullTime);
         }

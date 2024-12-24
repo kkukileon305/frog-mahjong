@@ -41,9 +41,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   const missionIDs = gameStore.gameState?.gameInfo?.missionIDs;
 
-  const currentMissions = gameStore.allMissions.filter((m) =>
-    missionIDs?.includes(m.id)
-  );
+  const currentMissions = gameStore.currentMissions;
 
   const currentUser = users.find((u) => u.id === Number(userID))!;
 
