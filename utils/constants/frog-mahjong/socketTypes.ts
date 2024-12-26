@@ -243,7 +243,7 @@ export interface UserSocket {
   turnNumber: number;
   profileID: number;
   missionSuccessCount: number;
-  items: Item[];
+  items: Item[] | null;
 }
 
 export type Item = {

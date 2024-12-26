@@ -151,14 +151,16 @@ const useFrogMahjong = (mode: MatchingMode) => {
         return;
       }
 
-      store.setGameState(data);
-
       if (data.errorInfo?.type === ERR_GAME_TERMINATED) {
         // 연결 끊김
         const intervalId = useFrogMahjongStore.getState().timerId;
 
         intervalId && clearTimeout(intervalId);
+
+        return;
       }
+
+      store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
         // TODO: 30초이상 재접속 없을시
@@ -266,6 +268,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
           } else {
             store.setIsHelpModalOpen(false);
             store.setIsUseItem(false);
+            localStorage.removeItem("item");
             store.setIsPickCardsModal(true);
             localStorage.setItem("pick", "true");
             store.setIsTimeOut(false);
@@ -285,6 +288,9 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === JOIN_PLAY
       ) {
         const cleared = localStorage.getItem("clearMissions");
+        const isUseItem = localStorage.getItem("item") === "true";
+
+        store.setIsUseItem(isUseItem);
 
         if (cleared) {
           const clearedMissionIDs = JSON.parse(cleared) as number[];
