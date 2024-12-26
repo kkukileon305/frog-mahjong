@@ -19,18 +19,21 @@ import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import axiosInstance, { Result } from "@/utils/axios";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 
-const ResultModal = ({
-  setIsOpen,
-}: {
-  setIsOpen: (isOpenResultModal: boolean) => void;
-}) => {
+const ResultModal = () => {
   const m = useTranslations("ResultModal");
 
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
 
-  const { clear, gameState, ws, allMissions, cards, timerId } =
-    useFrogMahjongStore();
+  const {
+    clear,
+    gameState,
+    ws,
+    allMissions,
+    cards,
+    timerId,
+    setIsOpenResultModal,
+  } = useFrogMahjongStore();
   const users = useRef(gameState?.users);
 
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
@@ -51,7 +54,7 @@ const ResultModal = ({
 
   const onClose: MouseEventHandler<HTMLDivElement> = (e) => {
     if ((e.target as HTMLElement).closest("#back")) {
-      setIsOpen && setIsOpen(false);
+      setIsOpenResultModal(false);
     }
   };
 

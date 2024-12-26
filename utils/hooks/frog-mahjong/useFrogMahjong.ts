@@ -157,6 +157,11 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
         intervalId && clearTimeout(intervalId);
 
+        // disconnected user store에 설정
+        const disconnectedUser =
+          data.users?.filter((u) => u.playerState === "disconnected") || [];
+        store.setDisconnectedUsers(disconnectedUser);
+
         return;
       }
 
@@ -296,6 +301,11 @@ const useFrogMahjong = (mode: MatchingMode) => {
           const clearedMissionIDs = JSON.parse(cleared) as number[];
           store.setClearMissionIDs(clearedMissionIDs);
         }
+
+        // disconnected user 유저 재접속시 store에 설정
+        const disconnectedUser =
+          data.users?.filter((u) => u.playerState === "disconnected") || [];
+        store.setDisconnectedUsers(disconnectedUser);
 
         const fullTime =
           useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
