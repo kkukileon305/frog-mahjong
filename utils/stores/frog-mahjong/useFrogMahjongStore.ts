@@ -108,6 +108,9 @@ interface GameStore {
   mode: string | null;
   setMode: (mode: string) => void;
 
+  disconnectedUsers: UserSocket[];
+  setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
+
   clear: () => void;
 }
 
@@ -222,6 +225,9 @@ const useFrogMahjongStore = create(
     mode: null,
     setMode: (mode) => set({ mode }),
 
+    disconnectedUsers: [],
+    setDisconnectedUsers: (disconnectedUsers) => set({ disconnectedUsers }),
+
     clear: () =>
       set({
         ws: null,
@@ -248,6 +254,7 @@ const useFrogMahjongStore = create(
         mode: null,
         timerId: null,
         currentMissions: [],
+        disconnectedUsers: [],
       }),
   }))
 );

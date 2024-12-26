@@ -183,6 +183,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
     gameStore.ws?.send(JSON.stringify(req));
     gameStore.setIsUseItem(true);
+    localStorage.setItem("item", "true");
   };
 
   // timer === 0 and not inGame
@@ -379,11 +380,12 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   <div className="h-full flex flex-col items-center justify-center">
                     <button
                       onClick={useFirstItem}
-                      disabled
-                      // disabled={
-                      //   gameStore.isUseItem ||
-                      //   currentUserItems[0].remainingUses === 0
-                      // }
+                      disabled={
+                        gameStore.isUseItem ||
+                        (currentUserItems
+                          ? currentUserItems[0].remainingUses === 0
+                          : true)
+                      }
                       className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl`}
                     >
                       ON
@@ -398,7 +400,10 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                           color: "white",
                         }}
                       >
-                        {/*{currentUserItems[0].remainingUses}/3*/}Dis
+                        {currentUserItems
+                          ? currentUserItems[0].remainingUses
+                          : 0}
+                        /3
                       </p>
                     </div>
                   </div>
