@@ -292,40 +292,42 @@ const useFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        // localStorage에서 끊기기 전 상태 불러옴
         const cleared = localStorage.getItem("clearMissions");
-        const isUseItem = localStorage.getItem("item") === "true";
-
-        store.setIsUseItem(isUseItem);
-
         if (cleared) {
           const clearedMissionIDs = JSON.parse(cleared) as number[];
           store.setClearMissionIDs(clearedMissionIDs);
         }
+
+        const isUseItem = localStorage.getItem("item") === "true";
+        store.setIsUseItem(isUseItem);
+
+        const victoryFailed = localStorage.getItem("victoryFailed") === "true";
+        store.setIsVictoryFailed(victoryFailed);
+
+        const isPickedBefore = localStorage.getItem("pick") === "true";
+        store.setIsPickCardsModal(isPickedBefore);
 
         // disconnected user 유저 재접속시 store에 설정
         const disconnectedUser =
           data.users?.filter((u) => u.playerState === "disconnected") || [];
         store.setDisconnectedUsers(disconnectedUser);
 
+        // 다른 유저 재접속시 또는 본인 접속시 시간 초기화
         const fullTime =
           useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
-
-        const cm = store.allMissions.filter((m) =>
-          data.gameInfo?.missionIDs.includes(m.id)
-        );
-        store.setCurrentMissions(cm);
-
-        const victoryFailed = localStorage.getItem("victoryFailed") === "true";
-        store.setIsVictoryFailed(victoryFailed);
 
         if (fullTime) {
           store.setTimer(fullTime);
         }
 
-        const isPickedBefore = localStorage.getItem("pick") === "true";
+        // 현재 미션 설정
+        const cm = store.allMissions.filter((m) =>
+          data.gameInfo?.missionIDs.includes(m.id)
+        );
+        store.setCurrentMissions(cm);
 
-        store.setIsPickCardsModal(isPickedBefore);
-
+        // 끊기지 않은 사용자일 경우 타이머를 다시 재생
         if (useFrogMahjongStore.getState().isStarted) {
           const intervalId = setInterval(() => {
             const newTime = useFrogMahjongStore.getState().timer - 1;
@@ -336,8 +338,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
           store.setTimerId(intervalId);
         }
 
+        // 첫 MATCH시 세션ID 저장
         const sessionID = useFrogMahjongStore.getState().sessionID;
-
         if (!sessionID) {
           store.setSessionID(parsedBody.sessionID);
         }

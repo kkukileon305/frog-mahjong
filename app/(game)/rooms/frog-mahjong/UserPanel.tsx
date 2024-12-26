@@ -29,7 +29,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
-  const { chatList, ws, gameState, isStarted, cards } = useFrogMahjongStore();
+  const { chatList, ws, gameState, cards } = useFrogMahjongStore();
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameState?.gameInfo?.roomID;
