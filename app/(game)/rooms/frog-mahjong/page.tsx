@@ -19,8 +19,6 @@ const Page = () => {
   useDetectNavigation();
   useTimer();
 
-  const isHelpModalOpen = useFrogMahjongStore((s) => s.isHelpModalOpen);
-
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
@@ -56,6 +54,9 @@ const Page = () => {
     return <Entering />;
   }
 
+  const users = gameStore.gameState.users;
+  const isDisconnected = users?.some((u) => u.playerState === "disconnected");
+
   return (
     <div className="flex h-dvh overflow-hidden">
       <div className="relative w-full flex flex-col justify-between">
@@ -68,7 +69,7 @@ const Page = () => {
         {gameStore.isPickCardsModal && <PickCardsModal />}
 
         {/* help modal */}
-        {isHelpModalOpen && <HelpModal />}
+        {gameStore.isHelpModalOpen && <HelpModal />}
 
         {/* roulette */}
         {gameStore.isRouletteLoading && <Roulette />}
