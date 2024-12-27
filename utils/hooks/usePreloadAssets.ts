@@ -11,6 +11,7 @@ import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import gameBackground from "@/public/bg/game_background.jpg";
 import roomBackground from "@/public/bg/room_background.jpg";
+import HelpImage from "@/public/helps/help.jpg";
 import Roulette0 from "@/public/effects/roulette0.png";
 import Roulette1 from "@/public/effects/roulette1.png";
 import Roulette2 from "@/public/effects/roulette2.png";
@@ -91,6 +92,7 @@ const usePreloadAssets = () => {
     EmojiSad,
     EmojiSleep,
     EmojiSmile,
+    HelpImage,
   ].map((image) => ({
     url: image.src,
     type: "image",
