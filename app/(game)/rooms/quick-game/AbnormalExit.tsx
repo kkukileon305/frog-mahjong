@@ -32,6 +32,7 @@ const AbnormalExit = () => {
     localStorage.removeItem("pick");
     localStorage.removeItem("clearMissions");
     localStorage.removeItem("victoryFailed");
+    localStorage.removeItem("isStarted");
 
     return () => {
       clearTimeout(timeout);

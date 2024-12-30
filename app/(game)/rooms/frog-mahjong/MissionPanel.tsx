@@ -31,9 +31,9 @@ const MissionPanel = () => {
   useEffect(() => {
     if (!currentUser || gameStore.isGameEnd) return;
 
-    const sessionID = localStorage.getItem("sessionID");
+    const isStarted = localStorage.getItem("isStarted") === "true";
 
-    if (!sessionID) {
+    if (!isStarted) {
       gameStore.setIsRouletteLoading(true);
     }
   }, []);
