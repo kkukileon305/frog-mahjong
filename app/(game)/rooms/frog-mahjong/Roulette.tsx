@@ -73,11 +73,9 @@ const Roulette = () => {
 
       await delay(5000);
 
-      const sessionID = gameStore.sessionID;
       const mode = gameStore.mode;
 
-      if (sessionID && mode) {
-        localStorage.setItem("sessionID", sessionID);
+      if (mode) {
         localStorage.setItem("matchMode", mode);
       }
 

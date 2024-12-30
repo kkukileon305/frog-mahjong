@@ -102,7 +102,11 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
       )}
 
       {prevMode && (
-        <MatchingModal mode={prevMode} setOpenMatchModal={setOpenMatchModal} />
+        <MatchingModal
+          mode={prevMode}
+          setOpenMatchModal={setOpenMatchModal}
+          isReconnected
+        />
       )}
 
       {openMatchModal && (

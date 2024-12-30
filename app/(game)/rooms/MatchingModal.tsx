@@ -16,17 +16,23 @@ import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import useFrogMahjong from "@/utils/hooks/frog-mahjong/useFrogMahjong";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import delay from "@/utils/functions/delay";
 
-type CancelMatchBtnProps = {
+type MatchingModalProps = {
   mode: MatchingMode;
   setOpenMatchModal: Dispatch<SetStateAction<MatchingMode | null>>;
+  isReconnected?: boolean;
 };
 
 type Inputs = {
   inputPassword: string;
 };
 
-const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
+const MatchingModal = ({
+  mode,
+  setOpenMatchModal,
+  isReconnected,
+}: MatchingModalProps) => {
   const m = useTranslations("MatchingModal");
 
   const [error, setError] = useState<null | string>(null);
@@ -83,6 +89,10 @@ const MatchingModal = ({ mode, setOpenMatchModal }: CancelMatchBtnProps) => {
             tkn: accessToken,
           },
         });
+
+        if (isReconnected) {
+          await delay(3000);
+        }
 
         if (gameType === "FROG_MAHJONG_OLD") {
           oldConnect();
