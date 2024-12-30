@@ -95,8 +95,8 @@ const MatchingModal = ({
         if (isReconnected) {
           const term = Date.now() - disconnected;
 
-          if (term < 6000) {
-            await delay(term);
+          if (term < 5000) {
+            await delay(5000 - term);
           }
         }
 
