@@ -362,6 +362,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
           }
 
           store.setIsStarted(true);
+          localStorage.setItem("isStarted", "true");
+
           audios?.commonStartAudio.play();
           audios && (audios.bg.loop = true);
           audios?.bg.play();

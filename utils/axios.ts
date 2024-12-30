@@ -31,6 +31,7 @@ export interface UserData {
   coin: number;
   errType?: string;
   profileID: number;
+  disconnected: number;
 }
 
 export type TokenType = {

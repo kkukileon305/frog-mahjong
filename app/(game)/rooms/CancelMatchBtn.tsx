@@ -39,6 +39,7 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
     localStorage.removeItem("pick");
     localStorage.removeItem("clearMissions");
     localStorage.removeItem("victoryFailed");
+    localStorage.removeItem("isStarted");
 
     setOpenMatchModal(null);
   };

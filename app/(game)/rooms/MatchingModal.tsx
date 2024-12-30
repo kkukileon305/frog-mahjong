@@ -8,7 +8,7 @@ import useOldFrogMahjong, {
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axiosInstance from "@/utils/axios";
+import axiosInstance, { UserData } from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
@@ -84,14 +84,20 @@ const MatchingModal = ({
 
     (async () => {
       try {
-        await axiosInstance.get(`/v0.1/users/${userID}`, {
+        const {
+          data: { disconnected },
+        } = await axiosInstance.get<UserData>(`/v0.1/users/${userID}`, {
           headers: {
             tkn: accessToken,
           },
         });
 
         if (isReconnected) {
-          await delay(3000);
+          const term = Date.now() - disconnected;
+
+          if (term < 5000) {
+            await delay(5000 - term);
+          }
         }
 
         if (gameType === "FROG_MAHJONG_OLD") {

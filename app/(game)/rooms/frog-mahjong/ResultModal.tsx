@@ -71,6 +71,7 @@ const ResultModal = () => {
     localStorage.removeItem("pick");
     localStorage.removeItem("clearMissions");
     localStorage.removeItem("victoryFailed");
+    localStorage.removeItem("isStarted");
 
     timerId && clearTimeout(timerId);
 
