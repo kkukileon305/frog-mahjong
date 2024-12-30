@@ -339,10 +339,8 @@ const useFrogMahjong = (mode: MatchingMode) => {
         }
 
         // 첫 MATCH시 세션ID 저장
-        const sessionID = useFrogMahjongStore.getState().sessionID;
-        if (!sessionID) {
-          store.setSessionID(parsedBody.sessionID);
-        }
+        store.setSessionID(parsedBody.sessionID);
+        localStorage.setItem("sessionID", parsedBody.sessionID);
 
         if (data.gameInfo?.isFull) {
           router.push("/rooms/frog-mahjong");
