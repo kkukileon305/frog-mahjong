@@ -16,6 +16,7 @@ import { BirdCard } from "@/utils/axios";
 import { useEffect } from "react";
 import { RANDOM } from "@/utils/constants/const";
 import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
+import { encryptAES } from "@/utils/functions/aes";
 
 type LeftCard = BirdCard & {
   picked: null | UserSocket;
@@ -118,20 +119,25 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       ) || null,
   }));
 
-  const pickCard = (card: LeftCard) => {
+  const pickCard = async (card: LeftCard) => {
     if (!gameStore.pickable.isPickable) {
       return;
     }
 
-    const body: ImportSingleCardBody = {
+    const message: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
     };
 
+    const encryptedMessage = await encryptAES(
+      JSON.stringify(message),
+      btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+    );
+
     const request: ImportSingleCardRequest = {
       userID: Number(userID),
       event: "IMPORT_SINGLE_CARD",
-      message: JSON.stringify(body),
+      message: encryptedMessage,
       roomID,
     };
 
@@ -143,21 +149,26 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     gameStore.ws?.send(JSON.stringify(request));
   };
 
-  const pickCards = () => {
+  const pickCards = async () => {
     if (!gameStore.pickable.isPickable) {
       return;
     }
 
     const card = getRandomElements(leftCards, 1)[0];
-    const body: ImportSingleCardBody = {
+    const message: ImportSingleCardBody = {
       cardID: card.id,
       playTurn,
     };
 
+    const encryptedMessage = await encryptAES(
+      JSON.stringify(message),
+      btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+    );
+
     const request: ImportSingleCardRequest = {
       userID: Number(userID),
       event: "IMPORT_SINGLE_CARD",
-      message: JSON.stringify(body),
+      message: encryptedMessage,
       roomID,
     };
 
@@ -169,15 +180,20 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
     gameStore.ws?.send(JSON.stringify(request));
   };
 
-  const useFirstItem = () => {
+  const useFirstItem = async () => {
     const body: ItemChangeBody = {
       itemID: 1,
     };
 
+    const encryptedMessage = await encryptAES(
+      JSON.stringify(body),
+      btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+    );
+
     const req: ItemChangeRequest = {
       userID: Number(userID),
       event: "ITEM_CHANGE",
-      message: JSON.stringify(body),
+      message: encryptedMessage,
       roomID,
     };
 
@@ -188,28 +204,35 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   // timer === 0 and not inGame
   useEffect(() => {
-    if (
-      gameStore.timer === 0 &&
-      !gameStore.isTimeOut &&
-      nokoriCardsLength &&
-      !inGame &&
-      !gameStore.isGameEnd
-    ) {
-      const body = {
-        count: nokoriCardsLength,
-      };
+    (async () => {
+      if (
+        gameStore.timer === 0 &&
+        !gameStore.isTimeOut &&
+        nokoriCardsLength &&
+        !inGame &&
+        !gameStore.isGameEnd
+      ) {
+        const body = {
+          count: nokoriCardsLength,
+        };
 
-      const req = {
-        userID: Number(userID),
-        roomID: Number(roomID),
-        event: RANDOM,
-        message: JSON.stringify(body),
-      };
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
 
-      gameStore.ws?.send(JSON.stringify(req));
+        const req = {
+          userID: Number(userID),
+          roomID: Number(roomID),
+          event: RANDOM,
+          message: encryptedMessage,
+        };
 
-      gameStore.setIsTimeOut(true);
-    }
+        gameStore.ws?.send(JSON.stringify(req));
+
+        gameStore.setIsTimeOut(true);
+      }
+    })();
   }, [gameStore.timer]);
 
   if (inGame) {
@@ -220,12 +243,16 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         <div className="w-full h-[calc(100%-32px)] flex gap-2 overflow-hidden">
           <div className="w-[calc(100%-48px)] flex gap-2">
             {openCards?.map((card) => (
-              <img
+              <div
                 key={card.id}
-                className="w-[calc((100%-16px)/3)] aspect-[63/111] object-fill"
-                src={card.image}
-                alt={"sealed card"}
-              />
+                className="w-full max-h-full relative aspect-[63/111] flex justify-center"
+              >
+                <img
+                  className="aspect-[63/111] object-fill"
+                  src={card.image}
+                  alt={"sealed card"}
+                />
+              </div>
             ))}
           </div>
           <div
@@ -417,14 +444,15 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                 <span className="ml-4">{currentUserCards?.length || 0}/4</span>
               </p>
 
-              <div className="w-full h-[calc(100%-40px)] flex gap-2 overflow-hidden justify-center">
+              <div className="w-full h-[calc(100%-32px)] grid gap-2 overflow-hidden grid-cols-4">
                 {currentUserCards?.map((card) => (
-                  <img
-                    key={card.id}
-                    className="max-w-[calc((100%-24px)/4)] aspect-[63/111] object-fill"
-                    src={card.image}
-                    alt={"sealed card"}
-                  />
+                  <div key={card.id} className="h-full flex justify-center">
+                    <img
+                      className="h-full object-fill"
+                      src={card.image}
+                      alt={"sealed card"}
+                    />
+                  </div>
                 ))}
               </div>
             </div>

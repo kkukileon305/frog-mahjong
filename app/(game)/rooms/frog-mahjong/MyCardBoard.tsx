@@ -18,8 +18,8 @@ import { DISCARD } from "@/utils/constants/const";
 import getSuccessMissionIDs from "@/utils/functions/frog-mahjong/checkMissions";
 import { MdOutlineCancel } from "react-icons/md";
 import { BirdCard } from "@/utils/axios";
-import { request } from "node:http";
 import getRandomElements from "@/utils/functions/getRandomElements";
+import { encryptAES } from "@/utils/functions/aes";
 
 const MyCardBoard = () => {
   const m = useTranslations("MyCardBoard");
@@ -80,18 +80,23 @@ const MyCardBoard = () => {
 
   const isOverFull = !!(currentUser?.cards && currentUser?.cards?.length >= 4);
 
-  const discard = (ci: BirdCard) => {
+  const discard = async (ci: BirdCard) => {
     if (isOverFull) {
       const body: DiscardBody = {
         cardID: ci.id,
         playTurn: gameInfo?.playTurn as number,
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(body),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: DiscardRequest = {
         userID: currentUser?.id,
         event: DISCARD,
         roomID: Number(roomID),
-        message: JSON.stringify(body),
+        message: encryptedMessage,
       };
 
       store.ws?.send(JSON.stringify(request));
@@ -100,7 +105,7 @@ const MyCardBoard = () => {
     }
   };
 
-  const victory = () => {
+  const victory = async () => {
     const successMissionIDs = getSuccessMissionIDs(items, currentMissions);
 
     const mergedClearIds = Array.from(
@@ -129,10 +134,15 @@ const MyCardBoard = () => {
         cards: items.map((item) => item.id),
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(body),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: MissionRequest = {
         userID: currentUser?.id,
         event: "MISSION",
-        message: JSON.stringify(body),
+        message: encryptedMessage,
       };
 
       store.ws?.send(JSON.stringify(request));
@@ -158,50 +168,64 @@ const MyCardBoard = () => {
 
   // mission clear count check
   useEffect(() => {
-    if (currentUser.missionSuccessCount === 3) {
-      const body: WinRequestBody = {
-        cards: items.map((i) => ({
-          cardID: i.id,
-        })),
-      };
+    (async () => {
+      if (currentUser.missionSuccessCount === 3) {
+        const body: WinRequestBody = {
+          cards: items.map((i) => ({
+            cardID: i.id,
+          })),
+        };
 
-      const req: WinRequest = {
-        userID: currentUser?.id,
-        event: "REQUEST_WIN",
-        roomID: roomID,
-        message: JSON.stringify(body),
-      };
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
 
-      store.ws?.send(JSON.stringify(req));
-      return;
-    }
+        const req: WinRequest = {
+          userID: currentUser?.id,
+          event: "REQUEST_WIN",
+          roomID: roomID,
+          message: encryptedMessage,
+        };
+
+        store.ws?.send(JSON.stringify(req));
+        return;
+      }
+    })();
   }, [currentUser.missionSuccessCount]);
 
   useEffect(() => {
-    if (store.timer === 0 && !store.isPickCardsModal && !store.isGameEnd) {
-      // 만료시 랜덤
-      const randomCard = getRandomElements(items, 1)[0];
+    (async () => {
+      if (store.timer === 0 && !store.isPickCardsModal && !store.isGameEnd) {
+        // 만료시 랜덤
+        const randomCard = getRandomElements(items, 1)[0];
 
-      if (isOverFull) {
-        const body: DiscardBody = {
-          cardID: randomCard.id,
-          playTurn: gameInfo?.playTurn as number,
-        };
+        if (isOverFull) {
+          const body: DiscardBody = {
+            cardID: randomCard.id,
+            playTurn: gameInfo?.playTurn as number,
+          };
 
-        const request: DiscardRequest = {
-          userID: currentUser?.id,
-          event: DISCARD,
-          roomID: Number(roomID),
-          message: JSON.stringify(body),
-        };
+          const encryptedMessage = await encryptAES(
+            JSON.stringify(body),
+            btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+          );
 
-        store.ws?.send(JSON.stringify(request));
-        setDiscardMode(false);
-        store.setIsTurnOver(true);
+          const request: DiscardRequest = {
+            userID: currentUser?.id,
+            event: DISCARD,
+            roomID: Number(roomID),
+            message: encryptedMessage,
+          };
 
-        audios?.cardChapAudio.play();
+          store.ws?.send(JSON.stringify(request));
+          setDiscardMode(false);
+          store.setIsTurnOver(true);
+
+          audios?.cardChapAudio.play();
+        }
       }
-    }
+    })();
   }, [store.timer]);
 
   return (

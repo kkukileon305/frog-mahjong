@@ -39,7 +39,7 @@ import {
   SUCCESS_LOAN,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
-import { encryptAES } from "@/utils/functions/aes";
+import { decryptAES, encryptAES } from "@/utils/functions/aes";
 
 const useFrogMahjong = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
@@ -78,17 +78,22 @@ const useFrogMahjong = (mode: MatchingMode) => {
   useEffect(() => {
     if (store.ws === null) return;
 
-    store.ws.addEventListener("open", () => {
+    store.ws.addEventListener("open", async () => {
       if (mode === "NORMAL") {
         const body: MatchBodyRequest = {
           count,
           timer,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: MatchRequest = {
           event: MATCH,
           userID: Number(userID),
-          message: encryptAES(JSON.stringify(body)),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
@@ -98,10 +103,15 @@ const useFrogMahjong = (mode: MatchingMode) => {
           count,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: PlayTogetherRequest = {
           event: PLAY_TOGETHER,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
@@ -112,17 +122,22 @@ const useFrogMahjong = (mode: MatchingMode) => {
           password,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: JoinPlayRequest = {
           event: JOIN_PLAY,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
       }
     });
 
-    store.ws.addEventListener("message", (event) => {
+    store.ws.addEventListener("message", async (event) => {
       const body = event.data;
       const parsedBody = JSON.parse(body) as SocketResponse;
       const eventName = parsedBody.event;
@@ -138,7 +153,12 @@ const useFrogMahjong = (mode: MatchingMode) => {
         return;
       }
 
-      const data = JSON.parse(parsedBody.message) as SocketResponseBody;
+      const decryptedMessage = await decryptAES(
+        parsedBody.message,
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
+      const data = JSON.parse(decryptedMessage) as SocketResponseBody;
 
       if (data.errorInfo?.type === ERR_NOT_FOUND_CARD) {
         if (process.env.NODE_ENV === "development") {
