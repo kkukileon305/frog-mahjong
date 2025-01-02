@@ -13,6 +13,7 @@ import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
+import { decryptAES, encryptAES } from "@/utils/functions/aes";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
