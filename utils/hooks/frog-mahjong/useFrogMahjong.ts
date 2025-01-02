@@ -39,6 +39,7 @@ import {
   SUCCESS_LOAN,
   TIME_OUT_DISCARD,
 } from "@/utils/constants/const";
+import { encryptAES } from "@/utils/functions/aes";
 
 const useFrogMahjong = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
@@ -87,7 +88,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
         const req: MatchRequest = {
           event: MATCH,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptAES(JSON.stringify(body)),
         };
 
         store.ws?.send(JSON.stringify(req));
