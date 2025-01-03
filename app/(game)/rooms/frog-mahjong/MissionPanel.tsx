@@ -78,7 +78,7 @@ const MissionPanel = () => {
   return (
     <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4">
       <div className="">
-        <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+        <p className="basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
           {m("mission")}
         </p>
 
@@ -98,7 +98,6 @@ const MissionPanel = () => {
 
                   {m.image && <img src={m.image} alt="" className="w-4 h-4" />}
                 </div>
-                <p>{nokoriPassCards[index].length}</p>
               </div>
             ))}
         </div>

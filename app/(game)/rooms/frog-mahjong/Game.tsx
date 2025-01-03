@@ -26,7 +26,7 @@ const Game = () => {
         </div>
 
         <div className="flex h-[calc(100%-108px)] flex-col">
-          <div className="h-[calc(30%)] relative flex justify-center items-center p-2">
+          <div className="h-[calc(30%)] relative flex justify-center items-center p-2 pb-0">
             <PickCardsModal inGame />
           </div>
           <div className="h-[calc(30%)] flex gap-4">
@@ -44,14 +44,14 @@ const Game = () => {
       </div>
 
       <div className="flex h-10 lg:h-10 justify-end bg-[#ECB5C1]">
-        <div className="w-4/5">
+        <div className="w-2/3">
           <ChatEmoji />
         </div>
 
-        <div className="flex w-1/5">
+        <div className="flex w-1/3">
           <button
             onClick={() => setIsHelpModalOpen(true)}
-            className="text-xs lg:text-base w-full bg-game-button font-bold"
+            className="lg:text-base w-full bg-game-button font-bold"
           >
             {m("help")}
           </button>

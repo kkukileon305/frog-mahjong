@@ -1,5 +1,6 @@
 "use client";
 
+// assets
 import EmojiAngry from "@/public/emojis/angry.png";
 import EmojiHeart from "@/public/emojis/heart.png";
 import EmojiNormal from "@/public/emojis/normal.png";
@@ -34,6 +35,10 @@ import missionFailedSrc from "@/public/audios/mission_failed.mp3";
 import bgSrc from "@/public/audios/bg.mp3";
 import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
+
+// old cards
+
+
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 import axiosInstance, { ImportCardBody, MissionResponse } from "@/utils/axios";

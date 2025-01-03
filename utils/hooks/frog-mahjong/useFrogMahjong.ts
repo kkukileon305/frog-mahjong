@@ -189,7 +189,6 @@ const useFrogMahjong = (mode: MatchingMode) => {
       store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
-        // TODO: 30초이상 재접속 없을시
         store.setIsAbnormalExit(true);
         audios?.bg.pause();
         audios && (audios.bg.currentTime = 0);

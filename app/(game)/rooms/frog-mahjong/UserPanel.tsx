@@ -92,10 +92,10 @@ const UserPanel = ({ user }: UserPanelProps) => {
           className="flex text-white h-full"
         >
           <div className="w-full flex flex-col rounded-t-lg py-1 lg:py-2">
-            <div className="flex flex-col items-center h-full">
+            <div className="flex flex-col items-center justify-center h-full">
               <div
                 tabIndex={0}
-                className="h-[calc((100%-24px)/2)] p-1 aspect-square relative group cursor-pointer"
+                className="h-[calc((100%-24px)/2)] aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
                   <div className="relative w-full aspect-square border-[3px] border-[#F19830] rounded">
@@ -138,7 +138,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
               </div>
 
               <div className="px-4 text-black font-bold w-full">
-                <p className="bg-white font-bold rounded lg:text-xl text-center">
+                <p className="bg-white font-bold rounded text-xs text-center">
                   {user.name}
                 </p>
               </div>
