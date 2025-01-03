@@ -83,20 +83,6 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       )
   );
 
-  const leftCardsWithoutPickedWithOpenCards = gameStore.cards.filter(
-    (card) =>
-      !(
-        allUserCardIds?.includes(card.id) ||
-        allUserCardWithoutPickedCardIds?.includes(card.id) ||
-        allUserDiscardedIds?.includes(card.id)
-      )
-  );
-
-  const nokoriPassCards = getSuccessCardIds(
-    leftCardsWithoutPickedWithOpenCards,
-    currentMissions
-  );
-
   // 뭉탱이카드
   const leftCards: LeftCard[] = leftCardsWithoutPicked.map((card) => ({
     ...card,
@@ -240,7 +226,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
       <div className="h-full py-2 px-4 bg-white/50 rounded-xl overflow-hidden">
         <p className="font-bold text-center mb-2">{m("preview")}</p>
 
-        <div className="w-full h-[calc(100%-32px)] flex gap-2 overflow-hidden">
+        <div className="w-full h-[calc(100%-32px)] flex gap-2 overflow-hidden justify-center">
           <div className="w-[calc(100%-48px)] flex gap-2">
             {openCards?.map((card) => (
               <div
@@ -256,14 +242,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             ))}
           </div>
           <div
-            className={`aspect-[205/235] p-2 relative ${
+            className={`w-20 aspect-[205/235] relative flex justify-center items-center ${
               gameStore.timer > 5 && "grayscale"
             }`}
           >
             <img
               src={Timer.src}
               alt="timer"
-              className="aspect-[205/235]"
+              className="w-20 aspect-[205/235]"
               width={205}
               height={235}
             />
@@ -287,7 +273,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
         >
           <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4 mb-2">
             <div className="">
-              <p className="p-1 basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+              <p className="basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
                 {gameM("mission")}
               </p>
 
@@ -310,7 +296,6 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                           <img src={m.image} alt="" className="w-4 h-4" />
                         )}
                       </div>
-                      <p>{nokoriPassCards[index].length}</p>
                     </div>
                   ))}
               </div>
@@ -318,14 +303,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
           </div>
 
           <div className="w-full h-[calc(100%-116px)] flex flex-col">
-            <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden p-3">
-              <p className="mb-5 font-bold text-center">
+            <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden py-2 px-4">
+              <p className="mb-2 font-bold text-center">
                 {m("selectOpen", {
                   count: nokoriCardsLength,
                 })}
               </p>
 
-              <div className="flex flex-col h-[calc(100%-52px)] gap-4 overflow-hidden">
+              <div className="flex flex-col h-[calc(100%-32px)] gap-4 overflow-hidden">
                 <div className="h-[calc(50%-8px)] gap-4 grid grid-cols-3">
                   {openCards.map((card) => (
                     <div
@@ -373,7 +358,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       leftCards.length === 0
                     }
                   />
-                  <div className="h-full flex flex-col items-center justify-center">
+                  <div className="h-full flex flex-col items-center justify-center py-3">
                     <div
                       className={`h-[calc(100%-60px)] aspect-[205/235] relative ${
                         gameStore.timer > 5 && "grayscale"
@@ -404,7 +389,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                     </div>
                   </div>
 
-                  <div className="h-full flex flex-col items-center justify-center">
+                  <div className="h-full flex flex-col items-center justify-center py-3">
                     <button
                       onClick={useFirstItem}
                       disabled={

@@ -149,7 +149,7 @@
     "waitYourTurn": "차례를 기다려주세요",
     "goLoanVictory":"론 승리를 선언하시거나 버리기(포기)해주세요",
     "someoneLoan": "님이 론을 선언했습니다",
-    "help": "설명서",
+    "help": "게임룰",
     "playing": "진행중",
     "quit": "나가기",
     "ready": "곧 시작됩니다",
@@ -244,7 +244,7 @@
   },
   "PickCardsModal": {
     "title": "카드를 {number}개 골라주세요",
-    "preview": "패 미리보기",
+    "preview": "카드덱 미리보기",
     "draw": "무승부",
     "selectOpen": "카드덱&랜덤에서 총 {count}장 골라주세요",
     "selectRandom": "남은카드",

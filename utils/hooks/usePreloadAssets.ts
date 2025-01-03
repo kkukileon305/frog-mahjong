@@ -1,5 +1,6 @@
 "use client";
 
+// assets
 import EmojiAngry from "@/public/emojis/angry.png";
 import EmojiHeart from "@/public/emojis/heart.png";
 import EmojiNormal from "@/public/emojis/normal.png";
@@ -34,6 +35,31 @@ import missionFailedSrc from "@/public/audios/mission_failed.mp3";
 import bgSrc from "@/public/audios/bg.mp3";
 import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
+
+// old cards
+import GreenBal from "@/public/cards/green_bal.png";
+import GreenEight from "@/public/cards/green_eight.png";
+import GreenFour from "@/public/cards/green_four.png";
+import GreenSix from "@/public/cards/green_six.png";
+import GreenThree from "@/public/cards/green_three.png";
+import GreenTwo from "@/public/cards/green_two.png";
+import NormalFive from "@/public/cards/normal_five.png";
+import NormalNine from "@/public/cards/normal_nine.png";
+import NormalOne from "@/public/cards/normal_one.png";
+import NormalSeven from "@/public/cards/normal_seven.png";
+import RedChung from "@/public/cards/red_chung.png";
+import RedEight from "@/public/cards/red_eight.png";
+import RedFive from "@/public/cards/red_five.png";
+import RedFour from "@/public/cards/red_four.png";
+import RedNine from "@/public/cards/red_nine.png";
+import RedOne from "@/public/cards/red_one.png";
+import RedSeven from "@/public/cards/red_seven.png";
+import RedSix from "@/public/cards/red_six.png";
+import RedThree from "@/public/cards/red_three.png";
+import RedTwo from "@/public/cards/red_two.png";
+import Sealed from "@/public/cards/sealed.jpg";
+
+// utils
 import useAssetStore from "@/utils/stores/useAssetStore";
 import useSoundStore, { GameAudios } from "@/utils/stores/useSoundStore";
 import axiosInstance, { ImportCardBody, MissionResponse } from "@/utils/axios";
@@ -93,6 +119,28 @@ const usePreloadAssets = () => {
     EmojiSleep,
     EmojiSmile,
     HelpImage,
+    // old cards
+    GreenBal,
+    GreenEight,
+    GreenFour,
+    GreenSix,
+    GreenThree,
+    GreenTwo,
+    NormalFive,
+    NormalNine,
+    NormalOne,
+    NormalSeven,
+    RedChung,
+    RedEight,
+    RedFive,
+    RedFour,
+    RedNine,
+    RedOne,
+    RedSeven,
+    RedSix,
+    RedThree,
+    RedTwo,
+    Sealed,
   ].map((image) => ({
     url: image.src,
     type: "image",
