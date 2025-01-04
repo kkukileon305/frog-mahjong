@@ -35,6 +35,9 @@ import missionFailedSrc from "@/public/audios/mission_failed.mp3";
 import bgSrc from "@/public/audios/bg.mp3";
 import cardSelectSrc from "@/public/audios/card_select.mp3";
 import cardDiscardSrc from "@/public/audios/card_discard.mp3";
+import FrogMahjong from "@/public/game-types/frog-mahjong.png";
+import Wingspan from "@/public/game-types/wingspan.png";
+import GreenArrow from "@/public/icons/green_arrow.png";
 
 // old cards
 import GreenBal from "@/public/cards/green_bal.png";
@@ -141,6 +144,9 @@ const usePreloadAssets = () => {
     RedThree,
     RedTwo,
     Sealed,
+    FrogMahjong,
+    Wingspan,
+    GreenArrow,
   ].map((image) => ({
     url: image.src,
     type: "image",

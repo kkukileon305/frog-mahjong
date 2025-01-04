@@ -13,7 +13,7 @@ import EditProfileImage from "@/app/(game)/rooms/EditProfileImage";
 import ProgressBar from "@/utils/components/ProgressBar";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
-import { decryptAES, encryptAES } from "@/utils/functions/aes";
+import GameTypeSwiper from "@/app/(game)/rooms/GameTypeSwiper";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -36,10 +36,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     gameType: s.gameType,
     setGameType: s.setGameType,
   }));
-
-  const handleGameTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setGameType(e.currentTarget.checked ? "FROG_MAHJONG_OLD" : "FROG_MAHJONG");
-  };
 
   const { profileIcons } = useProfileIconStore();
 
@@ -154,13 +150,15 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           </div>
         </div>
 
+        <GameTypeSwiper />
+
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full flex flex-col gap-8 mt-8"
+          className="w-full flex flex-col gap-8 landscape:mt-2"
         >
           <>
             <div className="flex flex-col">
-              <label className="text-center text-responsive font-bold">
+              <label className="text-center text-2xl font-bold">
                 {m("timeout")}
               </label>
               <div className="flex justify-between gap-2 mt-3">
@@ -185,7 +183,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
               </div>
             </div>
             <div className="flex flex-col mb-4">
-              <label className="text-center text-responsive font-bold">
+              <label className="text-center text-2xl font-bold">
                 {m("maxPlayerNumber")}
               </label>
               <div className="flex justify-between gap-2 mt-3">
@@ -242,21 +240,6 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             )}
           </>
         </form>
-
-        <div className="w-full flex justify-center mt-2 gap-4">
-          <span className="ms-3 text-sm font-medium text-gray-900 flex items-center">
-            구버전으로 플레이
-          </span>
-          <label className="w-fit inline-flex items-center cursor-pointer justify-center py-2">
-            <input
-              type="checkbox"
-              checked={gameType === "FROG_MAHJONG_OLD"}
-              onChange={handleGameTypeChange}
-              className="sr-only peer"
-            />
-            <div className="relative w-11 h-6 bg-gray-200 outline-none peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-          </label>
-        </div>
       </div>
     </div>
   );

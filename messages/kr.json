@@ -101,7 +101,9 @@
     "noCoin": "코인이 부족하여 진행 할 수 없습니다",
     "loadingImages": "이미지 불러오는 중 {loadedAssetCount}/{assetLength}",
     "close": "닫기",
-    "getAsset": "에셋 정보를 불러오는중"
+    "getAsset": "에셋 정보를 불러오는중",
+    "FROG_MAHJONG": "윙스팬",
+    "FROG_MAHJONG_OLD": "개굴작"
   },
   "AbnormalExit": {
     "title": "다른 유저가 이탈하여 게임을 종료합니다",

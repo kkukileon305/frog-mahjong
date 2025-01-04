@@ -4,17 +4,10 @@ import { getCookie } from "cookies-next";
 import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 import "swiper/css";
-import { StaticImageData } from "next/image";
 import getEmojiFromName, {
   emojiNames,
 } from "@/utils/functions/getEmojiFromName";
-
-type Emoji = {
-  name: string;
-  image: StaticImageData;
-};
 
 const ChatEmoji = () => {
   const { gameState, roomID, ws } = useFrogMahjongStore((s) => ({
