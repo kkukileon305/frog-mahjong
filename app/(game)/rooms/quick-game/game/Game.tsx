@@ -79,7 +79,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
       const {
         data: { cardIDList },
       } = await axiosInstance.get<CardListResponse>(
-        `/v2.1/game/${roomID}/deck`,
+        `/v0.1/game/${roomID}/deck`,
         {
           headers: {
             tkn: accessToken,

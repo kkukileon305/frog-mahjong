@@ -100,7 +100,9 @@
     "noCoin": "コインが足りないので進行できません",
     "loadingImages": "アセットを読み込み中 {loadedAssetCount}/{assetLength}",
     "close": "閉じる",
-    "getAsset": "画像情報を読み込み中"
+    "getAsset": "画像情報を読み込み中",
+    "FROG_MAHJONG": "ウィングスパン",
+    "FROG_MAHJONG_OLD": "カエル雀"
   },
   "AbnormalExit": {
     "title": "他のプレイヤーが離脱してゲームが強制終了されました",
