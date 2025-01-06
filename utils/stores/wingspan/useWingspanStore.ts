@@ -114,7 +114,7 @@ interface GameStore {
   clear: () => void;
 }
 
-const useFrogMahjongStore = create(
+const useWingspanStore = create(
   devtools<GameStore>((set) => ({
     ws: null as WebSocket | null,
     setWs: (ws: WebSocket | null) => set({ ws }),
@@ -259,4 +259,4 @@ const useFrogMahjongStore = create(
   }))
 );
 
-export default useFrogMahjongStore;
+export default useWingspanStore;

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type GameType = "FROG_MAHJONG_OLD" | "FROG_MAHJONG";
+export type GameType = "FROG_MAHJONG_OLD" | "WINGSPAN";
 
 type GameSettingStore = {
   timer: number;
@@ -26,7 +26,7 @@ const useMatchSettingStore = create<GameSettingStore>((set) => ({
   password: "",
   setPassword: (password: string) => set({ password }),
 
-  gameType: "FROG_MAHJONG",
+  gameType: "WINGSPAN",
   setGameType: (gameType: GameType) => set({ gameType }),
 }));
 

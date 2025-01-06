@@ -32,10 +32,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     null
   );
 
-  const { gameType, setGameType } = useMatchSettingStore((s) => ({
-    gameType: s.gameType,
-    setGameType: s.setGameType,
-  }));
+  const gameType = useMatchSettingStore((s) => s.gameType);
 
   const { profileIcons } = useProfileIconStore();
 
@@ -98,6 +95,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center bg-rooms bg-center bg-cover p-2">
+      {process.env.NODE_ENV !== "production" && (
+        <p className="absolute left-0 top-0">{gameType}</p>
+      )}
+
       {isProfileModalOpen && (
         <ModalContainer
           setIsOpen={setIsProfileModalOpen}

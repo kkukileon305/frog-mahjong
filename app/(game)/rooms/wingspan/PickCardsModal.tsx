@@ -1,6 +1,6 @@
 "use client";
 
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import Timer from "@/public/icons/timer.png";
 import { useTranslations } from "next-intl";
 import {
@@ -33,7 +33,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
 
   const users = gameStore.gameState?.users!;
   const playTurn = gameStore.gameState?.gameInfo?.playTurn!;

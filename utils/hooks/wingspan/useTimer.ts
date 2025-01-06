@@ -1,8 +1,8 @@
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { useEffect } from "react";
 
 const useTimer = () => {
-  const { setTimer, fullTime, setTimerId } = useFrogMahjongStore((s) => ({
+  const { setTimer, fullTime, setTimerId } = useWingspanStore((s) => ({
     setTimer: s.setTimer,
     setTimerId: s.setTimerId,
     fullTime: s.gameState?.gameInfo?.timer,
@@ -14,7 +14,7 @@ const useTimer = () => {
     setTimer(fullTime);
 
     const intervalId = setInterval(() => {
-      const newTime = useFrogMahjongStore.getState().timer - 1;
+      const newTime = useWingspanStore.getState().timer - 1;
 
       setTimer(newTime);
     }, 1000);

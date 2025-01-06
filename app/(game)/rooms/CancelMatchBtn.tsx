@@ -7,7 +7,7 @@ import { getCookie } from "cookies-next";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { Dispatch, SetStateAction } from "react";
 import { IoClose } from "react-icons/io5";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 type CancelMatchBtnProps = {
@@ -17,7 +17,7 @@ type CancelMatchBtnProps = {
 const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
   const userID = getCookie("userID") as string;
   const oldFrogMahjongStore = useOldFrogMahjongStore();
-  const frogMahjongStore = useFrogMahjongStore();
+  const frogMahjongStore = useWingspanStore();
 
   const gameType = useMatchSettingStore((s) => s.gameType);
   const store =

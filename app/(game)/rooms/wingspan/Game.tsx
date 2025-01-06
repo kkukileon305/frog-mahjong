@@ -2,17 +2,17 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import MissionPanel from "@/app/(game)/rooms/frog-mahjong/MissionPanel";
-import ChatEmoji from "@/app/(game)/rooms/frog-mahjong/ChatEmoji";
-import MyCardBoard from "@/app/(game)/rooms/frog-mahjong/MyCardBoard";
-import UserPanel from "@/app/(game)/rooms/frog-mahjong/UserPanel";
-import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
+import MissionPanel from "@/app/(game)/rooms/wingspan/MissionPanel";
+import ChatEmoji from "@/app/(game)/rooms/wingspan/ChatEmoji";
+import MyCardBoard from "@/app/(game)/rooms/wingspan/MyCardBoard";
+import UserPanel from "@/app/(game)/rooms/wingspan/UserPanel";
+import PickCardsModal from "@/app/(game)/rooms/wingspan/PickCardsModal";
 
 const Game = () => {
   const m = useTranslations("Game");
 
-  const { gameState, setIsHelpModalOpen } = useFrogMahjongStore((s) => ({
+  const { gameState, setIsHelpModalOpen } = useWingspanStore((s) => ({
     gameState: s.gameState,
     setIsHelpModalOpen: s.setIsHelpModalOpen,
   }));

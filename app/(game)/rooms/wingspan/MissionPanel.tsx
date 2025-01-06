@@ -1,5 +1,5 @@
 "use client";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ import Roulette3 from "@/public/effects/roulette3.png";
 const MissionPanel = () => {
   const userID = getCookie("userID") as string;
 
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
 
   const m = useTranslations("Game");
 

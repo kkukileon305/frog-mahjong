@@ -1,4 +1,4 @@
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { getCookie } from "cookies-next";
 import React, { useEffect, useState } from "react";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
@@ -27,7 +27,7 @@ const MyCardBoard = () => {
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
   const audios = useSoundStore((s) => s.audios);
 
-  const store = useFrogMahjongStore();
+  const store = useWingspanStore();
   const users = store.gameState?.users!;
   const gameInfo = store.gameState?.gameInfo!;
   const roomID = store.gameState?.gameInfo?.roomID!;

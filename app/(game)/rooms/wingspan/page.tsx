@@ -4,17 +4,17 @@ import useDetectNavigation from "@/utils/hooks/useDetectNavigation";
 import { getCookie } from "cookies-next";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import AbnormalExit from "@/app/(game)/rooms/quick-game/AbnormalExit";
 import Entering from "@/app/(game)/rooms/quick-game/Entering";
-import Game from "@/app/(game)/rooms/frog-mahjong/Game";
-import PickCardsModal from "@/app/(game)/rooms/frog-mahjong/PickCardsModal";
-import ResultModal from "@/app/(game)/rooms/frog-mahjong/ResultModal";
-import useTimer from "@/utils/hooks/frog-mahjong/useTimer";
-import HelpModal from "@/app/(game)/rooms/frog-mahjong/HelpModal";
-import Roulette from "@/app/(game)/rooms/frog-mahjong/Roulette";
+import Game from "@/app/(game)/rooms/wingspan/Game";
+import PickCardsModal from "@/app/(game)/rooms/wingspan/PickCardsModal";
+import ResultModal from "@/app/(game)/rooms/wingspan/ResultModal";
+import useTimer from "@/utils/hooks/wingspan/useTimer";
+import HelpModal from "@/app/(game)/rooms/wingspan/HelpModal";
+import Roulette from "@/app/(game)/rooms/wingspan/Roulette";
 import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
-import DisconnectedModal from "@/app/(game)/rooms/frog-mahjong/DisconnectedModal";
+import DisconnectedModal from "@/app/(game)/rooms/wingspan/DisconnectedModal";
 
 const Page = () => {
   useDetectNavigation();
@@ -24,7 +24,7 @@ const Page = () => {
   const accessToken = getCookie("accessToken") as string;
 
   const router = useRouter();
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
 
   const currentUser = gameStore.gameState?.users?.find(
     (user) => user.id === Number(userID)

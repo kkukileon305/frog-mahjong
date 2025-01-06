@@ -8,10 +8,9 @@ import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import ModalContainer from "@/utils/components/ModalContainer";
-import ReportModal from "@/app/(game)/rooms/frog-mahjong/ReportModal";
+import ReportModal from "@/app/(game)/rooms/wingspan/ReportModal";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
-import RedOne from "@/public/cards/red_one.png";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import getEmojiFromName from "@/utils/functions/getEmojiFromName";
 
 type UserPanelProps = {
@@ -29,7 +28,7 @@ const UserPanel = ({ user }: UserPanelProps) => {
 
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
-  const { chatList, ws, gameState, cards } = useFrogMahjongStore();
+  const { chatList, ws, gameState, cards } = useWingspanStore();
 
   const gameInfo = gameState?.gameInfo;
   const roomID = gameState?.gameInfo?.roomID;

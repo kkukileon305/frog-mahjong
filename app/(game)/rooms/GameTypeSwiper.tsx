@@ -35,7 +35,7 @@ const GameTypeSwiper = () => {
     {
       name: m("FROG_MAHJONG"),
       image: Wingspan,
-      gameType: "FROG_MAHJONG",
+      gameType: "WINGSPAN",
     },
     {
       name: m("FROG_MAHJONG_OLD"),
