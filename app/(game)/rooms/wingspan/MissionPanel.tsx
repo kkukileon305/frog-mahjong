@@ -1,21 +1,9 @@
 "use client";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
-import axiosInstance, {
-  BirdCard,
-  Mission,
-  MissionResponse,
-} from "@/utils/axios";
-import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
-import delay from "@/utils/functions/delay";
-import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
-import RouletteLoading from "@/public/effects/roulette_loading.gif";
-import Roulette1 from "@/public/effects/roulette1.png";
-import Roulette2 from "@/public/effects/roulette2.png";
-import Roulette3 from "@/public/effects/roulette3.png";
+import { getSuccessCardIds } from "@/utils/functions/wingspan/checkMissions";
 
 const MissionPanel = () => {
   const userID = getCookie("userID") as string;

@@ -9,7 +9,7 @@ import React, {
   useState,
 } from "react";
 import { getCookie } from "cookies-next";
-import { QUITRequest } from "@/utils/constants/frog-mahjong/socketTypes";
+import { QUITRequest } from "@/utils/constants/wingspan/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";

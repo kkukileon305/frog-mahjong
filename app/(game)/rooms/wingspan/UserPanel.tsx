@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { UserSocket } from "@/utils/constants/frog-mahjong/socketTypes";
+import { UserSocket } from "@/utils/constants/wingspan/socketTypes";
 import React, { useState } from "react";
 import { AnimatePresence } from "framer";
 import { useTranslations } from "next-intl";

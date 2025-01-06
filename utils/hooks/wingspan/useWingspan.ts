@@ -17,7 +17,7 @@ import {
   PlayTogetherRequest,
   SocketResponse,
   SocketResponseBody,
-} from "@/utils/constants/frog-mahjong/socketTypes";
+} from "@/utils/constants/wingspan/socketTypes";
 import {
   CHAT,
   DISCARD,
@@ -334,8 +334,7 @@ const useWingspan = (mode: MatchingMode) => {
         store.setDisconnectedUsers(disconnectedUser);
 
         // 다른 유저 재접속시 또는 본인 접속시 시간 초기화
-        const fullTime =
-          useWingspanStore.getState().gameState?.gameInfo?.timer;
+        const fullTime = useWingspanStore.getState().gameState?.gameInfo?.timer;
 
         if (fullTime) {
           store.setTimer(fullTime);

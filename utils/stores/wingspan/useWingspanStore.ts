@@ -3,7 +3,7 @@ import {
   ChatResponse,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/constants/frog-mahjong/socketTypes";
+} from "@/utils/constants/wingspan/socketTypes";
 import { devtools } from "zustand/middleware";
 import { BirdCard, Mission } from "@/utils/axios";
 

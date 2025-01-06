@@ -7,7 +7,7 @@ import Roulette1 from "@/public/effects/roulette1.png";
 import Roulette2 from "@/public/effects/roulette2.png";
 import Roulette3 from "@/public/effects/roulette3.png";
 import delay from "@/utils/functions/delay";
-import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
+import { STARTRequest } from "@/utils/constants/wingspan/socketTypes";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { getCookie } from "cookies-next";
 
