@@ -170,11 +170,11 @@ const SettingMenus = () => {
 
       <div
         id="setting-button"
-        className="w-fit absolute flex justify-end top-0 right-0 text-black"
+        className="w-fit absolute flex justify-end top-0 right-0 text-black z-10"
       >
         <button
           onClick={() => setIsOpen(true)}
-          className="cursor-pointer p-2 landscape:p-1 rounded-xl hover:bg-gray-200"
+          className="cursor-pointer p-2 rounded-xl"
         >
           <IoMdSettings size={24} />
         </button>
