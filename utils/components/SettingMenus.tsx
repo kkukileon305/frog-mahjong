@@ -64,7 +64,7 @@ const SettingMenus = () => {
   };
 
   const handleGameTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setGameType(e.currentTarget.checked ? "FROG_MAHJONG_OLD" : "FROG_MAHJONG");
+    setGameType(e.currentTarget.checked ? "FROG_MAHJONG_OLD" : "WINGSPAN");
   };
 
   return (
