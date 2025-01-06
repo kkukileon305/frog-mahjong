@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 
 export type GameType = "FROG_MAHJONG_OLD" | "WINGSPAN";
 
@@ -14,6 +15,9 @@ type GameSettingStore = {
 
   gameType: GameType;
   setGameType: (gameType: GameType) => void;
+
+  mode: MatchingMode | null;
+  setMode: (mode: MatchingMode) => void;
 };
 
 const useMatchSettingStore = create<GameSettingStore>((set) => ({
@@ -28,6 +32,9 @@ const useMatchSettingStore = create<GameSettingStore>((set) => ({
 
   gameType: "WINGSPAN",
   setGameType: (gameType: GameType) => set({ gameType }),
+
+  mode: null,
+  setMode: (mode) => set({ mode }),
 }));
 
 export default useMatchSettingStore;

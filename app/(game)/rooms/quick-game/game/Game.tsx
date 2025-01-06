@@ -35,6 +35,7 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import useSoundStore from "@/utils/stores/useSoundStore";
 import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -43,6 +44,7 @@ type GameProps = {
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
   const { isStarted, ws, gameState } = useOldFrogMahjongStore();
+  const mode = useMatchSettingStore((s) => s.mode);
   const [cards, setCards] = useState<CardImage[]>([]);
 
   const accessToken = getCookie("accessToken") as string;
@@ -94,6 +96,10 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     };
 
     getCards();
+
+    if (mode) {
+      localStorage.setItem("matchMode", mode);
+    }
   }, []);
 
   const getSelectedCards = () => {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
@@ -45,8 +45,24 @@ const GameTypeSwiper = () => {
   ];
 
   const handleGameTypeChange = (index: number) => {
-    setGameType(games[index].gameType);
+    const newType = games[index].gameType;
+
+    setGameType(newType);
+    localStorage.setItem("gameType", newType);
   };
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      const prevType = localStorage.getItem("gameType") as GameType | null;
+
+      if (prevType) {
+        setGameType(localStorage.getItem("gameType") as GameType);
+        setGameType(localStorage.getItem("gameType") as GameType);
+        const idx = games.findIndex((game) => game.gameType === prevType);
+        swiperRef.current.slideTo(idx);
+      }
+    }
+  }, [swiperRef.current]);
 
   return (
     <div className="relative">

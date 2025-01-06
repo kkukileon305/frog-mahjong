@@ -68,7 +68,7 @@ const useWingspan = (mode: MatchingMode) => {
       timer,
       count,
       accessToken,
-      gameType: "FROG_MAHJONG",
+      gameType: "WINGSPAN",
     });
 
     const newWs = new WebSocket(url);

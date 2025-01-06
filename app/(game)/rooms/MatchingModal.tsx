@@ -10,7 +10,9 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import { SubmitHandler, useForm } from "react-hook-form";
 import axiosInstance, { UserData } from "@/utils/axios";
 import { getCookie } from "cookies-next";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import useMatchSettingStore, {
+  GameType,
+} from "@/utils/stores/useMatchSettingStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
@@ -64,17 +66,18 @@ const MatchingModal = ({
     }));
 
   const frogMahjongConnect = useWingspan(mode);
-  const { password, isMatching, isMatchingCompleted, setMode } =
-    useWingspanStore((s) => ({
+  const { password, isMatching, isMatchingCompleted } = useWingspanStore(
+    (s) => ({
       password: s.gameState?.gameInfo?.password,
       isMatching: s.isMatching,
       isMatchingCompleted: s.isMatchingCompleted,
-      setMode: s.setMode,
-    }));
+    })
+  );
 
-  const { setPassword, gameType } = useMatchSettingStore((s) => ({
+  const { setPassword, gameType, setMode } = useMatchSettingStore((s) => ({
     setPassword: s.setPassword,
     gameType: s.gameType,
+    setMode: s.setMode,
   }));
 
   useEffect(() => {
@@ -99,6 +102,8 @@ const MatchingModal = ({
             await delay(5000 - term);
           }
         }
+
+        const gameType = localStorage.getItem("gameType") as GameType | null;
 
         if (gameType === "FROG_MAHJONG_OLD") {
           oldConnect();

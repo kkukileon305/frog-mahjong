@@ -105,9 +105,6 @@ interface GameStore {
   sessionID: string | null;
   setSessionID: (setIsUseItem: string) => void;
 
-  mode: string | null;
-  setMode: (mode: string) => void;
-
   disconnectedUsers: UserSocket[];
   setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
 
@@ -221,10 +218,6 @@ const useWingspanStore = create(
 
     sessionID: null,
     setSessionID: (sessionID) => set({ sessionID }),
-
-    mode: null,
-    setMode: (mode) => set({ mode }),
-
     disconnectedUsers: [],
     setDisconnectedUsers: (disconnectedUsers) => set({ disconnectedUsers }),
 
@@ -251,7 +244,6 @@ const useWingspanStore = create(
         isHelpModalOpen: false,
         isUseItem: false,
         sessionID: null,
-        mode: null,
         timerId: null,
         currentMissions: [],
         disconnectedUsers: [],

@@ -3,8 +3,10 @@
 import { useForm } from "react-hook-form";
 import { FormMetadata, UserData } from "@/utils/axios";
 import { useTranslations } from "next-intl";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import useMatchSettingStore, {
+  GameType,
+} from "@/utils/stores/useMatchSettingStore";
+import React, { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
@@ -69,6 +71,12 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     setTimer(formMetadata.timers[0]);
     loadImages();
     setFCM();
+
+    const gameType = localStorage.getItem("gameType");
+
+    if (!gameType) {
+      localStorage.setItem("gameType", "WINGSPAN");
+    }
   }, []);
 
   watch((value) => {
