@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import { useRouter } from "next/navigation";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 
 const AbnormalExit = () => {
   const m = useTranslations("AbnormalExit");
   const oldClear = useOldFrogMahjongStore((s) => s.clear);
-  const { clear, ws, timerId } = useFrogMahjongStore((s) => ({
+  const { clear, ws, timerId } = useWingspanStore((s) => ({
     clear: s.clear,
     ws: s.ws,
     timerId: s.timerId,

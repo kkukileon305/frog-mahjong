@@ -7,12 +7,14 @@ import Roulette1 from "@/public/effects/roulette1.png";
 import Roulette2 from "@/public/effects/roulette2.png";
 import Roulette3 from "@/public/effects/roulette3.png";
 import delay from "@/utils/functions/delay";
-import { STARTRequest } from "@/utils/constants/frog-mahjong/socketTypes";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import { STARTRequest } from "@/utils/constants/wingspan/socketTypes";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { getCookie } from "cookies-next";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 const Roulette = () => {
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
+  const mode = useMatchSettingStore((s) => s.mode);
   const currentMissions = gameStore.allMissions.filter((m) =>
     gameStore.gameState?.gameInfo?.missionIDs?.includes(m.id)
   );
@@ -72,8 +74,6 @@ const Roulette = () => {
       setStep(3);
 
       await delay(5000);
-
-      const mode = gameStore.mode;
 
       if (mode) {
         localStorage.setItem("matchMode", mode);

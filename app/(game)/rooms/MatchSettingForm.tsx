@@ -3,8 +3,10 @@
 import { useForm } from "react-hook-form";
 import { FormMetadata, UserData } from "@/utils/axios";
 import { useTranslations } from "next-intl";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import useMatchSettingStore, {
+  GameType,
+} from "@/utils/stores/useMatchSettingStore";
+import React, { useEffect, useState } from "react";
 import MatchingModal from "@/app/(game)/rooms/MatchingModal";
 import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import usePreloadAssets from "@/utils/hooks/usePreloadAssets";
@@ -32,10 +34,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     null
   );
 
-  const { gameType, setGameType } = useMatchSettingStore((s) => ({
-    gameType: s.gameType,
-    setGameType: s.setGameType,
-  }));
+  const gameType = useMatchSettingStore((s) => s.gameType);
 
   const { profileIcons } = useProfileIconStore();
 
@@ -72,6 +71,12 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     setTimer(formMetadata.timers[0]);
     loadImages();
     setFCM();
+
+    const gameType = localStorage.getItem("gameType");
+
+    if (!gameType) {
+      localStorage.setItem("gameType", "WINGSPAN");
+    }
   }, []);
 
   watch((value) => {
@@ -98,6 +103,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center bg-rooms bg-center bg-cover p-2">
+      {process.env.NODE_ENV !== "production" && (
+        <p className="absolute left-0 top-0">{gameType}</p>
+      )}
+
       {isProfileModalOpen && (
         <ModalContainer
           setIsOpen={setIsProfileModalOpen}

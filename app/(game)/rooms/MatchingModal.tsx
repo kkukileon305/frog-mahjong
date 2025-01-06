@@ -10,12 +10,14 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import { SubmitHandler, useForm } from "react-hook-form";
 import axiosInstance, { UserData } from "@/utils/axios";
 import { getCookie } from "cookies-next";
-import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import useMatchSettingStore, {
+  GameType,
+} from "@/utils/stores/useMatchSettingStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
 import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
-import useFrogMahjong from "@/utils/hooks/frog-mahjong/useFrogMahjong";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspan from "@/utils/hooks/wingspan/useWingspan";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import delay from "@/utils/functions/delay";
 
 type MatchingModalProps = {
@@ -63,18 +65,19 @@ const MatchingModal = ({
       oldIsMatchingCompleted: s.isMatchingCompleted,
     }));
 
-  const frogMahjongConnect = useFrogMahjong(mode);
-  const { password, isMatching, isMatchingCompleted, setMode } =
-    useFrogMahjongStore((s) => ({
+  const frogMahjongConnect = useWingspan(mode);
+  const { password, isMatching, isMatchingCompleted } = useWingspanStore(
+    (s) => ({
       password: s.gameState?.gameInfo?.password,
       isMatching: s.isMatching,
       isMatchingCompleted: s.isMatchingCompleted,
-      setMode: s.setMode,
-    }));
+    })
+  );
 
-  const { setPassword, gameType } = useMatchSettingStore((s) => ({
+  const { setPassword, gameType, setMode } = useMatchSettingStore((s) => ({
     setPassword: s.setPassword,
     gameType: s.gameType,
+    setMode: s.setMode,
   }));
 
   useEffect(() => {
@@ -100,9 +103,11 @@ const MatchingModal = ({
           }
         }
 
+        const gameType = localStorage.getItem("gameType") as GameType | null;
+
         if (gameType === "FROG_MAHJONG_OLD") {
           oldConnect();
-        } else if (gameType === "FROG_MAHJONG") {
+        } else if (gameType === "WINGSPAN") {
           frogMahjongConnect();
         }
       } catch (e) {
@@ -129,7 +134,7 @@ const MatchingModal = ({
 
         if (gameType === "FROG_MAHJONG_OLD") {
           oldConnect();
-        } else if (gameType === "FROG_MAHJONG") {
+        } else if (gameType === "WINGSPAN") {
           frogMahjongConnect();
         }
       } catch (e) {
@@ -157,7 +162,7 @@ const MatchingModal = ({
           setIsCopySuccess(false);
         }
       }
-    } else if (gameType === "FROG_MAHJONG") {
+    } else if (gameType === "WINGSPAN") {
       if (password) {
         try {
           await navigator.clipboard.writeText(password);
@@ -200,7 +205,7 @@ const MatchingModal = ({
                 <p className="text-center text-3xl font-bold">
                   {gameType === "FROG_MAHJONG_OLD" &&
                     m(oldIsMatchingCompleted ? "complete" : "search")}
-                  {gameType === "FROG_MAHJONG" &&
+                  {gameType === "WINGSPAN" &&
                     m(isMatchingCompleted ? "complete" : "search")}
                 </p>
               )}
@@ -210,14 +215,14 @@ const MatchingModal = ({
                   <p className="text-center text-3xl font-bold">
                     {gameType === "FROG_MAHJONG_OLD" &&
                       m(oldIsMatchingCompleted ? "complete" : "send")}
-                    {gameType === "FROG_MAHJONG" &&
+                    {gameType === "WINGSPAN" &&
                       m(isMatchingCompleted ? "complete" : "send")}
                   </p>
                   <div className="w-full flex items-center justify-center gap-4">
                     <p className="w-[calc(100%-136px)] font-bold text-xl text-white bg-game-icon p-2 rounded-xl max-w-64 text-center">
                       {gameType === "FROG_MAHJONG_OLD" &&
                         (oldPassword ? oldPassword : m("loading"))}{" "}
-                      {gameType === "FROG_MAHJONG" &&
+                      {gameType === "WINGSPAN" &&
                         (password ? password : m("loading"))}
                     </p>
                     <button
@@ -235,7 +240,7 @@ const MatchingModal = ({
                   <p className="text-center text-3xl font-bold">
                     {gameType === "FROG_MAHJONG_OLD" &&
                       m(oldIsMatchingCompleted ? "complete" : "write")}
-                    {gameType === "FROG_MAHJONG" &&
+                    {gameType === "WINGSPAN" &&
                       m(isMatchingCompleted ? "complete" : "write")}
                   </p>
 

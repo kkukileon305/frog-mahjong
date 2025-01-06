@@ -73,7 +73,7 @@ import useMessagingStore from "@/utils/stores/useMessagingStore";
 import { isSupported } from "@firebase/messaging";
 import { getMessaging } from "firebase/messaging";
 import { app } from "@/utils/firebaseConfig";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { getCookie } from "cookies-next";
 
 type AssetType = {
@@ -176,7 +176,7 @@ const usePreloadAssets = () => {
     type: "audio",
   }));
 
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;

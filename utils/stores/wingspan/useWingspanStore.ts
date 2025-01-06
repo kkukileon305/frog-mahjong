@@ -3,7 +3,7 @@ import {
   ChatResponse,
   SocketResponseBody,
   UserSocket,
-} from "@/utils/constants/frog-mahjong/socketTypes";
+} from "@/utils/constants/wingspan/socketTypes";
 import { devtools } from "zustand/middleware";
 import { BirdCard, Mission } from "@/utils/axios";
 
@@ -105,16 +105,13 @@ interface GameStore {
   sessionID: string | null;
   setSessionID: (setIsUseItem: string) => void;
 
-  mode: string | null;
-  setMode: (mode: string) => void;
-
   disconnectedUsers: UserSocket[];
   setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
 
   clear: () => void;
 }
 
-const useFrogMahjongStore = create(
+const useWingspanStore = create(
   devtools<GameStore>((set) => ({
     ws: null as WebSocket | null,
     setWs: (ws: WebSocket | null) => set({ ws }),
@@ -221,10 +218,6 @@ const useFrogMahjongStore = create(
 
     sessionID: null,
     setSessionID: (sessionID) => set({ sessionID }),
-
-    mode: null,
-    setMode: (mode) => set({ mode }),
-
     disconnectedUsers: [],
     setDisconnectedUsers: (disconnectedUsers) => set({ disconnectedUsers }),
 
@@ -251,7 +244,6 @@ const useFrogMahjongStore = create(
         isHelpModalOpen: false,
         isUseItem: false,
         sessionID: null,
-        mode: null,
         timerId: null,
         currentMissions: [],
         disconnectedUsers: [],
@@ -259,4 +251,4 @@ const useFrogMahjongStore = create(
   }))
 );
 
-export default useFrogMahjongStore;
+export default useWingspanStore;

@@ -1,6 +1,6 @@
 "use client";
 
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import Timer from "@/public/icons/timer.png";
 import { useTranslations } from "next-intl";
 import {
@@ -9,13 +9,13 @@ import {
   ItemChangeBody,
   ItemChangeRequest,
   UserSocket,
-} from "@/utils/constants/frog-mahjong/socketTypes";
+} from "@/utils/constants/wingspan/socketTypes";
 import { getCookie } from "cookies-next";
 import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
 import { useEffect } from "react";
 import { RANDOM } from "@/utils/constants/const";
-import { getSuccessCardIds } from "@/utils/functions/frog-mahjong/checkMissions";
+import { getSuccessCardIds } from "@/utils/functions/wingspan/checkMissions";
 import { encryptAES } from "@/utils/functions/aes";
 
 type LeftCard = BirdCard & {
@@ -33,7 +33,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
 
-  const gameStore = useFrogMahjongStore();
+  const gameStore = useWingspanStore();
 
   const users = gameStore.gameState?.users!;
   const playTurn = gameStore.gameState?.gameInfo?.playTurn!;

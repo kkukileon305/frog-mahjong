@@ -9,10 +9,10 @@ import React, {
   useState,
 } from "react";
 import { getCookie } from "cookies-next";
-import { QUITRequest } from "@/utils/constants/frog-mahjong/socketTypes";
+import { QUITRequest } from "@/utils/constants/wingspan/socketTypes";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { QUIT_GAME } from "@/utils/constants/const";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
@@ -33,7 +33,7 @@ const ResultModal = () => {
     cards,
     timerId,
     setIsOpenResultModal,
-  } = useFrogMahjongStore();
+  } = useWingspanStore();
   const users = useRef(gameState?.users);
 
   const profileIcons = useProfileIconStore((s) => s.profileIcons);

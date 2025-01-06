@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { useTranslations } from "next-intl";
 import HelpImage from "@/public/helps/help.jpg";
 
 const HelpModal = () => {
   const m = useTranslations("HelpModal");
-  const setIsHelpModal = useFrogMahjongStore((s) => s.setIsHelpModalOpen);
+  const setIsHelpModal = useWingspanStore((s) => s.setIsHelpModalOpen);
 
   return (
     <div className="fixed left-0 top-0 w-full h-full bg-black/50 p-2 z-30 flex justify-center items-center">

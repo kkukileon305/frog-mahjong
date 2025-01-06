@@ -35,6 +35,7 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import useSoundStore from "@/utils/stores/useSoundStore";
 import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
+import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -43,6 +44,7 @@ type GameProps = {
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
   const { isStarted, ws, gameState } = useOldFrogMahjongStore();
+  const mode = useMatchSettingStore((s) => s.mode);
   const [cards, setCards] = useState<CardImage[]>([]);
 
   const accessToken = getCookie("accessToken") as string;
@@ -94,6 +96,10 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     };
 
     getCards();
+
+    if (mode) {
+      localStorage.setItem("matchMode", mode);
+    }
   }, []);
 
   const getSelectedCards = () => {
@@ -140,7 +146,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
 
   const onSelectCard = (card: CardImage) => {
     if (isUserTurn) {
-      if (dora) {
+      if (dora?.cardID) {
         // 중복검사
         if (selectedCards.find((sc) => sc.id === card.id)) {
           setSelectedCards(selectedCards.filter((sc) => sc.id !== card.id));
@@ -221,7 +227,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     if (gameInfo?.loanInfo === null) {
       if (!isFullSixCard && isUserTurn) {
         if (currentUser.cards === null) {
-          return gameInfo.dora === null ? m("getDora") : m("getFiveCards");
+          return gameInfo.dora?.cardID === 0 ? m("getDora") : m("getFiveCards");
         } else {
           return filteredCards.length === 0 ? m("noLeftCards") : m("getCard");
         }

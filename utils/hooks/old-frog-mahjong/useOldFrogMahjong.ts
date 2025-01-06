@@ -173,6 +173,8 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
         }
+
+        localStorage.setItem("sessionID", parsedBody.sessionID);
       } else if (eventName === LOAN) {
         audios?.commonLoanAudio.play();
       } else if (eventName === FAILED_LOAN) {

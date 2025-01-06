@@ -1,7 +1,7 @@
 "use client";
 
 import { getCookie } from "cookies-next";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -10,7 +10,7 @@ import getEmojiFromName, {
 } from "@/utils/functions/getEmojiFromName";
 
 const ChatEmoji = () => {
-  const { gameState, roomID, ws } = useFrogMahjongStore((s) => ({
+  const { gameState, roomID, ws } = useWingspanStore((s) => ({
     gameState: s.gameState,
     roomID: s.gameState?.gameInfo?.roomID,
     ws: s.ws,

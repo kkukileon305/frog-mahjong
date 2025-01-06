@@ -32,7 +32,10 @@ const Tutorial = () => {
         </div>
       )}
 
-      <button onClick={() => setIsOpen(true)} className="absolute top-0 right-10 p-2">
+      <button
+        onClick={() => setIsOpen(true)}
+        className="absolute top-0 right-10 p-2 z-10"
+      >
         <MdOutlineQuestionMark size={24} />
       </button>
     </>

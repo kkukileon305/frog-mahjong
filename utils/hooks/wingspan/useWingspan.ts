@@ -2,7 +2,7 @@ import { MatchingMode } from "@/utils/hooks/old-frog-mahjong/useOldFrogMahjong";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
-import useFrogMahjongStore from "@/utils/stores/frog-mahjong/useFrogMahjongStore";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ import {
   PlayTogetherRequest,
   SocketResponse,
   SocketResponseBody,
-} from "@/utils/constants/frog-mahjong/socketTypes";
+} from "@/utils/constants/wingspan/socketTypes";
 import {
   CHAT,
   DISCARD,
@@ -41,7 +41,7 @@ import {
 } from "@/utils/constants/const";
 import { decryptAES, encryptAES } from "@/utils/functions/aes";
 
-const useFrogMahjong = (mode: MatchingMode) => {
+const useWingspan = (mode: MatchingMode) => {
   const { timer, count, password } = useMatchSettingStore((s) => ({
     timer: s.timer,
     count: s.count,
@@ -54,7 +54,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
   const accessToken = getCookie("accessToken") as string;
   const userID = getCookie("userID") as string;
 
-  const store = useFrogMahjongStore();
+  const store = useWingspanStore();
 
   // sounds
   const audios = useSoundStore((s) => s.audios);
@@ -68,7 +68,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
       timer,
       count,
       accessToken,
-      gameType: "FROG_MAHJONG",
+      gameType: "WINGSPAN",
     });
 
     const newWs = new WebSocket(url);
@@ -174,7 +174,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
 
       if (data.errorInfo?.type === ERR_GAME_TERMINATED) {
         // 연결 끊김
-        const intervalId = useFrogMahjongStore.getState().timerId;
+        const intervalId = useWingspanStore.getState().timerId;
 
         intervalId && clearTimeout(intervalId);
 
@@ -219,7 +219,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
       if (eventName === IMPORT_SINGLE_CARD || eventName === RANDOM) {
         audios?.cardSelect.play();
 
-        const requestedCard = useFrogMahjongStore.getState().pickable.card;
+        const requestedCard = useWingspanStore.getState().pickable.card;
 
         const curUser = data.users?.find((u) => u.id === Number(userID));
         const importedCard = curUser?.cards?.find(
@@ -248,7 +248,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
           store.setIsVictoryFailed(false);
 
           const fullTime =
-            useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+            useWingspanStore.getState().gameState?.gameInfo?.timer;
 
           if (fullTime) {
             store.setTimer(fullTime);
@@ -279,7 +279,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
           // 무승부 체크
           const isAllPicked =
             allUserCardIds.length + allUserDiscardedIds.length ===
-            useFrogMahjongStore.getState().cards.length;
+            useWingspanStore.getState().cards.length;
 
           if (isAllPicked) {
             const req: GameOverRequest = {
@@ -298,7 +298,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
             localStorage.setItem("pick", "true");
             store.setIsTimeOut(false);
             const fullTime =
-              useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+              useWingspanStore.getState().gameState?.gameInfo?.timer;
 
             if (fullTime) {
               store.setTimer(fullTime);
@@ -334,8 +334,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
         store.setDisconnectedUsers(disconnectedUser);
 
         // 다른 유저 재접속시 또는 본인 접속시 시간 초기화
-        const fullTime =
-          useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+        const fullTime = useWingspanStore.getState().gameState?.gameInfo?.timer;
 
         if (fullTime) {
           store.setTimer(fullTime);
@@ -348,9 +347,9 @@ const useFrogMahjong = (mode: MatchingMode) => {
         store.setCurrentMissions(cm);
 
         // 끊기지 않은 사용자일 경우 타이머를 다시 재생
-        if (useFrogMahjongStore.getState().isStarted) {
+        if (useWingspanStore.getState().isStarted) {
           const intervalId = setInterval(() => {
-            const newTime = useFrogMahjongStore.getState().timer - 1;
+            const newTime = useWingspanStore.getState().timer - 1;
 
             store.setTimer(newTime);
           }, 1000);
@@ -363,7 +362,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
         localStorage.setItem("sessionID", parsedBody.sessionID);
 
         if (data.gameInfo?.isFull) {
-          router.push("/rooms/frog-mahjong");
+          router.push("/rooms/wingspan");
           store.setIsMatching(false);
           store.setIsMatchingCompleted(true);
         }
@@ -375,7 +374,7 @@ const useFrogMahjong = (mode: MatchingMode) => {
       } else if (eventName === START) {
         if (data.errorInfo === null) {
           const fullTime =
-            useFrogMahjongStore.getState().gameState?.gameInfo?.timer;
+            useWingspanStore.getState().gameState?.gameInfo?.timer;
 
           if (fullTime) {
             store.setTimer(fullTime);
@@ -429,4 +428,4 @@ const useFrogMahjong = (mode: MatchingMode) => {
   return connectQuickMatchingSocket;
 };
 
-export default useFrogMahjong;
+export default useWingspan;
