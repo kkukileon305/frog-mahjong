@@ -102,6 +102,7 @@ export enum Nest {
   Ground = "ground",
   Platform = "platform",
   Wild = "wild",
+  All = "all",
 }
 
 export interface ImportCardBody {
