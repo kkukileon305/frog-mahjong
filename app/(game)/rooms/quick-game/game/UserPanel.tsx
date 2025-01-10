@@ -17,6 +17,7 @@ import useSoundStore from "@/utils/stores/useSoundStore";
 import ModalContainer from "@/utils/components/ModalContainer";
 import ReportModal from "@/app/(game)/rooms/quick-game/ReportModal";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
+import { encryptAES } from "@/utils/functions/aes";
 
 type UserPanelProps = {
   user?: UserSocket;
@@ -67,7 +68,7 @@ const UserPanel = ({
       cards.find((cardImage) => cardImage.id === card.cardID) as CardImage
   );
 
-  const onLoanCard = () => {
+  const onLoanCard = async () => {
     if (
       gameInfo?.loanInfo === null &&
       isLoanSelectMode &&
@@ -81,9 +82,14 @@ const UserPanel = ({
         targetUserID: user?.id!,
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(requestBody),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: LoanRequest = {
         roomID: Number(roomID),
-        message: JSON.stringify(requestBody),
+        message: encryptedMessage,
         event: "LOAN",
       };
 

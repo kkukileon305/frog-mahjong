@@ -27,6 +27,7 @@ import {
 } from "@/utils/constants/const";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import { encryptAES } from "@/utils/functions/aes";
 
 type TimerProps = {
   filteredCards: CardImage[];
@@ -67,129 +68,156 @@ const Timer = ({ filteredCards, setSelectedCards }: TimerProps) => {
   }, [gameInfo]);
 
   useEffect(() => {
-    if (!isActive || time !== 0) return;
+    (async () => {
+      if (!isActive || time !== 0) return;
 
-    if (currentUser?.cards?.length === 6) {
-      if (gameInfo?.loanInfo?.userID === currentUser?.id) {
-        // 론 버리기
-        const body: LoanFailedBody = {
-          cardID: gameInfo?.loanInfo?.cardID,
-          playTurn: gameInfo?.playTurn,
-          targetUserID: gameInfo?.loanInfo.targetUserID,
+      if (currentUser?.cards?.length === 6) {
+        if (gameInfo?.loanInfo?.userID === currentUser?.id) {
+          // 론 버리기
+          const body: LoanFailedBody = {
+            cardID: gameInfo?.loanInfo?.cardID,
+            playTurn: gameInfo?.playTurn,
+            targetUserID: gameInfo?.loanInfo.targetUserID,
+          };
+
+          const encryptedMessage = await encryptAES(
+            JSON.stringify(body),
+            btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+          );
+
+          const req: LoanFailedRequest = {
+            roomID: Number(roomID),
+            message: encryptedMessage,
+            event: FAILED_LOAN,
+          };
+
+          ws?.send(JSON.stringify(req));
+
+          audios?.timeoutAudio.play();
+          return;
+        } else {
+          // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
+          // 일반 버리기
+          const [randomCard] = getRandomElements(currentUser.cards, 1);
+
+          const body: DiscardBody = {
+            cardID: randomCard.cardID,
+            playTurn: gameInfo?.playTurn as number,
+          };
+
+          const encryptedMessage = await encryptAES(
+            JSON.stringify(body),
+            btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+          );
+
+          const request: DiscardRequest = {
+            userID: currentUser?.id,
+            event: DISCARD,
+            roomID: Number(roomID),
+            message: encryptedMessage,
+          };
+
+          ws?.send(JSON.stringify(request));
+
+          audios?.timeoutAudio.play();
+          return;
+        }
+      }
+
+      if (gameInfo?.dora === null) {
+        // dora 랜덤 선택
+        const [randomCard] = getRandomElements(filteredCards, 1);
+
+        const requestBody: DORABody = {
+          cardID: randomCard.id,
+          playTurn: gameInfo.playTurn,
         };
 
-        const req: LoanFailedRequest = {
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(requestBody),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
+        const request: DORARequest = {
+          userID: currentUser?.id!,
           roomID: Number(roomID),
-          message: JSON.stringify(body),
-          event: FAILED_LOAN,
-        };
-
-        ws?.send(JSON.stringify(req));
-
-        audios?.timeoutAudio.play();
-        return;
-      } else {
-        // 카드를 하나 골라 6개가 되었지만 버리는 도중 타임아웃
-        // 일반 버리기
-        const [randomCard] = getRandomElements(currentUser.cards, 1);
-
-        const body: DiscardBody = {
-          cardID: randomCard.cardID,
-          playTurn: gameInfo?.playTurn as number,
-        };
-
-        const request: DiscardRequest = {
-          userID: currentUser?.id,
-          event: DISCARD,
-          roomID: Number(roomID),
-          message: JSON.stringify(body),
+          event: DORA,
+          message: encryptedMessage,
         };
 
         ws?.send(JSON.stringify(request));
-
         audios?.timeoutAudio.play();
         return;
       }
-    }
 
-    if (gameInfo?.dora === null) {
-      // dora 랜덤 선택
-      const [randomCard] = getRandomElements(filteredCards, 1);
+      if (currentUser?.cards === null) {
+        // 카드 5개 선택
+        const randomCards = getRandomElements(filteredCards, 5);
 
-      const requestBody: DORABody = {
-        cardID: randomCard.id,
-        playTurn: gameInfo.playTurn,
-      };
-
-      const request: DORARequest = {
-        userID: currentUser?.id!,
-        roomID: Number(roomID),
-        event: DORA,
-        message: JSON.stringify(requestBody),
-      };
-
-      ws?.send(JSON.stringify(request));
-      audios?.timeoutAudio.play();
-      return;
-    }
-
-    if (currentUser?.cards === null) {
-      // 카드 5개 선택
-      const randomCards = getRandomElements(filteredCards, 5);
-
-      const body: ImportCardBody = {
-        cards: randomCards.map((ic) => ({
-          cardID: ic.id,
-        })),
-        playTurn: gameInfo?.playTurn as number,
-      };
-
-      const request: ImportRequest = {
-        userID: currentUser?.id,
-        event: IMPORT_CARDS,
-        roomID: Number(roomID),
-        message: JSON.stringify(body),
-      };
-
-      ws?.send(JSON.stringify(request));
-      setSelectedCards([]);
-      audios?.timeoutAudio.play();
-      return;
-    } else {
-      // 카드를 고르지않고 타임아웃
-      // 카드 1개 선택해서 바로 버리기
-      const [randomCard] = getRandomElements(filteredCards, 1);
-
-      if (!randomCard) {
-        // 남은 카드 없는경우 (무승부)
-        const req: GameOverRequest = {
-          roomID: Number(roomID),
-          message: "",
-          event: GAME_OVER,
-          userID: currentUser?.id!,
+        const body: ImportCardBody = {
+          cards: randomCards.map((ic) => ({
+            cardID: ic.id,
+          })),
+          playTurn: gameInfo?.playTurn as number,
         };
 
-        ws?.send(JSON.stringify(req));
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
+        const request: ImportRequest = {
+          userID: currentUser?.id,
+          event: IMPORT_CARDS,
+          roomID: Number(roomID),
+          message: encryptedMessage,
+        };
+
+        ws?.send(JSON.stringify(request));
+        setSelectedCards([]);
+        audios?.timeoutAudio.play();
+        return;
+      } else {
+        // 카드를 고르지않고 타임아웃
+        // 카드 1개 선택해서 바로 버리기
+        const [randomCard] = getRandomElements(filteredCards, 1);
+
+        if (!randomCard) {
+          // 남은 카드 없는경우 (무승부)
+          const req: GameOverRequest = {
+            roomID: Number(roomID),
+            message: "",
+            event: GAME_OVER,
+            userID: currentUser?.id!,
+          };
+
+          ws?.send(JSON.stringify(req));
+          return;
+        }
+
+        const body: DiscardBody = {
+          cardID: randomCard.id,
+          playTurn: gameInfo?.playTurn as number,
+        };
+
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
+        const request: TimeoutDiscardRequest = {
+          userID: currentUser?.id!,
+          event: TIME_OUT_DISCARD,
+          roomID: Number(roomID),
+          message: encryptedMessage,
+        };
+
+        ws?.send(JSON.stringify(request));
+        setSelectedCards([]);
+        audios?.timeoutAudio.play();
         return;
       }
-
-      const body: DiscardBody = {
-        cardID: randomCard.id,
-        playTurn: gameInfo?.playTurn as number,
-      };
-
-      const request: TimeoutDiscardRequest = {
-        userID: currentUser?.id!,
-        event: TIME_OUT_DISCARD,
-        roomID: Number(roomID),
-        message: JSON.stringify(body),
-      };
-
-      ws?.send(JSON.stringify(request));
-      setSelectedCards([]);
-      audios?.timeoutAudio.play();
-      return;
-    }
+    })();
   }, [time]);
 
   return <div>{isActive && <p>{time}</p>}</div>;
