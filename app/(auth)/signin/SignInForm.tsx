@@ -43,7 +43,7 @@ const SignInForm = () => {
   // 강제 로그인 중
   const [isPending, setIsPending] = useState(false);
 
-  const addNotification = useNotificationStore((s) => s.addNotification);
+  const { addNotification, removeNotification } = useNotificationStore();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,6 +68,10 @@ const SignInForm = () => {
             title: m("anotherSignOut"),
           },
         });
+
+        setTimeout(() => {
+          removeNotification(id);
+        }, 3000);
       }
 
       const today = new Date();
