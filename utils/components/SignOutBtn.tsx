@@ -54,6 +54,13 @@ const SignOutBtn = ({ noRequest }: SignOutBtnProps) => {
         deleteCookie("refreshToken");
         deleteCookie("userID");
 
+        localStorage.removeItem("sessionID");
+        localStorage.removeItem("matchMode");
+        localStorage.removeItem("pick");
+        localStorage.removeItem("clearMissions");
+        localStorage.removeItem("victoryFailed");
+        localStorage.removeItem("isStarted");
+
         router.push("/signin");
         router.refresh();
       }

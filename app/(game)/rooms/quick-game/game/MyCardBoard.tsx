@@ -29,6 +29,7 @@ import useSoundStore from "@/utils/stores/useSoundStore";
 import calculateScore, {
   ScoreResult,
 } from "@/utils/functions/old-frog-mahjong/calculateScore";
+import { encryptAES } from "@/utils/functions/aes";
 
 type MyCardProps = {
   discardMode: boolean;
@@ -147,18 +148,23 @@ const MyCardBoard = ({
     }
   }, [userCardImages]);
 
-  const handleDiscard = (ci: CardImage) => {
+  const handleDiscard = async (ci: CardImage) => {
     if (isFullSixCard) {
       const body: DiscardBody = {
         cardID: ci.id,
         playTurn: gameInfo?.playTurn as number,
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(body),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: DiscardRequest = {
         userID: currentUser?.id,
         event: DISCARD,
         roomID: Number(roomID),
-        message: JSON.stringify(body),
+        message: encryptedMessage,
       };
 
       ws?.send(JSON.stringify(request));
@@ -172,7 +178,7 @@ const MyCardBoard = ({
     }
   };
 
-  const handleWin = () => {
+  const handleWin = async () => {
     if (isFullSixCard && scoreResult.score >= 5) {
       if (isUserLoan) {
         const body: LoanSuccessBody = {
@@ -185,11 +191,16 @@ const MyCardBoard = ({
           },
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const request: LoanSuccessRequest = {
           userID: currentUser?.id,
           event: SUCCESS_LOAN,
           roomID: Number(roomID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         ws?.send(JSON.stringify(request));
@@ -200,11 +211,16 @@ const MyCardBoard = ({
           score: scoreResult.score,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const request: WinRequest = {
           userID: currentUser?.id,
           event: REQUEST_WIN,
           roomID: Number(roomID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         ws?.send(JSON.stringify(request));
@@ -212,7 +228,7 @@ const MyCardBoard = ({
     }
   };
 
-  const onSuteru = () => {
+  const onSuteru = async () => {
     if (isUserLoan) {
       if (gameInfo?.loanInfo?.cardID) {
         const body: LoanFailedBody = {
@@ -221,9 +237,14 @@ const MyCardBoard = ({
           targetUserID: gameInfo?.loanInfo.targetUserID,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: LoanFailedRequest = {
           roomID: Number(roomID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
           event: FAILED_LOAN,
         };
 

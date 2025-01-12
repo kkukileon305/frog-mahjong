@@ -33,6 +33,7 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import useSoundStore from "@/utils/stores/useSoundStore";
+import { decryptAES, encryptAES } from "@/utils/functions/aes";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
@@ -73,17 +74,22 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
   useEffect(() => {
     if (store.ws === null) return;
 
-    store.ws.addEventListener("open", () => {
+    store.ws.addEventListener("open", async () => {
       if (mode === "NORMAL") {
         const body: MatchBodyRequest = {
           count,
           timer,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: MatchRequest = {
           event: MATCH,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
@@ -93,10 +99,15 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
           count,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: PlayTogetherRequest = {
           event: PLAY_TOGETHER,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
@@ -107,17 +118,22 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
           password,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(body),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const req: JoinPlayRequest = {
           event: JOIN_PLAY,
           userID: Number(userID),
-          message: JSON.stringify(body),
+          message: encryptedMessage,
         };
 
         store.ws?.send(JSON.stringify(req));
       }
     });
 
-    store.ws.addEventListener("message", (event) => {
+    store.ws.addEventListener("message", async (event) => {
       const body = event.data;
       const parsedBody = JSON.parse(body);
       const eventName = parsedBody.event;
@@ -133,7 +149,12 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
         return;
       }
 
-      const data = JSON.parse(parsedBody.message) as SocketResponseBody;
+      const decryptedMessage = await decryptAES(
+        parsedBody.message,
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
+      const data = JSON.parse(decryptedMessage) as SocketResponseBody;
       store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {

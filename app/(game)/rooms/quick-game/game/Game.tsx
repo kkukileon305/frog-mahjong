@@ -36,6 +36,7 @@ import useSoundStore from "@/utils/stores/useSoundStore";
 import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import { encryptAES } from "@/utils/functions/aes";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -102,7 +103,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     }
   }, []);
 
-  const getSelectedCards = () => {
+  const getSelectedCards = async () => {
     if (isFullSelectedCards && gameInfo?.playTurn) {
       const body: ImportCardBody = {
         cards: selectedCards.map((ic) => ({
@@ -111,11 +112,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         playTurn: gameInfo.playTurn as number,
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(body),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: ImportRequest = {
         userID: currentUser?.id,
         event: IMPORT_CARDS,
         roomID: Number(roomID),
-        message: JSON.stringify(body),
+        message: encryptedMessage,
       };
 
       ws?.send(JSON.stringify(request));
@@ -129,11 +135,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
         playTurn: gameInfo.playTurn as number,
       };
 
+      const encryptedMessage = await encryptAES(
+        JSON.stringify(body),
+        btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+      );
+
       const request: ImportSingleCardRequest = {
         userID: currentUser?.id,
         event: IMPORT_SINGLE_CARD,
         roomID: Number(roomID),
-        message: JSON.stringify(body),
+        message: encryptedMessage,
       };
 
       ws?.send(JSON.stringify(request));
@@ -144,7 +155,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     audios?.cardChapAudio.play();
   };
 
-  const onSelectCard = (card: CardImage) => {
+  const onSelectCard = async (card: CardImage) => {
     if (isUserTurn) {
       if (dora?.cardID) {
         // 중복검사
@@ -169,11 +180,16 @@ const Game = ({ setIsHelpModal }: GameProps) => {
           playTurn: gameInfo.playTurn,
         };
 
+        const encryptedMessage = await encryptAES(
+          JSON.stringify(requestBody),
+          btoa(process.env.NEXT_PUBLIC_AES_KEY as string)
+        );
+
         const request: DORARequest = {
           userID: currentUser.id,
           roomID: Number(roomID),
           event: DORA,
-          message: JSON.stringify(requestBody),
+          message: encryptedMessage,
         };
 
         ws?.send(JSON.stringify(request));
