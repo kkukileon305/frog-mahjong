@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from "react";
 import { IoClose } from "react-icons/io5";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
+import { useRouter } from "next/navigation";
 
 type CancelMatchBtnProps = {
   setOpenMatchModal: Dispatch<SetStateAction<MatchingMode | null>>;
@@ -16,6 +17,7 @@ type CancelMatchBtnProps = {
 
 const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
   const userID = getCookie("userID") as string;
+  const router = useRouter();
   const oldFrogMahjongStore = useOldFrogMahjongStore();
   const frogMahjongStore = useWingspanStore();
 
@@ -42,6 +44,7 @@ const CancelMatchBtn = ({ setOpenMatchModal }: CancelMatchBtnProps) => {
     localStorage.removeItem("isStarted");
 
     setOpenMatchModal(null);
+    router.refresh();
   };
 
   return (

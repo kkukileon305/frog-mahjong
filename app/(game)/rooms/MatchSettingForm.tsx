@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { FormMetadata, UserData } from "@/utils/axios";
+import axiosInstance, { FormMetadata, UserData } from "@/utils/axios";
 import { useTranslations } from "next-intl";
 import useMatchSettingStore, {
   GameType,
@@ -16,6 +16,7 @@ import ProgressBar from "@/utils/components/ProgressBar";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
 import GameTypeSwiper from "@/app/(game)/rooms/GameTypeSwiper";
+import { getCookie } from "cookies-next";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -34,9 +35,13 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     null
   );
 
+  const [hasValidSessionID, setHasValidSessionID] = useState(false);
+
   const gameType = useMatchSettingStore((s) => s.gameType);
 
   const { profileIcons } = useProfileIconStore();
+
+  const accessToken = getCookie("accessToken") as string;
 
   const {
     loadImages,
@@ -77,6 +82,47 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     if (!gameType) {
       localStorage.setItem("gameType", "WINGSPAN");
     }
+
+    (async () => {
+      const prevMode = localStorage.getItem("matchMode") as MatchingMode | null;
+      const sessionID = localStorage.getItem("sessionID");
+
+      if (prevMode && sessionID) {
+        try {
+          const { data: isValidSessionID } = await axiosInstance.post<boolean>(
+            "/v0.1/rooms/session/check",
+            {
+              sessionID,
+            },
+            {
+              headers: {
+                tkn: accessToken,
+              },
+            }
+          );
+
+          if (isValidSessionID) {
+            setHasValidSessionID(true);
+          } else {
+            setHasValidSessionID(false);
+            localStorage.removeItem("sessionID");
+            localStorage.removeItem("matchMode");
+            localStorage.removeItem("pick");
+            localStorage.removeItem("clearMissions");
+            localStorage.removeItem("victoryFailed");
+            localStorage.removeItem("isStarted");
+          }
+        } catch (e) {
+          setHasValidSessionID(false);
+          localStorage.removeItem("sessionID");
+          localStorage.removeItem("matchMode");
+          localStorage.removeItem("pick");
+          localStorage.removeItem("clearMissions");
+          localStorage.removeItem("victoryFailed");
+          localStorage.removeItem("isStarted");
+        }
+      }
+    })();
   }, []);
 
   watch((value) => {
@@ -116,7 +162,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         </ModalContainer>
       )}
 
-      {prevMode && (
+      {hasValidSessionID && prevMode && (
         <MatchingModal
           mode={prevMode}
           setOpenMatchModal={setOpenMatchModal}
