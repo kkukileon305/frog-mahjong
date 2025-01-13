@@ -39,6 +39,11 @@ const ResultModal = () => {
   const init = () => {
     clear();
     localStorage.removeItem("sessionID");
+    localStorage.removeItem("matchMode");
+    localStorage.removeItem("pick");
+    localStorage.removeItem("clearMissions");
+    localStorage.removeItem("victoryFailed");
+    localStorage.removeItem("isStarted");
 
     const quitReq: QUITRequest = {
       roomID: Number(gameState?.gameInfo?.roomID),
