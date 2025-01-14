@@ -43,7 +43,7 @@ const Game = () => {
         </div>
       </div>
 
-      <div className="flex h-10 lg:h-10 justify-end bg-[#ECB5C1]">
+      <div className="flex h-10 justify-end bg-white/40">
         <div className="w-2/3">
           <ChatEmoji />
         </div>

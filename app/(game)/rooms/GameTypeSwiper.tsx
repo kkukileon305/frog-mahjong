@@ -67,7 +67,7 @@ const GameTypeSwiper = () => {
   return (
     <div className="relative">
       <Swiper
-        className="border my-2 flex bg-white"
+        className="my-2 flex bg-white/40 rounded-xl"
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}

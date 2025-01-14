@@ -94,10 +94,10 @@ const Roulette = () => {
   }, [gameStore.allMissions]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#FCE4C0] h-lvh justify-center items-center flex flex-col p-4 z-30">
+    <div className="fixed top-0 left-0 w-full bg-[#FCE4C0] h-lvh justify-end items-center gap-12 flex flex-col p-4 z-30">
       <div className="max-w-[320px] overflow-hidden">
         <div className="relative">
-          <p className="absolute top-[5%] left-1/2 -translate-x-1/2 font-bold text-2xl">
+          <p className="absolute top-[5%] left-1/2 -translate-x-1/2 font-bold text-3xl">
             랜덤미션
           </p>
           <img src={rouletteSteps[step].src} alt="rout1" />
@@ -128,7 +128,7 @@ const Roulette = () => {
               key={mission.id}
               className="w-[80%] text-nowrap overflow-hidden text-center absolute left-1/2 -translate-x-1/2"
               style={{
-                bottom: `calc(${2 - idx}7.5%)`,
+                bottom: `calc(${2 - idx}9%)`,
                 display: idx < step ? "block" : "none",
               }}
             >
