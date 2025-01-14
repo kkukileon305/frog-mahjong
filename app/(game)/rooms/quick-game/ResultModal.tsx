@@ -108,12 +108,7 @@ const ResultModal = () => {
               <div className="flex gap-4 justify-between">
                 <div className="w-[120px] flex flex-col items-center gap-2">
                   <p className="text-2xl font-bold">{winner.name}</p>
-                  <p className="font-bold text-blue-400 text-2xl">
-                    {m("win")} +{winnerAddedCoin}
-                  </p>
-                  <p className="font-bold text-blue-400 text-2xl">
-                    {winner.coin}point
-                  </p>
+                  <p className="font-bold text-blue-400 text-2xl">{m("win")}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex gap-2">
@@ -163,12 +158,7 @@ const ResultModal = () => {
                     <div className="w-[120px] flex flex-col items-center gap-2">
                       <p className="text-2xl font-bold">{lo.name}</p>
                       <p className="font-bold text-red-400 text-2xl text-center">
-                        {m("lose")} -
-                        {result.beforeUsers?.find((bu) => bu.id === lo.id)!
-                          .coin! - lo.coin}
-                      </p>
-                      <p className="font-bold text-red-400 text-2xl">
-                        {lo.coin}point
+                        {m("lose")}
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
