@@ -51,13 +51,13 @@ const SettingMenus = () => {
 
   const handleVolumeChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newVolume = parseFloat(event.target.value);
+    setVolume(newVolume);
 
     if (debounceTimeout) {
       clearTimeout(debounceTimeout);
     }
 
     const newTimeout = setTimeout(() => {
-      setVolume(newVolume);
       audios?.cardChapAudio.play();
     }, 200);
 
@@ -85,17 +85,28 @@ const SettingMenus = () => {
           <div>
             <div className="bg-white hover:bg-gray-200 p-2 flex flex-col items-center gap-4">
               <label htmlFor="volume">{m("volume")}</label>
-              <input
-                tabIndex={0}
-                id="volume"
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                defaultValue={volume}
-                onChange={handleVolumeChange}
-                className="focus:outline-none max-w-80 w-full bg-transparent accent-[#416A58]"
-              />
+              <div className="max-w-80 w-full h-8 relative">
+                <div className="absolute w-full left-0 top-[calc(50%)] -translate-y-1/2 h-3 bg-[#95C1A6] rounded-full overflow-hidden">
+                  <div
+                    className="absolute bg-[#416A58] h-full"
+                    style={{
+                      width: `calc(${volume * 100 + 1}%)`,
+                    }}
+                  />
+                </div>
+
+                <input
+                  tabIndex={0}
+                  id="volume"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  defaultValue={volume}
+                  onChange={handleVolumeChange}
+                  className="slider-volume focus:outline-none w-full bg-transparent accent-[#416A58] appearance-none absolute left-0 top-[calc(50%)] -translate-y-1/2"
+                />
+              </div>
             </div>
 
             <div className="bg-white">
