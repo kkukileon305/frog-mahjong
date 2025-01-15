@@ -13,6 +13,7 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import SwitchLocaleSlide from "@/utils/components/SwitchLocaleSlide";
 import OnlyClient from "@/utils/components/OnlyClient";
 import RequestPermission from "@/utils/components/RequestPermission";
+import { FaBell } from "react-icons/fa6";
 
 const SettingMenus = () => {
   // const curPermission = useRequestPermission();
@@ -82,7 +83,7 @@ const SettingMenus = () => {
       {isOpen && (
         <ModalContainer setIsOpen={setIsOpen}>
           <div>
-            <div className="bg-white hover:bg-gray-200 p-2 border-b flex flex-col">
+            <div className="bg-white hover:bg-gray-200 p-2 flex flex-col items-center gap-4">
               <label htmlFor="volume">{m("volume")}</label>
               <input
                 tabIndex={0}
@@ -93,13 +94,13 @@ const SettingMenus = () => {
                 step="0.01"
                 defaultValue={volume}
                 onChange={handleVolumeChange}
-                className="focus:outline-none w-32"
+                className="focus:outline-none max-w-80 w-full bg-transparent accent-[#416A58]"
               />
             </div>
 
             <div className="bg-white">
               <Link
-                className="p-2 block hover:bg-gray-200"
+                className="p-4 block hover:bg-gray-200 text-center"
                 href="https://parallel-jodhpur-935.notion.site/10d2c71ec7c580359d04cd5af3006252"
                 target="_blank"
               >
@@ -109,7 +110,7 @@ const SettingMenus = () => {
 
             <div className="bg-white">
               <Link
-                className="p-2 block hover:bg-gray-200"
+                className="p-4 block hover:bg-gray-200 text-center"
                 href="https://parallel-jodhpur-935.notion.site/10d2c71ec7c580f3a788e47b22a57dd3"
                 target="_blank"
               >
@@ -117,7 +118,10 @@ const SettingMenus = () => {
               </Link>
             </div>
             <div className="bg-white">
-              <Link className="p-2 block hover:bg-gray-200" href="/license">
+              <Link
+                className="p-4 block hover:bg-gray-200 text-center"
+                href="/license"
+              >
                 {m("license")}
               </Link>
             </div>
@@ -132,7 +136,7 @@ const SettingMenus = () => {
                       setIsQuitModalOpen(true);
                       setIsOpen(false);
                     }}
-                    className="w-full text-red-500 text-left p-2 block hover:bg-gray-200"
+                    className="w-full text-center text-red-500 text-left p-4 block hover:bg-gray-200"
                   >
                     {m("quit")}
                   </button>
@@ -147,19 +151,19 @@ const SettingMenus = () => {
               <SwitchLocaleSlide />
             </div>
 
-            <div className="bg-white w-full flex justify-between">
-              <span className="basis-1/2 ms-2 text-sm font-medium text-gray-900 flex items-center">
-                알림
+            <div className="bg-white w-full flex justify-center gap-4 items-center">
+              <span className="ms-2 font-medium text-gray-900 flex items-center gap-2">
+                {m("notification")} <FaBell color="#95C1A6" size={28} />
               </span>
-              <label className="w-fit inline-flex items-center cursor-pointer justify-center py-2">
+              <label className="w-fit inline-flex items-center cursor-pointer text-[#416A58] justify-center py-2 font-bold">
                 {notificationStatus === "granted" ? "ON" : "OFF"}
               </label>
             </div>
 
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-center mt-4">
               <button
                 id="back"
-                className="bg-game-icon px-2 py-1 rounded-lg font-bold text-white"
+                className="max-w-80 w-full bg-[#95C1A6] px-2 py-1 font-bold text-white"
               >
                 {m("close")}
               </button>

@@ -131,6 +131,16 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
     setPassword(value.password!);
   });
 
+  if (isError) {
+    return (
+      <div className="w-full h-full flex flex-col justify-center items-center p-2">
+        <div className="flex w-full h-[104px] justify-center items-center gap-4">
+          failed to load assets
+        </div>
+      </div>
+    );
+  }
+
   if (isLoading || !isLoaded) {
     return (
       <div className="w-full h-full flex flex-col justify-center items-center p-2">

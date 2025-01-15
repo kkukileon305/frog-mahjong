@@ -71,7 +71,7 @@ const SignOutBtn = ({ noRequest }: SignOutBtnProps) => {
     <button
       disabled={isLoading}
       onClick={signOut}
-      className="w-full flex p-2 hover:bg-gray-200 disabled:bg-gray-200 text-red-500"
+      className="w-full p-4 hover:bg-gray-200 text-center disabled:bg-gray-200 text-red-500"
     >
       {m("signOut")}
     </button>

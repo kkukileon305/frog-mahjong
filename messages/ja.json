@@ -214,7 +214,8 @@
     "license": "ライセンス契約",
     "quit": "アカウント削除",
     "close": "閉じる",
-    "language": "言語"
+    "language": "言語",
+    "notification": "通知"
   },
   "Warning": {
     "title": "画面を横に<br></br>してください"
