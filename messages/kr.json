@@ -140,7 +140,9 @@
   "HelpModal": {
     "color": "색깔들",
     "body": "신체부분들",
-    "close": "닫기"
+    "close": "닫기",
+    "calRule": "규칙",
+    "cardsInfo": "패 정보"
   },
   "Game": {
     "getDora": "도라를 선택해주세요",

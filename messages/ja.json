@@ -139,7 +139,9 @@
   "HelpModal": {
     "color": "カラー",
     "body": "身体部分",
-    "close": "閉じる"
+    "close": "閉じる",
+    "calRule": "ルール",
+    "cardsInfo": "牌情報"
   },
   "Game": {
     "getDora": "ドラを選んでください",
