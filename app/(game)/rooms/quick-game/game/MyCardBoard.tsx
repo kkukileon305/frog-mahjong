@@ -11,10 +11,8 @@ import {
   WinRequestBody,
 } from "@/utils/constants/old-frog-mahjong/socketTypes";
 import cards, { CardImage } from "@/app/(game)/rooms/quick-game/game/cards";
-import Image from "next/image";
 import MyCardList from "@/app/(game)/rooms/quick-game/game/MyCardList";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axiosInstance from "@/utils/axios";
 import { getCookie } from "cookies-next";
 import getPrevTurn from "@/utils/functions/old-frog-mahjong/getPrevTurn";
 import {

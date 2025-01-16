@@ -95,9 +95,9 @@ const Roulette = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#FCE4C0] h-lvh justify-end items-center gap-12 flex flex-col p-4 z-30">
-      <div className="max-w-[320px] overflow-hidden">
+      <div className="max-w-[370px] overflow-hidden">
         <div className="relative">
-          <p className="absolute top-[5%] left-1/2 -translate-x-1/2 font-bold text-3xl">
+          <p className="absolute top-[5%] left-1/2 -translate-x-1/2 font-bold text-3xl text-[#FFA350]">
             랜덤미션
           </p>
           <img src={rouletteSteps[step].src} alt="rout1" />
@@ -111,12 +111,12 @@ const Roulette = () => {
               {lieTitles.map((mission, index) => (
                 <div
                   key={index}
-                  className="w-full text-center h-full flex items-center justify-center gap-2"
+                  className="w-full text-center h-full font-bold flex items-center justify-center gap-2"
                 >
                   <p>{mission.title}</p>
 
                   {mission.image && (
-                    <img src={mission.image} alt="" className="w-8 h-8" />
+                    <img src={mission.image} alt="" className="w-5 h-5" />
                   )}
                 </div>
               ))}
@@ -132,11 +132,11 @@ const Roulette = () => {
                 display: idx < step ? "block" : "none",
               }}
             >
-              <div className="flex items-center justify-center gap-2">
-                <p>{mission.title}</p>
+              <div className="font-bold flex items-center justify-center gap-2">
+                <p className="text-[17px]">{mission.title}</p>
 
                 {mission.image && (
-                  <img src={mission.image} alt="" className="w-8 h-8" />
+                  <img src={mission.image} alt="" className="w-4 h-4" />
                 )}
               </div>
             </div>

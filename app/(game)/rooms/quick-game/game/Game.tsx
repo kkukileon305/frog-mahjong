@@ -243,7 +243,7 @@ const Game = ({ setIsHelpModal }: GameProps) => {
     if (gameInfo?.loanInfo === null) {
       if (!isFullSixCard && isUserTurn) {
         if (currentUser.cards === null) {
-          return gameInfo.dora?.cardID === 0 ? m("getDora") : m("getFiveCards");
+          return gameInfo.dora ? m("getFiveCards") : m("getDora");
         } else {
           return filteredCards.length === 0 ? m("noLeftCards") : m("getCard");
         }

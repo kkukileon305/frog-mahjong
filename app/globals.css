@@ -44,3 +44,12 @@ input:focus {
 .flip-card-back {
     transform: rotateY(180deg);
 }
+
+.slider-volume {
+    @apply
+    [&::-webkit-slider-thumb]:appearance-none
+    [&::-webkit-slider-thumb]:h-6
+    [&::-webkit-slider-thumb]:w-4
+    [&::-webkit-slider-thumb]:rounded-full
+    [&::-webkit-slider-thumb]:bg-[#416A58];
+}

@@ -223,18 +223,20 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
 
   if (inGame) {
     return (
-      <div className="h-full py-2 px-4 bg-white/50 rounded-xl overflow-hidden">
-        <p className="font-bold text-center mb-2">{m("preview")}</p>
+      <div className="max-w-[380px] w-full mx-auto h-full py-2 px-4 bg-white/50 rounded-[3px] overflow-hidden">
+        <p className="font-extrabold text-center text-[15px] mb-2">
+          {m("preview")}
+        </p>
 
         <div className="w-full h-[calc(100%-32px)] flex gap-2 overflow-hidden justify-center">
-          <div className="w-[calc(100%-48px)] flex gap-2">
+          <div className="w-[calc(100%-48px)] flex gap-[14.8px]">
             {openCards?.map((card) => (
               <div
                 key={card.id}
-                className="w-full max-h-full relative aspect-[63/111] flex justify-center"
+                className="w-full h-full relative flex justify-center items-center"
               >
                 <img
-                  className="aspect-[63/111] object-fill"
+                  className="w-[70px] aspect-[130/214] object-fill"
                   src={card.image}
                   alt={"sealed card"}
                 />
@@ -242,14 +244,14 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             ))}
           </div>
           <div
-            className={`w-20 aspect-[205/235] relative flex justify-center items-center ${
+            className={`w-20 relative flex justify-center items-center ${
               gameStore.timer > 5 && "grayscale"
             }`}
           >
             <img
               src={Timer.src}
               alt="timer"
-              className="w-20 aspect-[205/235]"
+              className="w-20"
               width={205}
               height={235}
             />
@@ -263,7 +265,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
   }
 
   return (
-    <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game text-[#7F674D] z-30">
+    <div className="absolute w-full h-full top-0 left-0 flex justify-center items-center bg-game z-30">
       <div className="w-full h-full p-0">
         <div
           className="w-full mx-auto h-full flex flex-col rounded-xl overflow-hidden"
@@ -271,9 +273,9 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
             padding: inGame ? "4px" : "8px",
           }}
         >
-          <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4 mb-2">
+          <div className="max-w-[380px] w-full mx-auto bg-white/50 rounded-[3px] p-1 border-[#796858] border-[1.5px] mb-2">
             <div className="">
-              <p className="basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+              <p className="basis-1/6 h-[16px] text-[12px] flex items-center justify-center bg-[#FA4E38] rounded-[3px] font-bold text-white text-center tracking-[8px]">
                 {gameM("mission")}
               </p>
 
@@ -288,12 +290,16 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <p>
+                        <p className="text-[12px]">
                           {index + 1}. {m.title}
                         </p>
 
                         {m.image && (
-                          <img src={m.image} alt="" className="w-4 h-4" />
+                          <img
+                            src={m.image}
+                            alt=""
+                            className="w-[14px] h-[14px]"
+                          />
                         )}
                       </div>
                     </div>
@@ -303,22 +309,22 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
           </div>
 
           <div className="w-full h-[calc(100%-116px)] flex flex-col">
-            <div className="h-[calc(200%/3)] border-2 border-[#796858] bg-[#E1EDE9] rounded-xl overflow-hidden py-2 px-4">
-              <p className="mb-2 font-bold text-center">
+            <div className="max-w-[380px] w-full mx-auto h-[calc(200%/3)] border-[1.5px] border-[#796858] bg-[#E1EDE9] rounded-[3px] overflow-hidden py-2 px-4">
+              <p className="mb-2 font-bold text-center text-[15px]">
                 {m("selectOpen", {
                   count: nokoriCardsLength,
                 })}
               </p>
 
               <div className="flex flex-col h-[calc(100%-32px)] gap-4 overflow-hidden">
-                <div className="h-[calc(50%-8px)] gap-4 grid grid-cols-3">
+                <div className="max-w-[335px] w-full mx-auto h-[calc(50%-8px)] gap-4 grid grid-cols-3">
                   {openCards.map((card) => (
                     <div
                       key={card.id}
                       className="w-full h-full overflow-hidden flex justify-center items-center"
                     >
                       <button
-                        className={`h-full overflow-hidden aspect-[63/111] relative ${
+                        className={`w-[100px] overflow-hidden aspect-[130/214] relative ${
                           card.picked
                             ? "border-2 border-red-400"
                             : nokoriCardsLength === 0
@@ -348,16 +354,18 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                   ))}
                 </div>
 
-                <div className="h-[calc(50%-8px)] flex justify-center items-center gap-6 bg-[#FDF9E0] border-[#796858] border-2 rounded p-2">
+                <div className="h-[calc(50%-8px)] flex justify-center items-center gap-6 bg-[#FDF9E0] border-[#796858] border-[1.5px] rounded p-2">
                   <button
                     onClick={pickCards}
-                    className="h-full aspect-[63/111] bg-[#C9F2A3] border-2 border-[#796858] rounded disabled:bg-gray-200"
+                    className="w-[73px] h-[122px] font-extrabold text-[20px] text-[#7F674D] bg-[#EAE4C7] border-[0.8px] border-[#443627] rounded-[3px] disabled:bg-gray-200"
                     disabled={
                       nokoriCardsLength === 0 ||
                       inGame ||
                       leftCards.length === 0
                     }
-                  />
+                  >
+                    랜덤
+                  </button>
                   <div className="h-full flex flex-col items-center justify-center py-3">
                     <div
                       className={`h-[calc(100%-60px)] aspect-[205/235] relative ${
@@ -376,14 +384,10 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       </p>
                     </div>
                     <div className="mt-2 flex flex-col items-center">
-                      <p className="font-bold text-sm">{m("selectRandom")}</p>
-                      <p
-                        className="font-bold text-xl"
-                        style={{
-                          WebkitTextStroke: "1px #7F674D",
-                          color: "white",
-                        }}
-                      >
+                      <p className="font-bold text-[16.5px] text-[#7F674D]">
+                        {m("selectRandom")}
+                      </p>
+                      <p className="font-bold text-[16.5px] text-[#7F674D]">
                         {leftCards.length}/{gameStore.cards.length}
                       </p>
                     </div>
@@ -398,20 +402,16 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                           ? currentUserItems[0].remainingUses === 0
                           : true)
                       }
-                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl`}
+                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl shadow-[2px_2px_0px_2px_#b33333] disabled:shadow-[2px_2px_0px_2px_#bbbbbb]`}
                     >
                       ON
                     </button>
 
                     <div className="mt-2 flex flex-col items-center">
-                      <p className="font-bold text-sm">{m("change")}</p>
-                      <p
-                        className="font-bold text-xl"
-                        style={{
-                          WebkitTextStroke: "1px #7F674D",
-                          color: "white",
-                        }}
-                      >
+                      <p className="font-bold text-[16.5px] text-[#7F674D]">
+                        {m("change")}
+                      </p>
+                      <p className="font-bold text-[16.5px] text-[#7F674D]">
                         {currentUserItems
                           ? currentUserItems[0].remainingUses
                           : 0}
@@ -423,15 +423,18 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
               </div>
             </div>
 
-            <div className="h-[calc((100%-8px)/3)] mt-2 border-2 border-[#796858] bg-[#ECC7C1] rounded-xl overflow-hidden p-2">
-              <p className="font-bold text-center mb-2">
+            <div className="max-w-[380px] w-full mx-auto h-[calc((100%-8px)/3)] mt-2 border-[1.5px] border-[#796858] bg-[#ECC7C1] rounded-[3px] overflow-hidden p-4">
+              <p className="font-extrabold text-center mb-2 text-[15px]">
                 {m("myCard")}
                 <span className="ml-4">{currentUserCards?.length || 0}/4</span>
               </p>
 
-              <div className="w-full h-[calc(100%-32px)] grid gap-2 overflow-hidden grid-cols-4">
+              <div className="w-full h-[calc(100%-32px)] grid gap-1 items-center overflow-hidden grid-cols-4">
                 {currentUserCards?.map((card) => (
-                  <div key={card.id} className="h-full flex justify-center">
+                  <div
+                    key={card.id}
+                    className="w-full flex justify-center aspect-[130/214]"
+                  >
                     <img
                       className="h-full object-fill"
                       src={card.image}

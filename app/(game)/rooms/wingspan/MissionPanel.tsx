@@ -64,9 +64,9 @@ const MissionPanel = () => {
   );
 
   return (
-    <div className="w-full bg-white/50 rounded-xl p-1 border-[#796858] border-4">
+    <div className="max-w-[380px] w-full mx-auto bg-white/50 rounded-[3px] p-1 border-[#796858] border-[1.5px]">
       <div className="">
-        <p className="basis-1/6 text-sm bg-[#FA4E38] rounded-xl font-bold text-white text-center">
+        <p className="basis-1/6 h-[16px] text-[12px] flex items-center justify-center bg-[#FA4E38] rounded-[3px] font-bold text-white text-center tracking-[8px]">
           {m("mission")}
         </p>
 
@@ -80,11 +80,13 @@ const MissionPanel = () => {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <p>
+                  <p className="text-[12px]">
                     {index + 1}. {m.title}
                   </p>
 
-                  {m.image && <img src={m.image} alt="" className="w-4 h-4" />}
+                  {m.image && (
+                    <img src={m.image} alt="" className="w-[14px] h-[14px]" />
+                  )}
                 </div>
               </div>
             ))}

@@ -58,7 +58,7 @@ const Page = () => {
   const isDisconnected = gameStore.disconnectedUsers.length > 0;
 
   return (
-    <div className="flex h-dvh overflow-hidden">
+    <div className="flex h-dvh overflow-hidden bg-game">
       <div className="relative w-full flex flex-col justify-between">
         {isDisconnected && <DisconnectedModal />}
 

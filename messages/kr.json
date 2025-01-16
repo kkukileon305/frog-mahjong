@@ -140,7 +140,9 @@
   "HelpModal": {
     "color": "색깔들",
     "body": "신체부분들",
-    "close": "닫기"
+    "close": "닫기",
+    "calRule": "규칙",
+    "cardsInfo": "패 정보"
   },
   "Game": {
     "getDora": "도라를 선택해주세요",
@@ -215,7 +217,8 @@
     "license": "라이센스",
     "quit": "회원탈퇴",
     "close": "닫기",
-    "language": "언어"
+    "language": "언어",
+    "notification": "알림"
   },
   "Warning": {
     "title": "화면을 가로로 <br></br> 돌려주세요"
