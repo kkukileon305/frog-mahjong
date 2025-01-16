@@ -229,10 +229,10 @@ const MyCardBoard = () => {
   }, [store.timer]);
 
   return (
-    <div className="h-full overflow-hidden flex justify-center flex-col p-4 bg-[#FDF9E0] rounded-xl gap-1 border-4 border-white">
+    <div className="h-full overflow-hidden flex justify-center flex-col p-1 bg-[#FDF9E0] rounded-[5px] gap-1 border-[1.5px] border-[#796858]">
       {!discardMode && (
         <Reorder.Group
-          className="w-full h-[calc(100%-44px)] flex gap-1 rounded relative basis-4/5 justify-center py-1"
+          className="w-full h-[calc(100%-44px)] flex gap-[5.8px] rounded relative basis-4/5 justify-center py-1"
           axis="x"
           values={items}
           onReorder={setItems}
@@ -245,12 +245,12 @@ const MyCardBoard = () => {
 
           {items.map((item) => (
             <Reorder.Item
-              className={`cursor-pointer basis-1/4 max-h-full aspect-[63/111] flex items-center`}
+              className={`cursor-pointer w-[83.637px] max-h-full aspect-[130/214] flex items-center`}
               key={item.id}
               value={item}
               onDragEnd={onDragEnd}
             >
-              <div className="w-full max-h-full relative aspect-[63/111] flex justify-center">
+              <div className="w-full max-h-full relative aspect-[130/214] flex justify-center">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -268,18 +268,18 @@ const MyCardBoard = () => {
       )}
 
       {discardMode && (
-        <ul className="w-full h-[calc(100%-44px)] flex gap-1 rounded relative basis-4/5 justify-center py-1">
+        <ul className="w-full h-[calc(100%-44px)] flex gap-[5.8px] rounded relative basis-4/5 justify-center py-1">
           {items.map((item) => (
             <li
               key={item.id}
-              className={`cursor-pointer basis-1/4 max-h-full aspect-[63/111] flex items-center`}
+              className={`cursor-pointer w-[83.637px] max-h-full aspect-[130/214] flex items-center`}
             >
               <button
-                className="w-full max-h-full relative aspect-[63/111] flex justify-center"
+                className="w-full max-h-full relative aspect-[130/214] flex justify-center"
                 disabled={!isOverFull || store.isTurnOver}
                 onClick={() => discard(item)}
               >
-                <div className="relative w-full max-h-full aspect-[63/111] flex justify-center">
+                <div className="relative w-full max-h-full aspect-[130/214] flex justify-center">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -297,17 +297,17 @@ const MyCardBoard = () => {
         </ul>
       )}
 
-      <div className="h-8 flex gap-4 py-1 overflow-hidden">
+      <div className="h-8 flex gap-4 overflow-hidden">
         {currentUser.cards && (
           <>
             <div className="flex gap-1">
               {currentMissions?.map((mission, idx) => (
                 <div
                   key={mission.id}
-                  className={`font-bold aspect-square flex justify-center items-center ${
+                  className={`font-bold aspect-square text-[18px] text-[#333333] flex justify-center items-center ${
                     store.clearMissionIDs.includes(mission.id)
-                      ? "bg-red-400"
-                      : "bg-[#C8F3A3]"
+                      ? "bg-[#FF5555]"
+                      : "bg-[#C9F2A3]"
                   }`}
                 >
                   {idx + 1}
@@ -315,22 +315,22 @@ const MyCardBoard = () => {
               ))}
             </div>
 
-            <div className="flex w-[calc(100%-96px)] gap-4">
+            <div className="flex w-[calc(100%-96px)] gap-[6.57px]">
+              <button
+                disabled={store.isTurnOver}
+                onClick={() => setDiscardMode(!discardMode)}
+                className="basis-1/2 flex items-center justify-center text-[12px] lg:text-base p-1 lg:p-2 border-[1.5px] border-white rounded-[3px] font-bold bg-[#ECC7C1] disabled:bg-gray-500 disabled:text-gray-400"
+              >
+                {m(discardMode ? "cancelSuteru" : "suteru")}
+              </button>
               <button
                 onClick={victory}
                 disabled={
                   discardMode || store.isTurnOver || store.isVictoryFailed
                 }
-                className="basis-1/2 flex items-center justify-center text-[10px] lg:text-base p-1 lg:p-2 rounded font-bold bg-[#C6D4FF] disabled:bg-gray-500 disabled:text-gray-400"
+                className="basis-1/2 flex items-center justify-center text-[12px] lg:text-base p-1 lg:p-2 border-[1.5px] border-white rounded-[3px] font-bold bg-[#E1EDE9] disabled:bg-gray-500 disabled:text-gray-400"
               >
                 {m("victory")}
-              </button>
-              <button
-                disabled={store.isTurnOver}
-                onClick={() => setDiscardMode(!discardMode)}
-                className="basis-1/2 flex items-center justify-center text-[10px] lg:text-base p-1 lg:p-2 rounded font-bold bg-[#C8F3A3] disabled:bg-gray-500 disabled:text-gray-400"
-              >
-                {m(discardMode ? "cancelSuteru" : "suteru")}
               </button>
             </div>
           </>

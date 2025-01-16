@@ -38,7 +38,7 @@ const ChatEmoji = () => {
       className="w-full h-full flex"
       modules={[Navigation]}
       spaceBetween={0}
-      slidesPerView={5.3}
+      slidesPerView={6}
       style={{
         padding: 4,
       }}

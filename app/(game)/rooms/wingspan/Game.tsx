@@ -8,6 +8,8 @@ import ChatEmoji from "@/app/(game)/rooms/wingspan/ChatEmoji";
 import MyCardBoard from "@/app/(game)/rooms/wingspan/MyCardBoard";
 import UserPanel from "@/app/(game)/rooms/wingspan/UserPanel";
 import PickCardsModal from "@/app/(game)/rooms/wingspan/PickCardsModal";
+import Quest from "@/public/icons/quest.png";
+import Setting from "@/public/icons/setting.png";
 
 const Game = () => {
   const m = useTranslations("Game");
@@ -20,7 +22,7 @@ const Game = () => {
 
   return (
     <>
-      <div className="relative w-full h-[calc(100%-40px)] lg:h-[calc(100%-40px)] flex flex-col bg-game bg-cover bg-center p-2 lg:p-8">
+      <div className="relative w-full h-[calc(100%-48px)] lg:h-[calc(100%-40px)] flex flex-col bg-cover bg-center p-2 lg:p-8">
         <div className="flex justify-center">
           <MissionPanel />
         </div>
@@ -29,7 +31,7 @@ const Game = () => {
           <div className="h-[calc(30%)] relative flex justify-center items-center p-2 pb-0">
             <PickCardsModal inGame />
           </div>
-          <div className="h-[calc(30%)] flex gap-4">
+          <div className="h-[calc(30%)] flex gap-6">
             {users.map((user) => (
               <div key={user.id} className="w-[calc((100%-48px)/4)]">
                 <UserPanel key={user.id} user={user} />
@@ -43,17 +45,24 @@ const Game = () => {
         </div>
       </div>
 
-      <div className="flex h-10 justify-end bg-white/40">
-        <div className="w-2/3">
+      <div className="flex h-12 justify-end bg-white/40">
+        <div className="w-3/4">
           <ChatEmoji />
         </div>
 
-        <div className="flex w-1/3">
+        <div className="flex w-1/4">
           <button
             onClick={() => setIsHelpModalOpen(true)}
-            className="lg:text-base w-full bg-game-button font-bold"
+            className="lg:text-base w-full font-bold flex justify-center items-center"
           >
-            {m("help")}
+            <img src={Quest.src} alt="" />
+          </button>
+
+          <button
+            onClick={() => setIsHelpModalOpen(true)}
+            className="lg:text-base w-full font-bold flex justify-center items-center"
+          >
+            <img src={Setting.src} alt="" />
           </button>
         </div>
       </div>

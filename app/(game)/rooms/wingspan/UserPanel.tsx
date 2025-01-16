@@ -94,18 +94,18 @@ const UserPanel = ({ user }: UserPanelProps) => {
             <div className="flex flex-col items-center justify-center h-full">
               <div
                 tabIndex={0}
-                className="h-[calc((100%-24px)/2)] aspect-square relative group cursor-pointer"
+                className="aspect-square relative group cursor-pointer"
               >
                 {userIcon ? (
-                  <div className="relative w-full aspect-square border-[3px] border-[#F19830] rounded">
+                  <div className="relative w-full aspect-square border-[3px] border-[#F19830] rounded-[2.5px]">
                     <img
-                      className="w-full aspect-square object-cover object-bottom"
+                      className="h-[75px] aspect-square object-cover object-bottom"
                       src={userIcon.image}
                       alt={user.name}
                     />
 
-                    <div className="w-5 h-5 flex justify-center items-center font-bold rounded-full top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-[#F19830] absolute">
-                      <p>{user.missionSuccessCount}</p>
+                    <div className="w-[22px] h-[22px] flex justify-center items-center font-bold rounded-full top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-[#F19830] absolute">
+                      <p className="text-[12px]">{user.missionSuccessCount}</p>
                     </div>
                   </div>
                 ) : (
@@ -137,12 +137,12 @@ const UserPanel = ({ user }: UserPanelProps) => {
               </div>
 
               <div className="px-4 text-black font-bold w-full">
-                <p className="bg-white font-bold rounded text-xs text-center">
+                <p className="bg-white font-bold rounded-[2.5px] text-[8px] text-center text-[#333333]">
                   {user.name}
                 </p>
               </div>
 
-              <div className="h-[calc((100%-24px)/2)]">
+              <div className="h-[50px] aspect-[130/214]">
                 {userLastDiscardImage && (
                   <button className="h-full overflow-hidden">
                     <img

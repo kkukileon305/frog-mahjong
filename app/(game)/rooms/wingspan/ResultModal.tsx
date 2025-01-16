@@ -122,10 +122,10 @@ const ResultModal = () => {
 
   return (
     <div
-      className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2 font-sb"
+      className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2 font-extrabold"
       onClick={onClose}
     >
-      <div className="p-2 bg-white w-full h-full border-[#796858] border-2 rounded-lg flex flex-col gap-2">
+      <div className="p-4 bg-white/65 w-full h-full border-[#796858] border-2 rounded-[5px] flex flex-col gap-2">
         {winner && (
           <>
             {isLoading && (
@@ -136,9 +136,13 @@ const ResultModal = () => {
 
             {!isLoading && result && (
               <div className="h-[calc(100%-40px)]">
-                <div className="flex justify-center items-center gap-4 h-16">
-                  <img src={winnerIcon?.image} alt="" className="w-16 h-16" />
-                  <div className="flex flex-col gap-1 font-bold text-[#FA4E38]">
+                <div className="flex justify-center items-center gap-4 h-[70px]">
+                  <img
+                    src={winnerIcon?.image}
+                    alt=""
+                    className="w-[70px] h-[70px] border-2 border-[#F19830] object-bottom object-cover"
+                  />
+                  <div className="flex flex-col gap-1 font-bold text-[#FA4E38] text-[19px]">
                     <p>
                       {winner?.name}
                       {m("san")}
@@ -147,20 +151,20 @@ const ResultModal = () => {
                   </div>
                 </div>
 
-                <div className="h-[calc(100%-64px)] gap-2 pt-2 flex flex-col">
+                <div className="h-[calc(100%-70px)] gap-2 pt-4 flex flex-col">
                   {result.missions.map((mission, idx) => (
                     <div
                       key={mission.missionID}
-                      className="h-1/3 overflow-hidden flex flex-col gap-2"
+                      className="h-1/3 overflow-hidden flex flex-col justify-center"
                     >
-                      <p>
+                      <p className="text-[16px]">
                         {idx + 1}.{" "}
                         {
                           allMissions.find((al) => al.id === mission.missionID)
                             ?.title
                         }
                       </p>
-                      <ul className="h-[calc(100%-30px)] flex gap-2">
+                      <ul className="h-[calc(100%-24px)] flex gap-[5.8352px] justify-center items-center">
                         {mission.cards
                           .map(
                             (cardID) =>
@@ -169,13 +173,13 @@ const ResultModal = () => {
                           .map((card) => (
                             <li
                               key={card.id}
-                              className="w-[calc((100%-24px)/4)] max-h-full aspect-[63/111] flex items-center"
+                              className="h-full max-h-[137.6794px] aspect-[130/214] flex items-center"
                             >
                               <img
                                 src={card.image}
                                 alt={card.name}
                                 draggable={false}
-                                className={`h-full aspect-[63/111] mx-auto`}
+                                className={`h-full aspect-[130/214] mx-auto`}
                               />
                             </li>
                           ))}
@@ -230,7 +234,7 @@ const ResultModal = () => {
         <button
           onClick={init}
           id="back"
-          className="w-full h-8 bg-[#FA4E38] rounded-lg py-1 text-white font-bold disabled:bg-gray-400"
+          className="w-full max-w-[118px] mx-auto bg-[#FA4E38] rounded-full py-1 text-white font-bold disabled:bg-gray-400"
         >
           {m("close")}
         </button>

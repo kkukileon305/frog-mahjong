@@ -38,6 +38,8 @@ import cardDiscardSrc from "@/public/audios/card_discard.mp3";
 import FrogMahjong from "@/public/game-types/frog-mahjong.png";
 import Wingspan from "@/public/game-types/wingspan.png";
 import GreenArrow from "@/public/icons/green_arrow.png";
+import Quest from "@/public/icons/quest.png";
+import Setting from "@/public/icons/setting.png";
 
 // old cards
 import GreenBal from "@/public/cards/green_bal.png";
@@ -122,6 +124,8 @@ const usePreloadAssets = () => {
     EmojiSleep,
     EmojiSmile,
     HelpImage,
+    Quest,
+    Setting,
     // old cards
     GreenBal,
     GreenEight,
