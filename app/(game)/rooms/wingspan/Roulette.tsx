@@ -94,7 +94,7 @@ const Roulette = () => {
   }, [gameStore.allMissions]);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#FCE4C0] h-lvh justify-end items-center gap-12 flex flex-col p-4 z-30">
+    <div className="fixed top-0 left-0 w-full bg-[#FCE4C0] h-lvh justify-center items-center gap-12 flex flex-col p-4 z-30">
       <div className="max-w-[370px] overflow-hidden">
         <div className="relative">
           <p className="absolute top-[5%] left-1/2 -translate-x-1/2 font-bold text-3xl text-[#FFA350]">
@@ -142,6 +142,8 @@ const Roulette = () => {
             </div>
           ))}
         </div>
+
+        <div className="h-[100px]" />
       </div>
     </div>
   );

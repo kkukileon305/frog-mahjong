@@ -120,28 +120,28 @@ export function getSuccessCardIds(
             return card.beakDirection === "left";
           case 12:
             // 12	둥지가 그릇 둥지인 새	nest == bowl
-            if (card.nest.toLowerCase() === "all") {
+            if (card.nest === "all") {
               return true;
             }
 
             return card.nest === "bowl";
           case 13:
             // 12	둥지가 평평형인 새	nest == platform
-            if (card.nest.toLowerCase() === "all") {
+            if (card.nest === "all") {
               return true;
             }
 
             return card.nest === "platform";
           case 14:
             // 13	둥지가 구멍형인 새	nest == cavity
-            if (card.nest.toLowerCase() === "all") {
+            if (card.nest === "all") {
               return true;
             }
 
             return card.nest === "cavity";
           case 15:
             // 14	둥지가 지면위 새	nest == ground
-            if (card.nest.toLowerCase() === "all") {
+            if (card.nest === "all") {
               return true;
             }
 
