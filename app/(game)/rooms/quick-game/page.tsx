@@ -14,6 +14,7 @@ import Game from "@/app/(game)/rooms/quick-game/game/Game";
 import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
+import DisconnectedModal from "@/app/(game)/rooms/quick-game/DisconnectedModal";
 
 const Page = () => {
   const orientation = useScreenOrientation();
@@ -50,9 +51,13 @@ const Page = () => {
     return <Entering />;
   }
 
+  const isDisconnected = gameStore.disconnectedUsers.length > 0;
+
   return (
     <div className="flex h-dvh overflow-hidden">
       <div className="relative w-full flex flex-col justify-between">
+        {isDisconnected && <DisconnectedModal />}
+
         {gameStore.isLoanFailed !== 0 && (
           <LoanFailedModal
             isLoanFailed={gameStore.isLoanFailed}

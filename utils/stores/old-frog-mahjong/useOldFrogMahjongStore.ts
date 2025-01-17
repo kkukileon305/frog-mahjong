@@ -61,6 +61,9 @@ interface GameStore {
   isGameEnd: boolean;
   setIsGameEnd: (isGameEnd: boolean) => void;
 
+  disconnectedUsers: UserSocket[];
+  setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
+
   clear: () => void;
 }
 
@@ -137,6 +140,10 @@ const useOldFrogMahjongStore = create(
 
     isGameEnd: false,
     setIsGameEnd: (isGameEnd) => set({ isGameEnd }),
+
+    disconnectedUsers: [],
+    setDisconnectedUsers: (disconnectedUsers: UserSocket[]) =>
+      set({ disconnectedUsers }),
 
     clear: () =>
       set({
