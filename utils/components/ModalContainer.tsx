@@ -31,7 +31,7 @@ const ModalContainer = ({
     >
       <div
         id="modal-container"
-        className={`relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto p-4 rounded-xl shadow ${
+        className={`relative max-w-3xl w-full max-h-[calc(100dvh-16px)] overflow-y-auto p-4 rounded-[7px] shadow ${
           customColor ? customColor : "bg-white"
         }`}
       >

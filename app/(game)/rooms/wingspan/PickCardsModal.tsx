@@ -379,7 +379,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                         width={205}
                         height={235}
                       />
-                      <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-3xl text-red-500 text-center top-[calc(50%-16px)] font-bold">
+                      <p className="absolute w-10 h-7 left-[calc(50%-20px)] text-[20px] text-red-500 text-center top-[calc(50%-12px)] font-bold">
                         {gameStore.timer >= 0 ? gameStore.timer : 0}
                       </p>
                     </div>
@@ -402,7 +402,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                           ? currentUserItems[0].remainingUses === 0
                           : true)
                       }
-                      className={`h-[calc(100%-60px)] aspect-square rounded-full bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl shadow-[2px_2px_0px_2px_#b33333] disabled:shadow-[2px_2px_0px_2px_#bbbbbb]`}
+                      className="h-[calc(100%-74px)] aspect-square rounded-full text-[20px] bg-[#FA4E38] disabled:bg-gray-200 flex justify-center items-center text-white font-bold text-3xl shadow-[2px_2px_0px_2px_#b33333] disabled:shadow-[2px_2px_0px_2px_#bbbbbb]"
                     >
                       ON
                     </button>

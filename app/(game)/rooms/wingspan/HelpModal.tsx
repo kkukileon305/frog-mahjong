@@ -8,6 +8,7 @@ import {
   bodyParts,
   colorParts,
 } from "@/utils/functions/wingspan/checkMissions";
+import MissionSize from "@/public/icons/mission_size.png";
 
 const HelpModal = () => {
   const m = useTranslations("HelpModal");
@@ -129,9 +130,12 @@ const HelpModal = () => {
                 새크기 미션
               </p>
 
-              <p className="h-[calc(100%-23px)] text-[15px] flex justify-center items-center">
-                이상 or 이하
-              </p>
+              <div className="h-[calc(100%-23px)] flex justify-center items-center gap-2">
+                <img src={MissionSize.src} alt={"size"} className="w-8 h-8" />
+                <p className="text-[13px] justify-center items-center flex flex-col">
+                  이상 <span className="text-[8px] leading-[4px]">or</span> 이하
+                </p>
+              </div>
             </li>
           </ul>
 

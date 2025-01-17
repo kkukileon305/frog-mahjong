@@ -108,6 +108,9 @@ interface GameStore {
   disconnectedUsers: UserSocket[];
   setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
 
+  isSettingModalOpen: boolean;
+  setIsSettingModal: (isSettingModalOpen: boolean) => void;
+
   clear: () => void;
 }
 
@@ -218,8 +221,12 @@ const useWingspanStore = create(
 
     sessionID: null,
     setSessionID: (sessionID) => set({ sessionID }),
+
     disconnectedUsers: [],
     setDisconnectedUsers: (disconnectedUsers) => set({ disconnectedUsers }),
+
+    isSettingModalOpen: false,
+    setIsSettingModal: (isSettingModalOpen) => set({ isSettingModalOpen }),
 
     clear: () =>
       set({
@@ -247,6 +254,7 @@ const useWingspanStore = create(
         timerId: null,
         currentMissions: [],
         disconnectedUsers: [],
+        isSettingModalOpen: false,
       }),
   }))
 );

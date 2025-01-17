@@ -15,6 +15,7 @@ import HelpModal from "@/app/(game)/rooms/wingspan/HelpModal";
 import Roulette from "@/app/(game)/rooms/wingspan/Roulette";
 import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
 import DisconnectedModal from "@/app/(game)/rooms/wingspan/DisconnectedModal";
+import SettingModal from "@/app/(game)/rooms/wingspan/SettingModal";
 
 const Page = () => {
   useDetectNavigation();
@@ -61,6 +62,9 @@ const Page = () => {
     <div className="flex h-dvh overflow-hidden bg-game">
       <div className="relative w-full flex flex-col justify-between">
         {isDisconnected && <DisconnectedModal />}
+
+        {/* setting modal*/}
+        {gameStore.isSettingModalOpen && <SettingModal />}
 
         {/* result modal */}
         {gameStore.isOpenResultModal && <ResultModal />}
