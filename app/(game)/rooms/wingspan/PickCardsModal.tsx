@@ -236,7 +236,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                 className="w-full h-full relative flex justify-center items-center"
               >
                 <img
-                  className="w-[70px] aspect-[130/214] object-fill"
+                  className="max-h-[115px] h-full aspect-[130/214] object-fill"
                   src={card.image}
                   alt={"sealed card"}
                 />
@@ -324,7 +324,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                       className="w-full h-full overflow-hidden flex justify-center items-center"
                     >
                       <button
-                        className={`w-[100px] overflow-hidden aspect-[130/214] relative ${
+                        className={`max-h-full overflow-hidden aspect-[130/214] relative ${
                           card.picked
                             ? "border-2 border-red-400"
                             : nokoriCardsLength === 0
@@ -433,7 +433,7 @@ const PickCardsModal = ({ inGame = false }: PickCardsModalProps) => {
                 {currentUserCards?.map((card) => (
                   <div
                     key={card.id}
-                    className="w-full flex justify-center aspect-[130/214]"
+                    className="max-h-[164.6px] w-full flex h-full overflow-hidden justify-center aspect-[130/214]"
                   >
                     <img
                       className="h-full object-fill"
