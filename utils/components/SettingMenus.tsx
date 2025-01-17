@@ -40,11 +40,6 @@ const SettingMenus = () => {
     audios: s.audios,
   }));
 
-  const { gameType, setGameType } = useMatchSettingStore((s) => ({
-    gameType: s.gameType,
-    setGameType: s.setGameType,
-  }));
-
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
     null
   );
@@ -62,10 +57,6 @@ const SettingMenus = () => {
     }, 200);
 
     setDebounceTimeout(newTimeout);
-  };
-
-  const handleGameTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setGameType(e.currentTarget.checked ? "FROG_MAHJONG_OLD" : "WINGSPAN");
   };
 
   return (

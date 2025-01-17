@@ -14,10 +14,13 @@ import Setting from "@/public/icons/setting.png";
 const Game = () => {
   const m = useTranslations("Game");
 
-  const { gameState, setIsHelpModalOpen } = useWingspanStore((s) => ({
-    gameState: s.gameState,
-    setIsHelpModalOpen: s.setIsHelpModalOpen,
-  }));
+  const { gameState, setIsHelpModalOpen, setIsSettingModal } = useWingspanStore(
+    (s) => ({
+      gameState: s.gameState,
+      setIsHelpModalOpen: s.setIsHelpModalOpen,
+      setIsSettingModal: s.setIsSettingModal,
+    })
+  );
   const users = gameState?.users!;
 
   return (
@@ -59,7 +62,7 @@ const Game = () => {
           </button>
 
           <button
-            onClick={() => setIsHelpModalOpen(true)}
+            onClick={() => setIsSettingModal(true)}
             className="lg:text-base w-full font-bold flex justify-center items-center"
           >
             <img src={Setting.src} alt="" />

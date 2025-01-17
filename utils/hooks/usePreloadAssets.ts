@@ -40,6 +40,7 @@ import Wingspan from "@/public/game-types/wingspan.png";
 import GreenArrow from "@/public/icons/green_arrow.png";
 import Quest from "@/public/icons/quest.png";
 import Setting from "@/public/icons/setting.png";
+import MissionSize from "@/public/icons/mission_size.png";
 
 // old cards
 import GreenBal from "@/public/cards/green_bal.png";
@@ -151,6 +152,7 @@ const usePreloadAssets = () => {
     FrogMahjong,
     Wingspan,
     GreenArrow,
+    MissionSize,
   ].map((image) => ({
     url: image.src,
     type: "image",
