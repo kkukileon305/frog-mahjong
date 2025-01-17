@@ -14,6 +14,8 @@ import {
   CHAT,
   DISCARD,
   ERR_ABNORMAL_EXIT,
+  ERR_GAME_TERMINATED,
+  ERR_NOT_FOUND_CARD,
   FAILED_LOAN,
   GAME_OVER,
   IMPORT_CARDS,
@@ -34,6 +36,7 @@ import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import getWsUrl from "@/utils/functions/getWsUrl";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import { decryptAES, encryptAES } from "@/utils/functions/aes";
+import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 
 export type MatchingMode = "NORMAL" | "CREATE" | "ENTER";
 
@@ -155,10 +158,24 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
       );
 
       const data = JSON.parse(decryptedMessage) as SocketResponseBody;
+
+      if (data.errorInfo?.type === ERR_GAME_TERMINATED) {
+        // 연결 끊김
+        const intervalId = useWingspanStore.getState().timerId;
+
+        intervalId && clearTimeout(intervalId);
+
+        // disconnected user store에 설정
+        const disconnectedUser =
+          data.users?.filter((u) => u.playerState === "disconnected") || [];
+        store.setDisconnectedUsers(disconnectedUser);
+
+        return;
+      }
+
       store.setGameState(data);
 
       if (data.errorInfo?.type === ERR_ABNORMAL_EXIT) {
-        // 비정상 종료
         store.setIsAbnormalExit(true);
         return;
       }
@@ -189,6 +206,10 @@ const useOldFrogMahjong = (mode: MatchingMode) => {
         eventName === PLAY_TOGETHER ||
         eventName === JOIN_PLAY
       ) {
+        const disconnectedUser =
+          data.users?.filter((u) => u.playerState === "disconnected") || [];
+        store.setDisconnectedUsers(disconnectedUser);
+
         if (data.gameInfo?.isFull) {
           router.push("/rooms/quick-game");
           store.setIsMatching(false);
