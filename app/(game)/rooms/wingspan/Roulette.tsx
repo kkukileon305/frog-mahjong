@@ -143,7 +143,6 @@ const Roulette = () => {
           ))}
         </div>
       </div>
-      <img src={RouletteLoading.src} alt="roulette loading" />
     </div>
   );
 };
