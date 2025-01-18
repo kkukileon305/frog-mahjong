@@ -15,7 +15,6 @@ import getRandomElements from "@/utils/functions/getRandomElements";
 import { BirdCard } from "@/utils/axios";
 import { useEffect } from "react";
 import { RANDOM } from "@/utils/constants/const";
-import { getSuccessCardIds } from "@/utils/functions/wingspan/checkMissions";
 import { encryptAES } from "@/utils/functions/aes";
 
 type LeftCard = BirdCard & {
