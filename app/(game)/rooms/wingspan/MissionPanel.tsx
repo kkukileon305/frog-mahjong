@@ -3,7 +3,6 @@ import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { getCookie } from "cookies-next";
-import { getSuccessCardIds } from "@/utils/functions/wingspan/checkMissions";
 
 const MissionPanel = () => {
   const userID = getCookie("userID") as string;
@@ -56,11 +55,6 @@ const MissionPanel = () => {
         allUserCardWithoutPickedCardIds?.includes(card.id) ||
         allUserDiscardedIds?.includes(card.id)
       )
-  );
-
-  const nokoriPassCards = getSuccessCardIds(
-    leftCardsWithoutPickedWithOpenCards,
-    gameStore.currentMissions
   );
 
   return (
