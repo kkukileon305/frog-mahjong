@@ -24,7 +24,6 @@ const Header = async () => {
             {m("tutorial")}
           </Link>
           <SwitchLocale />
-          <SettingMenus />
         </div>
       </div>
     </header>

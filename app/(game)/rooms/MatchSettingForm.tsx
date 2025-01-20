@@ -19,6 +19,8 @@ import GameTypeSwiper from "@/app/(game)/rooms/GameTypeSwiper";
 import { getCookie } from "cookies-next";
 import SettingMenus from "@/utils/components/SettingMenus";
 import Setting from "@/public/icons/setting.png";
+import Tutorial from "@/app/(game)/rooms/Tutorial";
+import Quest from "@/public/icons/quest.png";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -46,6 +48,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const accessToken = getCookie("accessToken") as string;
 
   const [isSettingOpen, setIsSettingOpen] = useState(false);
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
   const {
     loadImages,
@@ -187,6 +190,13 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         </button>
       </div>
 
+      <button
+        onClick={() => setIsTutorialOpen(true)}
+        className="absolute top-0 right-10 p-2 z-10"
+      >
+        <img src={Quest.src} alt="tutorial" width={24} height={24} />
+      </button>
+
       {hasValidSessionID && prevMode && (
         <MatchingModal
           mode={prevMode}
@@ -239,12 +249,15 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         >
           <div className="relative flex flex-col justify-center h-[calc(100%-99px)] my-4 gap-8">
             <SettingMenus isOpen={isSettingOpen} setIsOpen={setIsSettingOpen} />
+
             {isProfileModalOpen && (
               <EditProfileImage
                 userData={userData}
                 setIsOpen={setIsProfileModalOpen}
               />
             )}
+
+            {isTutorialOpen && <Tutorial setIsOpen={setIsTutorialOpen} />}
 
             <GameTypeSwiper />
 
