@@ -220,7 +220,7 @@
     "notification": "通知"
   },
   "Warning": {
-    "title": "画面を横に<br></br>してください"
+    "title": "画面を{jaDirection}に<br></br>してください"
   },
   "UserPanel": {
     "report": "報告"
