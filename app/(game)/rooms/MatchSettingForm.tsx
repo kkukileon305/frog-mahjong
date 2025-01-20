@@ -256,7 +256,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             onSubmit={(e) => e.preventDefault()}
             className="w-full h-[calc(100%-90px)] flex flex-col landscape:mt-2"
           >
-            <div className="relative flex flex-col h-[calc(100%-99px)] my-4 gap-8 overflow-y-auto">
+            <div className="relative flex flex-col h-[calc(100%-99px)] my-4 overflow-y-auto gap-8">
               <SettingMenus
                 isOpen={isSettingOpen}
                 setIsOpen={setIsSettingOpen}

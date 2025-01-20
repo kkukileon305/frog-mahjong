@@ -118,12 +118,12 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
                       <button
                         disabled
                         onClick={() => changeProfileID(icon.profileID)}
-                        className="w-full aspect-square"
+                        className="w-20 aspect-square"
                       >
                         <img
                           src={icon.image}
                           alt="icon"
-                          className="w-full h-full object-fill object-bottom"
+                          className="w-20 aspect-square object-cover object-bottom"
                         />
                       </button>
                     )}
@@ -132,12 +132,12 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
                       <button
                         disabled={isChanging}
                         onClick={() => changeProfileID(icon.profileID)}
-                        className="w-full aspect-square"
+                        className="w-20 aspect-square"
                       >
                         <img
                           src={icon.image}
                           alt="icon"
-                          className="w-full h-full object-cover object-bottom"
+                          className="w-20 aspect-square object-cover object-bottom"
                         />
                       </button>
                     )}
@@ -150,7 +150,7 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
                     <img
                       src={icon.image}
                       alt="icon"
-                      className="w-20 aspect-square object-cover"
+                      className="w-20 aspect-square object-cover object-bottom"
                     />
                   </button>
                 )}
