@@ -28,7 +28,7 @@ const SwitchLocaleSlide = () => {
         {locales.map((localeName) => (
           <div
             onClick={() => onClick(localeName)}
-            className="w-32 p-2 border-r last:border-none bg-white hover:bg-gray-200 cursor-pointer"
+            className="w-32 p-2 border-r last:border-none bg-[#E1EDE9] cursor-pointer"
             key={localeName}
           >
             <p

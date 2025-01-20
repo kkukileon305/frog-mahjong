@@ -47,10 +47,6 @@ const Page = async () => {
         <Notification />
 
         <MatchSettingForm formMetadata={formMetadata} userData={userData} />
-
-        <Tutorial />
-
-        <SettingMenus />
       </div>
     </div>
   );

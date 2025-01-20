@@ -41,7 +41,9 @@ const RootLayout = async ({
       </head>
       <body className={locale === "kr" ? fontKR.className : fontJP.className}>
         <NextIntlClientProvider messages={messages}>
-          <div className="min-h-[calc(100dvh)] bg-main bg-top">{children}</div>
+          <div className="min-h-[calc(100dvh)] bg-[#5F9C8C] bg-top">
+            {children}
+          </div>
         </NextIntlClientProvider>
 
         {process.env.NODE_ENV !== "development" && (

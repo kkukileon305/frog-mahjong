@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { useTranslations } from "next-intl";
 import { deleteCookie, getCookie } from "cookies-next";
 import axiosInstance from "@/utils/axios";
 import { useRouter } from "next/navigation";
 
-const QuitModal = () => {
+const QuitModal = ({
+  setIsQuitModalOpen,
+}: {
+  setIsQuitModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const m = useTranslations("Quit");
   const router = useRouter();
   const accessToken = getCookie("accessToken") as string;
@@ -38,10 +42,10 @@ const QuitModal = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="w-full h-full p-4 rounded-[7px] bg-[#E1EDE9] justify-between overflow-y-auto absolute z-30 font-extrabold flex flex-col gap-4">
       <p className="text-center font-bold text-xl">{m("title")}</p>
 
-      <div className="p-2 bg-gray-200 rounded">
+      <div className="p-2 rounded">
         <p className="text-center">{m("warning")}</p>
       </div>
 
@@ -51,6 +55,7 @@ const QuitModal = () => {
         <button
           id="back"
           disabled={isLoading}
+          onClick={() => setIsQuitModalOpen(false)}
           className="w-full bg-match-button font-bold text-white py-2 rounded text-xl disabled:bg-gray-200"
         >
           {m("back")}
