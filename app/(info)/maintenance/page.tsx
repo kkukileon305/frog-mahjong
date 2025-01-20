@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
 import SignOutBtn from "@/utils/components/SignOutBtn";
 import React from "react";
+import RouletteLoading from "@/public/effects/roulette_loading.gif";
+import TextLoading from "@/public/text/loading_text.png";
 
 const Page = () => {
   const m = useTranslations("error");

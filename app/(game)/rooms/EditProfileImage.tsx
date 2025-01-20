@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axiosInstance, {
   AvailableProfileIcon,
   AvailableProfileIconResponse,
@@ -15,9 +15,10 @@ import { useRouter } from "next/navigation";
 
 type EditProfileImageProps = {
   userData: UserData;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const EditProfileImage = ({ userData }: EditProfileImageProps) => {
+const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
   const m = useTranslations("EditProfileImage");
 
   const router = useRouter();
@@ -86,10 +87,8 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
   };
 
   return (
-    <div>
-      <p className="text-center font-sb text-xl text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">
-        {m("title")}
-      </p>
+    <div className="w-full h-full p-4 rounded-[7px] bg-[#E1EDE9] flex flex-col items-center overflow-y-auto absolute z-30 font-extrabold">
+      <p className="text-center text-xl">{m("title")}</p>
       {isLoading && (
         <div className="flex justify-center py-4">
           <AiOutlineLoading3Quarters className="animate-spin" />
@@ -97,17 +96,19 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
       )}
       {!isLoading && (
         <>
-          <div className="overflow-hidden py-4">
+          <div className="overflow-hidden py-4 h-[129px]">
             <img
               src={currentIcons.image}
               alt="icon"
-              className="w-1/6 mx-auto"
+              width={97}
+              height={97}
+              className="w-[97px] h-[97px] overflow-hidden mx-auto object-fill object-bottom"
             />
           </div>
 
-          <div className="w-fit max-h-[30dvh] mx-auto bg-white/40 p-2 rounded-xl grid grid-cols-3 gap-2 overflow-y-auto">
+          <div className="w-full h-[calc(100%-189px)] border-t border-[#95C1A6] mx-auto py-4 flex flex-wrap content-start gap-[10px] justify-between overflow-y-auto">
             {allProfileIcons.map((icon) => (
-              <div key={icon.profileID} className="">
+              <div key={icon.profileID} className="h-fit">
                 {availableProfileList
                   .map((icon) => icon.profileID)
                   .includes(icon.profileID) ? (
@@ -143,9 +144,13 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
                 ) : (
                   <button
                     disabled
-                    className="w-20 aspect-square rounded-xl overflow-hidden border-2 border-gray-400 grayscale"
+                    className="w-20 aspect-square overflow-hidden grayscale"
                   >
-                    <img src={icon.image} alt="icon" />
+                    <img
+                      src={icon.image}
+                      alt="icon"
+                      className="w-20 aspect-square object-cover"
+                    />
                   </button>
                 )}
 
@@ -159,9 +164,10 @@ const EditProfileImage = ({ userData }: EditProfileImageProps) => {
       )}
       <button
         id="back"
-        className="absolute top-2 right-2 bg-yellow-button font-bold text-white rounded text-xl disabled:bg-gray-200"
+        onClick={() => setIsOpen(false)}
+        className="max-w-80 w-full h-8 bg-[#95C1A6] px-2 py-1 font-bold text-white rounded-[1px]"
       >
-        <IoClose className="text-3xl" />
+        닫기
       </button>
     </div>
   );

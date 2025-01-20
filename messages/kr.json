@@ -211,7 +211,7 @@
     "error": "유저 검증 실패, 재로그인하세요"
   },
   "Settings": {
-    "volume": "볼륨",
+    "volume": "전체볼륨",
     "term": "이용약관",
     "privacy": "개인정보 처리방침",
     "license": "라이센스",

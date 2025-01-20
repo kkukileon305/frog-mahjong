@@ -13,9 +13,9 @@ const Page = async () => {
       <SignInForm />
 
       <div className="flex relative my-8 items-center">
-        <div className="basis-2/5 h-[1px] bg-gray-400" />
+        <div className="basis-2/5 h-[1px] bg-white" />
         <p className="basis-1/5 px-2 text-center">{m("or")}</p>
-        <div className="basis-2/5 h-[1px] bg-gray-400" />
+        <div className="basis-2/5 h-[1px] bg-white" />
       </div>
 
       <GoogleSignInBtn />

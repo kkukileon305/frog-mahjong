@@ -26,10 +26,7 @@ const GameTypeSwiper = () => {
 
   const swiperRef = useRef<SwiperType>();
 
-  const { gameType, setGameType } = useMatchSettingStore((s) => ({
-    gameType: s.gameType,
-    setGameType: s.setGameType,
-  }));
+  const setGameType = useMatchSettingStore((s) => s.setGameType);
 
   const games: GameMenu[] = [
     {
@@ -67,7 +64,7 @@ const GameTypeSwiper = () => {
   return (
     <div className="relative">
       <Swiper
-        className="my-2 flex bg-white/40 rounded-xl"
+        className="my-2 flex bg-white/40 rounded-[3px]"
         onBeforeInit={(swiper) => {
           swiperRef.current = swiper;
         }}

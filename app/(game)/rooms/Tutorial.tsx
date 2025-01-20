@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MdOutlineQuestionMark } from "react-icons/md";
+import Quest from "@/public/icons/quest.png";
 
 const Tutorial = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +36,7 @@ const Tutorial = () => {
         onClick={() => setIsOpen(true)}
         className="absolute top-0 right-10 p-2 z-10"
       >
-        <MdOutlineQuestionMark size={24} />
+        <img src={Quest.src} alt="tutorial" width={24} height={24} />
       </button>
     </>
   );

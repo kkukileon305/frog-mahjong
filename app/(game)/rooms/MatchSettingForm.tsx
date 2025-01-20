@@ -17,6 +17,8 @@ import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 import NokoriCoins from "@/app/(game)/rooms/NokoriCoins";
 import GameTypeSwiper from "@/app/(game)/rooms/GameTypeSwiper";
 import { getCookie } from "cookies-next";
+import SettingMenus from "@/utils/components/SettingMenus";
+import Setting from "@/public/icons/setting.png";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -42,6 +44,8 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const { profileIcons } = useProfileIconStore();
 
   const accessToken = getCookie("accessToken") as string;
+
+  const [isSettingOpen, setIsSettingOpen] = useState(false);
 
   const {
     loadImages,
@@ -158,19 +162,30 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const prevMode = localStorage.getItem("matchMode") as MatchingMode | null;
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center bg-rooms bg-center bg-cover p-2">
+    <div className="w-full h-full flex flex-col items-center bg-center bg-cover px-2 py-10">
       {process.env.NODE_ENV !== "production" && (
         <p className="absolute left-0 top-0">{gameType}</p>
       )}
 
-      {isProfileModalOpen && (
-        <ModalContainer
-          setIsOpen={setIsProfileModalOpen}
-          customColor="bg-game-icon"
+      <div
+        id="setting-button"
+        className="w-fit absolute flex justify-end top-0 right-0 text-black z-10"
+      >
+        <button
+          onClick={() => {
+            setIsSettingOpen(true);
+            setIsProfileModalOpen(false);
+          }}
+          className="cursor-pointer p-2 rounded-xl"
         >
-          <EditProfileImage userData={userData} />
-        </ModalContainer>
-      )}
+          <img
+            src={Setting.src}
+            alt="setting open modal"
+            width={24}
+            height={24}
+          />
+        </button>
+      </div>
 
       {hasValidSessionID && prevMode && (
         <MatchingModal
@@ -187,12 +202,15 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
         />
       )}
 
-      <div className="max-w-2xl w-full">
+      <div className="max-w-2xl w-full h-full flex flex-col justify-between">
         <div className="flex justify-center items-center gap-8">
           <button
             disabled={!isLoaded}
-            onClick={() => setIsProfileModalOpen(true)}
-            className="w-20 aspect-square"
+            onClick={() => {
+              setIsProfileModalOpen(true);
+              setIsSettingOpen(false);
+            }}
+            className="w-[90px] aspect-square"
           >
             {isLoaded ? (
               <img
@@ -210,18 +228,26 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             )}
           </button>
           <div className="font-bold">
-            <p className="text-2xl">{userData.name}</p>
+            <p className="text-[20px] w-[100px]">{userData.name}</p>
             <NokoriCoins userData={userData} />
           </div>
         </div>
 
-        <GameTypeSwiper />
-
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full flex flex-col gap-8 landscape:mt-2"
+          className="w-full h-[calc(100%-90px)] flex flex-col landscape:mt-2"
         >
-          <>
+          <div className="relative flex flex-col justify-center h-[calc(100%-99px)] my-4 gap-8">
+            <SettingMenus isOpen={isSettingOpen} setIsOpen={setIsSettingOpen} />
+            {isProfileModalOpen && (
+              <EditProfileImage
+                userData={userData}
+                setIsOpen={setIsProfileModalOpen}
+              />
+            )}
+
+            <GameTypeSwiper />
+
             <div className="flex flex-col">
               <label className="text-center text-2xl font-bold">
                 {m("timeout")}
@@ -230,10 +256,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 {formMetadata.timers.map((i) => (
                   <label
                     key={i}
-                    className={`w-1/3 text-responsive-small flex font-bold justify-center cursor-pointer py-1 ${
+                    className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
                       timer === i
                         ? "bg-button-selected text-white"
-                        : "bg-white text-green-600"
+                        : "bg-white text-[#289D4F]"
                     }`}
                   >
                     <input
@@ -255,10 +281,10 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 {["2", "3", "4"].map((i) => (
                   <label
                     key={i}
-                    className={`w-1/3 text-responsive-small flex font-bold justify-center cursor-pointer py-1 ${
+                    className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
                       count.toString() === i
                         ? "bg-button-selected text-white"
-                        : "bg-white text-green-600"
+                        : "bg-white text-[#289D4F]"
                     }`}
                   >
                     <input
@@ -273,37 +299,49 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 ))}
               </div>
             </div>
-            {userData.coin > 0 && (
-              <div className="flex flex-col gap-4">
+          </div>
+          {userData.coin > 0 && (
+            <div className="flex flex-col gap-4">
+              <button
+                onClick={() => {
+                  setOpenMatchModal("NORMAL");
+                  setIsSettingOpen(false);
+                  setIsProfileModalOpen(false);
+                }}
+                className="w-full bg-match-button font-bold text-white py-2 rounded-[4px] text-[17px] disabled:bg-gray-200"
+              >
+                {m("normal")}
+              </button>
+              <div className="flex gap-4">
                 <button
-                  onClick={() => setOpenMatchModal("NORMAL")}
-                  className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
+                  onClick={() => {
+                    setOpenMatchModal("CREATE");
+                    setIsSettingOpen(false);
+                    setIsProfileModalOpen(false);
+                  }}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded-[4px] text-[17px] disabled:bg-gray-200"
                 >
-                  {m("normal")}
+                  {m("createRoom")}
                 </button>
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setOpenMatchModal("CREATE")}
-                    className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
-                  >
-                    {m("createRoom")}
-                  </button>
 
-                  <button
-                    onClick={() => setOpenMatchModal("ENTER")}
-                    className="w-full bg-match-button font-bold text-white py-1 rounded text-responsive-small disabled:bg-gray-200"
-                  >
-                    {m("enterRoom")}
-                  </button>
-                </div>
+                <button
+                  onClick={() => {
+                    setOpenMatchModal("ENTER");
+                    setIsSettingOpen(false);
+                    setIsProfileModalOpen(false);
+                  }}
+                  className="w-full bg-match-button font-bold text-white py-2 rounded-[4px] text-[17px] disabled:bg-gray-200"
+                >
+                  {m("enterRoom")}
+                </button>
               </div>
-            )}
-            {userData.coin <= 0 && (
-              <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">
-                <p>{m("noCoin")}</p>
-              </div>
-            )}
-          </>
+            </div>
+          )}
+          {userData.coin <= 0 && (
+            <div className="flex h-[104px] justify-center bg-gray-200 items-center gap-4">
+              <p>{m("noCoin")}</p>
+            </div>
+          )}
         </form>
       </div>
     </div>
