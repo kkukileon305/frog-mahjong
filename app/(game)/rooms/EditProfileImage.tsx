@@ -94,6 +94,7 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
           <AiOutlineLoading3Quarters className="animate-spin" />
         </div>
       )}
+
       {!isLoading && (
         <>
           <div className="overflow-hidden py-4 h-[129px]">

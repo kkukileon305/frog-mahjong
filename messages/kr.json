@@ -221,7 +221,7 @@
     "notification": "알림"
   },
   "Warning": {
-    "title": "화면을 가로로 <br></br> 돌려주세요"
+    "title": "화면을 {direction}로 <br></br> 돌려주세요"
   },
   "UserPanel": {
     "report": "신고하기"

@@ -1,7 +1,15 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 
-const WarningModal = () => {
+type WarningModalProps = {
+  direction?: string;
+  jaDirection?: string;
+};
+
+const WarningModal = ({
+  direction = "가로",
+  jaDirection = "横",
+}: WarningModalProps) => {
   const m = useTranslations("Warning");
 
   return (
@@ -10,6 +18,8 @@ const WarningModal = () => {
         <p className="font-bold text-3xl text-center">
           {m.rich("title", {
             br: (c) => <br />,
+            direction,
+            jaDirection,
           })}
         </p>
       </div>
