@@ -283,6 +283,17 @@ const useWingspan = (mode: MatchingMode) => {
             allUserCardIds.length + allUserDiscardedIds.length ===
             useWingspanStore.getState().cards.length;
 
+          if (process.env.NODE_ENV !== "production") {
+            console.log(
+              "가져간 카드 개수",
+              allUserCardIds.length + allUserDiscardedIds.length
+            );
+            console.log(
+              "전체 카드 개수",
+              useWingspanStore.getState().cards.length
+            );
+          }
+
           if (isAllPicked) {
             if (currentUser?.isOwner) {
               const req: GameOverRequest = {
