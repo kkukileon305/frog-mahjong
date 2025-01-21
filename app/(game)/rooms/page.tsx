@@ -43,7 +43,7 @@ const Page = async () => {
 
   return (
     <div className="relative">
-      <div className="h-[calc(100dvh)] flex items-center w-full mx-auto">
+      <div className="min-h-[calc(100dvh)] max-w-2xl w-full mx-auto">
         <Notification />
 
         <MatchSettingForm formMetadata={formMetadata} userData={userData} />
