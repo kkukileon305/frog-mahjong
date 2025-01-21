@@ -250,7 +250,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             onSubmit={(e) => e.preventDefault()}
             className="w-full h-[calc(100%-90px)] flex flex-col landscape:mt-2"
           >
-            <div className="relative flex flex-col h-[calc(100%-99px)] min-h-[480px] my-4 overflow-y-auto gap-8">
+            <div className="relative flex flex-col h-[calc(100%-99px)] min-h-[460px] my-4 overflow-y-auto">
               <SettingMenus
                 isOpen={isSettingOpen}
                 setIsOpen={setIsSettingOpen}
@@ -267,55 +267,57 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
               <GameTypeSwiper />
 
-              <div className="flex flex-col">
-                <label className="text-center text-2xl font-bold">
-                  {m("timeout")}
-                </label>
-                <div className="flex justify-between gap-2 mt-3">
-                  {formMetadata.timers.map((i) => (
-                    <label
-                      key={i}
-                      className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
-                        timer === i
-                          ? "bg-button-selected text-white"
-                          : "bg-white text-[#289D4F]"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value={i}
-                        {...register("timer")}
-                        hidden
-                      />
-                      {i}s
-                    </label>
-                  ))}
+              <div className="flex flex-col justify-evenly h-[calc(100%-152px)] min-h-[calc(460px-152px)]">
+                <div className="flex flex-col">
+                  <label className="text-center text-2xl font-bold">
+                    {m("timeout")}
+                  </label>
+                  <div className="flex justify-between gap-2 mt-3">
+                    {formMetadata.timers.map((i) => (
+                      <label
+                        key={i}
+                        className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
+                          timer === i
+                            ? "bg-button-selected text-white"
+                            : "bg-white text-[#289D4F]"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          value={i}
+                          {...register("timer")}
+                          hidden
+                        />
+                        {i}s
+                      </label>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col mb-4">
-                <label className="text-center text-2xl font-bold">
-                  {m("maxPlayerNumber")}
-                </label>
-                <div className="flex justify-between gap-2 mt-3">
-                  {["2", "3", "4"].map((i) => (
-                    <label
-                      key={i}
-                      className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
-                        count.toString() === i
-                          ? "bg-button-selected text-white"
-                          : "bg-white text-[#289D4F]"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        value={i}
-                        {...register("count")}
-                        hidden
-                      />
-                      {i}
-                      {m("personCount")}
-                    </label>
-                  ))}
+                <div className="flex flex-col mb-4">
+                  <label className="text-center text-2xl font-bold">
+                    {m("maxPlayerNumber")}
+                  </label>
+                  <div className="flex justify-between gap-2 mt-3">
+                    {["2", "3", "4"].map((i) => (
+                      <label
+                        key={i}
+                        className={`w-1/3 text-responsive-small font-semibold rounded-[4px] flex justify-center cursor-pointer py-1 ${
+                          count.toString() === i
+                            ? "bg-button-selected text-white"
+                            : "bg-white text-[#289D4F]"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          value={i}
+                          {...register("count")}
+                          hidden
+                        />
+                        {i}
+                        {m("personCount")}
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
