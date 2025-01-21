@@ -37,7 +37,6 @@ type GameSettingInputs = {
 
 const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
   const m = useTranslations("MatchSettingForm");
-  const orientation = useScreenOrientation();
   const [openMatchModal, setOpenMatchModal] = useState<null | MatchingMode>(
     null
   );
@@ -169,12 +168,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
 
   return (
     <>
-      {orientation !== "portrait-primary" && (
-        <ModalContainer>
-          <WarningModal direction="세로" jaDirection="縦" />
-        </ModalContainer>
-      )}
-      <div className="w-full h-full flex flex-col items-center bg-center bg-cover px-2 py-10">
+      <div className="w-full min-h-full bg-[#5F9C8C] bg-cover px-2 py-10">
         {process.env.NODE_ENV !== "production" && (
           <p className="absolute left-0 top-0">{gameType}</p>
         )}
@@ -221,7 +215,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
           />
         )}
 
-        <div className="max-w-2xl w-full h-full flex flex-col justify-between">
+        <div className="max-w-2xl w-full h-full">
           <div className="flex justify-center items-center gap-8">
             <button
               disabled={!isLoaded}
@@ -256,7 +250,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
             onSubmit={(e) => e.preventDefault()}
             className="w-full h-[calc(100%-90px)] flex flex-col landscape:mt-2"
           >
-            <div className="relative flex flex-col h-[calc(100%-99px)] my-4 overflow-y-auto gap-8">
+            <div className="relative flex flex-col h-[calc(100%-99px)] min-h-[480px] my-4 overflow-y-auto gap-8">
               <SettingMenus
                 isOpen={isSettingOpen}
                 setIsOpen={setIsSettingOpen}
