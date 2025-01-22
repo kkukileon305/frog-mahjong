@@ -272,7 +272,7 @@ const MyCardBoard = ({
                 alt={doraImage.color + doraImage.name}
                 className="w-6 aspect-[40/58]"
               />
-              <p className="hidden lg:block text-xs lg:text-base font-bold text-white text-center">
+              <p className="text-xs lg:text-base font-bold text-white text-center">
                 {m("dora")} <br />
                 +1{m("score")}
               </p>

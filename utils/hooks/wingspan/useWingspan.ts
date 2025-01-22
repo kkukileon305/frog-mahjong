@@ -277,19 +277,34 @@ const useWingspan = (mode: MatchingMode) => {
             .flat()!;
 
           // 무승부 체크
+          const currentUser = users?.find((user) => user.id === Number(userID));
+
           const isAllPicked =
             allUserCardIds.length + allUserDiscardedIds.length ===
             useWingspanStore.getState().cards.length;
 
-          if (isAllPicked) {
-            const req: GameOverRequest = {
-              event: "GAME_OVER",
-              userID: Number(userID),
-              message: "",
-              roomID: Number(data.gameInfo.roomID),
-            };
+          if (process.env.NODE_ENV !== "production") {
+            console.log(
+              "가져간 카드 개수",
+              allUserCardIds.length + allUserDiscardedIds.length
+            );
+            console.log(
+              "전체 카드 개수",
+              useWingspanStore.getState().cards.length
+            );
+          }
 
-            store.ws?.send(JSON.stringify(req));
+          if (isAllPicked) {
+            if (currentUser?.isOwner) {
+              const req: GameOverRequest = {
+                event: "GAME_OVER",
+                userID: Number(userID),
+                message: "",
+                roomID: Number(data.gameInfo.roomID),
+              };
+
+              store.ws?.send(JSON.stringify(req));
+            }
           } else {
             store.setIsHelpModalOpen(false);
             store.setIsUseItem(false);
