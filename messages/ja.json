@@ -116,6 +116,7 @@
     "back": "戻る"
   },
   "ResultModal": {
+    "mission": "ミッション",
     "title": "結果",
     "same": "同じ牌(2点)",
     "continuous": "3つ連番(1点)",

@@ -140,6 +140,15 @@ export interface MissionResult {
   missionID: number;
 }
 
+export interface DrawData {
+  users: DrawUser[];
+}
+
+export interface DrawUser {
+  successMissions: number[];
+  userID: number;
+}
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 });

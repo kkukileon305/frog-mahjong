@@ -111,6 +111,9 @@ interface GameStore {
   isSettingModalOpen: boolean;
   setIsSettingModal: (isSettingModalOpen: boolean) => void;
 
+  isGameOver: boolean;
+  setIsGameOver: (isGameOver: boolean) => void;
+
   clear: () => void;
 }
 
@@ -228,6 +231,9 @@ const useWingspanStore = create(
     isSettingModalOpen: false,
     setIsSettingModal: (isSettingModalOpen) => set({ isSettingModalOpen }),
 
+    isGameOver: false,
+    setIsGameOver: (isGameOver) => set({ isGameOver }),
+
     clear: () =>
       set({
         ws: null,
@@ -255,6 +261,7 @@ const useWingspanStore = create(
         currentMissions: [],
         disconnectedUsers: [],
         isSettingModalOpen: false,
+        isGameOver: false,
       }),
   }))
 );
