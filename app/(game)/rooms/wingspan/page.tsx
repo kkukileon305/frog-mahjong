@@ -16,10 +16,15 @@ import Roulette from "@/app/(game)/rooms/wingspan/Roulette";
 import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
 import DisconnectedModal from "@/app/(game)/rooms/wingspan/DisconnectedModal";
 import SettingModal from "@/app/(game)/rooms/wingspan/SettingModal";
+import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
+import ModalContainer from "@/utils/components/ModalContainer";
+import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 
 const Page = () => {
   useDetectNavigation();
   useTimer();
+
+  const orientation = useScreenOrientation();
 
   const userID = getCookie("userID") as string;
   const accessToken = getCookie("accessToken") as string;
@@ -61,6 +66,12 @@ const Page = () => {
   return (
     <div className="flex h-dvh overflow-hidden bg-game">
       <div className="relative w-full flex flex-col justify-between">
+        {orientation !== "portrait-primary" && (
+          <ModalContainer>
+            <WarningModal direction="세로" jaDirection="縦" />
+          </ModalContainer>
+        )}
+
         {isDisconnected && <DisconnectedModal />}
 
         {/* setting modal*/}
