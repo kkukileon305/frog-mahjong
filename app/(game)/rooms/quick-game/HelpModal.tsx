@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import HelpImage1 from "@/public/helps/setsumei1.jpg";
-import HelpImage2 from "@/public/helps/setsumei2.jpg";
+import HelpImage1 from "@/public/helps/kero/kero_score.jpg";
+import HelpImage2 from "@/public/helps/kero/kero_cards.jpg";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
