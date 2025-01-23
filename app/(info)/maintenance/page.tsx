@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import HelpModal, { HelpContent } from "@/utils/components/HelpModal";
 import HelpImage1 from "@/public/helps/kero/kero_score.jpg";
 import HelpImage2 from "@/public/helps/kero/kero_cards.jpg";
+import ToriTuto1HelpImage from "@/public/helps/tori/tori_tuto_1.jpg";
 
 const Page = async () => {
   const m = await getTranslations("error");
@@ -28,7 +29,7 @@ const Page = async () => {
     },
     {
       title: "2",
-      image: HelpImage2,
+      image: ToriTuto1HelpImage,
     },
   ];
 
