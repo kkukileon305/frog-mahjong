@@ -291,7 +291,7 @@ const ResultModal = () => {
                           alt={u.name}
                         />
 
-                        <p className="h-[calc(100%-94px)] flex justify-center items-center mx-2 px-2 text-[7px] text-center bg-white rounded">
+                        <p className="h-[calc(100%-98px)] flex justify-center items-center mx-2 px-2 text-[7px] text-center bg-white rounded">
                           {u.name}
                         </p>
                       </div>
