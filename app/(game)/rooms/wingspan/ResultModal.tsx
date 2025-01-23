@@ -280,9 +280,9 @@ const ResultModal = () => {
                 <ul className="w-full h-[calc(100%-90px-68px)] mx-auto flex flex-col px-2">
                   {users.current?.map((u) => (
                     <li key={u.id} className="h-1/4 p-2 flex gap-2">
-                      <div className="h-full flex flex-col justify-center gap-2">
+                      <div className="w-[90px] h-full flex flex-col gap-1">
                         <img
-                          className="w-[90px] aspect-square object-cover object-bottom border"
+                          className="w-[90px] aspect-square overflow-hidden object-cover bg-white object-bottom"
                           src={
                             profileIcons.find(
                               (ic) => ic.profileID === u.profileID
@@ -291,12 +291,12 @@ const ResultModal = () => {
                           alt={u.name}
                         />
 
-                        <p className="mx-2 px-2 text-[7px] text-center bg-[#FCE4C0] rounded mt-1">
+                        <p className="h-[calc(100%-94px)] flex justify-center items-center mx-2 px-2 text-[7px] text-center bg-white rounded">
                           {u.name}
                         </p>
                       </div>
 
-                      <div className="w-full h-full bg-white p-8 flex flex-col justify-center gap-2">
+                      <div className="w-[calc(100%-98px)] h-[90px] bg-white p-8 flex flex-col justify-center gap-2">
                         {currentMissions.current &&
                           currentMissions.current.map((m, index) => (
                             <div
