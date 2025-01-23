@@ -17,7 +17,13 @@ export type HelpContent = {
   }[];
 };
 
-const HelpModal = ({ helpContents }: { helpContents: HelpContent[] }) => {
+const HelpModal = ({
+  helpContents,
+  setIsModalOpen,
+}: {
+  helpContents: HelpContent[];
+  setIsModalOpen: (isOpen: boolean) => void;
+}) => {
   const [pageIndex, setPageIndex] = useState(0);
   const swiperRef = useRef<SwiperType>();
 
@@ -94,6 +100,7 @@ const HelpModal = ({ helpContents }: { helpContents: HelpContent[] }) => {
 
         <button
           id="back"
+          onClick={() => setIsModalOpen(false)}
           className="w-full bg-sky-500 rounded-lg py-1 text-white font-bold disabled:bg-gray-400"
         >
           close
