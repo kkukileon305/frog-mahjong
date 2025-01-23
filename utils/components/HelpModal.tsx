@@ -68,14 +68,14 @@ const HelpModal = ({
               </Swiper>
 
               <button
-                className="absolute h-full top-0 left-20 z-10"
+                className="absolute h-full top-0 left-4 z-10"
                 onClick={() => swiperRef.current?.slidePrev()}
               >
                 <img src={GreenArrow.src} className="rotate-180" alt="" />
               </button>
 
               <button
-                className="absolute h-full top-0 right-20 z-10"
+                className="absolute h-full top-0 right-4 z-10"
                 onClick={() => swiperRef.current?.slideNext()}
               >
                 <img src={GreenArrow.src} alt="" />

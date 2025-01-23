@@ -19,10 +19,16 @@ import GameTypeSwiper from "@/app/(game)/rooms/GameTypeSwiper";
 import { getCookie } from "cookies-next";
 import SettingMenus from "@/utils/components/SettingMenus";
 import Setting from "@/public/icons/setting.png";
-import Tutorial from "@/app/(game)/rooms/Tutorial";
 import Quest from "@/public/icons/quest.png";
-import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
-import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
+import HelpModal from "@/utils/components/HelpModal";
+import KeroIntroduceHelpImage from "@/public/helps/kero/kero_introduce.jpg";
+import KeroTuto1HelpImage from "@/public/helps/kero/kero_tuto_1.jpg";
+import KeroTuto2HelpImage from "@/public/helps/kero/kero_tuto_2.jpg";
+import KeroTuto3HelpImage from "@/public/helps/kero/kero_tuto_3.jpg";
+import KeroTuto4HelpImage from "@/public/helps/kero/kero_tuto_4.jpg";
+import KeroScoreHelpImage from "@/public/helps/kero/kero_score.jpg";
+import KeroCardsHelpImage from "@/public/helps/kero/kero_cards.jpg";
+import ToriIntroduceHelpImage from "@/public/helps/tori/tori_introduce.jpg";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -263,7 +269,21 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                 />
               )}
 
-              {isTutorialOpen && <Tutorial setIsOpen={setIsTutorialOpen} />}
+              {isTutorialOpen && (
+                <HelpModal
+                  helpContents={[
+                    {
+                      title: "케로작",
+                      image: KeroIntroduceHelpImage,
+                    },
+                    {
+                      title: "토리덱",
+                      image: ToriIntroduceHelpImage,
+                    },
+                  ]}
+                  setIsModalOpen={setIsTutorialOpen}
+                />
+              )}
 
               <GameTypeSwiper />
 
