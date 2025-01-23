@@ -48,7 +48,7 @@ const HelpModal = ({
                 }}
                 modules={[Navigation]}
                 spaceBetween={0}
-                slidesPerView={2}
+                slidesPerView={1}
                 style={{
                   padding: 4,
                 }}
@@ -56,11 +56,11 @@ const HelpModal = ({
               >
                 {helpContents[pageIndex].slides.map((subHelp) => (
                   <SwiperSlide key={subHelp.subTitle}>
-                    <div className="flex h-full justify-center items-center">
+                    <div className="w-full flex h-full justify-center items-center">
                       <img
                         src={subHelp.image?.src}
                         alt=""
-                        className="h-full object-cover"
+                        className="w-full h-full object-center object-contain"
                       />
                     </div>
                   </SwiperSlide>
@@ -103,7 +103,7 @@ const HelpModal = ({
           onClick={() => setIsModalOpen(false)}
           className="w-full bg-sky-500 rounded-lg py-1 text-white font-bold disabled:bg-gray-400"
         >
-          close
+          닫기
         </button>
       </div>
     </div>
