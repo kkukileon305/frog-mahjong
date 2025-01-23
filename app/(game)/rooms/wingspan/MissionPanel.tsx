@@ -25,38 +25,6 @@ const MissionPanel = () => {
     }
   }, []);
 
-  // 남은 카드들중 미션에 부합하는거 표시
-  const users = gameStore.gameState?.users!;
-
-  const allUserCardIds = users
-    ?.map((user) => (user.cards ? user.cards.map((card) => card.cardID) : []))
-    .flat();
-
-  const allUserPickedCardIds = users
-    ?.map((user) =>
-      user.pickedCards ? user.pickedCards.map((card) => card.cardID) : []
-    )
-    .flat();
-
-  const allUserCardWithoutPickedCardIds = allUserCardIds.filter(
-    (id) => !allUserPickedCardIds.includes(id)
-  );
-
-  const allUserDiscardedIds = users
-    ?.map((user) =>
-      user.discardedCards ? user.discardedCards.map((card) => card.cardID) : []
-    )
-    .flat();
-
-  const leftCardsWithoutPickedWithOpenCards = gameStore.cards.filter(
-    (card) =>
-      !(
-        allUserCardIds?.includes(card.id) ||
-        allUserCardWithoutPickedCardIds?.includes(card.id) ||
-        allUserDiscardedIds?.includes(card.id)
-      )
-  );
-
   return (
     <div className="max-w-[380px] w-full mx-auto bg-white/50 rounded-[3px] p-1 border-[#796858] border-[1.5px]">
       <div className="">

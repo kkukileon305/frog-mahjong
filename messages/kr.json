@@ -117,6 +117,7 @@
     "back": "돌아가기"
   },
   "ResultModal": {
+    "mission": "미션",
     "title": "결과",
     "same": "같은 패 (2점)",
     "continuous": "연속 패 (1점)",

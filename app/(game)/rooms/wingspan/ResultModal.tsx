@@ -16,7 +16,7 @@ import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { QUIT_GAME } from "@/utils/constants/const";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import useBlockScroll from "@/utils/hooks/useBlockScroll";
-import axiosInstance, { Result } from "@/utils/axios";
+import axiosInstance, { DrawData, Result } from "@/utils/axios";
 import useProfileIconStore from "@/utils/stores/useProfileIconStore";
 
 const ResultModal = () => {
@@ -24,6 +24,7 @@ const ResultModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
+  const [drawData, setDrawData] = useState<DrawData | null>(null);
 
   const {
     clear,
@@ -33,8 +34,12 @@ const ResultModal = () => {
     cards,
     timerId,
     setIsOpenResultModal,
+    isGameOver,
+    clearMissionIDs,
   } = useWingspanStore();
   const users = useRef(gameState?.users);
+
+  const roomID = gameState?.gameInfo?.roomID!;
 
   const profileIcons = useProfileIconStore((s) => s.profileIcons);
 
@@ -89,34 +94,58 @@ const ResultModal = () => {
     }, 0);
   };
 
-  const getResult = async () => {
-    try {
-      setIsLoading(true);
-
-      const { data } = await axiosInstance.post<Result>(
-        "/v2.1/game/result",
-        {
-          roomID: Number(gameState?.gameInfo?.roomID),
-          userID: winner?.id,
-        },
-        {
-          headers: {
-            tkn: accessToken,
-          },
-        }
-      );
-
-      setResult(data);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (winner) {
+    if (!isGameOver && winner) {
+      const getResult = async () => {
+        try {
+          setIsLoading(true);
+
+          const { data } = await axiosInstance.post<Result>(
+            "/v2.1/game/result",
+            {
+              roomID: Number(gameState?.gameInfo?.roomID),
+              userID: winner?.id,
+            },
+            {
+              headers: {
+                tkn: accessToken,
+              },
+            }
+          );
+
+          setResult(data);
+        } catch (e) {
+          console.log(e);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
       getResult();
+    } else {
+      // 무승부시 api 요청
+      const getDrawResult = async () => {
+        try {
+          setIsLoading(true);
+
+          const { data } = await axiosInstance.get<DrawData>(
+            `/v2.1/game/${roomID}/draw`,
+            {
+              headers: {
+                tkn: accessToken,
+              },
+            }
+          );
+
+          setDrawData(data);
+        } catch (e) {
+          console.log(e);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      getDrawResult();
     }
   }, []);
 
@@ -125,17 +154,23 @@ const ResultModal = () => {
       className="absolute left-0 top-0 w-full h-[calc(100dvh)] bg-game z-30 flex justify-center items-center p-2 font-extrabold"
       onClick={onClose}
     >
-      <div className="p-4 bg-white/65 w-full h-full border-[#796858] border-2 rounded-[5px] flex flex-col gap-2">
+      <div
+        style={{
+          padding: isGameOver ? 4 : 16,
+          paddingBottom: 16,
+        }}
+        className="bg-white/65 w-full h-full border-[#796858] border-2 rounded-[5px] flex flex-col gap-2"
+      >
         {winner && (
           <>
             {isLoading && (
-              <div className="h-[calc(100%-40px)] flex justify-center items-center">
+              <div className="w-full h-[calc(100%-40px)] flex justify-center items-center">
                 loading...
               </div>
             )}
 
             {!isLoading && result && (
-              <div className="h-[calc(100%-40px)]">
+              <div className="w-full h-[calc(100%-40px)]">
                 <div className="flex justify-center items-center gap-4 h-[70px]">
                   <img
                     src={winnerIcon?.image}
@@ -193,42 +228,108 @@ const ResultModal = () => {
         )}
 
         {!winner && (
-          <div className="p-4 h-[calc(100%-40px)] flex flex-col">
-            <p className="text-3xl text-[#FA4E38] text-center">{m("fail")}</p>
+          <>
+            {isLoading && (
+              <div className="w-full h-[calc(100%-40px)] flex justify-center items-center">
+                loading...
+              </div>
+            )}
 
-            <ul className="text-center py-4">
-              {currentMissions.current.map((m, idx) => (
-                <li key={m.id}>
-                  {idx + 1}. {m.title}
-                </li>
-              ))}
-            </ul>
+            {!isLoading && drawData && (
+              <div className="w-full h-[calc(100%-40px)] flex flex-col">
+                {/*Panel*/}
+                <div className="max-w-[380px] w-full mx-auto bg-white/50 rounded-[3px] p-1 border-[#796858] border-[1.5px]">
+                  <div className="">
+                    <p className="basis-1/6 h-[16px] text-[12px] flex items-center justify-center bg-[#FA4E38] rounded-[3px] font-bold text-white text-center tracking-[8px]">
+                      {m("mission")}
+                    </p>
 
-            <ul className="max-w-[320px] h-full mx-auto grid grid-cols-2 grid-rows-2 p-4">
-              {users.current?.map((u) => (
-                <li key={u.id} className="p-2">
-                  <div className="relative w-full aspect-square border-2 border-[#F19830] rounded">
-                    <img
-                      className="w-full aspect-square object-cover object-bottom"
-                      src={
-                        profileIcons.find((ic) => ic.profileID === u.profileID)
-                          ?.image
-                      }
-                      alt={u.name}
-                    />
+                    <div className="py-2 px-4">
+                      {currentMissions.current &&
+                        currentMissions.current.map((m, index) => (
+                          <div
+                            key={m.id}
+                            className={`flex justify-between basis-5/6 font-bold text-xs text-black ${
+                              clearMissionIDs.includes(m.id) && "line-through"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <p className="text-[12px]">
+                                {index + 1}. {m.title}
+                              </p>
 
-                    <div className="w-5 h-5 flex justify-center items-center font-bold rounded-full top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-[#F19830] absolute">
-                      <p>{u.missionSuccessCount}</p>
+                              {m.image && (
+                                <img
+                                  src={m.image}
+                                  alt=""
+                                  className="w-[14px] h-[14px]"
+                                />
+                              )}
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
+                </div>
+                {/*Panel end*/}
 
-                  <p className="mx-2 px-2 text-center bg-[#FCE4C0] rounded mt-1">
-                    {u.name}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
+                <p className="text-3xl text-[#FA4E38] text-center py-4">
+                  {m("fail")}
+                </p>
+
+                <ul className="w-full h-[calc(100%-90px-68px)] mx-auto flex flex-col px-2">
+                  {users.current?.map((u) => (
+                    <li key={u.id} className="h-1/4 p-2 flex gap-2">
+                      <div className="h-full flex flex-col justify-center gap-2">
+                        <img
+                          className="w-[90px] aspect-square object-cover object-bottom border"
+                          src={
+                            profileIcons.find(
+                              (ic) => ic.profileID === u.profileID
+                            )?.image
+                          }
+                          alt={u.name}
+                        />
+
+                        <p className="mx-2 px-2 text-[7px] text-center bg-[#FCE4C0] rounded mt-1">
+                          {u.name}
+                        </p>
+                      </div>
+
+                      <div className="w-full h-full bg-white p-8 flex flex-col justify-center gap-2">
+                        {currentMissions.current &&
+                          currentMissions.current.map((m, index) => (
+                            <div
+                              key={m.id}
+                              className={`flex justify-between font-bold text-xs text-black ${
+                                drawData.users
+                                  .find((tu) => tu.userID === u.id)
+                                  ?.successMissions.includes(m.id) &&
+                                "line-through"
+                              }`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <p className="text-[12px]">
+                                  {index + 1}. {m.title}
+                                </p>
+
+                                {m.image && (
+                                  <img
+                                    src={m.image}
+                                    alt=""
+                                    className="w-[14px] h-[14px]"
+                                  />
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
         )}
 
         <button

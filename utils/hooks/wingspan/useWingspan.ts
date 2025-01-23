@@ -295,6 +295,8 @@ const useWingspan = (mode: MatchingMode) => {
           }
 
           if (isAllPicked) {
+            store.setIsGameOver(true);
+
             if (currentUser?.isOwner) {
               const req: GameOverRequest = {
                 event: "GAME_OVER",
