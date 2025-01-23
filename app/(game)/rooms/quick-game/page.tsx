@@ -7,7 +7,6 @@ import Entering from "@/app/(game)/rooms/quick-game/Entering";
 import LoanFailedModal from "@/app/(game)/rooms/quick-game/LoanFailedModal";
 import ModalContainer from "@/utils/components/ModalContainer";
 import ResultModal from "@/app/(game)/rooms/quick-game/ResultModal";
-import HelpModal from "@/app/(game)/rooms/quick-game/HelpModal";
 import { getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import Game from "@/app/(game)/rooms/quick-game/game/Game";
@@ -15,6 +14,15 @@ import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMa
 import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
 import DisconnectedModal from "@/app/(game)/rooms/quick-game/DisconnectedModal";
+
+import KeroCardsHelpImage from "@/public/helps/kero/kero_cards.jpg";
+import KeroIntroduceHelpImage from "@/public/helps/kero/kero_introduce.jpg";
+import KeroScoreHelpImage from "@/public/helps/kero/kero_score.jpg";
+import KeroTuto1HelpImage from "@/public/helps/kero/kero_tuto_1.jpg";
+import KeroTuto2HelpImage from "@/public/helps/kero/kero_tuto_2.jpg";
+import KeroTuto3HelpImage from "@/public/helps/kero/kero_tuto_3.jpg";
+import KeroTuto4HelpImage from "@/public/helps/kero/kero_tuto_4.jpg";
+import HelpModal from "@/utils/components/HelpModal";
 
 const Page = () => {
   const orientation = useScreenOrientation();
@@ -73,9 +81,44 @@ const Page = () => {
         )}
 
         {isHelpModal && (
-          <ModalContainer setIsOpen={setIsHelpModal} customColor="bg-white/50">
-            <HelpModal />
-          </ModalContainer>
+          <HelpModal
+            helpContents={[
+              {
+                title: "게임룰",
+                image: KeroIntroduceHelpImage,
+              },
+              {
+                title: "튜토리얼",
+                slides: [
+                  {
+                    subTitle: "sub 1",
+                    image: KeroTuto1HelpImage,
+                  },
+                  {
+                    subTitle: "sub 2",
+                    image: KeroTuto2HelpImage,
+                  },
+                  {
+                    subTitle: "sub 3",
+                    image: KeroTuto3HelpImage,
+                  },
+                  {
+                    subTitle: "sub 4",
+                    image: KeroTuto4HelpImage,
+                  },
+                ],
+              },
+              {
+                title: "점수규칙",
+                image: KeroScoreHelpImage,
+              },
+              {
+                title: "카드설명",
+                image: KeroCardsHelpImage,
+              },
+            ]}
+            setIsModalOpen={setIsHelpModal}
+          />
         )}
 
         {orientation === "portrait-primary" && (

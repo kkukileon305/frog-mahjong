@@ -107,7 +107,7 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
             />
           </div>
 
-          <div className="w-full h-[calc(100%-189px)] border-t border-[#95C1A6] mx-auto py-4 flex flex-wrap content-start gap-[10px] justify-between overflow-y-auto">
+          <div className="w-full h-[calc(100%-197px)] border-t border-[#95C1A6] mx-auto py-4 flex flex-wrap content-start gap-[10px] justify-between overflow-y-auto">
             {allProfileIcons.map((icon) => (
               <div key={icon.profileID} className="h-fit">
                 {availableProfileList
@@ -154,10 +154,6 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
                     />
                   </button>
                 )}
-
-                <p className="font-sb text-xs text-center text-white">
-                  {icon.name}
-                </p>
               </div>
             ))}
           </div>
@@ -166,7 +162,7 @@ const EditProfileImage = ({ userData, setIsOpen }: EditProfileImageProps) => {
       <button
         id="back"
         onClick={() => setIsOpen(false)}
-        className="max-w-80 w-full h-8 bg-[#95C1A6] px-2 py-1 font-bold text-white rounded-[1px]"
+        className="max-w-80 mt-2 w-full h-8 bg-[#95C1A6] px-2 py-1 font-bold text-white rounded-[1px]"
       >
         닫기
       </button>

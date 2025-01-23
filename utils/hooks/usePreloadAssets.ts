@@ -12,7 +12,6 @@ import frogPink from "@/public/icons/frog_pink.png";
 import frogYellow from "@/public/icons/frog_yellow.png";
 import gameBackground from "@/public/bg/game_background.jpg";
 import roomBackground from "@/public/bg/room_background.jpg";
-import HelpImage from "@/public/helps/help.jpg";
 import Roulette0 from "@/public/effects/roulette0.png";
 import Roulette1 from "@/public/effects/roulette1.png";
 import Roulette2 from "@/public/effects/roulette2.png";
@@ -41,6 +40,21 @@ import GreenArrow from "@/public/icons/green_arrow.png";
 import Quest from "@/public/icons/quest.png";
 import Setting from "@/public/icons/setting.png";
 import MissionSize from "@/public/icons/mission_size.png";
+
+// helps - kero
+import KeroCardsHelpImage from "@/public/helps/kero/kero_cards.jpg";
+import KeroIntroduceHelpImage from "@/public/helps/kero/kero_introduce.jpg";
+import KeroScoreHelpImage from "@/public/helps/kero/kero_score.jpg";
+import KeroTuto1HelpImage from "@/public/helps/kero/kero_tuto_1.jpg";
+import KeroTuto2HelpImage from "@/public/helps/kero/kero_tuto_2.jpg";
+import KeroTuto3HelpImage from "@/public/helps/kero/kero_tuto_3.jpg";
+import KeroTuto4HelpImage from "@/public/helps/kero/kero_tuto_4.jpg";
+
+// helps - tori
+import ToriIntroduceHelpImage from "@/public/helps/tori/tori_introduce.jpg";
+import ToriMissionHelpImage from "@/public/helps/tori/tori_missions.jpg";
+import ToriTuto1HelpImage from "@/public/helps/tori/tori_tuto_1.jpg";
+import ToriTuto2HelpImage from "@/public/helps/tori/tori_tuto_2.jpg";
 
 // old cards
 import GreenBal from "@/public/cards/green_bal.png";
@@ -124,7 +138,6 @@ const usePreloadAssets = () => {
     EmojiSad,
     EmojiSleep,
     EmojiSmile,
-    HelpImage,
     Quest,
     Setting,
     // old cards
@@ -153,6 +166,18 @@ const usePreloadAssets = () => {
     Wingspan,
     GreenArrow,
     MissionSize,
+    // helps
+    KeroCardsHelpImage,
+    KeroIntroduceHelpImage,
+    KeroScoreHelpImage,
+    KeroTuto1HelpImage,
+    KeroTuto2HelpImage,
+    KeroTuto3HelpImage,
+    KeroTuto4HelpImage,
+    ToriIntroduceHelpImage,
+    ToriMissionHelpImage,
+    ToriTuto1HelpImage,
+    ToriTuto2HelpImage,
   ].map((image) => ({
     url: image.src,
     type: "image",

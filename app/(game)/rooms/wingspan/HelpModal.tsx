@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
 import { useTranslations } from "next-intl";
-import HelpImage from "@/public/helps/help.jpg";
+import HelpImage from "@/public/helps/tori/tori_missions.jpg";
 import {
   bodyParts,
   colorParts,

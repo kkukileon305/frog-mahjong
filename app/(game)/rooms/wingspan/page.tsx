@@ -11,7 +11,6 @@ import Game from "@/app/(game)/rooms/wingspan/Game";
 import PickCardsModal from "@/app/(game)/rooms/wingspan/PickCardsModal";
 import ResultModal from "@/app/(game)/rooms/wingspan/ResultModal";
 import useTimer from "@/utils/hooks/wingspan/useTimer";
-import HelpModal from "@/app/(game)/rooms/wingspan/HelpModal";
 import Roulette from "@/app/(game)/rooms/wingspan/Roulette";
 import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
 import DisconnectedModal from "@/app/(game)/rooms/wingspan/DisconnectedModal";
@@ -19,6 +18,13 @@ import SettingModal from "@/app/(game)/rooms/wingspan/SettingModal";
 import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import ModalContainer from "@/utils/components/ModalContainer";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";
+import HelpModal from "@/utils/components/HelpModal";
+
+// tutorial
+import ToriIntroduceHelpImage from "@/public/helps/tori/tori_introduce.jpg";
+import ToriTuto1HelpImage from "@/public/helps/tori/tori_tuto_1.jpg";
+import ToriTuto2HelpImage from "@/public/helps/tori/tori_tuto_2.jpg";
+import ToriMissionHelpImage from "@/public/helps/tori/tori_missions.jpg";
 
 const Page = () => {
   useDetectNavigation();
@@ -84,7 +90,34 @@ const Page = () => {
         {gameStore.isPickCardsModal && <PickCardsModal />}
 
         {/* help modal */}
-        {gameStore.isHelpModalOpen && <HelpModal />}
+        {gameStore.isHelpModalOpen && (
+          <HelpModal
+            helpContents={[
+              {
+                title: "게임룰",
+                image: ToriIntroduceHelpImage,
+              },
+              {
+                title: "튜토리얼",
+                slides: [
+                  {
+                    subTitle: "sub 1",
+                    image: ToriTuto1HelpImage,
+                  },
+                  {
+                    subTitle: "sub 2",
+                    image: ToriTuto2HelpImage,
+                  },
+                ],
+              },
+              {
+                title: "미션설명",
+                image: ToriMissionHelpImage,
+              },
+            ]}
+            setIsModalOpen={gameStore.setIsHelpModalOpen}
+          />
+        )}
 
         {/* roulette */}
         {gameStore.isRouletteLoading && <Roulette />}
