@@ -23,6 +23,7 @@ import KeroTuto2HelpImage from "@/public/helps/kero/kero_tuto_2.jpg";
 import KeroTuto3HelpImage from "@/public/helps/kero/kero_tuto_3.jpg";
 import KeroTuto4HelpImage from "@/public/helps/kero/kero_tuto_4.jpg";
 import HelpModal from "@/utils/components/HelpModal";
+import SettingModal from "@/utils/components/SettingModal";
 
 const Page = () => {
   const orientation = useScreenOrientation();
@@ -79,6 +80,9 @@ const Page = () => {
             <ResultModal />
           </ModalContainer>
         )}
+
+        {/* setting modal*/}
+        {gameStore.isSettingModalOpen && <SettingModal />}
 
         {isHelpModal && (
           <HelpModal

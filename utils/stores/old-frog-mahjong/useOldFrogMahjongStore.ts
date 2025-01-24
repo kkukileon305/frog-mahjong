@@ -64,6 +64,9 @@ interface GameStore {
   disconnectedUsers: UserSocket[];
   setDisconnectedUsers: (disconnectedUser: UserSocket[]) => void;
 
+  isSettingModalOpen: boolean;
+  setIsSettingModalOpen: (isSettingModalOpen: boolean) => void;
+
   clear: () => void;
 }
 
@@ -145,6 +148,9 @@ const useOldFrogMahjongStore = create(
     setDisconnectedUsers: (disconnectedUsers: UserSocket[]) =>
       set({ disconnectedUsers }),
 
+    isSettingModalOpen: false,
+    setIsSettingModalOpen: (isSettingModalOpen) => set({ isSettingModalOpen }),
+
     clear: () =>
       set({
         ws: null,
@@ -162,6 +168,7 @@ const useOldFrogMahjongStore = create(
         },
         isMatchingCompleted: false,
         isGameEnd: false,
+        isSettingModalOpen: false,
       }),
   }))
 );

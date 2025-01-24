@@ -14,7 +14,7 @@ import useTimer from "@/utils/hooks/wingspan/useTimer";
 import Roulette from "@/app/(game)/rooms/wingspan/Roulette";
 import { ERR_ABNORMAL_EXIT } from "@/utils/constants/const";
 import DisconnectedModal from "@/app/(game)/rooms/wingspan/DisconnectedModal";
-import SettingModal from "@/app/(game)/rooms/wingspan/SettingModal";
+import SettingModal from "@/utils/components/SettingModal";
 import useScreenOrientation from "@/utils/hooks/useScreenOrientation";
 import ModalContainer from "@/utils/components/ModalContainer";
 import WarningModal from "@/app/(game)/rooms/quick-game/WarningModal";

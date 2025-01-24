@@ -6,6 +6,7 @@ import ModalContainer from "@/utils/components/ModalContainer";
 import { useTranslations } from "next-intl";
 import useSoundStore from "@/utils/stores/useSoundStore";
 import useWingspanStore from "@/utils/stores/wingspan/useWingspanStore";
+import useOldFrogMahjongStore from "@/utils/stores/old-frog-mahjong/useOldFrogMahjongStore";
 
 const SettingModal = () => {
   const m = useTranslations("Settings");
@@ -15,7 +16,8 @@ const SettingModal = () => {
     audios: s.audios,
   }));
 
-  const setIsOpen = useWingspanStore((s) => s.setIsSettingModal);
+  const setWingspanIsOpen = useWingspanStore((s) => s.setIsSettingModal);
+  const setFrogIsOpen = useOldFrogMahjongStore((s) => s.setIsSettingModalOpen);
 
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
     null
@@ -34,6 +36,11 @@ const SettingModal = () => {
     }, 200);
 
     setDebounceTimeout(newTimeout);
+  };
+
+  const setIsOpen = (isOpen: boolean) => {
+    setWingspanIsOpen(isOpen);
+    setFrogIsOpen(isOpen);
   };
 
   return (

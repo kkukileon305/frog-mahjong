@@ -29,6 +29,7 @@ import KeroTuto4HelpImage from "@/public/helps/kero/kero_tuto_4.jpg";
 import KeroScoreHelpImage from "@/public/helps/kero/kero_score.jpg";
 import KeroCardsHelpImage from "@/public/helps/kero/kero_cards.jpg";
 import ToriIntroduceHelpImage from "@/public/helps/tori/tori_introduce.jpg";
+import KeroIntroduceRotateHelpImage from "@/public/helps/kero/kero_introduce_rotate.jpg";
 
 type GameSettingFormProps = {
   formMetadata: FormMetadata;
@@ -274,7 +275,7 @@ const MatchSettingForm = ({ formMetadata, userData }: GameSettingFormProps) => {
                   helpContents={[
                     {
                       title: "케로작",
-                      image: KeroIntroduceHelpImage,
+                      image: KeroIntroduceRotateHelpImage,
                     },
                     {
                       title: "토리덱",
