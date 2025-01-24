@@ -37,6 +37,8 @@ import axiosInstance, { CardListResponse } from "@/utils/axios";
 import { default as cardDataList } from "@/app/(game)/rooms/quick-game/game/cards";
 import useMatchSettingStore from "@/utils/stores/useMatchSettingStore";
 import { encryptAES } from "@/utils/functions/aes";
+import QuestGreen from "@/public/icons/quest_green.png";
+import SettingGreen from "@/public/icons/setting_green.png";
 
 type GameProps = {
   setIsHelpModal: Dispatch<SetStateAction<boolean>>;
@@ -44,7 +46,8 @@ type GameProps = {
 
 const Game = ({ setIsHelpModal }: GameProps) => {
   const m = useTranslations("Game");
-  const { isStarted, ws, gameState } = useOldFrogMahjongStore();
+  const { isStarted, ws, gameState, setIsSettingModalOpen } =
+    useOldFrogMahjongStore();
   const mode = useMatchSettingStore((s) => s.mode);
   const [cards, setCards] = useState<CardImage[]>([]);
 
@@ -361,12 +364,19 @@ const Game = ({ setIsHelpModal }: GameProps) => {
           <ChatForm />
         </div>
 
-        <div className="flex basis-1/5">
+        <div className="flex basis-1/5 pl-8">
           <button
             onClick={() => setIsHelpModal(true)}
-            className="text-xs lg:text-base w-full bg-game-button font-bold"
+            className="text-xs lg:text-base w-full font-bold flex justify-center items-center p-1"
           >
-            {m("help")}
+            <img className="h-full" src={QuestGreen.src} alt="help" />
+          </button>
+
+          <button
+            onClick={() => setIsSettingModalOpen(true)}
+            className="text-xs lg:text-base w-full font-bold flex justify-center items-center p-1"
+          >
+            <img className="h-full" src={SettingGreen.src} alt="setting" />
           </button>
         </div>
       </div>

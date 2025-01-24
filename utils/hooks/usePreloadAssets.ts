@@ -39,11 +39,14 @@ import Wingspan from "@/public/game-types/wingspan.png";
 import GreenArrow from "@/public/icons/green_arrow.png";
 import Quest from "@/public/icons/quest.png";
 import Setting from "@/public/icons/setting.png";
+import QuestGreen from "@/public/icons/quest_green.png";
+import SettingGreen from "@/public/icons/setting_green.png";
 import MissionSize from "@/public/icons/mission_size.png";
 
 // helps - kero
 import KeroCardsHelpImage from "@/public/helps/kero/kero_cards.jpg";
 import KeroIntroduceHelpImage from "@/public/helps/kero/kero_introduce.jpg";
+import KeroIntroduceRotateHelpImage from "@/public/helps/kero/kero_introduce_rotate.jpg";
 import KeroScoreHelpImage from "@/public/helps/kero/kero_score.jpg";
 import KeroTuto1HelpImage from "@/public/helps/kero/kero_tuto_1.jpg";
 import KeroTuto2HelpImage from "@/public/helps/kero/kero_tuto_2.jpg";
@@ -140,6 +143,8 @@ const usePreloadAssets = () => {
     EmojiSmile,
     Quest,
     Setting,
+    QuestGreen,
+    SettingGreen,
     // old cards
     GreenBal,
     GreenEight,
@@ -178,6 +183,7 @@ const usePreloadAssets = () => {
     ToriMissionHelpImage,
     ToriTuto1HelpImage,
     ToriTuto2HelpImage,
+    KeroIntroduceRotateHelpImage,
   ].map((image) => ({
     url: image.src,
     type: "image",
