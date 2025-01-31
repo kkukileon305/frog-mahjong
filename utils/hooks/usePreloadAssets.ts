@@ -331,6 +331,8 @@ const usePreloadAssets = () => {
 
               audio.onerror = () =>
                 rej(new Error(`Failed to load image ${asset.url}`));
+
+              audio.load();
             }
           });
         })
