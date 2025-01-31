@@ -321,6 +321,7 @@ const usePreloadAssets = () => {
             } else if (asset.type === "audio") {
               const audio = new Audio();
 
+              audio.preload = "auto";
               audio.src = asset.url;
 
               audio.oncanplay = () => {
