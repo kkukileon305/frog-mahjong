@@ -323,7 +323,7 @@ const usePreloadAssets = () => {
 
               audio.src = asset.url;
 
-              audio.onloadeddata = () => {
+              audio.oncanplay = () => {
                 updateProgress();
                 res(asset);
               };
