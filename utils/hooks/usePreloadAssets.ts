@@ -322,10 +322,12 @@ const usePreloadAssets = () => {
               const audio = new Audio();
 
               audio.src = asset.url;
-              audio.oncanplaythrough = () => {
+
+              audio.onloadeddata = () => {
                 updateProgress();
                 res(asset);
               };
+
               audio.onerror = () =>
                 rej(new Error(`Failed to load image ${asset.url}`));
             }
